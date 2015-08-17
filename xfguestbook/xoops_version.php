@@ -86,116 +86,116 @@ $modversion['system_menu'] = 1;
 // Config Settings
 // anonymious can post
 $modversion['config'][1] = array(
-	'name'			=> 'anonsign',
-	'title' 		=> '_MI_XFGB_ANONSIGN',
-	'description'		=> '',
-	'formtype'		=> 'yesno',
-	'valuetype'		=> 'int',
-	'default'		=> '0'
+    'name'            => 'anonsign',
+    'title'        => '_MI_XFGB_ANONSIGN',
+    'description'        => '',
+    'formtype'        => 'yesno',
+    'valuetype'        => 'int',
+    'default'        => '0'
 ) ;
 // Moderate
 $modversion['config'][] = array(
-	'name'			=> 'moderate',
-	'title' 		=> '_MI_XFGB_MODERATE',
-	'description'		=> '_MI_XFGB_MODERATEDSC',
-	'formtype'		=> 'yesno',
-	'valuetype'		=> 'int',
-	'default'		=> '0'
+    'name'            => 'moderate',
+    'title'        => '_MI_XFGB_MODERATE',
+    'description'        => '_MI_XFGB_MODERATEDSC',
+    'formtype'        => 'yesno',
+    'valuetype'        => 'int',
+    'default'        => '0'
 ) ;
 // send mail to webmaster
 $modversion['config'][] = array(
-	'name'			=> 'sendmail2wm',
-	'title' 		=> '_MI_XFGB_SENDMAIL',
-	'description'		=> '',
-	'formtype'		=> 'yesno',
-	'valuetype'		=> 'int',
-	'default'		=> '0'
+    'name'            => 'sendmail2wm',
+    'title'        => '_MI_XFGB_SENDMAIL',
+    'description'        => '',
+    'formtype'        => 'yesno',
+    'valuetype'        => 'int',
+    'default'        => '0'
 ) ;
 // show mail
 $modversion['config'][] = array(
-	'name'			=> 'showemail',
-	'title' 		=> '_MI_XFGB_SHOWEMAIL',
-	'description'		=> '_MI_XFGB_SHOWEMAIL_DESC',
-	'formtype'		=> 'yesno',
-	'valuetype'		=> 'int',
-	'default'		=> '0'
+    'name'            => 'showemail',
+    'title'        => '_MI_XFGB_SHOWEMAIL',
+    'description'        => '_MI_XFGB_SHOWEMAIL_DESC',
+    'formtype'        => 'yesno',
+    'valuetype'        => 'int',
+    'default'        => '0'
 ) ;
 // number messages per page
 $modversion['config'][] = array(
-	'name'			=> 'perpage',
-	'title' 		=> '_MI_XFGB_NBMSG',
-	'description'		=> '',
-	'formtype'		=> 'textbox',
-	'valuetype'		=> 'int',
-	'default'		=> '5'
+    'name'            => 'perpage',
+    'title'        => '_MI_XFGB_NBMSG',
+    'description'        => '',
+    'formtype'        => 'textbox',
+    'valuetype'        => 'int',
+    'default'        => '5'
 ) ;
 // number flags per row
 $modversion['config'][] = array(
-	'name'			=> 'flagsperrow',
-	'title' 		=> '_MI_XFGB_NBFLAGS',
-	'description'		=> '',
-	'formtype'		=> 'select',
-	'valuetype'		=> 'int',
-	'default'		=> '3',
-	'options'		=> array(4=>4, 5=>5, 6=>6, 7=>7, 8=>8, 9=>9)
+    'name'            => 'flagsperrow',
+    'title'        => '_MI_XFGB_NBFLAGS',
+    'description'        => '',
+    'formtype'        => 'select',
+    'valuetype'        => 'int',
+    'default'        => '3',
+    'options'        => array(4=>4, 5=>5, 6=>6, 7=>7, 8=>8, 9=>9)
 ) ;
 // Display avatar and rank
 $modversion['config'][] = array(
-	'name'			=> 'display_avatar',
-	'title' 		=> '_MI_XFGB_AVATAR',
-	'description'		=> '',
-	'formtype'		=> 'yesno',
-	'valuetype'		=> 'int',
-	'default'		=> '1'
+    'name'            => 'display_avatar',
+    'title'        => '_MI_XFGB_AVATAR',
+    'description'        => '',
+    'formtype'        => 'yesno',
+    'valuetype'        => 'int',
+    'default'        => '1'
 ) ;
 // Photo max size
 $modversion['config'][] = array(
-	'name'			=>'photo_maxsize',
-	'title' 		=>'_MI_XFGB_MAXSIZEIMG',
-	'description'		=> '_MI_XFGB_MAXSIZEIMG_DESC',
-	'formtype'		=> 'textbox',
-	'valuetype'		=> 'int',
-	'default'		=> '30000',
+    'name'            =>'photo_maxsize',
+    'title'        =>'_MI_XFGB_MAXSIZEIMG',
+    'description'        => '_MI_XFGB_MAXSIZEIMG_DESC',
+    'formtype'        => 'textbox',
+    'valuetype'        => 'int',
+    'default'        => '30000',
 ) ;
 
 // Photo max height
 $modversion['config'][] = array(
-	'name'			=>'photo_maxheight',
-	'title' 		=>'_MI_XFGB_MAXHEIGHTIMG',
-	'description'		=> '',
-	'formtype'		=> 'textbox',
-	'valuetype'		=> 'int',
-	'default'		=> '120',
+    'name'            =>'photo_maxheight',
+    'title'        =>'_MI_XFGB_MAXHEIGHTIMG',
+    'description'        => '',
+    'formtype'        => 'textbox',
+    'valuetype'        => 'int',
+    'default'        => '120',
 ) ;
 
 // Photo max width
 $modversion['config'][] = array(
-	'name'			=>'photo_maxwidth',
-	'title' 		=>'_MI_XFGB_MAXWIDTHIMG',
-	'description'		=> '',
-	'formtype'		=> 'textbox',
-	'valuetype'		=> 'int',
-	'default'		=> '200',
+    'name'            =>'photo_maxwidth',
+    'title'        =>'_MI_XFGB_MAXWIDTHIMG',
+    'description'        => '',
+    'formtype'        => 'textbox',
+    'valuetype'        => 'int',
+    'default'        => '200',
 ) ;
 
 // name of flagpack
 $modversion['config'][] = array(
-	'name'			=>'country_caption',
-	'title' 		=>'_MI_XFGB_COUNTRY_CAPTION',
-	'description'		=> '',
-	'formtype'		=> 'textbox',
-	'valuetype'		=> 'text',
-	'default'		=> _MI_XFGB_COUNTRY,
+    'name'            =>'country_caption',
+    'title'        =>'_MI_XFGB_COUNTRY_CAPTION',
+    'description'        => '',
+    'formtype'        => 'textbox',
+    'valuetype'        => 'text',
+    'default'        => _MI_XFGB_COUNTRY,
 ) ;
 
 // Directory and sql name of flagpack
 $modversion['config'][] = array(
-	'name'			=>'flagdir',
-	'title' 		=>'_MI_XFGB_FLAGDIR',
-	'description'		=> '',
-	'formtype'		=> 'textbox',
-	'valuetype'		=> 'text',
-	'default'		=> '',
+    'name'            =>'flagdir',
+    'title'        =>'_MI_XFGB_FLAGDIR',
+    'description'        => '',
+    'formtype'        => 'textbox',
+    'valuetype'        => 'text',
+    'default'        => '',
 ) ;
 
 // Blocks
@@ -207,7 +207,6 @@ $modversion['blocks'][1]['edit_func'] = "b_xfguestbook_edit";
 $modversion['blocks'][1]['options'] = "5|19";
 $modversion['blocks'][1]['template'] = "xfguestbook_block_new.html";
 
-if(!file_exists(XOOPS_ROOT_PATH."/uploads/xfguestbook")) {
-mkdir(XOOPS_ROOT_PATH."/uploads/xfguestbook", 0777);
+if (!file_exists(XOOPS_ROOT_PATH."/uploads/xfguestbook")) {
+    mkdir(XOOPS_ROOT_PATH."/uploads/xfguestbook", 0777);
 }
-?>

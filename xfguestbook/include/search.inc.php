@@ -23,34 +23,35 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-function xfguestbook_search($queryarray, $andor, $limit, $offset, $user_id){
-	global $xoopsDB;
-	$sql = "SELECT msg_id,user_id,title,post_time FROM ".$xoopsDB->prefix("xfguestbook_msg")." WHERE moderate=0 ";
-	if ( $user_id != 0 ) {
-		$sql .= " AND user_id=".$user_id." ";
-	}
-	// because count() returns 1 even if a supplied variable
-	// is not an array, we must check if $querryarray is really an array
-	if ( is_array($queryarray) && $count = count($queryarray) ) {
-		$sql .= " AND ((message LIKE '%$queryarray[0]%' OR title LIKE '%$queryarray[0]%')";
-		for($i=1;$i<$count;$i++){
-			$sql .= " $andor ";
-			$sql .= "(message LIKE '%$queryarray[$i]%' OR title LIKE '%$queryarray[$i]%')";
-		}
-		$sql .= ") ";
-	}
-	$sql .= "ORDER BY post_time DESC";
-	$result = $xoopsDB->query($sql,$limit,$offset);
-	$ret = array();
-	$i = 0;
- 	while($myrow = $xoopsDB->fetchArray($result)){
-		$ret[$i]['image'] = "images/xfguestbook.gif";
-		$ret[$i]['link'] = "index.php?op=show_one&msg_id=".$myrow['msg_id']."";
-		$ret[$i]['title'] = $myrow['title'];
-		$ret[$i]['time'] = $myrow['post_time'];
-		$ret[$i]['uid'] = $myrow['user_id'];
-		$i++;
-	}
-	return $ret;
+function xfguestbook_search($queryarray, $andor, $limit, $offset, $user_id)
+{
+    global $xoopsDB;
+    $sql = "SELECT msg_id,user_id,title,post_time FROM ".$xoopsDB->prefix("xfguestbook_msg")." WHERE moderate=0 ";
+    if ($user_id != 0) {
+        $sql .= " AND user_id=".$user_id." ";
+    }
+    // because count() returns 1 even if a supplied variable
+    // is not an array, we must check if $querryarray is really an array
+    if (is_array($queryarray) && $count = count($queryarray)) {
+        $sql .= " AND ((message LIKE '%$queryarray[0]%' OR title LIKE '%$queryarray[0]%')";
+        for ($i=1;$i<$count;$i++) {
+            $sql .= " $andor ";
+            $sql .= "(message LIKE '%$queryarray[$i]%' OR title LIKE '%$queryarray[$i]%')";
+        }
+        $sql .= ") ";
+    }
+    $sql .= "ORDER BY post_time DESC";
+    $result = $xoopsDB->query($sql, $limit, $offset);
+    $ret = array();
+    $i = 0;
+    while ($myrow = $xoopsDB->fetchArray($result)) {
+        $ret[$i]['image'] = "images/xfguestbook.gif";
+        $ret[$i]['link'] = "index.php?op=show_one&msg_id=".$myrow['msg_id']."";
+        $ret[$i]['title'] = $myrow['title'];
+        $ret[$i]['time'] = $myrow['post_time'];
+        $ret[$i]['uid'] = $myrow['user_id'];
+        $i++;
+    }
+
+    return $ret;
 }
-?>

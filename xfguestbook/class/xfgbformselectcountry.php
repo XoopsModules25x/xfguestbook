@@ -22,23 +22,23 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
- 
+
 include_once XOOPS_ROOT_PATH."/class/xoopsform/formselect.php";
 
-class xfgbFormSelectCountry extends XoopsFormSelect
+class xfgbformselectcountry extends XoopsFormSelect
 {
-
-	function xfgbFormSelectCountry($caption, $name, $value=null, $size=1, $nullopt=false)
-	{
-		$db =& XoopsDatabaseFactory::getDatabaseConnection();
-		$this->XoopsFormSelect($caption, $name, $value, $size);
-		$sql = "SELECT country_code, country_name FROM ".$db->prefix("xfguestbook_country")." ORDER BY country_name";
-		$result = $db->query($sql);
-		if($nullopt) $this->addOption('','-');
-		$this->addOption('other', _MI_XFGB_OTHER);
-		while ( $myrow = $db->fetchArray($result) ) {
-			$this->addOption($myrow['country_code'],$myrow['country_name']);
-		}
-	}
+    public function xfgbFormSelectCountry($caption, $name, $value=null, $size=1, $nullopt=false)
+    {
+        $db =& XoopsDatabaseFactory::getDatabaseConnection();
+        $this->XoopsFormSelect($caption, $name, $value, $size);
+        $sql = "SELECT country_code, country_name FROM ".$db->prefix("xfguestbook_country")." ORDER BY country_name";
+        $result = $db->query($sql);
+        if ($nullopt) {
+            $this->addOption('', '-');
+        }
+        $this->addOption('other', _MI_XFGB_OTHER);
+        while ($myrow = $db->fetchArray($result)) {
+            $this->addOption($myrow['country_code'], $myrow['country_name']);
+        }
+    }
 }
-?>
