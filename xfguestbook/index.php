@@ -27,9 +27,9 @@ include("../../mainfile.php");
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
 include_once(XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->dirname() . "/include/functions.php");
 if (isset($_GET['msg_id'])) {
-    $msg_id = intval($_GET['msg_id']);
+    $msg_id = (int)($_GET['msg_id']);
 } elseif (isset($_POST['msg_id'])) {
-    $msg_id = intval($_POST['msg_id']);
+    $msg_id = (int)($_POST['msg_id']);
 } else {
     $msg_id = 0;
 }
@@ -50,7 +50,7 @@ $msg_handler =& xoops_getmodulehandler('msg');
 function delete($msg_id)
 {
     global $msg_handler, $xoopsModule;
-    $ok = isset($_POST['ok']) ? intval($_POST['ok']) : 0;
+    $ok = isset($_POST['ok']) ? (int)($_POST['ok']) : 0;
     if ($ok == 1) {
         $msg        = &$msg_handler->get($msg_id);
         $del_msg_ok = $msg_handler->delete($msg);
@@ -183,7 +183,7 @@ function xfgb_genderlist()
 
 // if op = show_***, functions needed
 if (substr($op, 0, 4) == 'show') {
-    $debut = isset($_GET['debut']) ? intval($_GET['debut']) : 0;
+    $debut = isset($_GET['debut']) ? (int)($_GET['debut']) : 0;
     $param = isset($_GET['param']) ? $_GET['param'] : '';
 
     include_once("include/functions.php");

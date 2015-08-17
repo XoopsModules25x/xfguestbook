@@ -38,7 +38,7 @@ $msg_handler =& xoops_getmodulehandler('msg');
 
 $confirm_code = isset($_POST['confirm_code']) ? $_POST['confirm_code'] : '';
 $confirm_str  = isset($_POST['confirm_str']) ? $_POST['confirm_str'] : '';
-$user_id      = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
+$user_id      = isset($_POST['user_id']) ? (int)($_POST['user_id']) : 0;
 $title        = (isset($_POST['title']) ? $_POST['title'] : '');
 $message      = (isset($_POST['message']) ? $_POST['message'] : '');
 $gender       = (isset($_POST['gender']) ? $_POST['gender'] : '');

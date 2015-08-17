@@ -49,7 +49,7 @@ if ($option['opt_country']) {
     $country_text = new xfgbFormSelectCountry($xoopsModuleConfig['country_caption'], "country", $country, 1, true);
     $country_text->setExtra('onchange="test_other(this.value)"');
     $signform->addElement($country_text, true);
-//	$other_text = new XoopsFormText('other', 'other', 50, 50, $other);
+//  $other_text = new XoopsFormText('other', 'other', 50, 50, $other);
     $other_text = new XoopsFormText('other', 'other', 50, 50);
     $signform->addElement($other_text);
 }
@@ -81,12 +81,12 @@ if ($option['opt_icon'] == 0) {
         $file_img = new XoopsFormFile('', "photo", $xoopsModuleConfig['photo_maxsize']);
         $file_img->setExtra("size ='40'") ;
         $file_tray->addElement($file_img);
-        $msg = sprintf(_MD_XFGB_IMG_CONFIG, intval($xoopsModuleConfig['photo_maxsize']/1000), $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
+        $msg = sprintf(_MD_XFGB_IMG_CONFIG, (int)($xoopsModuleConfig['photo_maxsize']/1000), $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
         $file_label = new XoopsFormLabel('', '<br>'.$msg);
         $file_tray->addElement($file_label);
         $signform->addElement($file_tray);
     }
-    
+
     if ($option['opt_url'] == 1 && $option['opt_icon'] > 0) {
         $xoopsTpl->assign('nofollow', true);
     }
