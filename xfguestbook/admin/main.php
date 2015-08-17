@@ -28,12 +28,11 @@ include_once '../include/cp_functions.php';
 include_once 'admin_header.php';
 
 if (!isset($xoopsModuleConfig['flagdir'])) {
-    redirect_header(XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module='.$xoopsModule->dirname(), 4, _AM_XFGB_MUST_UPDATE);
+    redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, _AM_XFGB_MUST_UPDATE);
 }
 
 include_once '../include/functions.php';
 //include_once("../class/msg.php");
-
 
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
@@ -60,14 +59,14 @@ function delete()
     if ($msg_count > 0) {
         $messagesent = _AM_XFGB_MSGDELETED;
         for ($i = 0; $i < $msg_count; $i++) {
-            $msg = & $msg_handler->get($_POST['msg_id'][$i]);
+            $msg      = &$msg_handler->get($_POST['msg_id'][$i]);
             $filename = $msg->getVar('title');
             $filename = $msg->getVar('photo');
             if (!$msg_handler->delete($msg)) {
                 $messagesent = _AM_XFGB_ERRORDEL;
             }
             if ($filename != '') {
-                $filename = XOOPS_UPLOAD_PATH.'/'.$xoopsModule->getVar('dirname').'/'.$filename;
+                $filename = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $filename;
                 unlink($filename);
             }
         }
@@ -84,7 +83,7 @@ function approve()
     if ($msg_count > 0) {
         $messagesent = _AM_XFGB_VALIDATE;
         for ($i = 0; $i < $msg_count; $i++) {
-            $msg = & $msg_handler->get($_POST['msg_id'][$i]);
+            $msg = &$msg_handler->get($_POST['msg_id'][$i]);
             $msg->setVar('moderate', 0);
             if (!$msg_handler->insert($msg)) {
                 $messagesent = _AM_XFGB_ERRORVALID;
@@ -104,19 +103,19 @@ function banish()
     if ($msg_count > 0) {
         $messagesent = _AM_XFGB_BANISHED;
         for ($i = 0; $i < $msg_count; $i++) {
-            $msg = & $msg_handler->get($_POST['msg_id'][$i]);
+            $msg    = &$msg_handler->get($_POST['msg_id'][$i]);
             $ip[$i] = $msg->getVar('poster_ip');
             $msg->setVar('moderate', 1);
             if (!$msg_handler->insert($msg)) {
                 $messagesent = _AM_XFGB_ERRORBANISHED;
             }
         }
-        $ip =array_unique($ip);
+        $ip     = array_unique($ip);
         $badips = xfgb_get_badips();
         foreach ($ip as $oneip) {
             if (!in_array($oneip, $badips)) {
-                $sql = "INSERT INTO ".$xoopsDB->prefix("xfguestbook_badips")." (ip_value) VALUES ('$oneip')";
-                $result=$xoopsDB->query($sql);
+                $sql    = "INSERT INTO " . $xoopsDB->prefix("xfguestbook_badips") . " (ip_value) VALUES ('$oneip')";
+                $result = $xoopsDB->query($sql);
             }
         }
     } else {
@@ -130,51 +129,51 @@ function banish()
 function show()
 {
     global $msg_handler, $xoopsModule, $pathIcon16;
-    $pick        = isset($_GET['pick']) ? intval($_GET['pick']) : 0;
-    $start        = isset($_GET['start']) ? intval($_GET['start']) : 0;
-    $sel_status = isset($_GET['sel_status']) ? $_GET['sel_status'] : 0;
-    $sel_order    = isset($_GET['sel_order']) ? $_GET['sel_order'] : 0;
-    $limit = 10;
-    $status_option0 = '';
-    $status_option1 = '';
-    $status_option2 = '';
-    $order_option_asc = '';
+    $pick              = isset($_GET['pick']) ? intval($_GET['pick']) : 0;
+    $start             = isset($_GET['start']) ? intval($_GET['start']) : 0;
+    $sel_status        = isset($_GET['sel_status']) ? $_GET['sel_status'] : 0;
+    $sel_order         = isset($_GET['sel_order']) ? $_GET['sel_order'] : 0;
+    $limit             = 10;
+    $status_option0    = '';
+    $status_option1    = '';
+    $status_option2    = '';
+    $order_option_asc  = '';
     $order_option_desc = '';
 
     switch ($sel_status) {
         case 0 :
             $status_option0 = "selected='selected'";
-            $title = _AM_XFGB_ALLMSG;
-            $criteria = new Criteria('msg_id', 0, '>');
+            $title          = _AM_XFGB_ALLMSG;
+            $criteria       = new Criteria('msg_id', 0, '>');
             $criteria->setSort('post_time');
-        break;
+            break;
 
         case 1 :
             $status_option1 = "selected='selected'";
-            $title = _AM_XFGB_PUBMSG;
-                $criteria = new Criteria('moderate', '0');
-                $criteria->setSort('post_time');
-        break;
+            $title          = _AM_XFGB_PUBMSG;
+            $criteria       = new Criteria('moderate', '0');
+            $criteria->setSort('post_time');
+            break;
 
         case 2 :
             $status_option2 = "selected='selected'";
-            $title = _AM_XFGB_WAITMSG;
-                $criteria = new Criteria('moderate', '1');
-                $criteria->setSort('post_time');
-        break;
+            $title          = _AM_XFGB_WAITMSG;
+            $criteria       = new Criteria('moderate', '1');
+            $criteria->setSort('post_time');
+            break;
 
     }
 
     switch ($sel_order) {
         case 1:
-        $order_option_asc = "selected='selected'";
-        $criteria->setOrder('ASC');
-        break;
+            $order_option_asc = "selected='selected'";
+            $criteria->setOrder('ASC');
+            break;
 
         case 0:
-        $order_option_desc = "selected='selected'";
-        $criteria->setOrder('DESC');
-        break;
+            $order_option_desc = "selected='selected'";
+            $criteria->setOrder('DESC');
+            break;
     }
 
     $totalcount = $msg_handler->countMsg($criteria);
@@ -189,139 +188,139 @@ function show()
     echo "<form name='pick' id='pick' action='" . $_SERVER['PHP_SELF'] . "' method='GET' style='margin: 0;'>";
 
     echo "
-		<table width='100%' cellspacing='1' cellpadding='2' border='0' style='border-left: 1px solid silver; border-top: 1px solid silver; border-right: 1px solid silver;'>
-			<tr>
-				<td><span style='font-weight: bold; font-size: 12px; font-variant: small-caps;'>" .$title." : ".$totalcount."</span></td>
-				<td align='right'>
-				" . _AM_XFGB_DISPLAY . " :
-					<select name='sel_status' onchange='submit()'>
-						<option value = '0' $status_option0>" . _AM_XFGB_ALLMSG . " </option>
-						<option value = '1' $status_option1>" . _AM_XFGB_PUBMSG . " </option>
-						<option value = '2' $status_option2>" . _AM_XFGB_WAITMSG . " </option>
-					</select>
-				" . _AM_XFGB_SELECT_SORT . "
-					<select name='sel_order' onchange='submit()'>
-						<option value = '1' $order_option_asc>" . _AM_XFGB_SORT_ASC . "</option>
-						<option value = '0' $order_option_desc>" . _AM_XFGB_SORT_DESC . "</option>
-					</select>
-				</td>
-			</tr>
-		</table>
-		</form>";
+        <table width='100%' cellspacing='1' cellpadding='2' border='0' style='border-left: 1px solid silver; border-top: 1px solid silver; border-right: 1px solid silver;'>
+            <tr>
+                <td><span style='font-weight: bold; font-size: 12px; font-variant: small-caps;'>" . $title . " : " . $totalcount . "</span></td>
+                <td align='right'>
+                " . _AM_XFGB_DISPLAY . " :
+                    <select name='sel_status' onchange='submit()'>
+                        <option value = '0' $status_option0>" . _AM_XFGB_ALLMSG . " </option>
+                        <option value = '1' $status_option1>" . _AM_XFGB_PUBMSG . " </option>
+                        <option value = '2' $status_option2>" . _AM_XFGB_WAITMSG . " </option>
+                    </select>
+                " . _AM_XFGB_SELECT_SORT . "
+                    <select name='sel_order' onchange='submit()'>
+                        <option value = '1' $order_option_asc>" . _AM_XFGB_SORT_ASC . "</option>
+                        <option value = '0' $order_option_desc>" . _AM_XFGB_SORT_DESC . "</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        </form>";
     /* -- end code to show selected terms -- */
 
-        echo "<table border='1' width='100%' cellpadding ='2' cellspacing='1'>";
+    echo "<table border='1' width='100%' cellpadding ='2' cellspacing='1'>";
     echo "<tr class='bg3'>";
     echo "<td align='center'></td>";
     echo "<td align='center'><b><input type='hidden' name='op' value='delete' /></td>";
-    echo "<td align='center'><b>"._AM_XFGB_NAME."</td>";
-    echo "<td align='center'><b>"._AM_XFGB_TITLE."</td>";
-    echo "<td align='center'><b>"._AM_XFGB_MESSAGE."</td>";
-    echo "<td align='center'><b>"._AM_XFGB_DATE."</td>";
-    echo "<td align='center'><b>"._AM_XFGB_ACTION."</td>";
+    echo "<td align='center'><b>" . _AM_XFGB_NAME . "</td>";
+    echo "<td align='center'><b>" . _AM_XFGB_TITLE . "</td>";
+    echo "<td align='center'><b>" . _AM_XFGB_MESSAGE . "</td>";
+    echo "<td align='center'><b>" . _AM_XFGB_DATE . "</td>";
+    echo "<td align='center'><b>" . _AM_XFGB_ACTION . "</td>";
     echo "</tr>";
 
     if ($totalcount != '0') {
         echo "<form name='msglist' id='list' action='" . $_SERVER['PHP_SELF'] . "' method='POST' style='margin: 0;'>";
 
         foreach ($msg as $onemsg) {
-            $all_msg = array();
+            $all_msg              = array();
             $all_msg['post_time'] = formatTimestamp($onemsg->getVar('post_time'));
-            $all_msg['msg_id'] = $onemsg->getVar('msg_id');
-            $all_msg['user'] = ($onemsg->getVar('user_id') > 0) ? XoopsUser::getUnameFromId($onemsg->getVar('user_id')) : $onemsg->getVar('uname');
-            $all_msg['action'] = "<a href='main.php?op=edit&amp;msg_id=".$onemsg->getVar('msg_id')."'><img src='".$pathIcon16."/edit.png'></a>";
-            $img_status = "<img src='".XOOPS_URL."/modules/".$xoopsModule->dirname()."/assets/images/";
+            $all_msg['msg_id']    = $onemsg->getVar('msg_id');
+            $all_msg['user']      = ($onemsg->getVar('user_id') > 0) ? XoopsUser::getUnameFromId($onemsg->getVar('user_id')) : $onemsg->getVar('uname');
+            $all_msg['action']    = "<a href='main.php?op=edit&amp;msg_id=" . $onemsg->getVar('msg_id') . "'><img src='" . $pathIcon16 . "/edit.png'></a>";
+            $img_status           = "<img src='" . XOOPS_URL . "/modules/" . $xoopsModule->dirname() . "/assets/images/";
             if ($onemsg->getVar('moderate')) {
                 $img_status .= "ic15_question.gif'>";
             } else {
                 $img_status .= "ic15_ok.gif'>";
             }
-            $all_msg['title'] = "<a href='../main.php?op=show_one&msg_id=".$onemsg->getVar('msg_id')."'>".$onemsg->getVar('title')."</a>";
+            $all_msg['title']   = "<a href='../main.php?op=show_one&msg_id=" . $onemsg->getVar('msg_id') . "'>" . $onemsg->getVar('title') . "</a>";
             $all_msg['message'] = $onemsg->getVar('message');
 
             if ($onemsg->getVar('photo')) {
-                $all_msg['message'] ="<img src=\"".XOOPS_UPLOAD_URL.'/'.$xoopsModule->getVar('dirname')."/".$onemsg->getVar('photo')."\" align = \"left\" hspace =\"10\">".$onemsg->getVar('message');
+                $all_msg['message'] = "<img src=\"" . XOOPS_UPLOAD_URL . '/' . $xoopsModule->getVar('dirname') . "/" . $onemsg->getVar('photo') . "\" align = \"left\" hspace =\"10\">" . $onemsg->getVar('message');
             } else {
                 $all_msg['message'] = $onemsg->getVar('message');
             }
 
             echo "<tr>";
-            echo "<td align='center' class='even'><input type='checkbox' name='msg_id[]' id='msg_id[]' value='".$all_msg['msg_id']."'/></td>";
-            echo "<td align='center' class = 'head'><b>".$img_status."</b></td>";
-            echo "<td align='center' class = 'even'>".$all_msg['user']."</td>";
-            echo "<td align='left' class = 'odd'>".$all_msg['title']."</td>";
-            echo "<td align='left' class = 'even'>".$all_msg['message']."</td>";
-            echo "<td class='odd'>".$all_msg['post_time']."<br>";
+            echo "<td align='center' class='even'><input type='checkbox' name='msg_id[]' id='msg_id[]' value='" . $all_msg['msg_id'] . "'/></td>";
+            echo "<td align='center' class = 'head'><b>" . $img_status . "</b></td>";
+            echo "<td align='center' class = 'even'>" . $all_msg['user'] . "</td>";
+            echo "<td align='left' class = 'odd'>" . $all_msg['title'] . "</td>";
+            echo "<td align='left' class = 'even'>" . $all_msg['message'] . "</td>";
+            echo "<td class='odd'>" . $all_msg['post_time'] . "<br>";
             if (in_array($onemsg->getVar('poster_ip'), $badips)) {
-                echo "<font color=\"#FF0000\"><b>".$onemsg->getVar('poster_ip')."</b></font></td>";
+                echo "<font color=\"#FF0000\"><b>" . $onemsg->getVar('poster_ip') . "</b></font></td>";
             } else {
-                echo $onemsg->getVar('poster_ip')."</td>";
+                echo $onemsg->getVar('poster_ip') . "</td>";
             }
-            echo "<td align='center' class='even'>".$all_msg['action']."</td>";
+            echo "<td align='center' class='even'>" . $all_msg['action'] . "</td>";
             echo "</tr>";
             unset($all_msg);
         }
         echo "<tr class='foot'><td><select name='op'>";
-        if ($sel_status !=1) {
-            echo "<option value='approve'>"._AM_XFGB_PUB."</option>";
+        if ($sel_status != 1) {
+            echo "<option value='approve'>" . _AM_XFGB_PUB . "</option>";
         }
-        echo "<option value='delete'>"._DELETE."</option>";
-        echo "<option value='banish'>"._AM_XFGB_BAN."</option>";
+        echo "<option value='delete'>" . _DELETE . "</option>";
+        echo "<option value='banish'>" . _AM_XFGB_BAN . "</option>";
         echo "</select>&nbsp;</td>";
-        echo "<td colspan='6'>".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='"._GO."' />";
+        echo "<td colspan='6'>" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "<input type='submit' value='" . _GO . "' />";
         echo "</td></tr>";
         echo "</form>";
     } else {
-        echo "<tr ><td align='center' colspan ='10' class = 'head'><b>"._AM_XFGB_NOMSG."</b></td></tr>";
+        echo "<tr ><td align='center' colspan ='10' class = 'head'><b>" . _AM_XFGB_NOMSG . "</b></td></tr>";
     }
     echo "</table><br />";
     if ($totalcount > $limit) {
-        include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-        $pagenav = new XoopsPageNav($totalcount, $limit, $start, 'start', 'sel_status='.$sel_status.'&sel_order='.$sel_order);
-        echo "<div style='text-align: center;' class = 'head'>".$pagenav->renderNav()."</div><br />";
+        include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+        $pagenav = new XoopsPageNav($totalcount, $limit, $start, 'start', 'sel_status=' . $sel_status . '&sel_order=' . $sel_order);
+        echo "<div style='text-align: center;' class = 'head'>" . $pagenav->renderNav() . "</div><br />";
     } else {
         echo '';
     }
-    echo"<br />";
+    echo "<br />";
 }
 
 switch ($op) {
     case "save":
-    global $xoopsModule;
+        global $xoopsModule;
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('index.php', 2, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
         $msgstop = '';
-        $msg = $msg_handler->get($msg_id);
+        $msg     = $msg_handler->get($msg_id);
         $del_img = isset($_POST['del_img']) ? intval($_POST['del_img']) : 0;
         if ($del_img) {
-            $filename = XOOPS_UPLOAD_PATH.'/'.$xoopsModule->getVar('dirname').'/'.$msg->getVar('photo');
+            $filename = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $msg->getVar('photo');
             unlink($filename);
             $msg->setVar('photo', '');
         } elseif (!empty($_FILES['photo']['name'])) {
             xfgb_upload();
-            $photo = str_replace('tmp_', 'msg_', $preview_name);
-            $photos_dir = XOOPS_UPLOAD_PATH.'/'.$xoopsModule->getVar('dirname').'/' ;
-            rename($photos_dir.$preview_name, $photos_dir.$photo) ;
-            if ($msg->getVar('photo')!='') {
-                $filename = XOOPS_UPLOAD_PATH.'/'.$xoopsModule->getVar('dirname').'/'.$msg->getVar('photo');
+            $photo      = str_replace('tmp_', 'msg_', $preview_name);
+            $photos_dir = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/';
+            rename($photos_dir . $preview_name, $photos_dir . $photo);
+            if ($msg->getVar('photo') != '') {
+                $filename = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $msg->getVar('photo');
                 unlink($filename);
             }
             $msg->setVar('photo', $photo);
         }
         if (!empty($msgstop)) {
-            redirect_header("main.php?op=edit&msg_id=".$msg_id, 2, $msgstop);
+            redirect_header("main.php?op=edit&msg_id=" . $msg_id, 2, $msgstop);
         }
-        $uname        = isset($_POST['uname']) ? $_POST['uname'] : '';
-        $email        = isset($_POST['email']) ? $_POST['email'] : '';
-        $url        = isset($_POST['url']) ? $_POST['url'] : '';
-        $title        = isset($_POST['title']) ? $_POST['title'] : '';
-        $message    = isset($_POST['message']) ? $_POST['message'] : '';
-        $note        = isset($_POST['note']) ? $_POST['note'] : '';
-        $gender    = isset($_POST['gender']) ? $_POST['gender'] : '';
-        $country    = isset($_POST['country']) ? $_POST['country'] : '';
-        $other        = isset($_POST['other']) ? $_POST['other'] : '';
-        $moderate    = isset($_POST['moderate']) ? intval($_POST['moderate']) : 0;
+        $uname    = isset($_POST['uname']) ? $_POST['uname'] : '';
+        $email    = isset($_POST['email']) ? $_POST['email'] : '';
+        $url      = isset($_POST['url']) ? $_POST['url'] : '';
+        $title    = isset($_POST['title']) ? $_POST['title'] : '';
+        $message  = isset($_POST['message']) ? $_POST['message'] : '';
+        $note     = isset($_POST['note']) ? $_POST['note'] : '';
+        $gender   = isset($_POST['gender']) ? $_POST['gender'] : '';
+        $country  = isset($_POST['country']) ? $_POST['country'] : '';
+        $other    = isset($_POST['other']) ? $_POST['other'] : '';
+        $moderate = isset($_POST['moderate']) ? intval($_POST['moderate']) : 0;
 
         $msg->setVar('uname', $uname);
         $msg->setVar('email', $email);
@@ -341,19 +340,19 @@ switch ($op) {
         } else {
             redirect_header("main.php?op=show", 2, _AM_XFGB_MSGERROR);
         }
-    break;
+        break;
 
     case "edit":
         xoops_cp_header();
-        $index_admin = new ModuleAdmin() ;
-        echo $index_admin->addNavigation('main.php') ;
+        $index_admin = new ModuleAdmin();
+        echo $index_admin->addNavigation('main.php');
         //xfguestbook_admin_menu(0);
-        $msg = & $msg_handler->get($msg_id);
+        $msg = &$msg_handler->get($msg_id);
         include "../include/form_edit.inc.php";
         $msg_form->display();
         include "admin_footer.php";
         //xoops_cp_footer();
-    break;
+        break;
 
     case "approve":
         approve();
@@ -361,20 +360,20 @@ switch ($op) {
 
     case "delete":
         delete();
-    break;
+        break;
 
     case "banish":
         banish();
-    break;
+        break;
 
     case "show":
     default:
         xoops_cp_header();
-        $index_admin = new ModuleAdmin() ;
-        echo $index_admin->addNavigation('main.php') ;
+        $index_admin = new ModuleAdmin();
+        echo $index_admin->addNavigation('main.php');
         //xfguestbook_admin_menu(0);
         show();
         include "admin_footer.php";
         //xoops_cp_footer();
-    break;
+        break;
 }
