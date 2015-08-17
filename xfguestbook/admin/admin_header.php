@@ -9,42 +9,42 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
- 
+
 /**
  * @copyright    The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
- * @author     XOOPS Development Team
- * @version    $Id $
+ * @author       XOOPS Development Team
+ * @version      $Id $
  */
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/mainfile.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 require_once XOOPS_ROOT_PATH . '/include/cp_functions.php';
 require '../../../include/cp_header.php';
-include_once(XOOPS_ROOT_PATH."/kernel/module.php");
+include_once(XOOPS_ROOT_PATH . "/kernel/module.php");
 
 if ($xoopsUser) {
     $xoopsModule = XoopsModule::getByDirname("xfguestbook");
     if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
-        redirect_header(XOOPS_URL."/", 3, _NOPERM);
+        redirect_header(XOOPS_URL . "/", 3, _NOPERM);
         exit();
     }
 } else {
-    redirect_header(XOOPS_URL."/", 3, _NOPERM);
+    redirect_header(XOOPS_URL . "/", 3, _NOPERM);
     exit();
 }
 if (file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php'))) {
     include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
-        //return true;
+    //return true;
 } else {
     echo xoops_error("Error: You don't use the Frameworks \"admin module\". Please install this Frameworks");
-        //return false;
+    //return false;
 }
 
 $moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));
-$pathIcon16 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons16');
-$pathIcon32 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons32');
+$pathIcon16 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons16');
+$pathIcon32 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons32');
 
 $myts =& MyTextSanitizer::getInstance();
 

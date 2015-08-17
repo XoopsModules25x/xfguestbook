@@ -22,7 +22,7 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-$dirname        = basename(dirname(dirname(__FILE__)));
+$dirname        = basename(dirname(__DIR__));
 $module_handler = &xoops_gethandler('module');
 $xoopsModule    = $module_handler->getByDirname($dirname);
 $pathIcon32     = $xoopsModule->getInfo('icons32');
