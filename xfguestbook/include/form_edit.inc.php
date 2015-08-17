@@ -46,9 +46,9 @@ include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/xfgbfor
     
 //if (trim($option['opt_country']) != '') {
     $country_tray = new XoopsFormElementTray(_AM_XFGB_COUNTRY, '');
-    $flag = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/images/flags/".$msg->getVar("flagdir")."/".$msg->getVar("country").".gif";
+    $flag = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/assets/images/flags/".$msg->getVar("flagdir")."/".$msg->getVar("country").".gif";
     if (file_exists($flag)) {
-        $country_tray->addElement(new XoopsFormLabel('', "<img src='".XOOPS_URL."/modules/".$xoopsModule->dirname()."/images/flags/".$msg->getVar("flagdir")."/".$msg->getVar("country").".gif' name='image' id='image' alt='' /><br /><br />"));
+        $country_tray->addElement(new XoopsFormLabel('', "<img src='".XOOPS_URL."/modules/".$xoopsModule->dirname()."/assets/images/flags/".$msg->getVar("flagdir")."/".$msg->getVar("country").".gif' name='image' id='image' alt='' /><br /><br />"));
     }
     $country_tray->addElement(new xfgbFormSelectCountry('', "country", $msg->getVar("country", "E"), 1, true));
     $country_tray->addElement(new XoopsFormText(_AM_XFGB_IF_OTHER, "other", 20, 20, $msg->getVar("other", "E")));

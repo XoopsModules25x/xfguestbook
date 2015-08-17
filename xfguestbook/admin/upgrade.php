@@ -203,9 +203,9 @@ switch ($op) {
             echo '</td>';
 //			echo '<td class="even">';
             if ($one_table['to_update'] > 0) {
-                echo '<td width="20%" class = "even"><img src=\''.XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/images/ic15_notok.gif\' alt=\'Pas OK\' >';
+                echo '<td width="20%" class = "even"><img src=\''.XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/assets/images/ic15_notok.gif\' alt=\'Pas OK\' >';
             } else {
-                echo '<td width="20%" class = "even"><img src=\''.XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/images/ic15_ok.gif\' alt=\'OK\' >';
+                echo '<td width="20%" class = "even"><img src=\''.XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/assets/images/ic15_ok.gif\' alt=\'OK\' >';
             }
             echo '<input type = "hidden" name = "'.$one_table['name'].'_checked" value = "'.$one_table['to_update'].'" >';
             echo '</td>';
@@ -218,9 +218,9 @@ switch ($op) {
                     echo _AM_XFGB_FIELD.$one_field['name'];
                     echo '</td>';
                     if ($one_field['to_update'] > 0) {
-                        echo '<td width="20%" class = "odd"><img src=\''.XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/images/ic15_notok.gif\' >';
+                        echo '<td width="20%" class = "odd"><img src=\''.XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/assets/images/ic15_notok.gif\' >';
                     } else {
-                        echo '<td width="20%" class = "odd"><img src=\''.XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/images/ic15_ok.gif\' >';
+                        echo '<td width="20%" class = "odd"><img src=\''.XOOPS_URL.'/modules/'.$xoopsModule->dirname().'/assets/images/ic15_ok.gif\' >';
                     }
                     echo '<input type = "hidden" name = "'.$one_table['name'].'_'.$one_field['name'].'_checked" value = "'.$one_field['to_update'].'" >';
                     echo '<td  width="40%" class = "odd">'.$one_field['version'];
@@ -314,7 +314,7 @@ switch ($op) {
                 if (!$result) {
                     $msg .= _AM_XFGB_ERROR.' '.$sql.'<br>';
                 }
-    //			$sqlfile = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname().'/images/flags/world_flags/flags_data.sql';
+    //			$sqlfile = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname().'/assets/images/flags/world_flags/flags_data.sql';
     //			$msg .= executeSQL($sqlfile);
 
                 $config_handler =& xoops_gethandler('config');

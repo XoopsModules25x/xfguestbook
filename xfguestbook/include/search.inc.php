@@ -45,7 +45,7 @@ function xfguestbook_search($queryarray, $andor, $limit, $offset, $user_id)
     $ret = array();
     $i = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        $ret[$i]['image'] = "images/xfguestbook.gif";
+        $ret[$i]['image'] = "assets/images/xfguestbook.gif";
         $ret[$i]['link'] = "index.php?op=show_one&msg_id=".$myrow['msg_id']."";
         $ret[$i]['title'] = $myrow['title'];
         $ret[$i]['time'] = $myrow['post_time'];

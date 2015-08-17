@@ -37,7 +37,7 @@ if (!isset($_POST['flagdir'])) {
     $form = new XoopsThemeForm(_AM_XFGB_INSTALL_FLAGS, "selectflag",  $_SERVER['PHP_SELF']);
     $sel_box = new XoopsFormSelect(_AM_XFGB_SELECT_PACK, 'flagdir', $xoopsModuleConfig['flagdir']);
     $sel_box->addOption('', _NONE);
-    $sel_box->addOptionArray(XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->dirname().'/images/flags/'));
+    $sel_box->addOptionArray(XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->dirname().'/assets/images/flags/'));
     $form->addElement($sel_box);
     
 
@@ -68,7 +68,7 @@ if (!isset($_POST['flagdir'])) {
     $result = $xoopsDB->queryF($sql);
     echo "Table <b>".$xoopsDB->prefix('xfguestbook_country')."</b> deleted.<br />";
     if ($flagdir != '') {
-        $sqlfile = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname().'/images/flags/'.$flagdir.'/flags_data.sql';
+        $sqlfile = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname().'/assets/images/flags/'.$flagdir.'/flags_data.sql';
         $msg .= executeSQL($sqlfile);
     }
     if ($msg == '') {

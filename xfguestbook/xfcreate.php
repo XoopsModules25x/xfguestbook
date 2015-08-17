@@ -108,7 +108,7 @@ case "preview":
         $msgpost['message'] = str_replace('target="_blank"', 'target="_blank" rel="nofollow"', $msgpost['message']);
     }
     if ($gender) {
-        $msgpost['gender'] = '<img src="images/'.$gender.'.gif"';
+        $msgpost['gender'] = '<img src="assets/images/'.$gender.'.gif"';
     }
     if ($email) {
         $msgpost['email'] = "<img src=\"".XOOPS_URL."/images/icons/email.gif\" alt=\""._SENDEMAILTO."\" />";
@@ -117,11 +117,11 @@ case "preview":
         $msgpost['url'] = '<img src="'.XOOPS_URL.'/images/icons/www.gif" alt="'._VISITWEBSITE.'">';
     }
     if ($country) {
-        $flag = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/images/flags/".$xoopsModuleConfig['flagdir']."/".$country.".gif";
+        $flag = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/assets/images/flags/".$xoopsModuleConfig['flagdir']."/".$country.".gif";
         $arr_country = xfgb_getCountry("country_code ='".$country."'");
         $country_name = (count($arr_country) > 0) ? $arr_country[0]['country_name'] : '';
         if (file_exists($flag)) {
-            $msgpost['country'] = "<img src=\"".XOOPS_URL."/modules/xfguestbook/images/flags/".$xoopsModuleConfig['flagdir']."/".$country.".gif\" alt=\"".$country_name."\">";
+            $msgpost['country'] = "<img src=\"".XOOPS_URL."/modules/xfguestbook/assets/images/flags/".$xoopsModuleConfig['flagdir']."/".$country.".gif\" alt=\"".$country_name."\">";
         } else {
             $msgpost['country'] = $country_name;
         }
