@@ -28,6 +28,7 @@
 if (!defined("XOOPS_ROOT_PATH")) {
     die('XOOPS root path not defined');
 }
+
 class xfguestbookMsg extends XoopsObject
 {
     // constructor
@@ -71,7 +72,7 @@ class xfguestbookMsgHandler
     {
         $id = intval($id);
         if ($id > 0) {
-            $sql = "SELECT * FROM ".$this->db->prefix("xfguestbook_msg")." WHERE msg_id=".$id ;
+            $sql = "SELECT * FROM " . $this->db->prefix("xfguestbook_msg") . " WHERE msg_id=" . $id;
             if (!$result = $this->db->query($sql)) {
                 return false;
             }
@@ -100,9 +101,9 @@ class xfguestbookMsgHandler
         }
         if (empty($msg_id)) {
             $msg_id = $this->db->genId('xfguestbook_msg_msg_id_seq');
-            $sql = 'INSERT INTO '.$this->db->prefix('xfguestbook_msg').' (msg_id, user_id, uname, title, message, note, post_time, email, url, poster_ip, moderate, gender, country, photo, flagdir, other) VALUES ('.$msg_id.','.$user_id.', '.$this->db->quoteString($uname).', '.$this->db->quoteString($title).', '.$this->db->quoteString($message).', '.$this->db->quoteString($note).', '.$post_time.',  '.$this->db->quoteString($email).', '.$this->db->quoteString($url).', '.$this->db->quoteString($poster_ip).', '.$moderate.', '.$this->db->quoteString($gender).', '.$this->db->quoteString($country).', '.$this->db->quoteString($photo).', '.$this->db->quoteString($flagdir).', '.$this->db->quoteString($other).')';
+            $sql    = 'INSERT INTO ' . $this->db->prefix('xfguestbook_msg') . ' (msg_id, user_id, uname, title, message, note, post_time, email, url, poster_ip, moderate, gender, country, photo, flagdir, other) VALUES (' . $msg_id . ',' . $user_id . ', ' . $this->db->quoteString($uname) . ', ' . $this->db->quoteString($title) . ', ' . $this->db->quoteString($message) . ', ' . $this->db->quoteString($note) . ', ' . $post_time . ',  ' . $this->db->quoteString($email) . ', ' . $this->db->quoteString($url) . ', ' . $this->db->quoteString($poster_ip) . ', ' . $moderate . ', ' . $this->db->quoteString($gender) . ', ' . $this->db->quoteString($country) . ', ' . $this->db->quoteString($photo) . ', ' . $this->db->quoteString($flagdir) . ', ' . $this->db->quoteString($other) . ')';
         } else {
-            $sql = 'UPDATE '.$this->db->prefix('xfguestbook_msg').' SET user_id='.$user_id.', uname='.$this->db->quoteString($uname).', title='.$this->db->quoteString($title).', message='.$this->db->quoteString($message).', note='.$this->db->quoteString($note).', email='.$this->db->quoteString($email).', url='.$this->db->quoteString($url).', moderate='.$moderate.', gender='.$this->db->quoteString($gender).', country='.$this->db->quoteString($country).', photo='.$this->db->quoteString($photo).', flagdir='.$this->db->quoteString($flagdir).', other='.$this->db->quoteString($other).' WHERE msg_id='.$msg_id;
+            $sql = 'UPDATE ' . $this->db->prefix('xfguestbook_msg') . ' SET user_id=' . $user_id . ', uname=' . $this->db->quoteString($uname) . ', title=' . $this->db->quoteString($title) . ', message=' . $this->db->quoteString($message) . ', note=' . $this->db->quoteString($note) . ', email=' . $this->db->quoteString($email) . ', url=' . $this->db->quoteString($url) . ', moderate=' . $moderate . ', gender=' . $this->db->quoteString($gender) . ', country=' . $this->db->quoteString($country) . ', photo=' . $this->db->quoteString($photo) . ', flagdir=' . $this->db->quoteString($flagdir) . ', other=' . $this->db->quoteString($other) . ' WHERE msg_id=' . $msg_id;
         }
         if (!$result = $this->db->queryF($sql)) {
             return false;
@@ -132,16 +133,16 @@ class xfguestbookMsgHandler
 
         return true;
     }
-    
+
     public function &getObjects($criteria = null)
     {
-        $ret = array();
+        $ret   = array();
         $limit = $start = 0;
-        $sql = 'SELECT * FROM '.$this->db->prefix('xfguestbook_msg');
+        $sql   = 'SELECT * FROM ' . $this->db->prefix('xfguestbook_msg');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
+            $sql .= ' ' . $criteria->renderWhere();
             $sort = ($criteria->getSort() != '') ? $criteria->getSort() : 'msg_id';
-            $sql .= ' ORDER BY '.$sort.' '.$criteria->getOrder();
+            $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
@@ -152,7 +153,7 @@ class xfguestbookMsgHandler
         while ($myrow = $this->db->fetchArray($result)) {
             $msg = new xfguestbookMsg();
             $msg->assignVars($myrow);
-            $ret[] =$msg;
+            $ret[] = $msg;
             unset($msg);
         }
 
@@ -161,9 +162,9 @@ class xfguestbookMsgHandler
 
     public function countMsg($criteria = null)
     {
-        $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('xfguestbook_msg');
+        $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xfguestbook_msg');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
+            $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result =& $this->db->query($sql)) {
             return 0;
@@ -176,28 +177,28 @@ class xfguestbookMsgHandler
     public function countMsgByCountry($criteria = null)
     {
         $arr = array();
-        $sql = 'SELECT country, flagdir FROM '.$this->db->prefix('xfguestbook_msg');
+        $sql = 'SELECT country, flagdir FROM ' . $this->db->prefix('xfguestbook_msg');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
+            $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result =& $this->db->query($sql)) {
             return false;
         }
         while (list($country, $flagdir) = $this->db->fetchRow($result)) {
-            $arr[] = $flagdir.'/'.$country;
+            $arr[] = $flagdir . '/' . $country;
         }
         $ret = array_count_values($arr);
         arsort($ret);
-        
+
         return $ret;
     }
 
     public function countMsgByGender($criteria = null)
     {
         $arr = array();
-        $sql = 'SELECT gender FROM '.$this->db->prefix('xfguestbook_msg');
+        $sql = 'SELECT gender FROM ' . $this->db->prefix('xfguestbook_msg');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
+            $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result =& $this->db->query($sql)) {
             return false;
@@ -209,13 +210,13 @@ class xfguestbookMsgHandler
 
         return $ret;
     }
-    
+
     public function getMsgImg($criteria = null)
     {
         $arr = array();
-        $sql = "SELECT photo FROM ".$this->db->prefix('xfguestbook_msg')." WHERE `photo` LIKE 'msg_%'";
+        $sql = "SELECT photo FROM " . $this->db->prefix('xfguestbook_msg') . " WHERE `photo` LIKE 'msg_%'";
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
+            $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result =& $this->db->query($sql)) {
             return 0;
