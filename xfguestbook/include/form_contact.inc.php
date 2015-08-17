@@ -1,5 +1,5 @@
 <?php
-// $Id: include/form_contact.inc.php,v 1.11 2004/12/02 C. Félix AKA the Cat
+// $Id: include/form_contact.inc.php,v 1.11 2004/12/02 C. FÃ©lix AKA the Cat
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -35,15 +35,15 @@ $name_text = new XoopsFormText(_MD_XFGB_YOURNAME, "name_user", 35, 100, $name_us
 $form_contact->addElement($name_text, true);
 
 $email_text = new XoopsFormText(_MD_XFGB_YOUREMAIL, "email_user", 35, 100, $email_user);
-$form_contact->addElement($email_text,true);
+$form_contact->addElement($email_text, true);
 
 if ($option['opt_icon'] == 0) {
-$annonce_text = new XoopsFormTextArea(_MD_XFGB_YOURMESSAGE, "message", $message);
+    $annonce_text = new XoopsFormTextArea(_MD_XFGB_YOURMESSAGE, "message", $message);
 } else {
-$annonce_text = new XoopsFormDhtmlTextArea(_MD_XFGB_YOURMESSAGE, "message", $message, 10 , 50);
+    $annonce_text = new XoopsFormDhtmlTextArea(_MD_XFGB_YOURMESSAGE, "message", $message, 10, 50);
 }
 $form_contact->addElement($annonce_text, true);
-$button_tray = new XoopsFormElementTray('' ,'');
+$button_tray = new XoopsFormElementTray('', '');
 $button_tray->addElement(new XoopsFormCaptcha(), true);
 $button_tray->addElement(new XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
 $button_tray->addElement(new XoopsFormButton('', 'post', _SEND, 'submit'));
@@ -56,4 +56,3 @@ $form_contact->addElement($button_tray);
 $form_contact->addElement(new XoopsFormHidden('email_author', $email_author));
 
 $form_contact->display();
-?>
