@@ -70,7 +70,7 @@ class xfguestbookMsgHandler
 
     public function get($id)
     {
-        $id = intval($id);
+        $id = (int)($id);
         if ($id > 0) {
             $sql = "SELECT * FROM " . $this->db->prefix("xfguestbook_msg") . " WHERE msg_id=" . $id;
             if (!$result = $this->db->query($sql)) {

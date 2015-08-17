@@ -43,9 +43,9 @@ if (isset($_GET['op'])) {
 }
 
 if (isset($_GET['msg_id'])) {
-    $msg_id = intval($_GET['msg_id']);
+    $msg_id = (int)($_GET['msg_id']);
 } elseif (isset($_POST['msg_id'])) {
-    $msg_id = intval($_POST['msg_id']);
+    $msg_id = (int)($_POST['msg_id']);
 } else {
     $msg_id = 0;
 }
@@ -129,8 +129,8 @@ function banish()
 function show()
 {
     global $msg_handler, $xoopsModule, $pathIcon16;
-    $pick              = isset($_GET['pick']) ? intval($_GET['pick']) : 0;
-    $start             = isset($_GET['start']) ? intval($_GET['start']) : 0;
+    $pick              = isset($_GET['pick']) ? (int)($_GET['pick']) : 0;
+    $start             = isset($_GET['start']) ? (int)($_GET['start']) : 0;
     $sel_status        = isset($_GET['sel_status']) ? $_GET['sel_status'] : 0;
     $sel_order         = isset($_GET['sel_order']) ? $_GET['sel_order'] : 0;
     $limit             = 10;
@@ -292,7 +292,7 @@ switch ($op) {
         }
         $msgstop = '';
         $msg     = $msg_handler->get($msg_id);
-        $del_img = isset($_POST['del_img']) ? intval($_POST['del_img']) : 0;
+        $del_img = isset($_POST['del_img']) ? (int)($_POST['del_img']) : 0;
         if ($del_img) {
             $filename = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $msg->getVar('photo');
             unlink($filename);
@@ -320,7 +320,7 @@ switch ($op) {
         $gender   = isset($_POST['gender']) ? $_POST['gender'] : '';
         $country  = isset($_POST['country']) ? $_POST['country'] : '';
         $other    = isset($_POST['other']) ? $_POST['other'] : '';
-        $moderate = isset($_POST['moderate']) ? intval($_POST['moderate']) : 0;
+        $moderate = isset($_POST['moderate']) ? (int)($_POST['moderate']) : 0;
 
         $msg->setVar('uname', $uname);
         $msg->setVar('email', $email);
