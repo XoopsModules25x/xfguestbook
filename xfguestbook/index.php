@@ -112,19 +112,19 @@ function xfgb_getmsg($msg)
         }
         // gender
         if ($onemsg->getVar('gender') !='') {
-            $a_msg['gender'] = '<a href="index.php?op=show_gender&param='.$onemsg->getVar('gender').'"><img src="images/'.$onemsg->getVar('gender').'.gif"</a>';
+            $a_msg['gender'] = '<a href="index.php?op=show_gender&param='.$onemsg->getVar('gender').'"><img src="assets/images/'.$onemsg->getVar('gender').'.gif"</a>';
         }
         // flag
         if ($onemsg->getVar('country') !='') {
             if ($onemsg->getVar('country') != 'other') {
-                $flag = XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->dirname().'/images/flags/'.$onemsg->getVar('flagdir').'/'.$onemsg->getVar('country').'.gif';
+                $flag = XOOPS_ROOT_PATH.'/modules/'.$xoopsModule->dirname().'/assets/images/flags/'.$onemsg->getVar('flagdir').'/'.$onemsg->getVar('country').'.gif';
                 if (array_key_exists($onemsg->getVar('flagdir').'/'.$onemsg->getVar('country'), $arr_country)) {
                     $country_name = $arr_country[$onemsg->getVar('flagdir').'/'.$onemsg->getVar('country')];
                 } else {
                     $country_name = '';
                 }
                 if (file_exists($flag)) {
-                    $a_msg['country'] = "<img src=\"".XOOPS_URL."/modules/xfguestbook/images/flags/".$onemsg->getVar('flagdir')."/".$onemsg->getVar('country').".gif\" alt=\"".$country_name."\">";
+                    $a_msg['country'] = "<img src=\"".XOOPS_URL."/modules/xfguestbook/assets/images/flags/".$onemsg->getVar('flagdir')."/".$onemsg->getVar('country').".gif\" alt=\"".$country_name."\">";
                 } else {
                     $a_msg['country'] = $country_name;
                 }
@@ -162,15 +162,15 @@ function xfgb_genderlist()
     foreach ($arr_msg as $k => $v) {
         if ($k =='M') {
             $gender[$i] = _MD_XFGB_MALES.'<br />';
-            $gender[$i] .= '<img src="images/M.gif" alt="'._MD_XFGB_MALES.'"><br /><br />';
+            $gender[$i] .= '<img src="assets/images/M.gif" alt="'._MD_XFGB_MALES.'"><br /><br />';
             $gender[$i] .= '<a href="index.php?op=show_gender&param=M">'.$v._MD_XFGB_MESSAGES.'</a>';
         } elseif ($k =='F') {
             $gender[$i] = _MD_XFGB_FEMALES.'<br />';
-            $gender[$i] .= '<img src="images/F.gif" alt="'._MD_XFGB_FEMALES.'"><br /><br />';
+            $gender[$i] .= '<img src="assets/images/F.gif" alt="'._MD_XFGB_FEMALES.'"><br /><br />';
             $gender[$i] .= '<a href="index.php?op=show_gender&param=F">'.$v._MD_XFGB_MESSAGES.'</a>';
         } else {
             $gender[$i] = _MD_XFGB_UNKNOW2.'<br />';
-            $gender[$i] .= '<img src="images/U.gif"><br /><br />';
+            $gender[$i] .= '<img src="assets/images/U.gif"><br /><br />';
             $gender[$i] .= $v._MD_XFGB_MESSAGES;
         }
         $i++;

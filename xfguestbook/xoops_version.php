@@ -27,39 +27,39 @@
 $modversion['name'] = _MI_XFGB_NAME;
 $modversion['version'] = '3.1';
 $modversion['description'] = _MI_XFGB_DESC;
-$modversion['credits'] = "phppp : randomscript, randomimage";
-$modversion['author'] = "the Cat";
-$modversion['contributors']= "Paul Mar alias Winsion";
+$modversion['credits'] = 'phppp : randomscript, randomimage';
+$modversion['author'] = 'the Cat';
+$modversion['contributors']= 'Paul Mar alias Winsion';
 $modversion['help'] = 'page=help';
 $modversion['license'] = 'GNU GPL 2.0';
-$modversion['license_url'] = "www.gnu.org/licenses/gpl-2.0.html/";
+$modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';
 
 $modversion['official'] = 0;
-$modversion['image'] = "images/xfguestbook_slogo.png";
-$modversion['dirname'] = "xfguestbook";
+$modversion['image'] = 'assets/images/module_logo.png';
+$modversion['dirname'] = 'xfguestbook';
 $modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
 $modversion['icons16'] = 'Frameworks/moduleclasses/icons/16';
 $modversion['icons32'] = 'Frameworks/moduleclasses/icons/32';
 
 // Sql file 
-$modversion['sqlfile']['mysql'] = "sql/mysql.sql";
-$modversion['tables'][0] = "xfguestbook_msg";
-$modversion['tables'][1] = "xfguestbook_config";
-$modversion['tables'][2] = "xfguestbook_country";
-$modversion['tables'][3] = "xfguestbook_badips";
+$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
+$modversion['tables'][0] = 'xfguestbook_msg';
+$modversion['tables'][1] = 'xfguestbook_config';
+$modversion['tables'][2] = 'xfguestbook_country';
+$modversion['tables'][3] = 'xfguestbook_badips';
 
 //Admin things
 $modversion['hasAdmin'] = 1;
-$modversion['adminindex'] = "admin/index.php";
-$modversion['adminmenu'] = "admin/menu.php";
+$modversion['adminindex'] = 'admin/index.php';
+$modversion['adminmenu'] = 'admin/menu.php';
 
 // Menu
 $modversion['hasMain'] = 1;
 
 // Search
 $modversion['hasSearch'] = 1;
-$modversion['search']['file'] = "include/search.inc.php";
-$modversion['search']['func'] = "xfguestbook_search";
+$modversion['search']['file'] = 'include/search.inc.php';
+$modversion['search']['func'] = 'xfguestbook_search';
 
 // Templates
 $modversion['templates'][1]['file'] = 'xfguestbook_index.html';
@@ -72,14 +72,14 @@ $modversion['templates'][3]['description'] = '';
 //about
 $modversion['status_version'] = 'RC';
 $modversion['release_date'] = '2011/09/09';
-$modversion["module_website_url"] = "http://www.xoops.org/";
-$modversion["module_website_name"] = "XOOPS";
-$modversion["module_status"] = "RC";
-$modversion["author_website_url"] = "http://www.FolsomLiving.com/";
-$modversion["author_website_name"] = "Metalslug";
+$modversion['module_website_url'] = 'http://www.xoops.org/';
+$modversion['module_website_name'] = 'XOOPS';
+$modversion['module_status'] = 'RC';
+$modversion['author_website_url'] = 'http://www.FolsomLiving.com/';
+$modversion['author_website_name'] = 'Metalslug';
 $modversion['min_php']=5.2;
-$modversion['min_xoops']="2.5.0";
-$modversion['min_admin']= "1.1";
+$modversion['min_xoops']='2.5.0';
+$modversion['min_admin']= '1.1';
 $modversion['min_db']= array('mysql'=>'5.0.7', 'mysqli'=>'5.0.7');
 $modversion['system_menu'] = 1;
 
@@ -199,14 +199,14 @@ $modversion['config'][] = array(
 ) ;
 
 // Blocks
-$modversion['blocks'][1]['file'] = "xfguestbook_new.php";
+$modversion['blocks'][1]['file'] = 'xfguestbook_new.php';
 $modversion['blocks'][1]['name'] = _MI_XFGUESTBOOK_BNAME1;
-$modversion['blocks'][1]['description'] = "Shows recently added donwload files";
-$modversion['blocks'][1]['show_func'] = "b_xfguestbook_show";
-$modversion['blocks'][1]['edit_func'] = "b_xfguestbook_edit";
-$modversion['blocks'][1]['options'] = "5|19";
-$modversion['blocks'][1]['template'] = "xfguestbook_block_new.html";
+$modversion['blocks'][1]['description'] = 'Shows recently added donwload files';
+$modversion['blocks'][1]['show_func'] = 'b_xfguestbook_show';
+$modversion['blocks'][1]['edit_func'] = 'b_xfguestbook_edit';
+$modversion['blocks'][1]['options'] = '5|19';
+$modversion['blocks'][1]['template'] = 'xfguestbook_block_new.html';
 
-if (!file_exists(XOOPS_ROOT_PATH."/uploads/xfguestbook")) {
-    mkdir(XOOPS_ROOT_PATH."/uploads/xfguestbook", 0777);
+if (!file_exists(XOOPS_ROOT_PATH.'/uploads/xfguestbook')) {
+    mkdir(XOOPS_ROOT_PATH.'/uploads/xfguestbook', 0777);
 }

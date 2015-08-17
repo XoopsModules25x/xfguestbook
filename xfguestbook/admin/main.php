@@ -230,7 +230,7 @@ function show()
             $all_msg['msg_id'] = $onemsg->getVar('msg_id');
             $all_msg['user'] = ($onemsg->getVar('user_id') > 0) ? XoopsUser::getUnameFromId($onemsg->getVar('user_id')) : $onemsg->getVar('uname');
             $all_msg['action'] = "<a href='main.php?op=edit&amp;msg_id=".$onemsg->getVar('msg_id')."'><img src='".$pathIcon16."/edit.png'></a>";
-            $img_status = "<img src='".XOOPS_URL."/modules/".$xoopsModule->dirname()."/images/";
+            $img_status = "<img src='".XOOPS_URL."/modules/".$xoopsModule->dirname()."/assets/images/";
             if ($onemsg->getVar('moderate')) {
                 $img_status .= "ic15_question.gif'>";
             } else {

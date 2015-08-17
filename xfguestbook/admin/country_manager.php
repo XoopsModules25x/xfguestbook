@@ -74,7 +74,7 @@ function flagUpload($country_code)
                     redirect_header('country_manager.php', 2, _MD_XFGB_FILEERROR) ;
                     exit ;
                 }
-                $photos_dir = XOOPS_ROOT_PATH . "/modules/".$xoopsModule->dirname()."/images/flags/".$xoopsModuleConfig['flagdir'] ;
+                $photos_dir = XOOPS_ROOT_PATH . "/modules/".$xoopsModule->dirname()."/assets/images/flags/".$xoopsModuleConfig['flagdir'] ;
                 $uploader = new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $maxsize, $maxwidth, $maxheight) ;
                 $uploader->setPrefix('tmp') ;
                 if ($uploader->fetchMedia($field) && $uploader->upload()) {
@@ -105,7 +105,7 @@ function flagForm($country_code)
     $flagform = new XoopsThemeForm(_AM_XFGB_SUBMITFLAG, "op", xoops_getenv('PHP_SELF'));
     $flagform->setExtra("enctype='multipart/form-data'") ;
     
-    $flag = "/modules/".$xoopsModule->dirname()."/images/flags/".$xoopsModuleConfig['flagdir']."/".$country_code.".gif";
+    $flag = "/modules/".$xoopsModule->dirname()."/assets/images/flags/".$xoopsModuleConfig['flagdir']."/".$country_code.".gif";
     if (file_exists(XOOPS_ROOT_PATH.$flag)) {
         $flag_img = "<img src='".XOOPS_URL.$flag."'>";
         $img_flag = new XoopsFormLabel('', "<br />".$flag_img."<br />");
@@ -132,7 +132,7 @@ function flagDel($country_code)
     global $xoopsModule, $xoopsModuleConfig;
     $ok =  isset($_POST['ok']) ? intval($_POST['ok']) : 0;
     if ($ok == 1) {
-        $flag = "/modules/".$xoopsModule->dirname()."/images/flags/".$xoopsModuleConfig['flagdir']."/".$country_code.".gif";
+        $flag = "/modules/".$xoopsModule->dirname()."/assets/images/flags/".$xoopsModuleConfig['flagdir']."/".$country_code.".gif";
         if (file_exists(XOOPS_ROOT_PATH.$flag)) {
             unlink(XOOPS_ROOT_PATH.$flag);
         }
@@ -203,7 +203,7 @@ function countryDel($country_id)
     $ok =  isset($_POST['ok']) ? intval($_POST['ok']) : 0;
     if ($ok == 1) {
         $arr_country = xfgb_getCountry('country_id='.$country_id, 0, 0);
-        $flag = "/modules/".$xoopsModule->dirname()."/images/flags/".$xoopsModuleConfig['flagdir']."/".$arr_country[0]['country_code'].".gif";
+        $flag = "/modules/".$xoopsModule->dirname()."/assets/images/flags/".$xoopsModuleConfig['flagdir']."/".$arr_country[0]['country_code'].".gif";
         $sql = "DELETE FROM ".$xoopsDB->prefix("xfguestbook_country")." WHERE country_id=$country_id";
         $result=$xoopsDB->query($sql);
         if (file_exists(XOOPS_ROOT_PATH.$flag)) {
@@ -282,7 +282,7 @@ function countryShow()
 
     for ($i = 0; $i < count($arr_country); $i++) {
         $all_country = array();
-        $flag = "/modules/".$xoopsModule->dirname()."/images/flags/".$xoopsModuleConfig['flagdir']."/".$arr_country[$i]['country_code'].".gif";
+        $flag = "/modules/".$xoopsModule->dirname()."/assets/images/flags/".$xoopsModuleConfig['flagdir']."/".$arr_country[$i]['country_code'].".gif";
         if (file_exists(XOOPS_ROOT_PATH.$flag)) {
             $all_country['flag_img'] = "<img src='".XOOPS_URL.$flag."'>";
         } else {
