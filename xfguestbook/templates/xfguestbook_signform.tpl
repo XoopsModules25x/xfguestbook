@@ -16,7 +16,7 @@ result_style.display = 'table-row';
 
 <div align="center"><font color="#FF0000"><strong><{$msgstop}></strong></font></div>
 <{if $preview and not $msgstop}>
-<{include file="db:xfguestbook_item.html"}>
+<{include file="db:xfguestbook_item.tpl"}>
 <{/if}>
 <div align="center"><strong>
   <{$moderate}>

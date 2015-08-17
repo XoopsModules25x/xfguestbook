@@ -36,7 +36,7 @@
 <br>-->
 <!-- start msg item loop -->
 <{section name=i loop=$msg}>
-<{include file="db:xfguestbook_item.html" msg=$msg[i]}>
+<{include file="db:xfguestbook_item.tpl" msg=$msg[i]}>
 <br />
 <{/section}>
 <!-- end msg item loop -->
