@@ -32,9 +32,9 @@ if (!defined("XOOPS_ROOT_PATH")) {
 class xfguestbookMsg extends XoopsObject
 {
     // constructor
-    public function xfguestbookMsg()
+    public function __construct()
     {
-        $this->XoopsObject();
+        parent::__construct();
         $this->initVar("msg_id", XOBJ_DTYPE_INT, null, false);
         $this->initVar("user_id", XOBJ_DTYPE_INT, null, false);
         $this->initVar("uname", XOBJ_DTYPE_TXTBOX, '', false);
