@@ -44,7 +44,8 @@ function xfgb_upload()
         } else {
             $photos_dir              = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
             $array_allowed_mimetypes = array('image/gif', 'image/pjpeg', 'image/jpeg', 'image/x-png');
-            $uploader                = new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $xoopsModuleConfig['photo_maxsize'], $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
+            $uploader                =
+                new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $xoopsModuleConfig['photo_maxsize'], $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
             if ($uploader->fetchMedia($field) && $uploader->upload()) {
                 if (isset($preview_name)) {
                     @unlink("$photos_dir/" . $preview_name);

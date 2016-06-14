@@ -27,7 +27,6 @@ include dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 include_once dirname(__DIR__) . '/include/cp_functions.php';
 include_once __DIR__ . '/admin_header.php';
 
-
 if (!isset($xoopsModuleConfig['flagdir'])) {
     redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, _AM_XFGB_MUST_UPDATE);
 }
@@ -240,7 +239,8 @@ function show()
             $all_msg['message'] = $onemsg->getVar('message');
 
             if ($onemsg->getVar('photo')) {
-                $all_msg['message'] = "<img src=\"" . XOOPS_UPLOAD_URL . '/' . $xoopsModule->getVar('dirname') . '/' . $onemsg->getVar('photo') . "\" align = \"left\" hspace =\"10\">" . $onemsg->getVar('message');
+                $all_msg['message'] =
+                    "<img src=\"" . XOOPS_UPLOAD_URL . '/' . $xoopsModule->getVar('dirname') . '/' . $onemsg->getVar('photo') . "\" align = \"left\" hspace =\"10\">" . $onemsg->getVar('message');
             } else {
                 $all_msg['message'] = $onemsg->getVar('message');
             }

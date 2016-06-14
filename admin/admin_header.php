@@ -36,7 +36,6 @@ if ($xoopsUser) {
 
 include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
 
-
 $moduleInfo = $module_handler->get($xoopsModule->getVar('mid'));
 $pathIcon16 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons16');
 $pathIcon32 = XOOPS_URL . '/' . $moduleInfo->getInfo('icons32');

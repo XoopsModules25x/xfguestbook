@@ -34,9 +34,9 @@ $modversion['help']         = 'page=help';
 $modversion['license']      = 'GNU GPL 2.0';
 $modversion['license_url']  = 'www.gnu.org/licenses/gpl-2.0.html/';
 
-$modversion['official']       = 0;
-$modversion['image']        = 'assets/images/logo_module.png';
-$modversion['dirname']      = basename(__DIR__);
+$modversion['official'] = 0;
+$modversion['image']    = 'assets/images/logo_module.png';
+$modversion['dirname']  = basename(__DIR__);
 
 $modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
 $modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
@@ -92,7 +92,8 @@ $modversion['config'][1] = array(
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '0');
+    'default'     => '0'
+);
 // Moderate
 $modversion['config'][] = array(
     'name'        => 'moderate',
@@ -100,7 +101,8 @@ $modversion['config'][] = array(
     'description' => '_MI_XFGB_MODERATEDSC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '0');
+    'default'     => '0'
+);
 // send mail to webmaster
 $modversion['config'][] = array(
     'name'        => 'sendmail2wm',
@@ -108,7 +110,8 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '0');
+    'default'     => '0'
+);
 // show mail
 $modversion['config'][] = array(
     'name'        => 'showemail',
@@ -116,7 +119,8 @@ $modversion['config'][] = array(
     'description' => '_MI_XFGB_SHOWEMAIL_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '0');
+    'default'     => '0'
+);
 // number messages per page
 $modversion['config'][] = array(
     'name'        => 'perpage',
@@ -124,7 +128,8 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '5');
+    'default'     => '5'
+);
 // number flags per row
 $modversion['config'][] = array(
     'name'        => 'flagsperrow',
@@ -133,7 +138,8 @@ $modversion['config'][] = array(
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => '3',
-    'options'     => array(4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9));
+    'options'     => array(4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9)
+);
 // Display avatar and rank
 $modversion['config'][] = array(
     'name'        => 'display_avatar',
@@ -141,7 +147,8 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '1');
+    'default'     => '1'
+);
 // Photo max size
 $modversion['config'][] = array(
     'name'        => 'photo_maxsize',
@@ -149,7 +156,8 @@ $modversion['config'][] = array(
     'description' => '_MI_XFGB_MAXSIZEIMG_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '30000');
+    'default'     => '30000'
+);
 
 // Photo max height
 $modversion['config'][] = array(
@@ -158,7 +166,8 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '120');
+    'default'     => '120'
+);
 
 // Photo max width
 $modversion['config'][] = array(
@@ -167,7 +176,8 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '200');
+    'default'     => '200'
+);
 
 // name of flagpack
 $modversion['config'][] = array(
@@ -176,7 +186,8 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => _MI_XFGB_COUNTRY);
+    'default'     => _MI_XFGB_COUNTRY
+);
 
 // Directory and sql name of flagpack
 $modversion['config'][] = array(
@@ -185,9 +196,10 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => '');
+    'default'     => ''
+);
 
-xoops_loadLanguage('admin',  basename(__DIR__));
+xoops_loadLanguage('admin', basename(__DIR__));
 // Blocks
 $modversion['blocks'][1]['file']        = 'xfguestbook_new.php';
 $modversion['blocks'][1]['name']        = '_MB_XFGUESTBOOK_BNAME1';

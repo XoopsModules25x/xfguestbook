@@ -149,7 +149,7 @@ function badIpShow()
     echo "<td align='center'><b>" . _AM_XFGB_ACTION . '</td>';
     echo '</tr>';
 
-    if ('0' !== count($badips)) {
+    if ('0' != count($badips)) {
         echo "<form name='badiplist' id='list' action='" . $_SERVER['PHP_SELF'] . "' method='POST' style='margin: 0;'>";
 
         for ($i = 0; $i < $nb_badips; $i++) {

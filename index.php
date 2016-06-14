@@ -113,7 +113,9 @@ function xfgb_getmsg($msg)
         $user           = $member_handler->getUser($onemsg->getVar('user_id'));
         // email
         if ($xoopsModuleConfig['showemail'] || ($onemsg->getVar('email') && (($user->getVar('user_viewemail') == 1 || $onemsg->getVar('user_id') == 0) && is_object($xoopsUser)))) {
-            $a_msg['email'] = "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/modules/xfguestbook/contact.php?msg_id=' . $onemsg->getVar('msg_id') . "', 'contact', 600, 450);\"><img src=\"" . XOOPS_URL . "/images/icons/email.gif\" alt=\"" . _SENDEMAILTO . "\" /></a>";
+            $a_msg['email'] =
+                "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/modules/xfguestbook/contact.php?msg_id=' . $onemsg->getVar('msg_id') . "', 'contact', 600, 450);\"><img src=\"" . XOOPS_URL
+                . "/images/icons/email.gif\" alt=\"" . _SENDEMAILTO . "\" /></a>";
         }
         // url
         if ($onemsg->getVar('url')) {
@@ -133,7 +135,9 @@ function xfgb_getmsg($msg)
                     $country_name = '';
                 }
                 if (file_exists($flag)) {
-                    $a_msg['country'] = "<img src=\"" . XOOPS_URL . '/modules/xfguestbook/assets/images/flags/' . $onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country') . ".gif\" alt=\"" . $country_name . "\">";
+                    $a_msg['country'] =
+                        "<img src=\"" . XOOPS_URL . '/modules/xfguestbook/assets/images/flags/' . $onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country') . ".gif\" alt=\"" . $country_name
+                        . "\">";
                 } else {
                     $a_msg['country'] = $country_name;
                 }

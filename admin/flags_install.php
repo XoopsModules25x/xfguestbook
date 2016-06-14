@@ -28,7 +28,6 @@ include_once dirname(__DIR__) . '/include/cp_functions.php';
 include_once dirname(__DIR__) . '/include/functions.php';
 include_once __DIR__ . '/admin_header.php';
 
-
 if (!isset($_POST['flagdir'])) {
     xoops_cp_header();
     $index_admin = new ModuleAdmin();

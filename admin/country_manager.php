@@ -267,7 +267,8 @@ function countrySave($country_id, $country_code, $country_name)
             $messagesent = '<font color="#FF0000">' . _AM_XFGB_COUNTRY_EXIST . '</font>';
         } else {
             $country_id = $xoopsDB->genId('country_id_seq');
-            $sql        = sprintf("INSERT INTO %s (country_id, country_code, country_name) VALUES (%s, '%s', '%s')", $xoopsDB->prefix('xfguestbook_country'), $country_id, $country_code, $country_name);
+            $sql        =
+                sprintf("INSERT INTO %s (country_id, country_code, country_name) VALUES (%s, '%s', '%s')", $xoopsDB->prefix('xfguestbook_country'), $country_id, $country_code, $country_name);
             $xoopsDB->query($sql);
             $messagesent = _AM_XFGB_COUNTRY_ADDED;
         }
@@ -381,7 +382,7 @@ switch ($op) {
         echo $index_admin->addNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(2);
         countryForm();
-        include __DIR__  . '/admin_footer.php';
+        include __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
         break;
     case 'countryShow':

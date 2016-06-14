@@ -120,7 +120,8 @@ switch ($op) {
             $arr_country  = xfgb_getCountry("country_code ='" . $country . "'");
             $country_name = (count($arr_country) > 0) ? $arr_country[0]['country_name'] : '';
             if (file_exists($flag)) {
-                $msgpost['country'] = "<img src=\"" . XOOPS_URL . '/modules/xfguestbook/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country . ".gif\" alt=\"" . $country_name . "\">";
+                $msgpost['country'] =
+                    "<img src=\"" . XOOPS_URL . '/modules/xfguestbook/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country . ".gif\" alt=\"" . $country_name . "\">";
             } else {
                 $msgpost['country'] = $country_name;
             }
