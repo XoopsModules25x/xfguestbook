@@ -46,7 +46,7 @@
     define('_MD_XFGB_CONFIRM_CODE', 'Confirm verification code');
     define('_MD_XFGB_CONFIRM_CODE_DESC', 'Verification code, enter below. ');
     define('_MD_XFGB_CONFIRM_CODE_WRONG', 'Entered verification code is in-correct.');
-    define('_MD_XFGB_NOFOLLOW_MSG', '<br /><br />Warning :<br />the inserted terms will be<br />ignored by search engines.');
+    define('_MD_XFGB_NOFOLLOW_MSG', '<br><br>Warning :<br>the inserted terms will be<br>ignored by search engines.');
     define('_MD_XFGB_URL_DISABLED', 'The inserted items are not authorised.');
     // add V2.40
     define('_MD_XFGB_MODERATED', 'Your message will not be published until validated by the webmaster');

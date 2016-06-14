@@ -23,22 +23,22 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
-include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/xfgbformselectcountry.php";
+include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/xfgbformselectcountry.php';
 
 //xoopsSecurity don't work with this form ???
 //$signform = new XoopsThemeForm(_MD_XFGB_SIGN, 'signform', 'xfcreate.php','post', true);
 $signform = new XoopsThemeForm(_MD_XFGB_SIGN, 'signform', 'xfcreate.php');
 $signform->setExtra("enctype='multipart/form-data'") ;
 
-$name_text = new XoopsFormText(_MD_XFGB_NAME, "name", 50, 100, $name);
+$name_text = new XoopsFormText(_MD_XFGB_NAME, 'name', 50, 100, $name);
 if ($xoopsUser) {
     $name_text->setExtra("readonly = 'readonly'") ;
 }
 $signform->addElement($name_text, true);
 
 if ($option['opt_gender']) {
-    $gender_text = new XoopsFormSelect(_MD_XFGB_GENDER, "gender", $gender);
+    $gender_text = new XoopsFormSelect(_MD_XFGB_GENDER, 'gender', $gender);
     $options = array('' => _MD_XFGB_UNKNOW, 'M' =>_MD_XFGB_MALE, 'F' => _MD_XFGB_FEMALE);
     $gender_text->addOptionArray($options);
     $signform->addElement($gender_text, true);
@@ -46,26 +46,26 @@ if ($option['opt_gender']) {
 
 // affichage pays
 if ($option['opt_country']) {
-    $country_text = new xfgbFormSelectCountry($xoopsModuleConfig['country_caption'], "country", $country, 1, true);
+    $country_text = new XfgbFormSelectCountry($xoopsModuleConfig['country_caption'], 'country', $country, 1, true);
     $country_text->setExtra('onchange="test_other(this.value)"');
     $signform->addElement($country_text, true);
 //  $other_text = new XoopsFormText('other', 'other', 50, 50, $other);
     $other_text = new XoopsFormText('other', 'other', 50, 50);
     $signform->addElement($other_text);
 }
-$uman_text=new XoopsFormText("uman", "uman", 50, 100, $uman);
+$uman_text=new XoopsFormText('uman', 'uman', 50, 100, $uman);
 $signform->addElement($uman_text);
 if ($option['opt_mail'] > 0) {
-    $email_text = new XoopsFormText(_MD_XFGB_EMAIL, "email", 50, 100, $email);
+    $email_text = new XoopsFormText(_MD_XFGB_EMAIL, 'email', 50, 100, $email);
     $signform->addElement($email_text, $option['opt_mail'] > 1);
 }
 
 if ($option['opt_website'] > 1 || ($option['opt_website'] == 1 && $xoopsUser)) {
-    $url_text = new XoopsFormText(_MD_XFGB_URL, "url", 50, 100, $url);
+    $url_text = new XoopsFormText(_MD_XFGB_URL, 'url', 50, 100, $url);
     $signform->addElement($url_text);
 }
 
-$title_text = new XoopsFormText(_MD_XFGB_TITLE, "title", 60, 100, $title);
+$title_text = new XoopsFormText(_MD_XFGB_TITLE, 'title', 60, 100, $title);
 $signform->addElement($title_text, true);
 
 if ($option['opt_icon'] == 0) {
@@ -78,7 +78,7 @@ if ($option['opt_icon'] == 0) {
     // upload image
     if ($xoopsModuleConfig['photo_maxsize'] > 0) {
         $file_tray = new XoopsFormElementTray(_MD_XFGB_ADDIMG, '', 'photo');
-        $file_img = new XoopsFormFile('', "photo", $xoopsModuleConfig['photo_maxsize']);
+        $file_img = new XoopsFormFile('', 'photo', $xoopsModuleConfig['photo_maxsize']);
         $file_img->setExtra("size ='40'") ;
         $file_tray->addElement($file_img);
         $msg = sprintf(_MD_XFGB_IMG_CONFIG, (int)($xoopsModuleConfig['photo_maxsize']/1000), $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);

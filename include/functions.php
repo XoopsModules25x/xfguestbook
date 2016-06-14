@@ -35,23 +35,24 @@ function xfgb_upload()
     global $xoopsModule, $xoopsModuleConfig, $preview_name, $msgstop;
     $created = time();
     $ext     = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $_FILES['photo']['name']);
-    include_once(XOOPS_ROOT_PATH . "/class/uploader.php");
-    $field = $_POST["xoops_upload_file"][0];
-    if (!empty($field) || $field != "") {
+    include_once(XOOPS_ROOT_PATH . '/class/uploader.php');
+    $field = $_POST['xoops_upload_file'][0];
+    if (!empty($field) || $field !== '') {
         // Check if file uploaded
-        if ($_FILES[$field]['tmp_name'] == "" || !is_readable($_FILES[$field]['tmp_name'])) {
+        if ($_FILES[$field]['tmp_name'] === '' || !is_readable($_FILES[$field]['tmp_name'])) {
             $msgstop .= sprintf(_MD_XFGB_FILEERROR, $xoopsModuleConfig['photo_maxsize']);
         } else {
             $photos_dir              = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
-            $array_allowed_mimetypes = array("image/gif", "image/pjpeg", "image/jpeg", "image/x-png");
-            $uploader                = new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $xoopsModuleConfig['photo_maxsize'], $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
+            $array_allowed_mimetypes = array('image/gif', 'image/pjpeg', 'image/jpeg', 'image/x-png');
+            $uploader                =
+                new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $xoopsModuleConfig['photo_maxsize'], $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
             if ($uploader->fetchMedia($field) && $uploader->upload()) {
                 if (isset($preview_name)) {
                     @unlink("$photos_dir/" . $preview_name);
                 }
                 $tmp_name     = $uploader->getSavedFileName();
                 $ext          = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $tmp_name);
-                $preview_name = "tmp_" . $created . "." . $ext;
+                $preview_name = 'tmp_' . $created . '.' . $ext;
                 rename("$photos_dir/$tmp_name", "$photos_dir/$preview_name");
             } else {
                 $msgstop .= $uploader->getErrors();
@@ -60,15 +61,21 @@ function xfgb_upload()
     }
 }
 
+/**
+ * @param null $criteria
+ * @param int  $limit
+ * @param int  $start
+ * @return array
+ */
 function xfgb_getCountry($criteria = null, $limit = 0, $start = 0)
 {
     global $xoopsDB, $action;
     $ret = array();
-    $sql = "SELECT * FROM " . $xoopsDB->prefix("xfguestbook_country");
-    if (isset($criteria) && $criteria != '') {
+    $sql = 'SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_country');
+    if (isset($criteria) && $criteria !== '') {
         $sql .= ' WHERE ' . $criteria;
     }
-    $sql .= " ORDER BY country_code ASC";
+    $sql .= ' ORDER BY country_code ASC';
     $result = $xoopsDB->query($sql, $limit, $start);
     while ($myrow = $xoopsDB->fetchArray($result)) {
         array_push($ret, $myrow);
@@ -77,15 +84,21 @@ function xfgb_getCountry($criteria = null, $limit = 0, $start = 0)
     return $ret;
 }
 
+/**
+ * @param null $criteria
+ * @param int  $limit
+ * @param int  $start
+ * @return array
+ */
 function xfgb_getAllCountry($criteria = null, $limit = 0, $start = 0)
 {
     global $xoopsDB, $action, $xoopsModuleConfig;
     $ret = array();
-    $sql = "SELECT country_code, country_name FROM " . $xoopsDB->prefix("xfguestbook_country");
-    if (isset($criteria) && $criteria != '') {
+    $sql = 'SELECT country_code, country_name FROM ' . $xoopsDB->prefix('xfguestbook_country');
+    if (isset($criteria) && $criteria !== '') {
         $sql .= ' WHERE ' . $criteria;
     }
-    $sql .= " ORDER BY country_code ASC";
+    $sql .= ' ORDER BY country_code ASC';
     $result = $xoopsDB->query($sql, $limit, $start);
     while ($myrow = $xoopsDB->fetchArray($result)) {
         //      $ret[$myrow['country_code']] = $myrow['country_name'];
@@ -95,22 +108,26 @@ function xfgb_getAllCountry($criteria = null, $limit = 0, $start = 0)
     return $ret;
 }
 
+/**
+ * @param $user_id
+ * @return bool
+ */
 function xfgb_get_user_data($user_id)
 {
     global $xoopsUser, $xoopsModuleConfig;
 
-    if (!(int)($user_id)) {
+    if (!(int)$user_id) {
         return false;
     }
 
     $poster = new XoopsUser($user_id);
     if ($poster->isActive()) {
-        ($xoopsUser) ? $a_poster['poster'] = "<a href='../../userinfo.php?uid=$user_id'>" . $poster->uname() . "</a>" : $a_poster['poster'] = $poster->uname();
+        $xoopsUser ? $a_poster['poster'] = "<a href='../../userinfo.php?uid=$user_id'>" . $poster->uname() . '</a>' : $a_poster['poster'] = $poster->uname();
         if ($xoopsModuleConfig['display_avatar']) {
             $rank = $poster->rank();
-            ($rank['title']) ? $a_poster['rank'] = $rank['title'] : $a_poster['rank'] = '';
-            ($rank['image']) ? $a_poster['rank_img'] = "<img src='" . XOOPS_URL . "/uploads/" . $rank['image'] . "' alt='' />" : $a_poster['rank_img'] = '';
-            ($poster->user_avatar()) ? $a_poster['avatar'] = "<img src='" . XOOPS_URL . "/uploads/" . $poster->user_avatar() . "' alt='' />" : $a_poster['avatar'] = '';
+            $rank['title'] ? $a_poster['rank'] = $rank['title'] : $a_poster['rank'] = '';
+            $rank['image'] ? $a_poster['rank_img'] = "<img src='" . XOOPS_URL . '/uploads/' . $rank['image'] . "' alt='' />" : $a_poster['rank_img'] = '';
+            $poster->user_avatar() ? $a_poster['avatar'] = "<img src='" . XOOPS_URL . '/uploads/' . $poster->user_avatar() . "' alt='' />" : $a_poster['avatar'] = '';
         } else {
             $a_poster['rank']     = '';
             $a_poster['avatar']   = '';
@@ -124,6 +141,11 @@ function xfgb_get_user_data($user_id)
 }
 
 // Effacement fichiers temporaires
+/**
+ * @param        $dir_path
+ * @param string $prefix
+ * @return int
+ */
 function xfgb_clear_tmp_files($dir_path, $prefix = 'tmp_')
 {
     if (!($dir = @opendir($dir_path))) {
@@ -144,11 +166,15 @@ function xfgb_clear_tmp_files($dir_path, $prefix = 'tmp_')
 }
 
 // IP bannies (modérés automatiquement)
+/**
+ * @param null $all
+ * @return array
+ */
 function xfgb_get_badips($all = null)
 {
     global $xoopsDB;
     $ret    = array();
-    $sql    = "SELECT * FROM " . $xoopsDB->prefix("xfguestbook_badips");
+    $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_badips');
     $result = $xoopsDB->query($sql);
     if ($all) {
         while ($myrow = $xoopsDB->fetchArray($result)) {
@@ -163,6 +189,10 @@ function xfgb_get_badips($all = null)
     return $ret;
 }
 
+/**
+ * @param $email
+ * @return bool
+ */
 function email_exist($email)
 {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

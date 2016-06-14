@@ -23,10 +23,13 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+/**
+ * @return mixed
+ */
 function getOptions()
 {
     global $xoopsDB;
-    $sql = "SELECT conf_name, conf_value FROM ".$xoopsDB->prefix("xfguestbook_config");
+    $sql = 'SELECT conf_name, conf_value FROM ' . $xoopsDB->prefix('xfguestbook_config');
     $result = $xoopsDB->query($sql);
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $arr_conf[$myrow['conf_name']] = $myrow['conf_value'];
@@ -35,10 +38,13 @@ function getOptions()
     return $arr_conf;
 }
 
+/**
+ * @return mixed
+ */
 function getOptions4Admin()
 {
     global $xoopsDB;
-    $sql = "SELECT conf_id, conf_name, conf_value FROM ".$xoopsDB->prefix("xfguestbook_config");
+    $sql = 'SELECT conf_id, conf_name, conf_value FROM ' . $xoopsDB->prefix('xfguestbook_config');
     $result = $xoopsDB->query($sql);
     $i=0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
