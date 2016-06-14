@@ -35,8 +35,9 @@ $modversion['license']      = 'GNU GPL 2.0';
 $modversion['license_url']  = 'www.gnu.org/licenses/gpl-2.0.html/';
 
 $modversion['official']       = 0;
-$modversion['image']          = 'assets/images/module_logo.png';
-$modversion['dirname']        = 'xfguestbook';
+$modversion['image']        = 'assets/images/logo_module.png';
+$modversion['dirname']      = basename(__DIR__);
+
 $modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
 $modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
@@ -70,15 +71,15 @@ $modversion['templates'][3]['file']        = 'xfguestbook_signform.tpl';
 $modversion['templates'][3]['description'] = '';
 
 //about
-$modversion['status_version']      = 'RC';
-$modversion['release_date']        = '2011/09/09';
+$modversion['status_version']      = 'RC 2';
+$modversion['release_date']        = '2016/06/14';
 $modversion['module_website_url']  = 'http://www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
-$modversion['module_status']       = 'RC';
+$modversion['module_status']       = 'RC 2';
 $modversion['author_website_url']  = 'http://www.FolsomLiving.com/';
 $modversion['author_website_name'] = 'Metalslug';
-$modversion['min_php']             = 5.2;
-$modversion['min_xoops']           = '2.5.0';
+$modversion['min_php']             = '5.5';
+$modversion['min_xoops']           = '2.5.8';
 $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
 $modversion['system_menu']         = 1;
@@ -148,7 +149,7 @@ $modversion['config'][] = array(
     'description' => '_MI_XFGB_MAXSIZEIMG_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '30000',);
+    'default'     => '30000');
 
 // Photo max height
 $modversion['config'][] = array(
@@ -157,7 +158,7 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '120',);
+    'default'     => '120');
 
 // Photo max width
 $modversion['config'][] = array(
@@ -166,7 +167,7 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '200',);
+    'default'     => '200');
 
 // name of flagpack
 $modversion['config'][] = array(
@@ -175,7 +176,7 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => _MI_XFGB_COUNTRY,);
+    'default'     => _MI_XFGB_COUNTRY);
 
 // Directory and sql name of flagpack
 $modversion['config'][] = array(
@@ -184,11 +185,12 @@ $modversion['config'][] = array(
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => '',);
+    'default'     => '');
 
+xoops_loadLanguage('admin',  basename(__DIR__));
 // Blocks
 $modversion['blocks'][1]['file']        = 'xfguestbook_new.php';
-$modversion['blocks'][1]['name']        = _MB_XFGUESTBOOK_BNAME1;
+$modversion['blocks'][1]['name']        = '_MB_XFGUESTBOOK_BNAME1';
 $modversion['blocks'][1]['description'] = 'Shows recently added donwload files';
 $modversion['blocks'][1]['show_func']   = 'b_xfguestbook_show';
 $modversion['blocks'][1]['edit_func']   = 'b_xfguestbook_edit';

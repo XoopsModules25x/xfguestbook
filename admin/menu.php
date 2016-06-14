@@ -23,7 +23,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 $dirname        = basename(dirname(__DIR__));
-$module_handler = &xoops_gethandler('module');
+$module_handler = xoops_getHandler('module');
 $xoopsModule    = $module_handler->getByDirname($dirname);
 $pathIcon32     = $xoopsModule->getInfo('icons32');
 
@@ -34,27 +34,27 @@ $adminmenu[$i]['desc']  = _MI_XFGB_ADMIN_HOME_DESC;
 $adminmenu[$i]['icon']  = '../../' . $pathIcon32 . '/home.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_XFGB_MSG_MANAGE;
-$adminmenu[$i]['link']  = "admin/main.php";
+$adminmenu[$i]['link']  = 'admin/main.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/manage.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_XFGB_CONF_FORM;
-$adminmenu[$i]['link']  = "admin/config.php";
+$adminmenu[$i]['link']  = 'admin/config.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/config.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_XFGB_COUNTRYMANAGE;
-$adminmenu[$i]['link']  = "admin/country_manager.php";
+$adminmenu[$i]['link']  = 'admin/country_manager.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/flag.png';
 $i++;
 $adminmenu[$i]['title'] = _AM_XFGB_INSTALL_IMG;
-$adminmenu[$i]['link']  = "admin/flags_install.php";
+$adminmenu[$i]['link']  = 'admin/flags_install.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/flag_in.png';
 $i++;
 $adminmenu[$i]['title'] = _AM_XFGB_IMG_MANAGER;
-$adminmenu[$i]['link']  = "admin/img_manager.php";
+$adminmenu[$i]['link']  = 'admin/img_manager.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/image.png';
 $i++;
 $adminmenu[$i]['title'] = _AM_XFGB_IP;
-$adminmenu[$i]['link']  = "admin/ip_manager.php";
+$adminmenu[$i]['link']  = 'admin/ip_manager.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/stop.png';
 $i++;
 $adminmenu[$i]['title'] = _MI_XFGB_ADMIN_ABOUT;

@@ -13,7 +13,7 @@ Guestbook for XOOPS CMS
 
 xfGuestbook for [XOOPS CMS](http://xoops.org) is a Guestbook module.
 
-[![Tutorial Available](http://xoops.org/images/tutorial-available-blue.svg)](https://www.gitbook.com/book/xoops/xfguestbook-tutorial/) Tutorial: see [here](https://www.gitbook.com/book/xoops/xfguestbook-tutorial/).
+[![Tutorial Available](http://xoops.org/images/tutorial-available-blue.svg)](https://www.gitbook.com/book/xoops/xfguestbook-tutorial/) Tutorial: see [GitBook](https://www.gitbook.com/book/xoops/xfguestbook-tutorial/).
 To contribute to the Tutorial, [fork it on GitHub](https://github.com/XoopsDocs/xfguestbook-tutorial)
 
 [![Translations on Transifex](http://xoops.org/images/translations-transifex-blue.svg)](https://www.transifex.com/xoops)

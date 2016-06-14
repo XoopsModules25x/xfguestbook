@@ -1,23 +1,23 @@
 <table width='98%' align='center' border='0' class='fg2'>
   <tr> 
     <td align='center'>
-<center>
-        <br />
-        <br />
-        <br />
+<div style="text-align: center;">
+        <br>
+        <br>
+        <br>
         <a href='xfcreate.php'><img src='<{$xoops_url}>/modules/xfguestbook/assets/images/guestbook.gif' border=''></a>
 		<br>
         <{$msg_message_count}>
         <br>
         <{$msg_moderate_text}>
-      </center>
+      </div>
       </td>
   </tr>
-</table><br/>
+</table><br>
 
 <{if $display_country}>
 <{html_table loop = $country cols = $flagsperrow tr_attr='align="left"'}> 
-<br />
+<br>
 <{/if}> 
 
 <{if $display_msg}>
@@ -37,7 +37,7 @@
 <!-- start msg item loop -->
 <{section name=i loop=$msg}>
 <{include file="db:xfguestbook_item.tpl" msg=$msg[i]}>
-<br />
+<br>
 <{/section}>
 <!-- end msg item loop -->
 

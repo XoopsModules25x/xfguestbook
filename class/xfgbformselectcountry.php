@@ -23,15 +23,27 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include_once XOOPS_ROOT_PATH."/class/xoopsform/formselect.php";
+include_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/formselect.php';
 
-class xfgbformselectcountry extends XoopsFormSelect
+/**
+ * Class XfgbFormSelectCountry
+ */
+class XfgbFormSelectCountry extends XoopsFormSelect
 {
-    public function xfgbFormSelectCountry($caption, $name, $value=null, $size=1, $nullopt=false)
+    /**
+     * XfgbFormSelectCountry constructor.
+     * @param      $caption
+     * @param      $name
+     * @param null $value
+     * @param int  $size
+     * @param bool $nullopt
+     * @return XfgbFormSelectCountry
+     */
+    public function __construct($caption, $name, $value=null, $size=1, $nullopt=false)
     {
-        $db =& XoopsDatabaseFactory::getDatabaseConnection();
-        $this->XoopsFormSelect($caption, $name, $value, $size);
-        $sql = "SELECT country_code, country_name FROM ".$db->prefix("xfguestbook_country")." ORDER BY country_name";
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        parent::__construct($caption, $name, $value, $size);
+        $sql = 'SELECT country_code, country_name FROM ' . $db->prefix('xfguestbook_country') . ' ORDER BY country_name';
         $result = $db->query($sql);
         if ($nullopt) {
             $this->addOption('', '-');

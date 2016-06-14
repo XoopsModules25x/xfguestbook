@@ -23,13 +23,13 @@ xoops_cp_header();
 
 $indexAdmin = new ModuleAdmin();
 $folder[] = '/uploads/xfguestbook/';
-$result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix("xfguestbook_msg") . " WHERE 	moderate>0");
+$result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xfguestbook_msg') . ' WHERE 	moderate>0');
 list($totalWaitingMsg) = $xoopsDB->fetchRow($result);
 if ($totalWaitingMsg > 0) {
     $totalWaitingMsg = "<span style='color: #ff0000; font-weight: bold'>{$totalWaitingMsg}</span>";
 }
 
-$result = $xoopsDB->query("SELECT COUNT(*) FROM " . $xoopsDB->prefix("xfguestbook_msg") . " WHERE 	moderate=0");
+$result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xfguestbook_msg') . ' WHERE 	moderate=0');
 list($totalModerateMsg) = $xoopsDB->fetchRow($result);
 
 $indexAdmin->addInfoBox(_MD_XFGB_MSGCONF);
@@ -52,7 +52,7 @@ foreach (array_keys($folder) as $i) {
     $indexAdmin->addConfigBoxLine(XOOPS_ROOT_PATH.$folder[$i], 'folder');
     $indexAdmin->addConfigBoxLine(array(XOOPS_ROOT_PATH.$folder[$i], '777'), 'chmod');
 }
-echo $indexAdmin->addNavigation('index.php');
+echo $indexAdmin->addNavigation(basename(__FILE__));
 echo $indexAdmin->renderIndex();
 
 include __DIR__ . '/admin_footer.php';

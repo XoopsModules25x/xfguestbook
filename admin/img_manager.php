@@ -23,10 +23,11 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include '../../../include/cp_header.php';
-include_once '../include/cp_functions.php';
-include_once XOOPS_ROOT_PATH."/class/xoopslists.php";
-$msg_handler =& xoops_getmodulehandler('msg');
+include dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include_once dirname(__DIR__) . '/include/cp_functions.php';
+include_once dirname(dirname(dirname(__DIR__))) . '/class/xoopslists.php';
+
+$msg_handler = xoops_getModuleHandler('msg');
 include_once __DIR__ . '/admin_header.php';
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
@@ -38,33 +39,33 @@ if (isset($_GET['op'])) {
 
 switch ($op) {
 
-    case "delete":
+    case 'delete':
     if (!empty($_POST['imglist_id'])) {
         $img_count = count($_POST['imglist_id']);
         for ($i = 0; $i < $img_count; $i++) {
             unlink(XOOPS_UPLOAD_PATH.'/'.$xoopsModule->getVar('dirname').'/'.$_POST['imglist_id'][$i]);
         }
-        redirect_header("img_manager.php", 1, $i._AM_XFGB_IMG_DELETED);
+        redirect_header('img_manager.php', 1, $i . _AM_XFGB_IMG_DELETED);
         break;
     }
 
-    case "show":
+    case 'show':
     default:
         xoops_cp_header();
     $index_admin = new ModuleAdmin() ;
-    echo $index_admin->addNavigation('img_manager.php') ;
+    echo $index_admin->addNavigation(basename(__FILE__));
     $cpt1 = $cpt2 = 0;
-    $all_img = & XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH.'/'.$xoopsModule->getVar('dirname').'/');
-    echo _AM_XFGB_ORPHEAN_DSC.'<br />';
+    $all_img =  XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH.'/'.$xoopsModule->getVar('dirname').'/');
+    echo _AM_XFGB_ORPHEAN_DSC.'<br>';
     $msg_img = $msg_handler->getMsgImg();
     if (count($all_img) > count($msg_img)) {
         echo "<form action='img_manager.php' method='post' name='imglist' id='imglist'><input type='hidden' name='op' value='delete' />";
         echo "<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr>
 			<th align='center'><input type='checkbox' name='imglist_checkall' id='imglist_checkall' ' checked='checked' onclick='xoopsCheckAll(\"imglist\", \"imglist_checkall\");' /></th>
 			<th align='center'>"._AM_XFGB_IMG."</th>
-			<th align='center'>"._AM_XFGB_IMG_FILE."</th></tr>";
+			<th align='center'>"._AM_XFGB_IMG_FILE . '</th></tr>';
         foreach ($all_img as $one_img) {
-            if (count($msg_img) > 0 && !in_array($one_img, $msg_img) || count($msg_img) == 0) {
+            if (count($msg_img) === 0 || count($msg_img) > 0 && !in_array($one_img, $msg_img)) {
                 ($cpt1 % 2 == 0) ? $class = 'even' : $class = 'odd';
                 echo "<tr class='$class'><td align='center'><input type='checkbox' name='imglist_id[]' id='imglist_id[]' value='".$one_img."' checked='checked'/></td>";
                 echo '<td><img src = "'.XOOPS_UPLOAD_URL.'/'.$xoopsModule->getVar('dirname').'/'.$one_img.'"/>';
@@ -78,10 +79,10 @@ switch ($op) {
         echo "<tr class='foot'><td>&nbsp;</td>";
         echo "<td ><input type='hidden' name='op' value='delete' /><input type='submit' value='"._DELETE."' /></td>";
         echo '<td>&nbsp;'.$cpt1._AM_XFGB_IMG_ORPHEAN.'</td></tr>';
-        echo "</table>";
+        echo '</table>';
         echo "</form>\n";
     } else {
-        echo '<br />'._AM_XFGB_NO_ORPHEAN;
+        echo '<br>'._AM_XFGB_NO_ORPHEAN;
     }
     include __DIR__ . '/admin_footer.php';
     //xoops_cp_footer();

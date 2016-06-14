@@ -1,3 +1,15 @@
+3.10. RC 2      NOT RELEASED
+---------------------------
+- removed "@version" (mamba)
+- XOOPS 2.5.8 and PHP 7 (mamba)
+- standardization with addNavigation(basename(__FILE__)) (mamba)
+- removed unneeded double quotes and parenthesis (mamba)
+- improved type comparison (mamba)
+- standardization with <br> (mamba)
+- updated function visibility (mamba)
+- reference mismatch (mamba)
+- code cosmetics (mamba)
+
 3.10. RC 1      NOT RELEASED
 ---------------------------
 - Captcha fix (Roby73)

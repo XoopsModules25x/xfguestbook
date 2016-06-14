@@ -14,7 +14,7 @@ var result_style = document.getElementById('result_tr').style;
 result_style.display = 'table-row';
 </script>
 
-<div align="center"><font color="#FF0000"><strong><{$msgstop}></strong></font></div>
+<div align="center"><span style="color: #FF0000; "><strong><{$msgstop}></strong></span></div>
 <{if $preview and not $msgstop}>
 <{include file="db:xfguestbook_item.tpl"}>
 <{/if}>

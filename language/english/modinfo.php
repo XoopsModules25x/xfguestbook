@@ -33,8 +33,8 @@
     define('_MI_XFGB_ADMIN_HOME', 'Home');
     define('_MI_XFGB_ADMIN_HOME_DESC', 'Back to Home');
     define('_MI_XFGB_ADMIN_ABOUT', 'About');
-    if (!defined('_AM_XFGB_IP')) {
-        define('_AM_XFGB_IP', 'IP');
-    }
+//    if (!defined('_AM_XFGB_IP')) {
+//        define('_AM_XFGB_IP', 'IP');
+//    }
 
     define('_MI_XFGB_SHOWEMAIL', 'Visualize the button email on the all messages');

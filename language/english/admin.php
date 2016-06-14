@@ -37,7 +37,7 @@
     define('_AM_XFGB_COUNTRYDELETED', 'Country deleted');
     define('_AM_XFGB_MSGERROR', 'ERROR : Could not update message in the database!');
         //add V2.30
-    define('_AM_XFGB_MUST_UPDATE', 'You have installeeacute;  files of version 2.30. <br /> Veuillez faire une mise &agrave; jour du module');
+    define('_AM_XFGB_MUST_UPDATE', 'You have installeeacute;  files of version 2.30. <br> Veuillez faire une mise &agrave; jour du module');
     //add V2.40
     define('_AM_XFGB_BANISHED', 'IP address saved in the database');
     define('_AM_XFGB_ERRORBANISHED', 'Error');
@@ -120,7 +120,7 @@
     define('_AM_XFGB_NOCHANGE', 'No modifications');
     define('_AM_XFGB_CHANGED', 'Changed in v ');
     define('_AM_XFGB_UPGRADE_GO', 'Upgrade');
-    define('_AM_XFGB_WARNING_UPGRADE', 'Attention, this operation will modify certain tables. <br />Please make a backup first !');
+    define('_AM_XFGB_WARNING_UPGRADE', 'Attention, this operation will modify certain tables. <br>Please make a backup first !');
     define('_AM_XFGB_ERROR', 'Error : ');
     define('_AM_XFGB_UPGRADE_SUCCESS', 'Upgrade successfull');
     define('_AM_XFGB_NO_UPGRADE', 'Upgrade not necessary');
@@ -131,13 +131,13 @@
     define('_AM_XFGB_WARNING_MSG1', '<font color=\'#FF0000\'>&nbsp;This operation will erase the contents of the table</font> %s <font color=\'#FF0000\'> and replace it.</font>');
     define('_AM_XFGB_GOFORMOPT', ' Go to form options');
     define('_AM_XFGB_GO_UPGRADE', ' To restore the table, go to Upgrade');
-    define('_AM_XFGB_ERROR_FLAGS', '<font color=\'#FF0000\'> Data insertion Error of %s.sql <br /> Table %s deleted</font>');
+    define('_AM_XFGB_ERROR_FLAGS', '<font color=\'#FF0000\'> Data insertion Error of %s.sql <br> Table %s deleted</font>');
 // img_manager add v2.30
     define('_AM_XFGB_IMG_DELETED', ' image(s) deleted');
     define('_AM_XFGB_IMG_FILE', 'File');
     define('_AM_XFGB_IMG_ORPHEAN', ' image(s) orphan(s)');
     define('_AM_XFGB_NO_ORPHEAN', 'No orphan images');
-    define('_AM_XFGB_ORPHEAN_DSC', ' This page enables you to post the images which are not attached to a message (orphan).<br />&nbsp;This can occur if a problem when sending a message.<br />&nbsp;Erase these useless images');
+    define('_AM_XFGB_ORPHEAN_DSC', ' This page enables you to post the images which are not attached to a message (orphan).<br>&nbsp;This can occur if a problem when sending a message.<br>&nbsp;Erase these useless images');
 // ip manager add V2.40
     define('_AM_XFGB_DISP_BADIPS', 'IP addresses moderated automatically');
     define('_AM_XFGB_IPS', 'IP Address');

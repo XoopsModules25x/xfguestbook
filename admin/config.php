@@ -23,13 +23,17 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include '../../../include/cp_header.php';
-include_once '../include/cp_functions.php';
+include dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include_once dirname(__DIR__) . '/include/cp_functions.php';
 include_once __DIR__ . '/admin_header.php';
+/**
+ * @param int $cat
+ * @return mixed
+ */
 function getOptions4Admin($cat=2)
 {
     global $xoopsDB;
-    $sql = "SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ".$xoopsDB->prefix("xfguestbook_config")." WHERE conf_cat=".$cat." ORDER BY conf_order ASC";
+    $sql = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ' . $xoopsDB->prefix('xfguestbook_config') . ' WHERE conf_cat=' . $cat . ' ORDER BY conf_order ASC';
     $result = $xoopsDB->query($sql);
     $i=0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
@@ -61,42 +65,42 @@ if (isset($_GET['op'])) {
 
 switch ($op) {
 
-case "save":
+case 'save':
     $option=getOptions4Admin();
     $nb_opt = count($option);
 
     for ($i = 0; $i < $nb_opt; $i++) {
-        $sql = "UPDATE ".$xoopsDB->prefix("xfguestbook_config")." SET conf_value='".${$option[$i]['conf_name']}."' WHERE conf_id=".$option[$i]['conf_id'];
+        $sql = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_config') . " SET conf_value='" . ${$option[$i]['conf_name']} . "' WHERE conf_id=" . $option[$i]['conf_id'];
         $result=$xoopsDB->query($sql);
     }
-    redirect_header("config.php", 1, _AM_XFGB_DBUPDATED);
+    redirect_header('config.php', 1, _AM_XFGB_DBUPDATED);
     break;
 
-case "show":
+case 'show':
 default:
     xoops_cp_header();
     $index_admin = new ModuleAdmin();
-    echo $index_admin->addNavigation('config.php');
+    echo $index_admin->addNavigation(basename(__FILE__));
     //xfguestbook_admin_menu(1);
     include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
-    include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/xfgbformselectcountry.php";
+    include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/xfgbformselectcountry.php';
     
     $option=getOptions4Admin();
     $nb_opt = count($option);
 
-    $sform = new XoopsThemeForm(_AM_XFGB_FORMOPT, "op", xoops_getenv('PHP_SELF'));
+    $sform = new XoopsThemeForm(_AM_XFGB_FORMOPT, 'op', xoops_getenv('PHP_SELF'));
 
     for ($i = 0; $i < $nb_opt; $i++) {
-        $title = (!defined($option[$i]['conf_desc']) || constant($option[$i]['conf_desc']) == '') ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title']).'<br /><br /><span style="font-weight:normal;">'.constant($option[$i]['conf_desc']).'</span>';
+        $title = (!defined($option[$i]['conf_desc']) || constant($option[$i]['conf_desc']) === '') ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title']).'<br><br><span style="font-weight:normal;">'.constant($option[$i]['conf_desc']).'</span>';
         switch ($option[$i]['conf_formtype']) {
         case 'yesno':
-            if ($option[$i]['conf_name'] == 'opt_country' && $xoopsModuleConfig['flagdir'] == '') {
-                $title .= '<br /><span style="font-weight:normal;">'._AM_XFGB_WARNING_MSG2.'</span>';
+            if ($xoopsModuleConfig['flagdir'] === '' && $option[$i]['conf_name'] === 'opt_country') {
+                $title .= '<br><span style="font-weight:normal;">'._AM_XFGB_WARNING_MSG2.'</span>';
             }
             $ele = new XoopsFormRadioYN($title, $option[$i]['conf_name'], $option[$i]['conf_value'], _YES, _NO);
             break;
         case 'selectcountry':
-            $ele = new xfgbFormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
+            $ele = new XfgbFormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
             break;
         case 'selectmail':
             $ele = new XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
