@@ -1,5 +1,5 @@
 <?php
-// $Id: contact.php,v 1.11 2004/12/02 C. Felix AKA the Cat
+//
 // ------------------------------------------------------------------------- //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -22,7 +22,7 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //---------------------------------------------------------------------------//
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include __DIR__ . '/../../mainfile.php';
 $op = 'form';
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
@@ -36,8 +36,8 @@ if (isset($preview)) {
 } elseif (isset($post)) {
     $op = 'post';
 }
-include_once(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/functions.php');
-include_once('include/config.inc.php');
+include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/functions.php';
+include_once __DIR__ . '/include/config.inc.php';
 $option = getOptions();
 
 /**
@@ -46,7 +46,11 @@ $option = getOptions();
  */
 function displaypost($title, $content)
 {
-    echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $title . '</td></tr><tr><td><br>' . $content . '<br></td></tr></table>';
+    echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'
+         . $title
+         . '</td></tr><tr><td><br>'
+         . $content
+         . '<br></td></tr></table>';
 }
 
 switch ($op) {
@@ -123,8 +127,8 @@ switch ($op) {
     default:
 
         xoops_header();
-        $msg_handler = &xoops_getModuleHandler('msg');
-        $msg         = &$msg_handler->get($msg_id);
+        $msgHandler = xoops_getModuleHandler('msg');
+        $msg        = $msgHandler->get($msg_id);
         if (!$msg) {
             redirect_header('index.php', 3, _NOPERM);
         }

@@ -1,5 +1,5 @@
 <?php
-// $Id: include/form_edit.inc.php,v 1.20 2005/08/08 C. Felix AKA the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -39,18 +39,31 @@ $uname_text = new XoopsFormText(_AM_XFGB_NAME, 'uname', 50, 255, $msg->getVar('u
 $msg_form->addElement($uname_text);
 
 $gender_text = new XoopsFormRadio(_AM_XFGB_GENDER, 'gender', $msg->getVar('gender', 'E'));
-//	$gender_text = new XoopsFormSelect(_MD_XFGB_SEXE, "gender", $msg->getVar("gender", "E"));
+//  $gender_text = new XoopsFormSelect(_MD_XFGB_SEXE, "gender", $msg->getVar("gender", "E"));
 $options = array('M' => _AM_XFGB_MALE, 'F' => _AM_XFGB_FEMALE, '' => _AM_XFGB_GENDER_UNKNOW);
 $gender_text->addOptionArray($options);
 $msg_form->addElement($gender_text, true);
 
 //if (trim($option['opt_country']) != '') {
 $country_tray = new XoopsFormElementTray(_AM_XFGB_COUNTRY, '');
-$flag         = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $msg->getVar('flagdir') . '/' . $msg->getVar('country') . '.gif';
+$flag         = XOOPS_ROOT_PATH
+                . '/modules/'
+                . $xoopsModule->dirname()
+                . '/assets/images/flags/'
+                . $msg->getVar('flagdir')
+                . '/'
+                . $msg->getVar('country')
+                . '.gif';
 if (file_exists($flag)) {
-    $country_tray->addElement(new XoopsFormLabel('',
-                                                 "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $msg->getVar('flagdir') . '/' . $msg->getVar('country')
-                                                 . ".gif' name='image' id='image' alt='' /><br><br>"));
+    $country_tray->addElement(new XoopsFormLabel('', "<img src='"
+                                                     . XOOPS_URL
+                                                     . '/modules/'
+                                                     . $xoopsModule->dirname()
+                                                     . '/assets/images/flags/'
+                                                     . $msg->getVar('flagdir')
+                                                     . '/'
+                                                     . $msg->getVar('country')
+                                                     . ".gif' name='image' id='image' alt='' /><br><br>"));
 }
 $country_tray->addElement(new XfgbFormSelectCountry('', 'country', $msg->getVar('country', 'E'), 1, true));
 $country_tray->addElement(new XoopsFormText(_AM_XFGB_IF_OTHER, 'other', 20, 20, $msg->getVar('other', 'E')));
@@ -73,8 +86,13 @@ $msg_form->addElement($message_text);
 
 $file_tray = new XoopsFormElementTray(_AM_XFGB_IMG, '');
 if ($msg->getVar('photo')) {
-    $file_tray->addElement(new XoopsFormLabel('',
-                                              "<img src='" . XOOPS_UPLOAD_URL . '/' . $xoopsModule->getVar('dirname') . '/' . $msg->getVar('photo') . "' name='image' id='image' alt='' /><br><br>"));
+    $file_tray->addElement(new XoopsFormLabel('', "<img src='"
+                                                  . XOOPS_UPLOAD_URL
+                                                  . '/'
+                                                  . $xoopsModule->getVar('dirname')
+                                                  . '/'
+                                                  . $msg->getVar('photo')
+                                                  . "' name='image' id='image' alt='' /><br><br>"));
     $check_del_img = new XoopsFormCheckBox('', 'del_img');
     $check_del_img->addOption(1, _AM_XFGB_DELIMG);
     $file_tray->addElement($check_del_img);

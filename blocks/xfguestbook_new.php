@@ -31,37 +31,38 @@ function b_xfguestbook_show($options)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
     if (empty($xoopsModule) || 'xfguestbook' !== $xoopsModule->getVar('dirname')) {
-        $module_handler = xoops_getHandler('module');
-        $module = $module_handler->getByDirname('xfguestbook');
-        $config_handler = xoops_getHandler('config');
-        $config =& $config_handler->getConfigsByCat(0, $module->getVar('mid'));
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname('xfguestbook');
+        $configHandler = xoops_getHandler('config');
+        $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
         $module =& $xoopsModule;
         $config =& $xoopsModuleConfig;
     }
-    
+
     $block = array();
     if (0 != $options[1]) {
         $block['full_view'] = true;
     } else {
         $block['full_view'] = false;
     }
-    
-    $msg_hnd = xoops_getModuleHandler('msg', 'xfguestbook');
+
+    $msg_hnd  = xoops_getModuleHandler('msg', 'xfguestbook');
     $criteria = new Criteria('moderate', '0', '=');
     $criteria->setSort('post_time');
     $criteria->setOrder('DESC');
     $criteria->setLimit($options[0]);
     $nbmsg = $msg_hnd->countMsg($criteria);
-    
+
     $a_item = array();
-    
+
     if ($nbmsg > 0) {
         $msg = $msg_hnd->getObjects($criteria);
-        $ts = MyTextSanitizer::getInstance();
+        $ts  = MyTextSanitizer::getInstance();
         foreach ($msg as $onemsg) {
-            $msg_id = $onemsg->getVar('msg_id');
-            $a_item['id'] = $msg_id;
+            $msg_id          = $onemsg->getVar('msg_id');
+            $a_item['id']    = $msg_id;
             $a_item['title'] = $onemsg->getVar('title');
             if (!XOOPS_USE_MULTIBYTES) {
                 $length = strlen($onemsg->getVar('title'));
@@ -69,8 +70,8 @@ function b_xfguestbook_show($options)
                     $a_item['title'] = substr($a_item['title'], 0, $options[1] - $length) . '...';
                 }
             }
-            $a_item['name'] = $onemsg->getVar('uname');
-            $a_item['date'] = formatTimestamp($onemsg->getVar('post_time'), 's') ;
+            $a_item['name']   = $onemsg->getVar('uname');
+            $a_item['date']   = formatTimestamp($onemsg->getVar('post_time'), 's');
             $block['items'][] = $a_item;
             unset($a_item);
         }
@@ -88,7 +89,7 @@ function b_xfguestbook_show($options)
 function b_xfguestbook_edit($options)
 {
     $form = '' . _MB_XFGB_DISP . '&nbsp;';
-    $form .= "<input type=\"text\" name=\"options[]\" value=\"".$options[0]."\" />&nbsp;"._MB_XFGB_NBMSG . '';
+    $form .= "<input type=\"text\" name=\"options[]\" value=\"" . $options[0] . "\" />&nbsp;" . _MB_XFGB_NBMSG . '';
     $form .= '&nbsp;<br>' . _MB_XFGB_CHARS . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . "' />&nbsp;" . _MB_XFGB_LENGTH . '';
 
     return $form;

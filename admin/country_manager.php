@@ -1,5 +1,5 @@
 <?php
-// $Id: admin/index.php,v 2.21 2005/11/09 C. Felix alias the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -23,8 +23,8 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once dirname(__DIR__) . '/include/cp_functions.php';
+include __DIR__ . '/../../../include/cp_header.php';
+include_once __DIR__ . '/../include/cp_functions.php';
 include_once __DIR__ . '/admin_header.php';
 
 // Flag
@@ -70,13 +70,12 @@ function flagUpload($country_code)
     // photos
     if (!empty($_FILES['photo']['name'])) {
         $ext = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $_FILES['photo']['name']);
-        include_once(XOOPS_ROOT_PATH . '/class/uploader.php');
+        include_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $field = $_POST['xoops_upload_file'][0];
         if (!empty($field) || $field !== '') {
             // Check if file uploaded
             if ($_FILES[$field]['tmp_name'] === '' || !is_readable($_FILES[$field]['tmp_name'])) {
                 redirect_header('country_manager.php', 2, _MD_XFGB_FILEERROR);
-                exit;
             }
             $photos_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'];
             $uploader   = new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $maxsize, $maxwidth, $maxheight);
@@ -91,7 +90,6 @@ function flagUpload($country_code)
                 rename("$photos_dir/$tmp_name", "$photos_dir/$photo");
             } else {
                 redirect_header('country_manager.php', 2, $uploader->getErrors());
-                exit();
             }
         }
         redirect_header('country_manager.php', 2, _AM_XFGB_FILEUPLOADED);
@@ -126,7 +124,7 @@ function flagForm($country_code)
     $flagform->addElement($img_text);
 
     $button_tray = new XoopsFormElementTray('', '');
-    $button_tray->addElement(new XoopsFormButton('', 'post', _SEND, 'submit'));
+    $button_tray->addElement(new XoopsFormButton('', 'post', _SUBMIT, 'submit'));
     $button_tray->addElement(new XoopsFormHidden('country_code', $country_code));
     $button_tray->addElement(new XoopsFormHidden('op', 'flagUpload'));
     $flagform->addElement($button_tray);
@@ -193,9 +191,9 @@ function countryForm($country_id = null)
 }
 
 /**
- * @param null $criteria
- * @param int  $limit
- * @param int  $start
+ * @param  null $criteria
+ * @param  int  $limit
+ * @param  int  $start
  * @return array
  */
 function xfgb_getCountry($criteria = null, $limit = 0, $start = 0)
@@ -225,7 +223,13 @@ function countryDel($country_id)
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
     if ($ok == 1) {
         $arr_country = xfgb_getCountry('country_id=' . $country_id, 0, 0);
-        $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $arr_country[0]['country_code'] . '.gif';
+        $flag        = '/modules/'
+                       . $xoopsModule->dirname()
+                       . '/assets/images/flags/'
+                       . $xoopsModuleConfig['flagdir']
+                       . '/'
+                       . $arr_country[0]['country_code']
+                       . '.gif';
         $sql         = 'DELETE FROM ' . $xoopsDB->prefix('xfguestbook_country') . " WHERE country_id=$country_id";
         $result      = $xoopsDB->query($sql);
         if (file_exists(XOOPS_ROOT_PATH . $flag)) {
@@ -264,17 +268,16 @@ function countrySave($country_id, $country_code, $country_name)
         $sql = sprintf("SELECT COUNT(*) FROM  %s WHERE country_code = '%s'", $xoopsDB->prefix('xfguestbook_country'), $country_code);
         list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql));
         if ($count > 0) {
-            $messagesent = '<font color="#FF0000">' . _AM_XFGB_COUNTRY_EXIST . '</font>';
+            $messagesent = '<span style="color: #FF0000; ">' . _AM_XFGB_COUNTRY_EXIST . '</span>';
         } else {
             $country_id = $xoopsDB->genId('country_id_seq');
-            $sql        =
-                sprintf("INSERT INTO %s (country_id, country_code, country_name) VALUES (%s, '%s', '%s')", $xoopsDB->prefix('xfguestbook_country'), $country_id, $country_code, $country_name);
+            $sql        = sprintf("INSERT INTO %s (country_id, country_code, country_name) VALUES (%s, '%s', '%s')",
+                                  $xoopsDB->prefix('xfguestbook_country'), $country_id, $country_code, $country_name);
             $xoopsDB->query($sql);
             $messagesent = _AM_XFGB_COUNTRY_ADDED;
         }
     }
     redirect_header('country_manager.php', 2, $messagesent);
-    exit();
 }
 
 function countryShow()
@@ -308,9 +311,15 @@ function countryShow()
         echo "<tr ><td align='center' colspan ='10' class = 'head'><b>" . _AM_XFGB_NOFLAG . '</b></td></tr>';
     }
 
-    for ($i = 0; $i < count($arr_country); $i++) {
+    for ($i = 0, $iMax = count($arr_country); $i < $iMax; ++$i) {
         $all_country = array();
-        $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $arr_country[$i]['country_code'] . '.gif';
+        $flag        = '/modules/'
+                       . $xoopsModule->dirname()
+                       . '/assets/images/flags/'
+                       . $xoopsModuleConfig['flagdir']
+                       . '/'
+                       . $arr_country[$i]['country_code']
+                       . '.gif';
         if (file_exists(XOOPS_ROOT_PATH . $flag)) {
             $all_country['flag_img'] = "<img src='" . XOOPS_URL . $flag . "'>";
         } else {
@@ -320,10 +329,26 @@ function countryShow()
         $all_country['country_id']   = $arr_country[$i]['country_id'];
         $all_country['country_code'] = $arr_country[$i]['country_code'];
         $all_country['country_name'] = $arr_country[$i]['country_name'];
-        $all_country['msg_action']   = "<a href='country_manager.php?op=countryEdit&amp;country_id=" . $arr_country[$i]['country_id'] . "'><img src='" . $pathIcon16 . "/edit.png'></a>";
-        $all_country['msg_action'] .= "&nbsp;<a href='country_manager.php?op=countryDel&amp;country_id=" . $arr_country[$i]['country_id'] . "'><img src='" . $pathIcon16 . "/delete.png'></a>";
-        $all_country['flag_action'] = "<a href='country_manager.php?op=flagForm&amp;country_code=" . $arr_country[$i]['country_code'] . "'><img src='" . $pathIcon16 . "/add.png'></a>";
-        $all_country['flag_action'] .= "&nbsp;<a href='country_manager.php?op=flagDel&amp;country_code=" . $arr_country[$i]['country_code'] . "'><img src='" . $pathIcon16 . "/delete.png'></a>";
+        $all_country['msg_action']   = "<a href='country_manager.php?op=countryEdit&amp;country_id="
+                                       . $arr_country[$i]['country_id']
+                                       . "'><img src='"
+                                       . $pathIcon16
+                                       . "/edit.png'></a>";
+        $all_country['msg_action'] .= "&nbsp;<a href='country_manager.php?op=countryDel&amp;country_id="
+                                      . $arr_country[$i]['country_id']
+                                      . "'><img src='"
+                                      . $pathIcon16
+                                      . "/delete.png'></a>";
+        $all_country['flag_action'] = "<a href='country_manager.php?op=flagForm&amp;country_code="
+                                      . $arr_country[$i]['country_code']
+                                      . "'><img src='"
+                                      . $pathIcon16
+                                      . "/add.png'></a>";
+        $all_country['flag_action'] .= "&nbsp;<a href='country_manager.php?op=flagDel&amp;country_code="
+                                       . $arr_country[$i]['country_code']
+                                       . "'><img src='"
+                                       . $pathIcon16
+                                       . "/delete.png'></a>";
         echo "<tr><td align='center' class = 'head'><b>" . $all_country['flag_img'] . '</b>';
         echo "</td><td class = 'even'>" . $all_country['country_code'] . '';
         echo "</td><td class = 'odd'>" . $all_country['country_name'] . '';

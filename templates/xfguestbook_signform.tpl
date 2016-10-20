@@ -44,10 +44,10 @@
         <{if $signform.elements.country.body}>
             <tr>
                 <td class="head"><{$signform.elements.country.caption}>
-                    <div style="display:none" id="other_caption"><br/><{$smarty.const._MD_XFGB_OTHER_CAPTION}></div>
+                    <div style="display:none;" id="other_caption"><br><{$smarty.const._MD_XFGB_OTHER_CAPTION}></div>
                 </td>
                 <td class="<{cycle values='even,odd'}>"><{$signform.elements.country.body}>
-                    <div style="display:none" id="other_tbox"><br/><{$signform.elements.other.body}></div>
+                    <div style="display:none;" id="other_tbox"><br><{$signform.elements.other.body}></div>
                 </td>
             </tr>
         <{/if}>
@@ -71,8 +71,8 @@
         <tr>
             <td class="head"><{$signform.elements.message.caption}>
                 <{if $nofollow}>
-                    <br/>
-                    <br/>
+                    <br>
+                    <br>
                     <{$smarty.const._MD_XFGB_NOFOLLOW_MSG}>
                 <{/if}>
             </td>

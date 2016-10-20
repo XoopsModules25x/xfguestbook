@@ -1,5 +1,5 @@
 <?php
-// $Id: admin/config.php,v 2.20 2005/08/09 C. Felix alias the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -23,17 +23,21 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once dirname(__DIR__) . '/include/cp_functions.php';
+include __DIR__ . '/../../../include/cp_header.php';
+include_once __DIR__ . '/../include/cp_functions.php';
 include_once __DIR__ . '/admin_header.php';
 /**
- * @param int $cat
+ * @param  int $cat
  * @return mixed
  */
 function getOptions4Admin($cat = 2)
 {
     global $xoopsDB;
-    $sql    = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ' . $xoopsDB->prefix('xfguestbook_config') . ' WHERE conf_cat=' . $cat . ' ORDER BY conf_order ASC';
+    $sql    = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM '
+              . $xoopsDB->prefix('xfguestbook_config')
+              . ' WHERE conf_cat='
+              . $cat
+              . ' ORDER BY conf_order ASC';
     $result = $xoopsDB->query($sql);
     $i      = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
@@ -70,7 +74,12 @@ switch ($op) {
         $nb_opt = count($option);
 
         for ($i = 0; $i < $nb_opt; $i++) {
-            $sql    = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_config') . " SET conf_value='" . ${$option[$i]['conf_name']} . "' WHERE conf_id=" . $option[$i]['conf_id'];
+            $sql    = 'UPDATE '
+                      . $xoopsDB->prefix('xfguestbook_config')
+                      . " SET conf_value='"
+                      . ${$option[$i]['conf_name']}
+                      . "' WHERE conf_id="
+                      . $option[$i]['conf_id'];
             $result = $xoopsDB->query($sql);
         }
         redirect_header('config.php', 1, _AM_XFGB_DBUPDATED);
@@ -91,9 +100,11 @@ switch ($op) {
         $sform = new XoopsThemeForm(_AM_XFGB_FORMOPT, 'op', xoops_getenv('PHP_SELF'));
 
         for ($i = 0; $i < $nb_opt; $i++) {
-            $title = (!defined($option[$i]['conf_desc']) || constant($option[$i]['conf_desc']) === '') ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title'])
-                                                                                                                                               . '<br><br><span style="font-weight:normal;">'
-                                                                                                                                               . constant($option[$i]['conf_desc']) . '</span>';
+            $title = (!defined($option[$i]['conf_desc'])
+                      || constant($option[$i]['conf_desc']) === '') ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title'])
+                                                                                                            . '<br><br><span style="font-weight:normal;">'
+                                                                                                            . constant($option[$i]['conf_desc'])
+                                                                                                            . '</span>';
             switch ($option[$i]['conf_formtype']) {
                 case 'yesno':
                     if ($xoopsModuleConfig['flagdir'] === '' && $option[$i]['conf_name'] === 'opt_country') {
@@ -124,8 +135,7 @@ switch ($op) {
             $hidden  = new XoopsFormHidden('conf_ids[]', $option[$i]['conf_id']);
             $sform->addElement($ele);
             $sform->addElement($hidden);
-            unset($ele);
-            unset($hidden);
+            unset($ele, $hidden);
         }
 
         $button_tray = new XoopsFormElementTray('', '');

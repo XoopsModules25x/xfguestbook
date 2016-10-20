@@ -1,5 +1,4 @@
 <?php
-// $Id: xfcreate.php, v 0.1 2007/12/04 C. Asswipe php team
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -23,17 +22,17 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include __DIR__ . '/../../mainfile.php';
 if (!is_object($xoopsUser) && 1 != $xoopsModuleConfig['anonsign']) {
     redirect_header(XOOPS_URL . '/user.php', 2, _MD_XFGB_MUSTREGFIRST);
 }
 
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
-include_once(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/functions.php');
-include_once('include/config.inc.php');
+include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/functions.php';
+include_once __DIR__ . '/include/config.inc.php';
 
-$option      = getOptions();
-$msg_handler = xoops_getModuleHandler('msg');
+$option     = getOptions();
+$msgHandler = xoops_getModuleHandler('msg');
 
 $confirm_code = isset($_POST['confirm_code']) ? $_POST['confirm_code'] : '';
 $confirm_str  = isset($_POST['confirm_str']) ? $_POST['confirm_str'] : '';
@@ -65,10 +64,10 @@ switch ($op) {
         break;
 
     case 'preview':
-        $ts = MyTextSanitizer::getInstance();
+        $ts                                      = MyTextSanitizer::getInstance();
+        $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
         include XOOPS_ROOT_PATH . '/header.php';
-        $xoopsOption['template_main'] = 'xfguestbook_signform.tpl';
-        $msgstop                      = '';
+        $msgstop = '';
 
         /*if ($option['opt_code']==1) {
             xoops_load('XoopsCaptcha');
@@ -116,12 +115,26 @@ switch ($op) {
             $msgpost['url'] = '<img src="' . XOOPS_URL . '/images/icons/www.gif" alt="' . _VISITWEBSITE . '">';
         }
         if ($country) {
-            $flag         = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country . '.gif';
+            $flag         = XOOPS_ROOT_PATH
+                            . '/modules/'
+                            . $xoopsModule->dirname()
+                            . '/assets/images/flags/'
+                            . $xoopsModuleConfig['flagdir']
+                            . '/'
+                            . $country
+                            . '.gif';
             $arr_country  = xfgb_getCountry("country_code ='" . $country . "'");
             $country_name = (count($arr_country) > 0) ? $arr_country[0]['country_name'] : '';
             if (file_exists($flag)) {
-                $msgpost['country'] =
-                    "<img src=\"" . XOOPS_URL . '/modules/xfguestbook/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country . ".gif\" alt=\"" . $country_name . "\">";
+                $msgpost['country'] = "<img src=\""
+                                      . XOOPS_URL
+                                      . '/modules/xfguestbook/assets/images/flags/'
+                                      . $xoopsModuleConfig['flagdir']
+                                      . '/'
+                                      . $country
+                                      . ".gif\" alt=\""
+                                      . $country_name
+                                      . "\">";
             } else {
                 $msgpost['country'] = $country_name;
             }
@@ -145,7 +158,7 @@ switch ($op) {
             }
             include XOOPS_ROOT_PATH . '/header.php';
         }
-        if ('' !== $_POST['uman']) {
+        if ('' == $_POST['uman']) {
             redirect_header('index.php', 2, '');
         }
         if (2 == $option['opt_url'] && preg_match('/(http)|(www)/i', $message)) {
@@ -161,8 +174,8 @@ switch ($op) {
             xfgb_upload();
         }
         if (!empty($msgstop)) {
+            $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
             include XOOPS_ROOT_PATH . '/header.php';
-            $xoopsOption['template_main'] = 'xfguestbook_signform.tpl';
             $xoopsTpl->assign('preview', true);
             $xoopsTpl->assign('msgstop', $msgstop);
             include_once __DIR__ . '/include/form_sign.inc.php';
@@ -176,7 +189,7 @@ switch ($op) {
             rename("$photos_dir/$preview_name", "$photos_dir/$photo");
         }
 
-        $msgpost = $msg_handler->create();
+        $msgpost = $msgHandler->create();
         $xoopsUser ? $user_id = $xoopsUser->uid() : $user_id = 0;
         $xoopsUser ? $username = $xoopsUser->uname() : $username = $name;
         $msgpost->setVar('user_id', $user_id);
@@ -204,7 +217,7 @@ switch ($op) {
         $nb_removed_tmp = xfgb_clear_tmp_files($photos_dir);
         $messagesent    = _MD_XFGB_MESSAGESENT;
 
-        if ($msg_handler->insert($msgpost)) {
+        if ($msgHandler->insert($msgpost)) {
             if ($badip || $xoopsModuleConfig['moderate']) {
                 $messagesent .= '<br>' . _MD_XFGB_AFTERMODERATE;
             }

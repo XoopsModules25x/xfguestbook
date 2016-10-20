@@ -26,7 +26,7 @@ CREATE TABLE `xfguestbook_msg` (
 # Contenu de la table `xfguestbook_msg`
 #
 
-INSERT INTO xfguestbook_msg (msg_id, user_id, uname, title, message, note, post_time, email, url, poster_ip, moderate,gender,country,photo,flagdir) VALUES (1, 0, 'Asswipe php team', 'Welcome - Welkom', ':-) Welcome in your Guestbook - Welkom in ons Gastenboek', 'You can delete this message - Je kunt dit bericht verwijderen', 1073730287, '', '', '127.0.0.1', 0,'M','FR','msg_1000000000.gif','world_flags');
+INSERT INTO xfguestbook_msg (msg_id, user_id, uname, title, message, note, post_time, email, url, poster_ip, moderate,gender,country,photo,flagdir) VALUES (1, 0, 'Joe Doe PHP team', 'Welcome', ':-) Welcome in your Guestbook', 'You can delete this message', 1073730287, '', '', '127.0.0.1', 0,'M','FR','msg_1000000000.jpg','world_flags');
 
 
 #

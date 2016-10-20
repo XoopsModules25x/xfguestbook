@@ -1,5 +1,5 @@
 <?php
-// $Id: flag_install.php, v 1.0 2005/08/06 C. Felix AKA the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -23,9 +23,9 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once dirname(__DIR__) . '/include/cp_functions.php';
-include_once dirname(__DIR__) . '/include/functions.php';
+include __DIR__ . '/../../../include/cp_header.php';
+include_once __DIR__ . '/../include/cp_functions.php';
+include_once __DIR__ . '/../include/functions.php';
 include_once __DIR__ . '/admin_header.php';
 
 if (!isset($_POST['flagdir'])) {
@@ -41,7 +41,7 @@ if (!isset($_POST['flagdir'])) {
     $form->addElement($sel_box);
 
     $button_tray = new XoopsFormElementTray('', '');
-    $button_tray->addElement(new XoopsFormButton('', 'post', _SEND, 'submit'));
+    $button_tray->addElement(new XoopsFormButton('', 'post', _SUBMIT, 'submit'));
     $button_cancel = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
     $button_cancel->setExtra("' onclick='javascript: history.go(-1)'");
     $button_tray->addElement($button_cancel);
@@ -71,14 +71,14 @@ if (!isset($_POST['flagdir'])) {
         $msg .= executeSQL($sqlfile);
     }
     if ($msg === '') {
-        $config_handler = xoops_getHandler('config');
-        $criteria       = new CriteriaCompo(new Criteria('conf_modid', $xoopsModule->mid()));
+        $configHandler = xoops_getHandler('config');
+        $criteria      = new CriteriaCompo(new Criteria('conf_modid', $xoopsModule->mid()));
         $criteria->add(new Criteria('conf_name', 'flagdir'));
-        $config =& $config_handler->getConfigs($criteria);
+        $config = $configHandler->getConfigs($criteria);
         $value  = array($config[0]->getConfValueForOutput());
         $config[0]->setVar('conf_value', $flagdir);
         //  $config[0]->setConfValueForInput($value[0]);
-        if (!$config_handler->insertConfig($config[0])) {
+        if (!$configHandler->insertConfig($config[0])) {
             $msg .= 'Could not insert flagdir config <br>';
         }
         echo $msg;

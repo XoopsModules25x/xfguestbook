@@ -1,5 +1,5 @@
 <?php
-// $Id: include/functions.php,v 1.4 2006/01/01 C.Felix AKA the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -26,7 +26,7 @@
 global $xoopsModule;
 $cacheFolder = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
 if (!is_dir($cacheFolder)) {
-    mkdir($cacheFolder, 0777);
+    mkdir($cacheFolder);
     file_put_contents($cacheFolder . '/index.html', '');
 }
 
@@ -35,7 +35,7 @@ function xfgb_upload()
     global $xoopsModule, $xoopsModuleConfig, $preview_name, $msgstop;
     $created = time();
     $ext     = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $_FILES['photo']['name']);
-    include_once(XOOPS_ROOT_PATH . '/class/uploader.php');
+    include_once XOOPS_ROOT_PATH . '/class/uploader.php';
     $field = $_POST['xoops_upload_file'][0];
     if (!empty($field) || $field !== '') {
         // Check if file uploaded
@@ -44,8 +44,8 @@ function xfgb_upload()
         } else {
             $photos_dir              = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
             $array_allowed_mimetypes = array('image/gif', 'image/pjpeg', 'image/jpeg', 'image/x-png');
-            $uploader                =
-                new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $xoopsModuleConfig['photo_maxsize'], $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
+            $uploader                = new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $xoopsModuleConfig['photo_maxsize'],
+                                                              $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
             if ($uploader->fetchMedia($field) && $uploader->upload()) {
                 if (isset($preview_name)) {
                     @unlink("$photos_dir/" . $preview_name);
@@ -62,9 +62,9 @@ function xfgb_upload()
 }
 
 /**
- * @param null $criteria
- * @param int  $limit
- * @param int  $start
+ * @param  null $criteria
+ * @param  int  $limit
+ * @param  int  $start
  * @return array
  */
 function xfgb_getCountry($criteria = null, $limit = 0, $start = 0)
@@ -85,9 +85,9 @@ function xfgb_getCountry($criteria = null, $limit = 0, $start = 0)
 }
 
 /**
- * @param null $criteria
- * @param int  $limit
- * @param int  $start
+ * @param  null $criteria
+ * @param  int  $limit
+ * @param  int  $start
  * @return array
  */
 function xfgb_getAllCountry($criteria = null, $limit = 0, $start = 0)
@@ -122,12 +122,22 @@ function xfgb_get_user_data($user_id)
 
     $poster = new XoopsUser($user_id);
     if ($poster->isActive()) {
-        $xoopsUser ? $a_poster['poster'] = "<a href='../../userinfo.php?uid=$user_id'>" . $poster->uname() . '</a>' : $a_poster['poster'] = $poster->uname();
+        $xoopsUser ? $a_poster['poster'] = "<a href='../../userinfo.php?uid=$user_id'>"
+                                           . $poster->uname()
+                                           . '</a>' : $a_poster['poster'] = $poster->uname();
         if ($xoopsModuleConfig['display_avatar']) {
             $rank = $poster->rank();
             $rank['title'] ? $a_poster['rank'] = $rank['title'] : $a_poster['rank'] = '';
-            $rank['image'] ? $a_poster['rank_img'] = "<img src='" . XOOPS_URL . '/uploads/' . $rank['image'] . "' alt='' />" : $a_poster['rank_img'] = '';
-            $poster->user_avatar() ? $a_poster['avatar'] = "<img src='" . XOOPS_URL . '/uploads/' . $poster->user_avatar() . "' alt='' />" : $a_poster['avatar'] = '';
+            $rank['image'] ? $a_poster['rank_img'] = "<img src='"
+                                                     . XOOPS_URL
+                                                     . '/uploads/'
+                                                     . $rank['image']
+                                                     . "' alt='' />" : $a_poster['rank_img'] = '';
+            $poster->user_avatar() ? $a_poster['avatar'] = "<img src='"
+                                                           . XOOPS_URL
+                                                           . '/uploads/'
+                                                           . $poster->user_avatar()
+                                                           . "' alt='' />" : $a_poster['avatar'] = '';
         } else {
             $a_poster['rank']     = '';
             $a_poster['avatar']   = '';
@@ -142,8 +152,8 @@ function xfgb_get_user_data($user_id)
 
 // Effacement fichiers temporaires
 /**
- * @param        $dir_path
- * @param string $prefix
+ * @param         $dir_path
+ * @param  string $prefix
  * @return int
  */
 function xfgb_clear_tmp_files($dir_path, $prefix = 'tmp_')
@@ -154,7 +164,8 @@ function xfgb_clear_tmp_files($dir_path, $prefix = 'tmp_')
     $ret        = 0;
     $prefix_len = strlen($prefix);
     while (($file = readdir($dir)) !== false) {
-        if (strncmp($file, $prefix, $prefix_len) === 0) {
+        //        if (strncmp($file, $prefix, $prefix_len) === 0) {
+        if (0 === strpos($file, $prefix)) {
             if (@unlink("$dir_path/$file")) {
                 $ret++;
             }
@@ -167,7 +178,7 @@ function xfgb_clear_tmp_files($dir_path, $prefix = 'tmp_')
 
 // IP bannies (modérés automatiquement)
 /**
- * @param null $all
+ * @param  null $all
  * @return array
  */
 function xfgb_get_badips($all = null)

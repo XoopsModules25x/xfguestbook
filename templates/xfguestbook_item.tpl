@@ -57,8 +57,8 @@
             <td width="25%" class="foot"><br><{$smarty.const._MD_XFGB_COUNTRY}>: <{$msg.local}></td>
             <td class='foot' align="right">
                 <img src="<{$xoops_url}>/modules/xfguestbook/assets/images/ip.gif" border=0 title="<{$msg.poster_ip}>">&nbsp;&nbsp;
-                <a href="admin/main.php?op=edit&msg_id=<{$msg.msg_id}>"><img src="<{$xoops_url}>/modules/xfguestbook/assets/images/edit.gif" border=0 alt="<{$smarty.const._EDIT}>"></a>&nbsp;
-                <a href="index.php?op=delete&msg_id=<{$msg.msg_id}>"><img src="<{$xoops_url}>/modules/xfguestbook/assets/images/delete.gif" border=0 alt="<{$smarty.const._DELETE}>"></a>&nbsp;
+                <a href="admin/main.php?op=edit&msg_id=<{$msg.msg_id}>"><img src="<{xoModuleIcons16 edit.png}>" border=0 alt="<{$smarty.const._EDIT}>"></a>&nbsp;
+                <a href="index.php?op=delete&msg_id=<{$msg.msg_id}>"><img src="<{xoModuleIcons16 delete.png}>" border=0 alt="<{$smarty.const._DELETE}>"></a>&nbsp;
                 <{if $msg.moderate}>
                     <a href="index.php?op=approve&msg_id=<{$msg.msg_id}>"><img src="<{$xoops_url}>/modules/xfguestbook/assets/images/valid.gif" border=0 alt="<{$smarty.const._SUBMIT}>"></a>
                 <{/if}>

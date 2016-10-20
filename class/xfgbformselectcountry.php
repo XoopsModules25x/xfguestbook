@@ -1,5 +1,5 @@
 <?php
-// $Id: xfgbformselectcountry.php,v 1.2 2005/08/10 Exp $
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -23,12 +23,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/formselect.php';
+include_once __DIR__ . '/../../../class/xoopsform/formselect.php';
 
 /**
  * Class XfgbFormSelectCountry
  */
-class XfgbFormSelectCountry extends XoopsFormSelect
+class xfgbformselectcountry extends XoopsFormSelect
 {
     /**
      * XfgbFormSelectCountry constructor.
@@ -39,11 +39,11 @@ class XfgbFormSelectCountry extends XoopsFormSelect
      * @param bool $nullopt
      * @return XfgbFormSelectCountry
      */
-    public function __construct($caption, $name, $value=null, $size=1, $nullopt=false)
+    public function __construct($caption, $name, $value = null, $size = 1, $nullopt = false)
     {
         $db = XoopsDatabaseFactory::getDatabaseConnection();
         parent::__construct($caption, $name, $value, $size);
-        $sql = 'SELECT country_code, country_name FROM ' . $db->prefix('xfguestbook_country') . ' ORDER BY country_name';
+        $sql    = 'SELECT country_code, country_name FROM ' . $db->prefix('xfguestbook_country') . ' ORDER BY country_name';
         $result = $db->query($sql);
         if ($nullopt) {
             $this->addOption('', '-');

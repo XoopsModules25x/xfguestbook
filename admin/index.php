@@ -14,7 +14,7 @@
  * @package         
  * @author 	   		
  *
- * Version : $Id:
+ * Version :
  * ****************************************************************************
  */
 
@@ -26,7 +26,7 @@ $folder[] = '/uploads/xfguestbook/';
 $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xfguestbook_msg') . ' WHERE 	moderate>0');
 list($totalWaitingMsg) = $xoopsDB->fetchRow($result);
 if ($totalWaitingMsg > 0) {
-    $totalWaitingMsg = "<span style='color: #ff0000; font-weight: bold'>{$totalWaitingMsg}</span>";
+    $totalWaitingMsg = "<span style='color: #ff0000; font-weight: bold;'>{$totalWaitingMsg}</span>";
 }
 
 $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xfguestbook_msg') . ' WHERE 	moderate=0');

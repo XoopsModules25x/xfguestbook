@@ -1,5 +1,5 @@
 <?php
-// $Id: include/form_contact.inc.php,v 1.11 2004/12/02 C. Félix AKA the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -46,7 +46,7 @@ $form_contact->addElement($annonce_text, true);
 $button_tray = new XoopsFormElementTray('', '');
 $button_tray->addElement(new XoopsFormCaptcha(), true);
 $button_tray->addElement(new XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
-$button_tray->addElement(new XoopsFormButton('', 'post', _SEND, 'submit'));
+$button_tray->addElement(new XoopsFormButton('', 'post', _SUBMIT, 'submit'));
 $button_cancel = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
 $button_cancel->setExtra("' onclick='javascript:window.close();'");
 $button_tray->addElement($button_cancel);

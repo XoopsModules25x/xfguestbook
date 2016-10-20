@@ -1,5 +1,5 @@
 <?php
-// $Id: blocks.php,v 1.0 2004/10/01
+//
 // Blocks XF Guestbook
 define('_MB_XFGB_DISP', 'Display');
 define('_MB_XFGB_NBMSG', 'Messages');

@@ -86,8 +86,9 @@ define('_AM_XFGB_SEL_A0', 'nessuna azione');
 define('_AM_XFGB_SEL_A1', 'nonindicizzabili');
 define('_AM_XFGB_SEL_A2', 'proibiti');
 define('_AM_XFGB_CODE_OPT', 'Chiedi codice di sicurezza');
-define('_AM_XFGB_WARNING_MSG2',
-       "<font color=\"#FF0000\">Se scegli ' SI ' devi installare un<a href=\"" . XOOPS_URL . "/modules/xfguestbook/admin/flags_install.php\">pacchetto immagine di (bandiere, ...)</a></font>");
+define('_AM_XFGB_WARNING_MSG2', "<span style='color: #FF0000; '>Se scegli ' SI ' devi installare un<a href=\""
+                                . XOOPS_URL
+                                . "/modules/xfguestbook/admin/flags_install.php\">pacchetto immagine di (bandiere, ...)</a></span>");
 // add v2.40
 define('_AM_XFGB_WEBSITE_OPT', 'Campo sito web autorizzato');
 define('_AM_XFGB_SEL_W0', 'a nessuno');
@@ -129,10 +130,11 @@ define('_AM_XFGB_NO_UPGRADE', 'Aggiornamento non necessario');
 define('_AM_XFGB_INSTALL_FLAGS', 'Installa un pacchetto immagini (bandiere, mappe, ...)');
 define('_AM_XFGB_SELECT_PACK', 'Scegli un pacchetto da installare');
 define('_AM_XFGB_WARNING', '<b>&nbsp;Attenzione</b>');
-define('_AM_XFGB_WARNING_MSG1', "<font color=\"#FF0000\">&nbsp;Questa operazione canceller&agrave; i contenuti della tabella</font> %s <font color=\"#FF0000\"> e la sostituir&agrave;.</font>");
+define('_AM_XFGB_WARNING_MSG1',
+       "<span style='color: #FF0000; '>&nbsp;Questa operazione canceller&agrave; i contenuti della tabella</span> %s <span style='color: #FF0000; '> e la sostituir&agrave;.</span>");
 define('_AM_XFGB_GOFORMOPT', ' Vai al modulo opzioni');
 define('_AM_XFGB_GO_UPGRADE', " Per ripristinare le tabelle, vai all'Aggiornamento");
-define('_AM_XFGB_ERROR_FLAGS', "<font color=\"#FF0000\"> Errore inserimento dati di %s.sql <br> Tabella %s cancellata</font>");
+define('_AM_XFGB_ERROR_FLAGS', "<span style='color: #FF0000; '> Errore inserimento dati di %s.sql <br> Tabella %s cancellata</span>");
 // img_manager add v2.30
 define('_AM_XFGB_IMG_DELETED', ' immagine(i) cancellata(e)');
 define('_AM_XFGB_IMG_FILE', 'File');

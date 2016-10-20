@@ -1,5 +1,5 @@
 <?php
-// $Id: xoops_version.php,v 1.81 2006/03/18 C.Felix alias the Cat$
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 //  ------------------------------------------------------------------------ //
@@ -24,20 +24,21 @@
 //  ------------------------------------------------------------------------ //
 //system menu
 
-$modversion['name']         = _MI_XFGB_NAME;
-$modversion['version']      = '3.1';
-$modversion['description']  = _MI_XFGB_DESC;
-$modversion['credits']      = 'phppp : randomscript, randomimage';
-$modversion['author']       = 'the Cat';
-$modversion['contributors'] = 'Paul Mar alias Winsion';
-$modversion['help']         = 'page=help';
-$modversion['license']      = 'GNU GPL 2.0';
-$modversion['license_url']  = 'www.gnu.org/licenses/gpl-2.0.html/';
+$modversion['version']        = '3.1';
+$modversion['status_version'] = 'Final';
+$modversion['release_date']   = '2016/10/18';
+$modversion['name']           = _MI_XFGB_NAME;
+$modversion['description']    = _MI_XFGB_DESC;
+$modversion['credits']        = 'phppp : randomscript, randomimage';
+$modversion['author']         = 'the Cat';
+$modversion['contributors']   = 'Paul Mar alias Winsion';
+$modversion['help']           = 'page=help';
+$modversion['license']        = 'GNU GPL 2.0';
+$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
 
-$modversion['official'] = 0;
-$modversion['image']    = 'assets/images/logo_module.png';
-$modversion['dirname']  = basename(__DIR__);
-
+$modversion['official']       = 0;
+$modversion['image']          = 'assets/images/logoModule.png';
+$modversion['dirname']        = basename(__DIR__);
 $modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
 $modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
@@ -71,8 +72,6 @@ $modversion['templates'][3]['file']        = 'xfguestbook_signform.tpl';
 $modversion['templates'][3]['description'] = '';
 
 //about
-$modversion['status_version']      = 'RC 2';
-$modversion['release_date']        = '2016/06/14';
 $modversion['module_website_url']  = 'http://www.xoops.org/';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['module_status']       = 'RC 2';
@@ -80,8 +79,8 @@ $modversion['author_website_url']  = 'http://www.FolsomLiving.com/';
 $modversion['author_website_name'] = 'Metalslug';
 $modversion['min_php']             = '5.5';
 $modversion['min_xoops']           = '2.5.8';
-$modversion['min_admin']           = '1.1';
-$modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
+$modversion['min_admin']           = '1.2';
+$modversion['min_db']              = array('mysql' => '5.1');
 $modversion['system_menu']         = 1;
 
 // Config Settings
@@ -199,7 +198,6 @@ $modversion['config'][] = array(
     'default'     => ''
 );
 
-xoops_loadLanguage('admin', basename(__DIR__));
 // Blocks
 $modversion['blocks'][1]['file']        = 'xfguestbook_new.php';
 $modversion['blocks'][1]['name']        = '_MB_XFGUESTBOOK_BNAME1';

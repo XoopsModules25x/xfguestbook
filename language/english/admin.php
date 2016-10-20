@@ -86,8 +86,9 @@ define('_AM_XFGB_SEL_A0', 'no action');
 define('_AM_XFGB_SEL_A1', 'nonindexable');
 define('_AM_XFGB_SEL_A2', 'prohibited');
 define('_AM_XFGB_CODE_OPT', 'Ask verification code');
-define('_AM_XFGB_WARNING_MSG2',
-       '<font color=\'#FF0000\'>For Selection \' YES \' you must install one<a href=\'' . XOOPS_URL . '/modules/xfguestbook/admin/flags_install.php\'>Image Pack of (flags, ...)</a></font>');
+define('_AM_XFGB_WARNING_MSG2', "<span style='color: #FF0000; '>For Selection ' YES' you must install one<a href='"
+                                . XOOPS_URL
+                                . "/modules/xfguestbook/admin/flags_install.php'>Image Pack of (flags, ...)</a></span>");
 // add v2.40
 define('_AM_XFGB_WEBSITE_OPT', 'Field website authorised');
 define('_AM_XFGB_SEL_W0', 'nobody');
@@ -129,10 +130,11 @@ define('_AM_XFGB_NO_UPGRADE', 'Upgrade not necessary');
 define('_AM_XFGB_INSTALL_FLAGS', 'Install an image pack (flags, charts, ...)');
 define('_AM_XFGB_SELECT_PACK', 'Select a pack to install');
 define('_AM_XFGB_WARNING', '<b>&nbsp;Warning</b>');
-define('_AM_XFGB_WARNING_MSG1', '<font color=\'#FF0000\'>&nbsp;This operation will erase the contents of the table</font> %s <font color=\'#FF0000\'> and replace it.</font>');
+define('_AM_XFGB_WARNING_MSG1',
+       '<span style=\'color: #FF0000; \'>&nbsp;This operation will erase the contents of the table</span> %s <span style=\'color: #FF0000; \'> and replace it.</span>');
 define('_AM_XFGB_GOFORMOPT', ' Go to form options');
 define('_AM_XFGB_GO_UPGRADE', ' To restore the table, go to Upgrade');
-define('_AM_XFGB_ERROR_FLAGS', '<font color=\'#FF0000\'> Data insertion Error of %s.sql <br> Table %s deleted</font>');
+define('_AM_XFGB_ERROR_FLAGS', '<span style=\'color: #FF0000; \'> Data insertion Error of %s.sql <br> Table %s deleted</span>');
 // img_manager add v2.30
 define('_AM_XFGB_IMG_DELETED', ' image(s) deleted');
 define('_AM_XFGB_IMG_FILE', 'File');

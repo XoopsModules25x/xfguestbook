@@ -1,9 +1,9 @@
 <?php
-// $Id: msg.php, v 2.20 2005/08/12 C. Felix alias the Cat
+//
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
+//                  Copyright (c) 2000-2016 XOOPS.org                        //
+//                         <http://xoops.org/>                               //
 // ------------------------------------------------------------------------- //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -28,13 +28,13 @@
 defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 /**
- * Class xfguestbookMsg
+ * Class XfguestbookMsg
  */
-class xfguestbookMsg extends XoopsObject
+class XfguestbookMsg extends XoopsObject
 {
     // constructor
     /**
-     * xfguestbookMsg constructor.
+     * XfguestbookMsg constructor.
      */
     public function __construct()
     {
@@ -59,32 +59,32 @@ class xfguestbookMsg extends XoopsObject
 }
 
 /**
- * Class xfguestbookMsgHandler
+ * Class XfguestbookMsgHandler
  */
-class xfguestbookMsgHandler
+class XfguestbookMsgHandler
 {
     public $db;
 
     /**
-     * xfguestbookMsgHandler constructor.
-     * @param $db
+     * XfguestbookMsgHandler constructor.
+     * @param XoopsDatabase $db
      */
-    public function __construct($db)
+    public function __construct(XoopsDatabase $db)
     {
         $this->db = $db;
     }
 
     /**
-     * @return xfguestbookMsg
+     * @return XfguestbookMsg
      */
     public function create()
     {
-        return new xfguestbookMsg();
+        return new XfguestbookMsg();
     }
 
     /**
      * @param $id
-     * @return bool|xfguestbookMsg
+     * @return bool|XfguestbookMsg
      */
     public function get($id)
     {
@@ -96,7 +96,7 @@ class xfguestbookMsgHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if (1 == $numrows) {
-                $msg = new xfguestbookMsg();
+                $msg = new XfguestbookMsg();
                 $msg->assignVars($this->db->fetchArray($result));
 
                 return $msg;
@@ -123,18 +123,72 @@ class xfguestbookMsgHandler
         }
         if (empty($msg_id)) {
             $msg_id = $this->db->genId('xfguestbook_msg_msg_id_seq');
-            $sql    = 'INSERT INTO ' . $this->db->prefix('xfguestbook_msg')
-                      . ' (msg_id, user_id, uname, title, message, note, post_time, email, url, poster_ip, moderate, gender, country, photo, flagdir, other) VALUES (' . $msg_id . ',' . $user_id . ', '
-                      . $this->db->quoteString($uname) . ', ' . $this->db->quoteString($title) . ', ' . $this->db->quoteString($message) . ', ' . $this->db->quoteString($note) . ', ' . $post_time
-                      . ',  ' . $this->db->quoteString($email) . ', ' . $this->db->quoteString($url) . ', ' . $this->db->quoteString($poster_ip) . ', ' . $moderate . ', '
-                      . $this->db->quoteString($gender) . ', ' . $this->db->quoteString($country) . ', ' . $this->db->quoteString($photo) . ', ' . $this->db->quoteString($flagdir) . ', '
-                      . $this->db->quoteString($other) . ')';
+            $sql    = 'INSERT INTO '
+                      . $this->db->prefix('xfguestbook_msg')
+                      . ' (msg_id, user_id, uname, title, message, note, post_time, email, url, poster_ip, moderate, gender, country, photo, flagdir, other) VALUES ('
+                      . $msg_id
+                      . ','
+                      . $user_id
+                      . ', '
+                      . $this->db->quoteString($uname)
+                      . ', '
+                      . $this->db->quoteString($title)
+                      . ', '
+                      . $this->db->quoteString($message)
+                      . ', '
+                      . $this->db->quoteString($note)
+                      . ', '
+                      . $post_time
+                      . ',  '
+                      . $this->db->quoteString($email)
+                      . ', '
+                      . $this->db->quoteString($url)
+                      . ', '
+                      . $this->db->quoteString($poster_ip)
+                      . ', '
+                      . $moderate
+                      . ', '
+                      . $this->db->quoteString($gender)
+                      . ', '
+                      . $this->db->quoteString($country)
+                      . ', '
+                      . $this->db->quoteString($photo)
+                      . ', '
+                      . $this->db->quoteString($flagdir)
+                      . ', '
+                      . $this->db->quoteString($other)
+                      . ')';
         } else {
-            $sql =
-                'UPDATE ' . $this->db->prefix('xfguestbook_msg') . ' SET user_id=' . $user_id . ', uname=' . $this->db->quoteString($uname) . ', title=' . $this->db->quoteString($title) . ', message='
-                . $this->db->quoteString($message) . ', note=' . $this->db->quoteString($note) . ', email=' . $this->db->quoteString($email) . ', url=' . $this->db->quoteString($url) . ', moderate='
-                . $moderate . ', gender=' . $this->db->quoteString($gender) . ', country=' . $this->db->quoteString($country) . ', photo=' . $this->db->quoteString($photo) . ', flagdir='
-                . $this->db->quoteString($flagdir) . ', other=' . $this->db->quoteString($other) . ' WHERE msg_id=' . $msg_id;
+            $sql = 'UPDATE '
+                   . $this->db->prefix('xfguestbook_msg')
+                   . ' SET user_id='
+                   . $user_id
+                   . ', uname='
+                   . $this->db->quoteString($uname)
+                   . ', title='
+                   . $this->db->quoteString($title)
+                   . ', message='
+                   . $this->db->quoteString($message)
+                   . ', note='
+                   . $this->db->quoteString($note)
+                   . ', email='
+                   . $this->db->quoteString($email)
+                   . ', url='
+                   . $this->db->quoteString($url)
+                   . ', moderate='
+                   . $moderate
+                   . ', gender='
+                   . $this->db->quoteString($gender)
+                   . ', country='
+                   . $this->db->quoteString($country)
+                   . ', photo='
+                   . $this->db->quoteString($photo)
+                   . ', flagdir='
+                   . $this->db->quoteString($flagdir)
+                   . ', other='
+                   . $this->db->quoteString($other)
+                   . ' WHERE msg_id='
+                   . $msg_id;
         }
         if (!$result = $this->db->queryF($sql)) {
             return false;
@@ -154,7 +208,7 @@ class xfguestbookMsgHandler
     public function delete($msg)
     {
         global $xoopsModule;
-        if ('xfguestbookmsg' !== strtolower(get_class($msg))) {
+        if ('XfguestbookMsg' !== strtolower(get_class($msg))) {
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE msg_id = %u', $this->db->prefix('xfguestbook_msg'), $msg->getVar('msg_id'));
@@ -170,7 +224,7 @@ class xfguestbookMsgHandler
     }
 
     /**
-     * @param null $criteria
+     * @param  null $criteria
      * @return array
      */
     public function &getObjects($criteria = null)
@@ -190,7 +244,7 @@ class xfguestbookMsgHandler
             return $ret;
         }
         while ($myrow = $this->db->fetchArray($result)) {
-            $msg = new xfguestbookMsg();
+            $msg = new XfguestbookMsg();
             $msg->assignVars($myrow);
             $ret[] = $msg;
             unset($msg);
@@ -200,7 +254,7 @@ class xfguestbookMsgHandler
     }
 
     /**
-     * @param null $criteria
+     * @param  null $criteria
      * @return int
      */
     public function countMsg($criteria = null)
@@ -218,7 +272,7 @@ class xfguestbookMsgHandler
     }
 
     /**
-     * @param null $criteria
+     * @param  null $criteria
      * @return array|bool
      */
     public function countMsgByCountry($criteria = null)
@@ -241,7 +295,7 @@ class xfguestbookMsgHandler
     }
 
     /**
-     * @param null $criteria
+     * @param  null $criteria
      * @return array|bool
      */
     public function countMsgByGender($criteria = null)
@@ -263,7 +317,7 @@ class xfguestbookMsgHandler
     }
 
     /**
-     * @param null $criteria
+     * @param  null $criteria
      * @return array|int
      */
     public function getMsgImg($criteria = null)

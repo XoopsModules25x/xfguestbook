@@ -1,5 +1,5 @@
 <?php
-// $Id: admin/ip_manager.php,v 1.0 2006/01/01 C. Felix alias the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -23,10 +23,10 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once dirname(__DIR__) . '/include/cp_functions.php';
+include __DIR__ . '/../../../include/cp_header.php';
+include_once __DIR__ . '/../include/cp_functions.php';
 include_once __DIR__ . '/admin_header.php';
-include_once dirname(__DIR__) . '/include/functions.php';
+include_once __DIR__ . '/../include/functions.php';
 
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
@@ -113,7 +113,7 @@ function badIpSave($ip_id, $ip_value)
         $sql = sprintf("SELECT COUNT(*) FROM  %s WHERE ip_value = '%s'", $xoopsDB->prefix('xfguestbook_badips'), $ip_value);
         list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql));
         if ($count > 0) {
-            $messagesent = '<font color="#FF0000">' . _AM_XFGB_BADIP_EXIST . '</font>';
+            $messagesent = '<span style="color: #FF0000; ">' . _AM_XFGB_BADIP_EXIST . '</span>';
         } else {
             $country_id = $xoopsDB->genId('ip_id_seq');
             $sql        = sprintf("INSERT INTO %s (ip_id, ip_value) VALUES (%s, '%s')", $xoopsDB->prefix('xfguestbook_badips'), $ip_id, $ip_value);
@@ -122,7 +122,6 @@ function badIpSave($ip_id, $ip_value)
         }
     }
     redirect_header('ip_manager.php', 2, $messagesent);
-    exit();
 }
 
 function badIpShow()
@@ -156,7 +155,11 @@ function badIpShow()
             echo '<tr>';
             echo "<td align='center' class='even'><input type='checkbox' name='ip_id[]' id='ip_id[]' value='" . $badips[$i]['ip_id'] . "'/></td>";
             echo "<td class = 'odd'>" . $badips[$i]['ip_value'] . '</td>';
-            echo "<td align='center' class='even'><a href='ip_manager.php?op=badIpEdit&amp;ip_id=" . $badips[$i]['ip_id'] . "'>" . _EDIT . '</a></td>';
+            echo "<td align='center' class='even'><a href='ip_manager.php?op=badIpEdit&amp;ip_id="
+                 . $badips[$i]['ip_id']
+                 . "'>"
+                 . _EDIT
+                 . '</a></td>';
             echo '</tr>';
             //          unset($badips);
         }

@@ -1,5 +1,5 @@
 <?php
-// $Id: admin/menu.php,v 2.20 2005/08/10 C. Felix alias the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -22,10 +22,11 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-$dirname        = basename(dirname(__DIR__));
-$module_handler = xoops_getHandler('module');
-$xoopsModule    = $module_handler->getByDirname($dirname);
-$pathIcon32     = $xoopsModule->getInfo('icons32');
+$dirname       = basename(dirname(__DIR__));
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler = xoops_getHandler('module');
+$xoopsModule   = $moduleHandler->getByDirname($dirname);
+$pathIcon32    = $xoopsModule->getInfo('icons32');
 
 $i                      = 1;
 $adminmenu[$i]['title'] = _MI_XFGB_ADMIN_HOME;
