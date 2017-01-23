@@ -33,11 +33,7 @@ include_once __DIR__ . '/admin_header.php';
 function getOptions4Admin($cat = 2)
 {
     global $xoopsDB;
-    $sql    = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM '
-              . $xoopsDB->prefix('xfguestbook_config')
-              . ' WHERE conf_cat='
-              . $cat
-              . ' ORDER BY conf_order ASC';
+    $sql    = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ' . $xoopsDB->prefix('xfguestbook_config') . ' WHERE conf_cat=' . $cat . ' ORDER BY conf_order ASC';
     $result = $xoopsDB->query($sql);
     $i      = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
@@ -74,15 +70,10 @@ switch ($op) {
         $nb_opt = count($option);
 
         for ($i = 0; $i < $nb_opt; $i++) {
-            $sql    = 'UPDATE '
-                      . $xoopsDB->prefix('xfguestbook_config')
-                      . " SET conf_value='"
-                      . ${$option[$i]['conf_name']}
-                      . "' WHERE conf_id="
-                      . $option[$i]['conf_id'];
+            $sql    = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_config') . " SET conf_value='" . ${$option[$i]['conf_name']} . '\' WHERE conf_id=' . $option[$i]['conf_id'];
             $result = $xoopsDB->query($sql);
         }
-        redirect_header('config.php', 1, _AM_XFGB_DBUPDATED);
+        redirect_header('config.php', 1, AM_XFGB_DBUPDATED);
         break;
 
     case 'show':
@@ -97,7 +88,7 @@ switch ($op) {
         $option = getOptions4Admin();
         $nb_opt = count($option);
 
-        $sform = new XoopsThemeForm(_AM_XFGB_FORMOPT, 'op', xoops_getenv('PHP_SELF'));
+        $sform = new XoopsThemeForm(AM_XFGB_FORMOPT, 'op', xoops_getenv('PHP_SELF'));
 
         for ($i = 0; $i < $nb_opt; $i++) {
             $title = (!defined($option[$i]['conf_desc'])
@@ -108,7 +99,7 @@ switch ($op) {
             switch ($option[$i]['conf_formtype']) {
                 case 'yesno':
                     if ($xoopsModuleConfig['flagdir'] === '' && $option[$i]['conf_name'] === 'opt_country') {
-                        $title .= '<br><span style="font-weight:normal;">' . _AM_XFGB_WARNING_MSG2 . '</span>';
+                        $title .= '<br><span style="font-weight:normal;">' . AM_XFGB_WARNING_MSG2 . '</span>';
                     }
                     $ele = new XoopsFormRadioYN($title, $option[$i]['conf_name'], $option[$i]['conf_value'], _YES, _NO);
                     break;
@@ -117,17 +108,17 @@ switch ($op) {
                     break;
                 case 'selectmail':
                     $ele     = new XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
-                    $options = array(0 => _AM_XFGB_SEL_R0, 1 => _AM_XFGB_SEL_R1, 2 => _AM_XFGB_SEL_R2);
+                    $options = [0 => AM_XFGB_SEL_R0, 1 => AM_XFGB_SEL_R1, 2 => AM_XFGB_SEL_R2];
                     $ele->addOptionArray($options);
                     break;
                 case 'selectaction':
                     $ele     = new XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
-                    $options = array(0 => _AM_XFGB_SEL_A0, 1 => _AM_XFGB_SEL_A1, 2 => _AM_XFGB_SEL_A2);
+                    $options = [0 => AM_XFGB_SEL_A0, 1 => AM_XFGB_SEL_A1, 2 => AM_XFGB_SEL_A2];
                     $ele->addOptionArray($options);
                     break;
                 case 'selectwebsite':
                     $ele     = new XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
-                    $options = array(0 => _AM_XFGB_SEL_W0, 1 => _AM_XFGB_SEL_W1, 2 => _AM_XFGB_SEL_W2);
+                    $options = [0 => AM_XFGB_SEL_W0, 1 => AM_XFGB_SEL_W1, 2 => AM_XFGB_SEL_W2];
                     $ele->addOptionArray($options);
                     break;
             }

@@ -50,14 +50,14 @@ CREATE TABLE `xfguestbook_config` (
 # Contenu de la table `xfguestbook_config`
 #
 
-INSERT INTO `xfguestbook_config` VALUES (1, 2, 'opt_mail', '_AM_XFGB_MAILTRUE', '', '1', 'selectmail', 'int', 1);
-INSERT INTO `xfguestbook_config` VALUES (2, 2, 'opt_gender', '_AM_XFGB_GENDER_OPT', '', '1', 'yesno', 'int', 2);
-INSERT INTO `xfguestbook_config` VALUES (3, 2, 'opt_country', '_AM_XFGB_COUNTRY_OPT', '', '1', 'yesno', 'text', 3);
-INSERT INTO `xfguestbook_config` VALUES (4, 2, 'opt_icon', '_AM_XFGB_OPT1', '', '1', 'yesno', 'int', 5);
-INSERT INTO `xfguestbook_config` VALUES (7, 2, 'opt_url', '_AM_XFGB_URL_OPT', '', '1', 'selectaction', 'int', 8);
-INSERT INTO `xfguestbook_config` VALUES (8, 2, 'opt_code', '_AM_XFGB_CODE_OPT', '', '0', 'yesno', 'int', 9);
-INSERT INTO `xfguestbook_config` VALUES (9, 2, 'countrybydefault', '_AM_XFGB_COUNTRYDEF', '', '', 'selectcountry', 'text', 4);
-INSERT INTO `xfguestbook_config` VALUES (10, 2, 'opt_website', '_AM_XFGB_WEBSITE_OPT', '', '2', 'selectwebsite', 'int', 10);
+INSERT INTO `xfguestbook_config` VALUES (1, 2, 'opt_mail', 'AM_XFGB_MAILTRUE', '', '1', 'selectmail', 'int', 1);
+INSERT INTO `xfguestbook_config` VALUES (2, 2, 'opt_gender', 'AM_XFGB_GENDER_OPT', '', '1', 'yesno', 'int', 2);
+INSERT INTO `xfguestbook_config` VALUES (3, 2, 'opt_country', 'AM_XFGB_COUNTRY_OPT', '', '1', 'yesno', 'text', 3);
+INSERT INTO `xfguestbook_config` VALUES (4, 2, 'opt_icon', 'AM_XFGB_OPT1', '', '1', 'yesno', 'int', 5);
+INSERT INTO `xfguestbook_config` VALUES (7, 2, 'opt_url', 'AM_XFGB_URL_OPT', '', '1', 'selectaction', 'int', 8);
+INSERT INTO `xfguestbook_config` VALUES (8, 2, 'opt_code', 'AM_XFGB_CODE_OPT', '', '0', 'yesno', 'int', 9);
+INSERT INTO `xfguestbook_config` VALUES (9, 2, 'countrybydefault', 'AM_XFGB_COUNTRYDEF', '', '', 'selectcountry', 'text', 4);
+INSERT INTO `xfguestbook_config` VALUES (10, 2, 'opt_website', 'AM_XFGB_WEBSITE_OPT', '', '2', 'selectwebsite', 'int', 10);
 
 #
 # Structure de la table `xfguestbook_country`

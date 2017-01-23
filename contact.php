@@ -46,11 +46,7 @@ $option = getOptions();
  */
 function displaypost($title, $content)
 {
-    echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">'
-         . $title
-         . '</td></tr><tr><td><br>'
-         . $content
-         . '<br></td></tr></table>';
+    echo '<table cellpadding="4" cellspacing="1" width="98%" class="outer"><tr><td class="head">' . $title . '</td></tr><tr><td><br>' . $content . '<br></td></tr></table>';
 }
 
 switch ($op) {
@@ -67,28 +63,28 @@ switch ($op) {
                 redirect_header('index.php', 3, $xoopsCaptcha->getMessage());
             }
         }
-        $fullmsg = _MD_XFGB_FROMUSER . " $name_user " . _MD_XFGB_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br><br>';
+        $fullmsg = MD_XFGB_FROMUSER . " $name_user " . MD_XFGB_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br><br>';
         $fullmsg .= $title . '<br>';
         $fullmsg .= '<hr><br>';
         $fullmsg .= "$message<br><br>";
         $fullmsg .= '<hr><br>';
-        $fullmsg .= _MD_XFGB_CANJOINT . ' [email]' . $email_user . '[/email]';
+        $fullmsg .= MD_XFGB_CANJOINT . ' [email]' . $email_user . '[/email]';
 
         $xoopsMailer =& xoops_getMailer();
         $xoopsMailer->useMail();
         $xoopsMailer->setFromEmail($email_user);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);
         $xoopsMailer->setToEmails($email_author);
-        $xoopsMailer->setSubject(_MD_XFGB_CONTACTAFTERMSG);
+        $xoopsMailer->setSubject(MD_XFGB_CONTACTAFTERMSG);
         $xoopsMailer->multimailer->isHTML(true);
         $xoopsMailer->setBody($ts->xoopsCodeDecode($fullmsg));
         $msgsend = "<div style='text-align:center;'><br><br>";
         if (!$xoopsMailer->send()) {
             $msgsend .= $xoopsMailer->getErrors();
         } else {
-            $msgsend .= '<h4>' . _MD_XFGB_MSGSEND . '</h4>';
+            $msgsend .= '<h4>' . MD_XFGB_MSGSEND . '</h4>';
         }
-        $msgsend .= "<br><br><a href=\"javascript:window.close();\">" . _MD_XFGB_CLOSEWINDOW . '</a></div>';
+        $msgsend .= '<br><br><a href="javascript:window.close();">' . MD_XFGB_CLOSEWINDOW . '</a></div>';
         echo $msgsend;
         break;
 
@@ -106,12 +102,12 @@ switch ($op) {
         }
         $p_title = $title;
         $p_title = $ts->htmlSpecialChars($ts->stripSlashesGPC($p_title));
-        $p_msg   = _MD_XFGB_FROMUSER . " $name_user " . _MD_XFGB_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br>';
-        $p_msg .= $title . '<br>';
-        $p_msg .= '<hr><br>';
-        $p_msg .= $message . '<br><br>';
-        $p_msg .= '<hr><br>';
-        $p_msg .= _MD_XFGB_CANJOINT . " $email_user";
+        $p_msg   = MD_XFGB_FROMUSER . " $name_user " . MD_XFGB_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br>';
+        $p_msg   .= $title . '<br>';
+        $p_msg   .= '<hr><br>';
+        $p_msg   .= $message . '<br><br>';
+        $p_msg   .= '<hr><br>';
+        $p_msg   .= MD_XFGB_CANJOINT . " $email_user";
 
         $p_msg .= '<br>';
         displaypost($p_title, $p_msg);

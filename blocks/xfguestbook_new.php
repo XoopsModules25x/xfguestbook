@@ -41,7 +41,7 @@ function b_xfguestbook_show($options)
         $config =& $xoopsModuleConfig;
     }
 
-    $block = array();
+    $block = [];
     if (0 != $options[1]) {
         $block['full_view'] = true;
     } else {
@@ -55,7 +55,7 @@ function b_xfguestbook_show($options)
     $criteria->setLimit($options[0]);
     $nbmsg = $msg_hnd->countMsg($criteria);
 
-    $a_item = array();
+    $a_item = [];
 
     if ($nbmsg > 0) {
         $msg = $msg_hnd->getObjects($criteria);
@@ -88,9 +88,9 @@ function b_xfguestbook_show($options)
  */
 function b_xfguestbook_edit($options)
 {
-    $form = '' . _MB_XFGB_DISP . '&nbsp;';
-    $form .= "<input type=\"text\" name=\"options[]\" value=\"" . $options[0] . "\" />&nbsp;" . _MB_XFGB_NBMSG . '';
-    $form .= '&nbsp;<br>' . _MB_XFGB_CHARS . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . "' />&nbsp;" . _MB_XFGB_LENGTH . '';
+    $form = '' . MB_XFGB_DISP . '&nbsp;';
+    $form .= '<input type="text" name="options[]" value="' . $options[0] . '" />&nbsp;' . MB_XFGB_NBMSG . '';
+    $form .= '&nbsp;<br>' . MB_XFGB_CHARS . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . '\' />&nbsp;' . MB_XFGB_LENGTH . '';
 
     return $form;
 }

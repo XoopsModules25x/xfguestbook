@@ -22,42 +22,56 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-$dirname       = basename(dirname(__DIR__));
-/** @var XoopsModuleHandler $moduleHandler */
-$moduleHandler = xoops_getHandler('module');
-$xoopsModule   = $moduleHandler->getByDirname($dirname);
-$pathIcon32    = $xoopsModule->getInfo('icons32');
+
+include_once __DIR__ . '/admin_header.php';
+
+if (!isset($moduleDirName)) {
+    $moduleDirName = basename(dirname(__DIR__));
+}
+
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
+
+$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');
 
 $i                      = 1;
-$adminmenu[$i]['title'] = _MI_XFGB_ADMIN_HOME;
+$adminmenu[$i]['title'] = MI_XFGB_ADMIN_HOME;
 $adminmenu[$i]['link']  = 'admin/index.php';
-$adminmenu[$i]['desc']  = _MI_XFGB_ADMIN_HOME_DESC;
-$adminmenu[$i]['icon']  = '../../' . $pathIcon32 . '/home.png';
+$adminmenu[$i]['desc']  = MI_XFGB_ADMIN_HOME_DESC;
+$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
 $i++;
-$adminmenu[$i]['title'] = _MI_XFGB_MSG_MANAGE;
+$adminmenu[$i]['title'] = MI_XFGB_MSG_MANAGE;
 $adminmenu[$i]['link']  = 'admin/main.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/manage.png';
 $i++;
-$adminmenu[$i]['title'] = _MI_XFGB_CONF_FORM;
+$adminmenu[$i]['title'] = MI_XFGB_CONF_FORM;
 $adminmenu[$i]['link']  = 'admin/config.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/config.png';
 $i++;
-$adminmenu[$i]['title'] = _MI_XFGB_COUNTRYMANAGE;
+$adminmenu[$i]['title'] = MI_XFGB_COUNTRYMANAGE;
 $adminmenu[$i]['link']  = 'admin/country_manager.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/flag.png';
 $i++;
-$adminmenu[$i]['title'] = _AM_XFGB_INSTALL_IMG;
+$adminmenu[$i]['title'] = AM_XFGB_INSTALL_IMG;
 $adminmenu[$i]['link']  = 'admin/flags_install.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/flag_in.png';
 $i++;
-$adminmenu[$i]['title'] = _AM_XFGB_IMG_MANAGER;
+$adminmenu[$i]['title'] = AM_XFGB_IMG_MANAGER;
 $adminmenu[$i]['link']  = 'admin/img_manager.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/image.png';
 $i++;
-$adminmenu[$i]['title'] = _AM_XFGB_IP;
+$adminmenu[$i]['title'] = MI_XFGB_IP;
 $adminmenu[$i]['link']  = 'admin/ip_manager.php';
 $adminmenu[$i]['icon']  = 'assets/images/admin/stop.png';
 $i++;
-$adminmenu[$i]['title'] = _MI_XFGB_ADMIN_ABOUT;
+$adminmenu[$i]['title'] = MI_XFGB_ADMIN_ABOUT;
 $adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['icon']  = '../../' . $pathIcon32 . '/about.png';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';

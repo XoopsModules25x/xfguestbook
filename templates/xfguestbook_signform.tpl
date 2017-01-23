@@ -1,7 +1,7 @@
 <{$signform.javascript}>
 <script>
     function test_other(valeur) {
-        if (valeur == "other") {
+        if (valeur === "other") {
             document.getElementById('other_caption').style.display = "block";
             document.getElementById('other_tbox').style.display = "block";
         }
@@ -44,7 +44,7 @@
         <{if $signform.elements.country.body}>
             <tr>
                 <td class="head"><{$signform.elements.country.caption}>
-                    <div style="display:none;" id="other_caption"><br><{$smarty.const._MD_XFGB_OTHER_CAPTION}></div>
+                    <div style="display:none;" id="other_caption"><br><{$smarty.const.MD_XFGB_OTHER_CAPTION}></div>
                 </td>
                 <td class="<{cycle values='even,odd'}>"><{$signform.elements.country.body}>
                     <div style="display:none;" id="other_tbox"><br><{$signform.elements.other.body}></div>
@@ -62,7 +62,7 @@
             </tr>
         <{/if}>
         <tr>
-            <th colspan="2"><{$smarty.const._MD_XFGB_HEADMSG}></th>
+            <th colspan="2"><{$smarty.const.MD_XFGB_HEADMSG}></th>
         </tr>
         <tr>
             <td class="head"><{$signform.elements.title.caption}></td>
@@ -73,7 +73,7 @@
                 <{if $nofollow}>
                     <br>
                     <br>
-                    <{$smarty.const._MD_XFGB_NOFOLLOW_MSG}>
+                    <{$smarty.const.MD_XFGB_NOFOLLOW_MSG}>
                 <{/if}>
             </td>
             <td class="<{cycle values='even,odd'}>"><{$signform.elements.message.body}></td>
@@ -86,11 +86,11 @@
         <{/if}>
         <{if $confirm_image}>
             <tr>
-                <td class="head"><{$smarty.const._MD_XFGB_CONFIRM_CODE_DESC}></td>
+                <td class="head"><{$smarty.const.MD_XFGB_CONFIRM_CODE_DESC}></td>
                 <td class="<{cycle values='even,odd'}>"><{$confirm_image}>
             </tr>
             <tr>
-                <td class="head"><{$smarty.const._MD_XFGB_CONFIRM_CODE}></td>
+                <td class="head"><{$smarty.const.MD_XFGB_CONFIRM_CODE}></td>
                 <td class="<{cycle values='even,odd'}>"><{$signform.elements.confirm_code.body}>
             </tr>
             <{$signform.elements.confirm_str.body}>

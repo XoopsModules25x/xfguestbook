@@ -53,7 +53,7 @@ function xfguestbook_admin_menu($currentoption = 0, $breadcrumb = '')
     global $xoopsModule, $xoopsConfig;
     $myts = MyTextSanitizer::getInstance();
 
-    $tblColors                 = array();
+    $tblColors                 = [];
     $tblColors[0]              = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] = $tblColors[7] = $tblColors[8] = '';
     $tblColors[$currentoption] = 'current';
     //    if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
@@ -64,73 +64,25 @@ function xfguestbook_admin_menu($currentoption = 0, $breadcrumb = '')
     xoops_loadLanguage('modinfo', $xoopsModule->getVar('dirname'));
 
     echo "<div id='buttontop'>";
-    echo "<table style=\"width: 100%; padding: 0; \" cellspacing=\"0\"><tr>";
+    echo '<table style="width: 100%; padding: 0; " cellspacing="0"><tr>';
     //echo "<td style=\"width: 45%; font-size: 10px; text-align: left; color: #2F5376; padding: 0 6px; line-height: 18px;\"><a class=\"nobutton\" href=\"../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=" . $xoopsModule->getVar('mid') . "\">" . _AM_SF_OPTS . "</a> | <a href=\"import.php\">" . _AM_SF_IMPORT . "</a> | <a href=\"../index.php\">" . _AM_SF_GOMOD . "</a> | <a href=\"../help/index.html\" target=\"_blank\">" . _AM_SF_HELP . "</a> | <a href=\"about.php\">" . _AM_SF_ABOUT . "</a></td>";
     echo "<td style='font-size: 10px; text-align: left; color: #2F5376; padding: 0 6px; line-height: 18px;'>
-      <a class='nobutton' href='"
-         . XOOPS_URL
-         . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod='
-         . $xoopsModule->getVar('mid')
-         . "'>"
-         . _AM_XFGB_GENERALSET
-         . "</a>
-    | <a href='"
-         . XOOPS_URL
-         . "/modules/xfguestbook/index.php'>"
-         . _AM_XFGB_GOINDEX
-         . "</a>
-    | <a href='"
-         . XOOPS_URL
-         . "/modules/xfguestbook/admin/flags_install.php'>"
-         . _AM_XFGB_INSTALL_IMG
-         . "</a>
-    | <a href='"
-         . XOOPS_URL
-         . "/modules/xfguestbook/admin/upgrade.php'>"
-         . _AM_XFGB_UPGRADE
-         . "</a>
-    | <a href='"
-         . XOOPS_URL
-         . "/modules/xfguestbook/admin/img_manager.php'>"
-         . _AM_XFGB_MSGIMG
-         . '</a>
+      <a class='nobutton' href='" . XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $xoopsModule->getVar('mid') . '\'>' . AM_XFGB_GENERALSET . "</a>
+    | <a href='" . XOOPS_URL . "/modules/xfguestbook/index.php'>" . AM_XFGB_GOINDEX . "</a>
+    | <a href='" . XOOPS_URL . "/modules/xfguestbook/admin/flags_install.php'>" . AM_XFGB_INSTALL_IMG . "</a>
+    | <a href='" . XOOPS_URL . "/modules/xfguestbook/admin/upgrade.php'>" . AM_XFGB_UPGRADE . "</a>
+    | <a href='" . XOOPS_URL . "/modules/xfguestbook/admin/img_manager.php'>" . AM_XFGB_MSGIMG . '</a>
     </td>';
-    echo "<td style='font-size: 10px; text-align: right; color: #2F5376; padding: 0 6px; line-height: 18px;'><b>"
-         . $myts->displayTarea($xoopsModule->name())
-         . ' </b> </td>';
+    echo "<td style='font-size: 10px; text-align: right; color: #2F5376; padding: 0 6px; line-height: 18px;'><b>" . $myts->displayTarea($xoopsModule->name()) . ' </b> </td>';
     echo '</tr></table>';
     echo '</div>';
 
     echo "<div id='buttonbar'>";
     echo '<ul>';
-    echo "<li id='"
-         . $tblColors[0]
-         . "'><a href=\""
-         . XOOPS_URL
-         . "/modules/xfguestbook/admin/index.php\"><span>"
-         . _AM_XFGB_MSGMANAGE
-         . '</span></a></li>';
-    echo "<li id='"
-         . $tblColors[1]
-         . "'><a href=\""
-         . XOOPS_URL
-         . "/modules/xfguestbook/admin/config.php\"><span>"
-         . _AM_XFGB_FORMOPT
-         . '</span></a></li>';
-    echo "<li id='"
-         . $tblColors[2]
-         . "'><a href=\""
-         . XOOPS_URL
-         . "/modules/xfguestbook/admin/country_manager.php\"><span>"
-         . _AM_XFGB_COUNTRYMANAGE
-         . '</span></a></li>';
-    echo "<li id='"
-         . $tblColors[3]
-         . "'><a href=\""
-         . XOOPS_URL
-         . "/modules/xfguestbook/admin/ip_manager.php\"><span>"
-         . _AM_XFGB_BADIPSMANAGE
-         . '</span></a></li>';
+    echo "<li id='" . $tblColors[0] . '\'><a href="' . XOOPS_URL . '/modules/xfguestbook/admin/index.php"><span>' . AM_XFGB_MSGMANAGE . '</span></a></li>';
+    echo "<li id='" . $tblColors[1] . '\'><a href="' . XOOPS_URL . '/modules/xfguestbook/admin/config.php"><span>' . AM_XFGB_FORMOPT . '</span></a></li>';
+    echo "<li id='" . $tblColors[2] . '\'><a href="' . XOOPS_URL . '/modules/xfguestbook/admin/country_manager.php"><span>' . AM_XFGB_COUNTRYMANAGE . '</span></a></li>';
+    echo "<li id='" . $tblColors[3] . '\'><a href="' . XOOPS_URL . '/modules/xfguestbook/admin/ip_manager.php"><span>' . AM_XFGB_BADIPSMANAGE . '</span></a></li>';
     echo '</ul></div>&nbsp;';
 }
 
@@ -155,7 +107,7 @@ function executeSQL($sql_file_path)
         $sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
         $sql_query = trim($sql_query);
         SqlUtility::splitMySqlFile($pieces, $sql_query);
-        $created_tables = array();
+        $created_tables = [];
         foreach ($pieces as $piece) {
             // [0] contains the prefixed query
             // [4] contains unprefixed table name

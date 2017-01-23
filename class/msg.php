@@ -110,7 +110,7 @@ class XfguestbookMsgHandler
      * @param $msg
      * @return bool
      */
-    public function insert($msg)
+    public function insert(XoopsObject $msg)
     {
         if ('xfguestbookmsg' !== strtolower(get_class($msg))) {
             return false;
@@ -229,13 +229,13 @@ class XfguestbookMsgHandler
      */
     public function &getObjects($criteria = null)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('xfguestbook_msg');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' ' . $criteria->renderWhere();
-            $sort = ($criteria->getSort() !== '') ? $criteria->getSort() : 'msg_id';
-            $sql .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
+            $sql   .= ' ' . $criteria->renderWhere();
+            $sort  = ($criteria->getSort() !== '') ? $criteria->getSort() : 'msg_id';
+            $sql   .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
@@ -277,7 +277,7 @@ class XfguestbookMsgHandler
      */
     public function countMsgByCountry($criteria = null)
     {
-        $arr = array();
+        $arr = [];
         $sql = 'SELECT country, flagdir FROM ' . $this->db->prefix('xfguestbook_msg');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
@@ -300,7 +300,7 @@ class XfguestbookMsgHandler
      */
     public function countMsgByGender($criteria = null)
     {
-        $arr = array();
+        $arr = [];
         $sql = 'SELECT gender FROM ' . $this->db->prefix('xfguestbook_msg');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
@@ -322,7 +322,7 @@ class XfguestbookMsgHandler
      */
     public function getMsgImg($criteria = null)
     {
-        $arr = array();
+        $arr = [];
         $sql = 'SELECT photo FROM ' . $this->db->prefix('xfguestbook_msg') . " WHERE `photo` LIKE 'msg_%'";
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();

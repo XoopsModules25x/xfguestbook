@@ -18,45 +18,33 @@
  * @author       XOOPS Development Team
  */
 
-require_once __DIR__ . '/../../../mainfile.php';
-require_once __DIR__ . '/../../../include/cp_functions.php';
-require __DIR__ . '/../../../include/cp_header.php';
-include_once __DIR__ . '/../../../kernel/module.php';
-xoops_load('XoopsRequest');
-
-if ($xoopsUser) {
-    $xoopsModule = XoopsModule::getByDirname('xfguestbook');
-    if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
-        redirect_header(XOOPS_URL . '/', 3, _NOPERM);
-    }
-} else {
-    redirect_header(XOOPS_URL . '/', 3, _NOPERM);
+include_once __DIR__ . '/../../../include/cp_header.php';
+include_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
+if (!isset($moduleDirName)) {
+    $moduleDirName = basename(dirname(__DIR__));
 }
 
-include_once $GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/moduleadmin.php');
-/** @var XoopsModuleHandler $moduleHandler */
-$moduleHandler = xoops_getHandler('module');
-$moduleInfo    = $moduleHandler->get($xoopsModule->getVar('mid'));
-$pathIcon16    = XOOPS_URL . '/' . $moduleInfo->getInfo('icons16');
-$pathIcon32    = XOOPS_URL . '/' . $moduleInfo->getInfo('icons32');
+xoops_load('XoopsRequest');
+
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
+
+$pathIcon16      = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+
+// Load language files
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');
+xoops_loadLanguage('user');
 
 $myts = MyTextSanitizer::getInstance();
 
-if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
-    include_once XOOPS_ROOT_PATH . '/class/template.php';
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    include_once $GLOBALS['xoops']->path('class/template.php');
     $xoopsTpl = new XoopsTpl();
-}
-
-//xoops_cp_header();
-
-//Load languages
-$thisModDir = $xoopsModule->getVar('dirname', 'n');
-xoops_loadLanguage('admin', $thisModDir);
-xoops_loadLanguage('modinfo', $thisModDir);
-xoops_loadLanguage('main', $thisModDir);
-
-xoops_loadLanguage('user');
-if (!isset($GLOBALS['xoopsTpl']) || !is_object($GLOBALS['xoopsTpl'])) {
-    include_once $GLOBALS['xoops']->path('/class/template.php');
-    $GLOBALS['xoopsTpl'] = new XoopsTpl();
 }

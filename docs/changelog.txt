@@ -1,3 +1,20 @@
+3.20. Beta 1      NOT RELEASED
+---------------------------
+- Hardening to type safe (mamba)
+- update Help (mamba)
+- changed _handler to Handler (mamba)
+- changed to ->renderButton('left') (mamba)
+- removed '/' from void HTML elements (&lt;br&gt;, &lt;img&gt;, etc) (mamba)
+- HTML 5: removed 'selected' and 'checked' (mamba)
+- short array syntax (mamba)
+- added install checks for PHP 5.5 and XOOPS 2.5.8 (mamba)
+- added auto-creation of upload folders (mamba)
+
+- moved functions to Util class (mamba)
+
+- moved all images, CSS, and JS files to /assets (mamba)
+- renamed .html Smarty templates to .tpl (mamba)
+
 3.10. FINAL      2016-10-18
 ---------------------------
 - fixed submission bug (safeinsanity/mamba)

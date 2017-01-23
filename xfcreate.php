@@ -24,7 +24,7 @@
 
 include __DIR__ . '/../../mainfile.php';
 if (!is_object($xoopsUser) && 1 != $xoopsModuleConfig['anonsign']) {
-    redirect_header(XOOPS_URL . '/user.php', 2, _MD_XFGB_MUSTREGFIRST);
+    redirect_header(XOOPS_URL . '/user.php', 2, MD_XFGB_MUSTREGFIRST);
 }
 
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
@@ -77,11 +77,11 @@ switch ($op) {
             }
         }*/
         if (2 == $option['opt_url'] && preg_match('/(http)|(www)/i', $message)) {
-            $msgstop .= _MD_XFGB_URL_DISABLED . '<br>';
+            $msgstop .= MD_XFGB_URL_DISABLED . '<br>';
         }
 
         if ('' !== $email && !checkEmail($email)) {
-            $msgstop .= _MD_XFGB_INVALIDMAIL . '<br>';
+            $msgstop .= MD_XFGB_INVALIDMAIL . '<br>';
         }
         if (!empty($_FILES['photo']['name'])) {
             xfgb_upload();
@@ -109,32 +109,25 @@ switch ($op) {
             $msgpost['gender'] = '<img src="assets/images/' . $gender . '.gif"';
         }
         if ($email) {
-            $msgpost['email'] = "<img src=\"" . XOOPS_URL . "/images/icons/email.gif\" alt=\"" . _SENDEMAILTO . "\" />";
+            $msgpost['email'] = '<img src="' . XOOPS_URL . '/images/icons/email.gif" alt="' . _SENDEMAILTO . '" />';
         }
         if ($url) {
             $msgpost['url'] = '<img src="' . XOOPS_URL . '/images/icons/www.gif" alt="' . _VISITWEBSITE . '">';
         }
         if ($country) {
-            $flag         = XOOPS_ROOT_PATH
-                            . '/modules/'
-                            . $xoopsModule->dirname()
-                            . '/assets/images/flags/'
-                            . $xoopsModuleConfig['flagdir']
-                            . '/'
-                            . $country
-                            . '.gif';
-            $arr_country  = xfgb_getCountry("country_code ='" . $country . "'");
+            $flag         = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country . '.gif';
+            $arr_country  = xfgb_getCountry("country_code ='" . $country . '\'');
             $country_name = (count($arr_country) > 0) ? $arr_country[0]['country_name'] : '';
             if (file_exists($flag)) {
-                $msgpost['country'] = "<img src=\""
+                $msgpost['country'] = '<img src="'
                                       . XOOPS_URL
                                       . '/modules/xfguestbook/assets/images/flags/'
                                       . $xoopsModuleConfig['flagdir']
                                       . '/'
                                       . $country
-                                      . ".gif\" alt=\""
+                                      . '.gif" alt="'
                                       . $country_name
-                                      . "\">";
+                                      . '">';
             } else {
                 $msgpost['country'] = $country_name;
             }
@@ -162,13 +155,13 @@ switch ($op) {
             redirect_header('index.php', 2, '');
         }
         if (2 == $option['opt_url'] && preg_match('/(http)|(www)/i', $message)) {
-            $msgstop .= _MD_XFGB_URL_DISABLED . '<br><br>';
+            $msgstop .= MD_XFGB_URL_DISABLED . '<br><br>';
         }
         if (!email_exist($email)) {
-            $msgstop .= _MD_XFGB_INVALIDMAIL . '<br><br>';
+            $msgstop .= MD_XFGB_INVALIDMAIL . '<br><br>';
         }
         if ('' !== $email && !checkEmail($email)) {
-            $msgstop .= _MD_XFGB_INVALIDMAIL . '<br><br>';
+            $msgstop .= MD_XFGB_INVALIDMAIL . '<br><br>';
         }
         if (!empty($_FILES['photo']['name'])) {
             xfgb_upload();
@@ -215,23 +208,23 @@ switch ($op) {
             $msgpost->setVar('moderate', $xoopsModuleConfig['moderate']);
         }
         $nb_removed_tmp = xfgb_clear_tmp_files($photos_dir);
-        $messagesent    = _MD_XFGB_MESSAGESENT;
+        $messagesent    = MD_XFGB_MESSAGESENT;
 
         if ($msgHandler->insert($msgpost)) {
             if ($badip || $xoopsModuleConfig['moderate']) {
-                $messagesent .= '<br>' . _MD_XFGB_AFTERMODERATE;
+                $messagesent .= '<br>' . MD_XFGB_AFTERMODERATE;
             }
 
             // Send mail to webmaster
             if (1 == $xoopsModuleConfig['sendmail2wm']) {
-                $subject     = $xoopsConfig['sitename'] . ' - ' . _MD_XFGB_NAMEMODULE;
+                $subject     = $xoopsConfig['sitename'] . ' - ' . MD_XFGB_NAMEMODULE;
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->useMail();
                 $xoopsMailer->setToEmails($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromName($xoopsConfig['sitename']);
                 $xoopsMailer->setSubject($subject);
-                $xoopsMailer->setBody(_MD_XFGB_NEWMESSAGE . ' ' . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/');
+                $xoopsMailer->setBody(MD_XFGB_NEWMESSAGE . ' ' . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/');
                 if (!$xoopsMailer->send()) {
                     echo $xoopsMailer->getErrors();
                 }
@@ -259,7 +252,7 @@ switch ($op) {
             $xoopsCaptcha = XoopsCaptcha::getInstance();
         }
         if ($badip || $xoopsModuleConfig['moderate']) {
-            $xoopsTpl->assign('moderate', _MD_XFGB_MODERATED);
+            $xoopsTpl->assign('moderate', MD_XFGB_MODERATED);
         }
 
         include __DIR__ . '/include/form_sign.inc.php';
