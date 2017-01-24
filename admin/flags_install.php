@@ -1,5 +1,5 @@
 <?php
-// $Id: flag_install.php, v 1.0 2005/08/06 C. Felix AKA the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -23,10 +23,10 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once dirname(__DIR__) . '/include/cp_functions.php';
-include_once dirname(__DIR__) . '/include/functions.php';
 include_once __DIR__ . '/admin_header.php';
+include_once __DIR__ . '/../include/cp_functions.php';
+require __DIR__ . '/../class/util.php';
+
 
 if (!isset($_POST['flagdir'])) {
     xoops_cp_header();
@@ -34,23 +34,23 @@ if (!isset($_POST['flagdir'])) {
     echo $index_admin->addNavigation(basename(__FILE__));
     include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $form    = new XoopsThemeForm(_AM_XFGB_INSTALL_FLAGS, 'selectflag', $_SERVER['PHP_SELF']);
-    $sel_box = new XoopsFormSelect(_AM_XFGB_SELECT_PACK, 'flagdir', $xoopsModuleConfig['flagdir']);
+    $form    = new XoopsThemeForm(AM_XFGUESTBOOK_INSTALL_FLAGS, 'selectflag', $_SERVER['PHP_SELF']);
+    $sel_box = new XoopsFormSelect(AM_XFGUESTBOOK_SELECT_PACK, 'flagdir', $xoopsModuleConfig['flagdir']);
     $sel_box->addOption('', _NONE);
     $sel_box->addOptionArray(XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/'));
     $form->addElement($sel_box);
 
     $button_tray = new XoopsFormElementTray('', '');
-    $button_tray->addElement(new XoopsFormButton('', 'post', _SEND, 'submit'));
+    $button_tray->addElement(new XoopsFormButton('', 'post', _SUBMIT, 'submit'));
     $button_cancel = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
-    $button_cancel->setExtra("' onclick='javascript: history.go(-1)'");
+    $button_cancel->setExtra('\' onclick=\'javascript: history.go(-1)\'');
     $button_tray->addElement($button_cancel);
     $form->addElement($button_tray);
 
     $form->display();
-    if (count(xfgb_getCountry()) > 0) {
-        $msg = sprintf(_AM_XFGB_WARNING_MSG1, $xoopsDB->prefix('xfguestbook_country'));
-        echo _AM_XFGB_WARNING . '<br>' . $msg . '&nbsp;';
+    if (count(XfguestbookUtil::getCountry()) > 0) {
+        $msg = sprintf(AM_XFGUESTBOOK_WARNING_MSG1, $xoopsDB->prefix('xfguestbook_country'));
+        echo AM_XFGUESTBOOK_WARNING . '<br>' . $msg . '&nbsp;';
     }
     //xoops_cp_footer();
     echo '<br><br>';
@@ -68,24 +68,24 @@ if (!isset($_POST['flagdir'])) {
     echo 'Table <b>' . $xoopsDB->prefix('xfguestbook_country') . '</b> deleted.<br>';
     if ($flagdir !== '') {
         $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $flagdir . '/flags_data.sql';
-        $msg .= executeSQL($sqlfile);
+        $msg     .= executeSQL($sqlfile);
     }
     if ($msg === '') {
-        $config_handler = xoops_getHandler('config');
-        $criteria       = new CriteriaCompo(new Criteria('conf_modid', $xoopsModule->mid()));
+        $configHandler = xoops_getHandler('config');
+        $criteria      = new CriteriaCompo(new Criteria('conf_modid', $xoopsModule->mid()));
         $criteria->add(new Criteria('conf_name', 'flagdir'));
-        $config =& $config_handler->getConfigs($criteria);
-        $value  = array($config[0]->getConfValueForOutput());
+        $config = $configHandler->getConfigs($criteria);
+        $value  = [$config[0]->getConfValueForOutput()];
         $config[0]->setVar('conf_value', $flagdir);
         //  $config[0]->setConfValueForInput($value[0]);
-        if (!$config_handler->insertConfig($config[0])) {
+        if (!$configHandler->insertConfig($config[0])) {
             $msg .= 'Could not insert flagdir config <br>';
         }
         echo $msg;
-        echo '<br>&nbsp;<a href = "' . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/admin/config.php">' . _AM_XFGB_GOFORMOPT . '</a>';
+        echo '<br>&nbsp;<a href = "' . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/admin/config.php">' . AM_XFGUESTBOOK_GOFORMOPT . '</a>';
     } else {
-        echo sprintf(_AM_XFGB_ERROR_FLAGS, $flagdir, $xoopsDB->prefix('xfguestbook_country'));
-        echo '<br><br>&nbsp;<a href = "' . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/admin/upgrade.php">' . _AM_XFGB_GO_UPGRADE . '</a>';
+        echo sprintf(AM_XFGUESTBOOK_ERROR_FLAGS, $flagdir, $xoopsDB->prefix('xfguestbook_country'));
+        echo '<br><br>&nbsp;<a href = "' . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/admin/upgrade.php">' . AM_XFGUESTBOOK_GO_UPGRADE . '</a>';
     }
     //xoops_cp_footer();
     echo '<br><br>';

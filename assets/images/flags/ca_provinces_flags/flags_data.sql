@@ -1,4 +1,3 @@
-
 INSERT INTO `xfguestbook_country` VALUES (1, 'ca-bc', 'British Columbia');
 INSERT INTO `xfguestbook_country` VALUES (2, 'ca-ab', 'Alberta');
 INSERT INTO `xfguestbook_country` VALUES (3, 'ca-sk', 'Saskatchewan');

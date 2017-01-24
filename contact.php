@@ -1,5 +1,5 @@
 <?php
-// $Id: contact.php,v 1.11 2004/12/02 C. Felix AKA the Cat
+//
 // ------------------------------------------------------------------------- //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -22,7 +22,7 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //---------------------------------------------------------------------------//
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+include __DIR__ . '/../../mainfile.php';
 $op = 'form';
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
@@ -36,8 +36,8 @@ if (isset($preview)) {
 } elseif (isset($post)) {
     $op = 'post';
 }
-include_once(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/functions.php');
-include_once('include/config.inc.php');
+include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/util.php';
+include_once __DIR__ . '/include/config.inc.php';
 $option = getOptions();
 
 /**
@@ -63,28 +63,28 @@ switch ($op) {
                 redirect_header('index.php', 3, $xoopsCaptcha->getMessage());
             }
         }
-        $fullmsg = _MD_XFGB_FROMUSER . " $name_user " . _MD_XFGB_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br><br>';
+        $fullmsg = MD_XFGUESTBOOK_FROMUSER . " $name_user " . MD_XFGUESTBOOK_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br><br>';
         $fullmsg .= $title . '<br>';
         $fullmsg .= '<hr><br>';
         $fullmsg .= "$message<br><br>";
         $fullmsg .= '<hr><br>';
-        $fullmsg .= _MD_XFGB_CANJOINT . ' [email]' . $email_user . '[/email]';
+        $fullmsg .= MD_XFGUESTBOOK_CANJOINT . ' [email]' . $email_user . '[/email]';
 
         $xoopsMailer =& xoops_getMailer();
         $xoopsMailer->useMail();
         $xoopsMailer->setFromEmail($email_user);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);
         $xoopsMailer->setToEmails($email_author);
-        $xoopsMailer->setSubject(_MD_XFGB_CONTACTAFTERMSG);
+        $xoopsMailer->setSubject(MD_XFGUESTBOOK_CONTACTAFTERMSG);
         $xoopsMailer->multimailer->isHTML(true);
         $xoopsMailer->setBody($ts->xoopsCodeDecode($fullmsg));
         $msgsend = "<div style='text-align:center;'><br><br>";
         if (!$xoopsMailer->send()) {
             $msgsend .= $xoopsMailer->getErrors();
         } else {
-            $msgsend .= '<h4>' . _MD_XFGB_MSGSEND . '</h4>';
+            $msgsend .= '<h4>' . MD_XFGUESTBOOK_MSGSEND . '</h4>';
         }
-        $msgsend .= "<br><br><a href=\"javascript:window.close();\">" . _MD_XFGB_CLOSEWINDOW . '</a></div>';
+        $msgsend .= '<br><br><a href="javascript:window.close();">' . MD_XFGUESTBOOK_CLOSEWINDOW . '</a></div>';
         echo $msgsend;
         break;
 
@@ -102,12 +102,12 @@ switch ($op) {
         }
         $p_title = $title;
         $p_title = $ts->htmlSpecialChars($ts->stripSlashesGPC($p_title));
-        $p_msg   = _MD_XFGB_FROMUSER . " $name_user " . _MD_XFGB_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br>';
-        $p_msg .= $title . '<br>';
-        $p_msg .= '<hr><br>';
-        $p_msg .= $message . '<br><br>';
-        $p_msg .= '<hr><br>';
-        $p_msg .= _MD_XFGB_CANJOINT . " $email_user";
+        $p_msg   = MD_XFGUESTBOOK_FROMUSER . " $name_user " . MD_XFGUESTBOOK_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br>';
+        $p_msg   .= $title . '<br>';
+        $p_msg   .= '<hr><br>';
+        $p_msg   .= $message . '<br><br>';
+        $p_msg   .= '<hr><br>';
+        $p_msg   .= MD_XFGUESTBOOK_CANJOINT . " $email_user";
 
         $p_msg .= '<br>';
         displaypost($p_title, $p_msg);
@@ -123,8 +123,8 @@ switch ($op) {
     default:
 
         xoops_header();
-        $msg_handler = &xoops_getModuleHandler('msg');
-        $msg         = &$msg_handler->get($msg_id);
+        $msgHandler = xoops_getModuleHandler('msg');
+        $msg        = $msgHandler->get($msg_id);
         if (!$msg) {
             redirect_header('index.php', 3, _NOPERM);
         }

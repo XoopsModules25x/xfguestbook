@@ -1,5 +1,5 @@
 <?php
-// $Id: include/form_contact.inc.php,v 1.11 2004/12/02 C. Félix AKA the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -25,30 +25,30 @@
 
 include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$form_contact = new XoopsThemeForm(_MD_XFGB_CONTACTAUTOR, 'form_contact', 'contact.php');
+$form_contact = new XoopsThemeForm(MD_XFGUESTBOOK_CONTACTAUTOR, 'form_contact', 'contact.php');
 
-$title_text = new XoopsFormText(_MD_XFGB_TITLE, 'title', 35, 100, $title);
+$title_text = new XoopsFormText(MD_XFGUESTBOOK_TITLE, 'title', 35, 100, $title);
 //$title_text->setExtra("readonly = 'readonly'");
 $form_contact->addElement($title_text, true);
 
-$name_text = new XoopsFormText(_MD_XFGB_YOURNAME, 'name_user', 35, 100, $name_user);
+$name_text = new XoopsFormText(MD_XFGUESTBOOK_YOURNAME, 'name_user', 35, 100, $name_user);
 $form_contact->addElement($name_text, true);
 
-$email_text = new XoopsFormText(_MD_XFGB_YOUREMAIL, 'email_user', 35, 100, $email_user);
+$email_text = new XoopsFormText(MD_XFGUESTBOOK_YOUREMAIL, 'email_user', 35, 100, $email_user);
 $form_contact->addElement($email_text, true);
 
 if ($option['opt_icon'] == 0) {
-    $annonce_text = new XoopsFormTextArea(_MD_XFGB_YOURMESSAGE, 'message', $message);
+    $annonce_text = new XoopsFormTextArea(MD_XFGUESTBOOK_YOURMESSAGE, 'message', $message);
 } else {
-    $annonce_text = new XoopsFormDhtmlTextArea(_MD_XFGB_YOURMESSAGE, 'message', $message, 10, 50);
+    $annonce_text = new XoopsFormDhtmlTextArea(MD_XFGUESTBOOK_YOURMESSAGE, 'message', $message, 10, 50);
 }
 $form_contact->addElement($annonce_text, true);
 $button_tray = new XoopsFormElementTray('', '');
 $button_tray->addElement(new XoopsFormCaptcha(), true);
 $button_tray->addElement(new XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
-$button_tray->addElement(new XoopsFormButton('', 'post', _SEND, 'submit'));
+$button_tray->addElement(new XoopsFormButton('', 'post', _SUBMIT, 'submit'));
 $button_cancel = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
-$button_cancel->setExtra("' onclick='javascript:window.close();'");
+$button_cancel->setExtra('\' onclick=\'javascript:window.close();\'');
 $button_tray->addElement($button_cancel);
 
 $form_contact->addElement($button_tray);

@@ -1,5 +1,5 @@
 <?php
-// $Id: include/search.inc.php, v 1.12 2004/12/30 C. Felix AKA the Cat
+//
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
 // ------------------------------------------------------------------------- //
@@ -42,22 +42,22 @@ function xfguestbook_search($queryarray, $andor, $limit, $offset, $user_id)
     // is not an array, we must check if $querryarray is really an array
     if (is_array($queryarray) && $count = count($queryarray)) {
         $sql .= " AND ((message LIKE '%$queryarray[0]%' OR title LIKE '%$queryarray[0]%')";
-        for ($i=1;$i<$count;$i++) {
+        for ($i = 1; $i < $count; $i++) {
             $sql .= " $andor ";
             $sql .= "(message LIKE '%$queryarray[$i]%' OR title LIKE '%$queryarray[$i]%')";
         }
         $sql .= ') ';
     }
-    $sql .= 'ORDER BY post_time DESC';
+    $sql    .= 'ORDER BY post_time DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
-    $ret = array();
-    $i = 0;
+    $ret    = [];
+    $i      = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $ret[$i]['image'] = 'assets/images/xfguestbook.gif';
-        $ret[$i]['link'] = 'index.php?op=show_one&msg_id=' . $myrow['msg_id'] . '';
+        $ret[$i]['link']  = 'index.php?op=show_one&msg_id=' . $myrow['msg_id'] . '';
         $ret[$i]['title'] = $myrow['title'];
-        $ret[$i]['time'] = $myrow['post_time'];
-        $ret[$i]['uid'] = $myrow['user_id'];
+        $ret[$i]['time']  = $myrow['post_time'];
+        $ret[$i]['uid']   = $myrow['user_id'];
         $i++;
     }
 
