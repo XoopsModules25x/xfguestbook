@@ -107,7 +107,7 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param $msg
+     * @param XoopsObject $msg
      * @return bool
      */
     public function insert(XoopsObject $msg)
@@ -202,10 +202,10 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param $msg
+     * @param XoopsObject $msg
      * @return bool
      */
-    public function delete($msg)
+    public function delete(XoopsObject $msg)
     {
         global $xoopsModule;
         if ('xfguestbookmsg' !== strtolower(get_class($msg))) {
@@ -224,10 +224,10 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null $criteria
+     * @param  null|CriteriaElement $criteria
      * @return array
      */
-    public function &getObjects($criteria = null)
+    public function &getObjects(CriteriaElement $criteria = null)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -254,10 +254,10 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null $criteria
+     * @param  null|CriteriaElement $criteria
      * @return int
      */
-    public function countMsg($criteria = null)
+    public function countMsg(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xfguestbook_msg');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -272,10 +272,10 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null $criteria
+     * @param  null|CriteriaElement  $criteria
      * @return array|bool
      */
-    public function countMsgByCountry($criteria = null)
+    public function countMsgByCountry(CriteriaElement $criteria = null)
     {
         $arr = [];
         $sql = 'SELECT country, flagdir FROM ' . $this->db->prefix('xfguestbook_msg');
@@ -295,10 +295,10 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null $criteria
+     * @param  null CriteriaElement $criteria
      * @return array|bool
      */
-    public function countMsgByGender($criteria = null)
+    public function countMsgByGender(CriteriaElement $criteria = null)
     {
         $arr = [];
         $sql = 'SELECT gender FROM ' . $this->db->prefix('xfguestbook_msg');
@@ -317,10 +317,10 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null $criteria
+     * @param  null|CriteriaElement $criteria
      * @return array|int
      */
-    public function getMsgImg($criteria = null)
+    public function getMsgImg(CriteriaElement $criteria = null)
     {
         $arr = [];
         $sql = 'SELECT photo FROM ' . $this->db->prefix('xfguestbook_msg') . " WHERE `photo` LIKE 'msg_%'";
