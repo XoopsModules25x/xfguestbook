@@ -20,6 +20,8 @@
 
 include_once __DIR__ . '/../../../include/cp_header.php';
 include_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
+//require __DIR__ . '/../class/util.php';
+//require_once __DIR__ . '/../include/common.php';
 if (!isset($moduleDirName)) {
     $moduleDirName = basename(dirname(__DIR__));
 }

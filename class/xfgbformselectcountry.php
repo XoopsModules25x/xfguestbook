@@ -48,7 +48,7 @@ class xfgbformselectcountry extends XoopsFormSelect
         if ($nullopt) {
             $this->addOption('', '-');
         }
-        $this->addOption('other', MI_XFGB_OTHER);
+        $this->addOption('other', MI_XFGUESTBOOK_OTHER);
         while ($myrow = $db->fetchArray($result)) {
             $this->addOption($myrow['country_code'], $myrow['country_name']);
         }

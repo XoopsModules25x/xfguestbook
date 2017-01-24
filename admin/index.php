@@ -33,20 +33,20 @@ if ($totalWaitingMsg > 0) {
 $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xfguestbook_msg') . ' WHERE   moderate=0');
 list($totalModerateMsg) = $xoopsDB->fetchRow($result);
 
-$adminObject->addInfoBox(MD_XFGB_MSGCONF);
+$adminObject->addInfoBox(MD_XFGUESTBOOK_MSGCONF);
 /*
 if (0 == $totalWaitingMsg) {
-    //$adminObject->addLineLabel(MD_XFGB_MSGCONF, MD_XFGB_MSGWAITING, $totalNewMsg, 'Green');
-    $adminObject->addInfoBoxLine(MD_XFGB_MSGWAITING, $totalWaitingMsg, 'Green');
+    //$adminObject->addLineLabel(MD_XFGUESTBOOK_MSGCONF, MD_XFGUESTBOOK_MSGWAITING, $totalNewMsg, 'Green');
+    $adminObject->addInfoBoxLine(MD_XFGUESTBOOK_MSGWAITING, $totalWaitingMsg, 'Green');
 } else {
-    $adminObject->addInfoBoxLine(MD_XFGB_MSGWAITING, $totalWaitingMsg, 'Red');
+    $adminObject->addInfoBoxLine(MD_XFGUESTBOOK_MSGWAITING, $totalWaitingMsg, 'Red');
 }
 
 if (0 < $totalModerateMsg) {
-    //$adminObject->addLineLabel(MD_XFGB_MSGWAITING, $totalNewMsg, 'Green');
-    $adminObject->addInfoBoxLine(MD_XFGB_MSGMODERATE, $totalModerateMsg, 'Green');
+    //$adminObject->addLineLabel(MD_XFGUESTBOOK_MSGWAITING, $totalNewMsg, 'Green');
+    $adminObject->addInfoBoxLine(MD_XFGUESTBOOK_MSGMODERATE, $totalModerateMsg, 'Green');
 } else {
-    $adminObject->addInfoBoxLine(MD_XFGB_MSGMODERATE, $totalModerateMsg, 'Red');
+    $adminObject->addInfoBoxLine(MD_XFGUESTBOOK_MSGMODERATE, $totalModerateMsg, 'Red');
 }
 
 foreach (array_keys($folder) as $i) {

@@ -28,10 +28,10 @@ include_once __DIR__ . '/../include/cp_functions.php';
 include_once __DIR__ . '/admin_header.php';
 
 if (!isset($xoopsModuleConfig['flagdir'])) {
-    redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, AM_XFGB_MUST_UPDATE);
+    redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, AM_XFGUESTBOOK_MUST_UPDATE);
 }
 
-include_once __DIR__ . '/../include/functions.php';
+include_once __DIR__ . '/../class/util.php';
 //include_once("../class/msg.php");
 
 if (isset($_GET['op'])) {
@@ -57,13 +57,13 @@ function delete()
     global $msgHandler, $xoopsModule;
     $msg_count = (!empty($_POST['msg_id']) && is_array($_POST['msg_id'])) ? count($_POST['msg_id']) : 0;
     if ($msg_count > 0) {
-        $messagesent = AM_XFGB_MSGDELETED;
+        $messagesent = AM_XFGUESTBOOK_MSGDELETED;
         for ($i = 0; $i < $msg_count; $i++) {
             $msg      = $msgHandler->get($_POST['msg_id'][$i]);
             $filename = $msg->getVar('title');
             $filename = $msg->getVar('photo');
             if (!$msgHandler->delete($msg)) {
-                $messagesent = AM_XFGB_ERRORDEL;
+                $messagesent = AM_XFGUESTBOOK_ERRORDEL;
             }
             if ('' !== $filename) {
                 $filename = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $filename;
@@ -71,7 +71,7 @@ function delete()
             }
         }
     } else {
-        $messagesent = AM_XFGB_NOMSG;
+        $messagesent = AM_XFGUESTBOOK_NOMSG;
     }
     redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
 }
@@ -81,16 +81,16 @@ function approve()
     global $msgHandler;
     $msg_count = (!empty($_POST['msg_id']) && is_array($_POST['msg_id'])) ? count($_POST['msg_id']) : 0;
     if ($msg_count > 0) {
-        $messagesent = AM_XFGB_VALIDATE;
+        $messagesent = AM_XFGUESTBOOK_VALIDATE;
         for ($i = 0; $i < $msg_count; $i++) {
             $msg = $msgHandler->get($_POST['msg_id'][$i]);
             $msg->setVar('moderate', 0);
             if (!$msgHandler->insert($msg)) {
-                $messagesent = AM_XFGB_ERRORVALID;
+                $messagesent = AM_XFGUESTBOOK_ERRORVALID;
             }
         }
     } else {
-        $messagesent = AM_XFGB_NOMSG;
+        $messagesent = AM_XFGUESTBOOK_NOMSG;
     }
     redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
 }
@@ -100,17 +100,17 @@ function banish()
     global $msgHandler, $xoopsDB;
     $msg_count = (!empty($_POST['msg_id']) && is_array($_POST['msg_id'])) ? count($_POST['msg_id']) : 0;
     if ($msg_count > 0) {
-        $messagesent = AM_XFGB_BANISHED;
+        $messagesent = AM_XFGUESTBOOK_BANISHED;
         for ($i = 0; $i < $msg_count; $i++) {
             $msg    = $msgHandler->get($_POST['msg_id'][$i]);
             $ip[$i] = $msg->getVar('poster_ip');
             $msg->setVar('moderate', 1);
             if (!$msgHandler->insert($msg)) {
-                $messagesent = AM_XFGB_ERRORBANISHED;
+                $messagesent = AM_XFGUESTBOOK_ERRORBANISHED;
             }
         }
         $ip     = array_unique($ip);
-        $badips = xfgb_get_badips();
+        $badips = XfguestbookUtil::get_badips();
         foreach ($ip as $oneip) {
             if (!in_array($oneip, $badips)) {
                 $sql    = 'INSERT INTO ' . $xoopsDB->prefix('xfguestbook_badips') . " (ip_value) VALUES ('$oneip')";
@@ -118,7 +118,7 @@ function banish()
             }
         }
     } else {
-        $messagesent = AM_XFGB_NOMSG;
+        $messagesent = AM_XFGUESTBOOK_NOMSG;
     }
 
     redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
@@ -141,21 +141,21 @@ function show()
     switch ($sel_status) {
         case 0:
             $status_option0 = 'selected';
-            $title          = AM_XFGB_ALLMSG;
+            $title          = AM_XFGUESTBOOK_ALLMSG;
             $criteria       = new Criteria('msg_id', 0, '>');
             $criteria->setSort('post_time');
             break;
 
         case 1:
             $status_option1 = 'selected';
-            $title          = AM_XFGB_PUBMSG;
+            $title          = AM_XFGUESTBOOK_PUBMSG;
             $criteria       = new Criteria('moderate', '0');
             $criteria->setSort('post_time');
             break;
 
         case 2:
             $status_option2 = 'selected';
-            $title          = AM_XFGB_WAITMSG;
+            $title          = AM_XFGUESTBOOK_WAITMSG;
             $criteria       = new Criteria('moderate', '1');
             $criteria->setSort('post_time');
             break;
@@ -180,7 +180,7 @@ function show()
     $criteria->setStart($start);
     $msg =& $msgHandler->getObjects($criteria);
 
-    $badips = xfgb_get_badips();
+    $badips = XfguestbookUtil::get_badips();
 
     /* -- Code to show selected terms -- */
     echo "<form name='pick' id='pick' action='" . $_SERVER['PHP_SELF'] . '\' method=\'GET\' style=\'margin: 0;\'>';
@@ -190,16 +190,16 @@ function show()
             <tr>
                 <td><span style='font-weight: bold; font-size: 12px; font-variant: small-caps;'>" . $title . ' : ' . $totalcount . "</span></td>
                 <td align='right'>
-                " . AM_XFGB_DISPLAY . " :
+                " . AM_XFGUESTBOOK_DISPLAY . " :
                     <select name='sel_status' onchange='submit()'>
-                        <option value = '0' $status_option0>" . AM_XFGB_ALLMSG . " </option>
-                        <option value = '1' $status_option1>" . AM_XFGB_PUBMSG . " </option>
-                        <option value = '2' $status_option2>" . AM_XFGB_WAITMSG . ' </option>
+                        <option value = '0' $status_option0>" . AM_XFGUESTBOOK_ALLMSG . " </option>
+                        <option value = '1' $status_option1>" . AM_XFGUESTBOOK_PUBMSG . " </option>
+                        <option value = '2' $status_option2>" . AM_XFGUESTBOOK_WAITMSG . ' </option>
                     </select>
-                ' . AM_XFGB_SELECT_SORT . "
+                ' . AM_XFGUESTBOOK_SELECT_SORT . "
                     <select name='sel_order' onchange='submit()'>
-                        <option value = '1' $order_option_asc>" . AM_XFGB_SORT_ASC . "</option>
-                        <option value = '0' $order_option_desc>" . AM_XFGB_SORT_DESC . '</option>
+                        <option value = '1' $order_option_asc>" . AM_XFGUESTBOOK_SORT_ASC . "</option>
+                        <option value = '0' $order_option_desc>" . AM_XFGUESTBOOK_SORT_DESC . '</option>
                     </select>
                 </td>
             </tr>
@@ -211,11 +211,11 @@ function show()
     echo "<tr class='bg3'>";
     echo "<td align='center'></td>";
     echo "<td align='center'><b><input type='hidden' name='op' value='delete' /></td>";
-    echo "<td align='center'><b>" . AM_XFGB_NAME . '</td>';
-    echo "<td align='center'><b>" . AM_XFGB_TITLE . '</td>';
-    echo "<td align='center'><b>" . AM_XFGB_MESSAGE . '</td>';
-    echo "<td align='center'><b>" . AM_XFGB_DATE . '</td>';
-    echo "<td align='center'><b>" . AM_XFGB_ACTION . '</td>';
+    echo "<td align='center'><b>" . AM_XFGUESTBOOK_NAME . '</td>';
+    echo "<td align='center'><b>" . AM_XFGUESTBOOK_TITLE . '</td>';
+    echo "<td align='center'><b>" . AM_XFGUESTBOOK_MESSAGE . '</td>';
+    echo "<td align='center'><b>" . AM_XFGUESTBOOK_DATE . '</td>';
+    echo "<td align='center'><b>" . AM_XFGUESTBOOK_ACTION . '</td>';
     echo '</tr>';
 
     if ('0' != $totalcount) {
@@ -267,16 +267,16 @@ function show()
         }
         echo "<tr class='foot'><td><select name='op'>";
         if (1 != $sel_status) {
-            echo "<option value='approve'>" . AM_XFGB_PUB . '</option>';
+            echo "<option value='approve'>" . AM_XFGUESTBOOK_PUB . '</option>';
         }
         echo "<option value='delete'>" . _DELETE . '</option>';
-        echo "<option value='banish'>" . AM_XFGB_BAN . '</option>';
+        echo "<option value='banish'>" . AM_XFGUESTBOOK_BAN . '</option>';
         echo '</select>&nbsp;</td>';
         echo "<td colspan='6'>" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "<input type='submit' value='" . _GO . '\' />';
         echo '</td></tr>';
         echo '</form>';
     } else {
-        echo "<tr ><td align='center' colspan ='10' class = 'head'><b>" . AM_XFGB_NOMSG . '</b></td></tr>';
+        echo "<tr ><td align='center' colspan ='10' class = 'head'><b>" . AM_XFGUESTBOOK_NOMSG . '</b></td></tr>';
     }
     echo '</table><br>';
     if ($totalcount > $limit) {
@@ -303,7 +303,7 @@ switch ($op) {
             unlink($filename);
             $msg->setVar('photo', '');
         } elseif (!empty($_FILES['photo']['name'])) {
-            xfgb_upload();
+            XfguestbookUtil::upload();
             $photo      = str_replace('tmp_', 'msg_', $preview_name);
             $photos_dir = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/';
             rename($photos_dir . $preview_name, $photos_dir . $photo);
@@ -341,9 +341,9 @@ switch ($op) {
         $msg->setVar('other', $other);
         $msg->setVar('moderate', $moderate);
         if ($msgHandler->insert($msg)) {
-            redirect_header('main.php?op=show', 1, AM_XFGB_MSGMOD);
+            redirect_header('main.php?op=show', 1, AM_XFGUESTBOOK_MSGMOD);
         } else {
-            redirect_header('main.php?op=show', 2, AM_XFGB_MSGERROR);
+            redirect_header('main.php?op=show', 2, AM_XFGUESTBOOK_MSGERROR);
         }
         break;
 

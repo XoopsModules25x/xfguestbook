@@ -24,11 +24,11 @@
 
 include __DIR__ . '/../../mainfile.php';
 if (!is_object($xoopsUser) && 1 != $xoopsModuleConfig['anonsign']) {
-    redirect_header(XOOPS_URL . '/user.php', 2, MD_XFGB_MUSTREGFIRST);
+    redirect_header(XOOPS_URL . '/user.php', 2, MD_XFGUESTBOOK_MUSTREGFIRST);
 }
 
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
-include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/functions.php';
+include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/util.php';
 include_once __DIR__ . '/include/config.inc.php';
 
 $option     = getOptions();
@@ -54,12 +54,12 @@ if (isset($_POST['preview'])) {
     $op = 'form';
 }
 
-$badip = in_array($_SERVER['REMOTE_ADDR'], xfgb_get_badips()) ? true : false;
+$badip = in_array($_SERVER['REMOTE_ADDR'], XfguestbookUtil::get_badips()) ? true : false;
 
 switch ($op) {
     case 'cancel':
         $photos_dir     = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
-        $nb_removed_tmp = xfgb_clear_tmp_files($photos_dir);
+        $nb_removed_tmp = XfguestbookUtil::clear_tmp_files($photos_dir);
         redirect_header('index.php', 0);
         break;
 
@@ -77,14 +77,14 @@ switch ($op) {
             }
         }*/
         if (2 == $option['opt_url'] && preg_match('/(http)|(www)/i', $message)) {
-            $msgstop .= MD_XFGB_URL_DISABLED . '<br>';
+            $msgstop .= MD_XFGUESTBOOK_URL_DISABLED . '<br>';
         }
 
         if ('' !== $email && !checkEmail($email)) {
-            $msgstop .= MD_XFGB_INVALIDMAIL . '<br>';
+            $msgstop .= MD_XFGUESTBOOK_INVALIDMAIL . '<br>';
         }
         if (!empty($_FILES['photo']['name'])) {
-            xfgb_upload();
+            XfguestbookUtil::upload();
         }
         $title   = $ts->htmlSpecialChars($ts->stripSlashesGPC($title));
         $message = $ts->htmlSpecialChars($ts->stripSlashesGPC($message));
@@ -116,7 +116,7 @@ switch ($op) {
         }
         if ($country) {
             $flag         = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country . '.gif';
-            $arr_country  = xfgb_getCountry("country_code ='" . $country . '\'');
+            $arr_country  = XfguestbookUtil::getCountry("country_code ='" . $country . '\'');
             $country_name = (count($arr_country) > 0) ? $arr_country[0]['country_name'] : '';
             if (file_exists($flag)) {
                 $msgpost['country'] = '<img src="'
@@ -155,16 +155,16 @@ switch ($op) {
             redirect_header('index.php', 2, '');
         }
         if (2 == $option['opt_url'] && preg_match('/(http)|(www)/i', $message)) {
-            $msgstop .= MD_XFGB_URL_DISABLED . '<br><br>';
+            $msgstop .= MD_XFGUESTBOOK_URL_DISABLED . '<br><br>';
         }
-        if (!email_exist($email)) {
-            $msgstop .= MD_XFGB_INVALIDMAIL . '<br><br>';
+        if (!XfguestbookUtil::email_exist($email)) {
+            $msgstop .= MD_XFGUESTBOOK_INVALIDMAIL . '<br><br>';
         }
         if ('' !== $email && !checkEmail($email)) {
-            $msgstop .= MD_XFGB_INVALIDMAIL . '<br><br>';
+            $msgstop .= MD_XFGUESTBOOK_INVALIDMAIL . '<br><br>';
         }
         if (!empty($_FILES['photo']['name'])) {
-            xfgb_upload();
+            XfguestbookUtil::upload();
         }
         if (!empty($msgstop)) {
             $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
@@ -207,24 +207,24 @@ switch ($op) {
         } else {
             $msgpost->setVar('moderate', $xoopsModuleConfig['moderate']);
         }
-        $nb_removed_tmp = xfgb_clear_tmp_files($photos_dir);
-        $messagesent    = MD_XFGB_MESSAGESENT;
+        $nb_removed_tmp = XfguestbookUtil::clear_tmp_files($photos_dir);
+        $messagesent    = MD_XFGUESTBOOK_MESSAGESENT;
 
         if ($msgHandler->insert($msgpost)) {
             if ($badip || $xoopsModuleConfig['moderate']) {
-                $messagesent .= '<br>' . MD_XFGB_AFTERMODERATE;
+                $messagesent .= '<br>' . MD_XFGUESTBOOK_AFTERMODERATE;
             }
 
             // Send mail to webmaster
             if (1 == $xoopsModuleConfig['sendmail2wm']) {
-                $subject     = $xoopsConfig['sitename'] . ' - ' . MD_XFGB_NAMEMODULE;
+                $subject     = $xoopsConfig['sitename'] . ' - ' . MD_XFGUESTBOOK_NAMEMODULE;
                 $xoopsMailer =& xoops_getMailer();
                 $xoopsMailer->useMail();
                 $xoopsMailer->setToEmails($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromName($xoopsConfig['sitename']);
                 $xoopsMailer->setSubject($subject);
-                $xoopsMailer->setBody(MD_XFGB_NEWMESSAGE . ' ' . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/');
+                $xoopsMailer->setBody(MD_XFGUESTBOOK_NEWMESSAGE . ' ' . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/');
                 if (!$xoopsMailer->send()) {
                     echo $xoopsMailer->getErrors();
                 }
@@ -252,7 +252,7 @@ switch ($op) {
             $xoopsCaptcha = XoopsCaptcha::getInstance();
         }
         if ($badip || $xoopsModuleConfig['moderate']) {
-            $xoopsTpl->assign('moderate', MD_XFGB_MODERATED);
+            $xoopsTpl->assign('moderate', MD_XFGUESTBOOK_MODERATED);
         }
 
         include __DIR__ . '/include/form_sign.inc.php';

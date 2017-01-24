@@ -26,26 +26,26 @@
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/xfgbformselectcountry.php';
 
-$msg_form = new XoopsThemeForm(AM_XFGB_NAME, 'msg_form', 'main.php', 'post', true);
+$msg_form = new XoopsThemeForm(AM_XFGUESTBOOK_NAME, 'msg_form', 'main.php', 'post', true);
 $msg_form->setExtra("enctype='multipart/form-data'");
 
-$date_text = new XoopsFormLabel(AM_XFGB_DATE, formatTimestamp($msg->getVar('post_time', 'S')));
+$date_text = new XoopsFormLabel(AM_XFGUESTBOOK_DATE, formatTimestamp($msg->getVar('post_time', 'S')));
 $msg_form->addElement($date_text);
 
-$poster_ip_text = new XoopsFormLabel(AM_XFGB_IP, $msg->getVar('poster_ip', 'S'));
+$poster_ip_text = new XoopsFormLabel(AM_XFGUESTBOOK_IP, $msg->getVar('poster_ip', 'S'));
 $msg_form->addElement($poster_ip_text);
 
-$uname_text = new XoopsFormText(AM_XFGB_NAME, 'uname', 50, 255, $msg->getVar('uname', 'E'));
+$uname_text = new XoopsFormText(AM_XFGUESTBOOK_NAME, 'uname', 50, 255, $msg->getVar('uname', 'E'));
 $msg_form->addElement($uname_text);
 
-$gender_text = new XoopsFormRadio(AM_XFGB_GENDER, 'gender', $msg->getVar('gender', 'E'));
-//  $gender_text = new XoopsFormSelect(MD_XFGB_SEXE, "gender", $msg->getVar("gender", "E"));
-$options = ['M' => AM_XFGB_MALE, 'F' => AM_XFGB_FEMALE, '' => AM_XFGB_GENDER_UNKNOW];
+$gender_text = new XoopsFormRadio(AM_XFGUESTBOOK_GENDER, 'gender', $msg->getVar('gender', 'E'));
+//  $gender_text = new XoopsFormSelect(MD_XFGUESTBOOK_SEXE, "gender", $msg->getVar("gender", "E"));
+$options = ['M' => AM_XFGUESTBOOK_MALE, 'F' => AM_XFGUESTBOOK_FEMALE, '' => AM_XFGUESTBOOK_GENDER_UNKNOW];
 $gender_text->addOptionArray($options);
 $msg_form->addElement($gender_text, true);
 
 //if (trim($option['opt_country']) != '') {
-$country_tray = new XoopsFormElementTray(AM_XFGB_COUNTRY, '');
+$country_tray = new XoopsFormElementTray(AM_XFGUESTBOOK_COUNTRY, '');
 $flag         = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $msg->getVar('flagdir') . '/' . $msg->getVar('country') . '.gif';
 if (file_exists($flag)) {
     $country_tray->addElement(new XoopsFormLabel('', "<img src='"
@@ -59,32 +59,32 @@ if (file_exists($flag)) {
                                                      . ".gif' name='image' id='image' alt='' /><br><br>"));
 }
 $country_tray->addElement(new XfgbFormSelectCountry('', 'country', $msg->getVar('country', 'E'), 1, true));
-$country_tray->addElement(new XoopsFormText(AM_XFGB_IF_OTHER, 'other', 20, 20, $msg->getVar('other', 'E')));
+$country_tray->addElement(new XoopsFormText(AM_XFGUESTBOOK_IF_OTHER, 'other', 20, 20, $msg->getVar('other', 'E')));
 $msg_form->addElement($country_tray, false);
 //}
 
-$email_text = new XoopsFormText(AM_XFGB_EMAIL, 'email', 50, 255, $msg->getVar('email', 'E'));
+$email_text = new XoopsFormText(AM_XFGUESTBOOK_EMAIL, 'email', 50, 255, $msg->getVar('email', 'E'));
 $msg_form->addElement($email_text);
 
-$url_text = new XoopsFormText(AM_XFGB_URL, 'url', 50, 255, $msg->getVar('url', 'E'));
+$url_text = new XoopsFormText(AM_XFGUESTBOOK_URL, 'url', 50, 255, $msg->getVar('url', 'E'));
 $msg_form->addElement($url_text);
 
-$msg_form->insertBreak('<b>' . AM_XFGB_MESSAGE . '</b>', 'bg3');
+$msg_form->insertBreak('<b>' . AM_XFGUESTBOOK_MESSAGE . '</b>', 'bg3');
 
-$title_text = new XoopsFormText(AM_XFGB_TITLE, 'title', 50, 255, $msg->getVar('title', 'E'));
+$title_text = new XoopsFormText(AM_XFGUESTBOOK_TITLE, 'title', 50, 255, $msg->getVar('title', 'E'));
 $msg_form->addElement($title_text);
 
-$message_text = new XoopsFormDhtmlTextArea(AM_XFGB_MESSAGE, 'message', $msg->getVar('message', 'E'));
+$message_text = new XoopsFormDhtmlTextArea(AM_XFGUESTBOOK_MESSAGE, 'message', $msg->getVar('message', 'E'));
 $msg_form->addElement($message_text);
 
-$file_tray = new XoopsFormElementTray(AM_XFGB_IMG, '');
+$file_tray = new XoopsFormElementTray(AM_XFGUESTBOOK_IMG, '');
 if ($msg->getVar('photo')) {
     $file_tray->addElement(new XoopsFormLabel('',
                                               "<img src='" . XOOPS_UPLOAD_URL . '/' . $xoopsModule->getVar('dirname') . '/' . $msg->getVar('photo') . '\' name=\'image\' id=\'image\' alt=\'\' /><br><br>'));
     $check_del_img = new XoopsFormCheckBox('', 'del_img');
-    $check_del_img->addOption(1, AM_XFGB_DELIMG);
+    $check_del_img->addOption(1, AM_XFGUESTBOOK_DELIMG);
     $file_tray->addElement($check_del_img);
-    $file_img = new XoopsFormFile(AM_XFGB_REPLACEIMG, 'photo', $xoopsModuleConfig['photo_maxsize']);
+    $file_img = new XoopsFormFile(AM_XFGUESTBOOK_REPLACEIMG, 'photo', $xoopsModuleConfig['photo_maxsize']);
     $file_img->setExtra("size ='40'");
 } else {
     $file_img = new XoopsFormFile('', 'photo', $xoopsModuleConfig['photo_maxsize']);
@@ -93,11 +93,11 @@ if ($msg->getVar('photo')) {
 $file_tray->addElement($file_img);
 $msg_form->addElement($file_tray);
 
-$msg_form->insertBreak('<b>' . AM_XFGB_WM . '</b>', 'bg3');
-$note_text = new XoopsFormDhtmlTextArea(AM_XFGB_NOTE, 'note', $msg->getVar('note', 'E'));
+$msg_form->insertBreak('<b>' . AM_XFGUESTBOOK_WM . '</b>', 'bg3');
+$note_text = new XoopsFormDhtmlTextArea(AM_XFGUESTBOOK_NOTE, 'note', $msg->getVar('note', 'E'));
 $msg_form->addElement($note_text);
 
-$moderate_text = new XoopsFormRadio(AM_XFGB_APPROVE, 'moderate', $msg->getVar('moderate', 'E'));
+$moderate_text = new XoopsFormRadio(AM_XFGUESTBOOK_APPROVE, 'moderate', $msg->getVar('moderate', 'E'));
 $options       = [0 => _YES, 1 => _NO];
 $moderate_text->addOptionArray($options);
 $msg_form->addElement($moderate_text);

@@ -45,7 +45,7 @@ switch ($op) {
             for ($i = 0; $i < $img_count; $i++) {
                 unlink(XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $_POST['imglist_id'][$i]);
             }
-            redirect_header('img_manager.php', 1, $i . AM_XFGB_IMG_DELETED);
+            redirect_header('img_manager.php', 1, $i . AM_XFGUESTBOOK_IMG_DELETED);
         }
         break;
     case 'show':
@@ -55,14 +55,14 @@ switch ($op) {
         echo $index_admin->addNavigation(basename(__FILE__));
         $cpt1    = $cpt2 = 0;
         $all_img = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/');
-        echo AM_XFGB_ORPHEAN_DSC . '<br>';
+        echo AM_XFGUESTBOOK_ORPHEAN_DSC . '<br>';
         $msg_img = $msgHandler->getMsgImg();
         if (count($all_img) > count($msg_img)) {
             echo "<form action='img_manager.php' method='post' name='imglist' id='imglist'><input type='hidden' name='op' value='delete' />";
             echo "<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr>
             <th align='center'><input type='checkbox' name='imglist_checkall' id='imglist_checkall' ' checked onclick='xoopsCheckAll(\"imglist\", \"imglist_checkall\");' /></th>
-            <th align='center'>" . AM_XFGB_IMG . "</th>
-            <th align='center'>" . AM_XFGB_IMG_FILE . '</th></tr>';
+            <th align='center'>" . AM_XFGUESTBOOK_IMG . "</th>
+            <th align='center'>" . AM_XFGUESTBOOK_IMG_FILE . '</th></tr>';
             foreach ($all_img as $one_img) {
                 if (count($msg_img) === 0 || count($msg_img) > 0 && !in_array($one_img, $msg_img)) {
                     ($cpt1 % 2 == 0) ? $class = 'even' : $class = 'odd';
@@ -77,11 +77,11 @@ switch ($op) {
             }
             echo "<tr class='foot'><td>&nbsp;</td>";
             echo "<td ><input type='hidden' name='op' value='delete' /><input type='submit' value='" . _DELETE . '\' /></td>';
-            echo '<td>&nbsp;' . $cpt1 . AM_XFGB_IMG_ORPHEAN . '</td></tr>';
+            echo '<td>&nbsp;' . $cpt1 . AM_XFGUESTBOOK_IMG_ORPHEAN . '</td></tr>';
             echo '</table>';
             echo "</form>\n";
         } else {
-            echo '<br>' . AM_XFGB_NO_ORPHEAN;
+            echo '<br>' . AM_XFGUESTBOOK_NO_ORPHEAN;
         }
         include __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();

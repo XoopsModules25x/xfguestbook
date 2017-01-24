@@ -25,7 +25,7 @@
 
 include __DIR__ . '/../../mainfile.php';
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
-include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/functions.php';
+include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/util.php';
 if (isset($_GET['msg_id'])) {
     $msg_id = (int)$_GET['msg_id'];
 } elseif (isset($_POST['msg_id'])) {
@@ -63,9 +63,9 @@ function delete($msg_id)
             unlink($filename);
         }
         if ($del_msg_ok) {
-            $messagesent = MD_XFGB_MSGDELETED;
+            $messagesent = MD_XFGUESTBOOK_MSGDELETED;
         } else {
-            $messagesent = MD_XFGB_ERRORDEL;
+            $messagesent = MD_XFGUESTBOOK_ERRORDEL;
         }
         redirect_header('index.php', 2, $messagesent);
     } else {
@@ -83,9 +83,9 @@ function approve($msg_id)
     $msg = $msgHandler->get($msg_id);
     $msg->setVar('moderate', 0);
     if (!$msgHandler->insert($msg)) {
-        $messagesent = MD_XFGB_ERRORVALID;
+        $messagesent = MD_XFGUESTBOOK_ERRORVALID;
     } else {
-        $messagesent = MD_XFGB_VALIDATE;
+        $messagesent = MD_XFGUESTBOOK_VALIDATE;
     }
     redirect_header('index.php?op=show_waiting', 2, $messagesent);
 }
@@ -97,10 +97,10 @@ function xfgb_getmsg($msg)
 {
     global $nbmsg, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $xoopsConfig, $options, $opt, $xoopsDB;
 
-    $arr_country = xfgb_getAllCountry();
+    $arr_country = XfguestbookUtil::getAllCountry();
     $xoopsTpl->assign('display_msg', true);
     foreach ($msg as $onemsg) {
-        if ($poster = xfgb_get_user_data($onemsg->getVar('user_id'))) {
+        if ($poster = XfguestbookUtil::get_user_data($onemsg->getVar('user_id'))) {
             $a_msg = &$poster;
         } else {
             $a_msg             = [];
@@ -189,19 +189,20 @@ function xfgb_genderlist()
     $criteria = new Criteria('moderate', 0);
     $arr_msg  = $msgHandler->countMsgByGender($criteria);
     $i        = 0;
+    $gender = [];
     foreach ($arr_msg as $k => $v) {
         if ($k === 'M') {
-            $gender[$i] = MD_XFGB_MALES . '<br>';
-            $gender[$i] .= '<img src="assets/images/M.gif" alt="' . MD_XFGB_MALES . '"><br><br>';
-            $gender[$i] .= '<a href="index.php?op=show_gender&param=M">' . $v . MD_XFGB_MESSAGES . '</a>';
+            $gender[$i] = MD_XFGUESTBOOK_MALES . '<br>';
+            $gender[$i] .= '<img src="assets/images/M.gif" alt="' . MD_XFGUESTBOOK_MALES . '"><br><br>';
+            $gender[$i] .= '<a href="index.php?op=show_gender&param=M">' . $v . MD_XFGUESTBOOK_MESSAGES . '</a>';
         } elseif ($k === 'F') {
-            $gender[$i] = MD_XFGB_FEMALES . '<br>';
-            $gender[$i] .= '<img src="assets/images/F.gif" alt="' . MD_XFGB_FEMALES . '"><br><br>';
-            $gender[$i] .= '<a href="index.php?op=show_gender&param=F">' . $v . MD_XFGB_MESSAGES . '</a>';
+            $gender[$i] = MD_XFGUESTBOOK_FEMALES . '<br>';
+            $gender[$i] .= '<img src="assets/images/F.gif" alt="' . MD_XFGUESTBOOK_FEMALES . '"><br><br>';
+            $gender[$i] .= '<a href="index.php?op=show_gender&param=F">' . $v . MD_XFGUESTBOOK_MESSAGES . '</a>';
         } else {
-            $gender[$i] = MD_XFGB_UNKNOW2 . '<br>';
+            $gender[$i] = MD_XFGUESTBOOK_UNKNOW2 . '<br>';
             $gender[$i] .= '<img src="assets/images/U.gif"><br><br>';
-            $gender[$i] .= $v . MD_XFGB_MESSAGES;
+            $gender[$i] .= $v . MD_XFGUESTBOOK_MESSAGES;
         }
         $i++;
     }
@@ -217,7 +218,7 @@ if (0 === strpos($op, 'show')) {
     $debut = isset($_GET['debut']) ? (int)$_GET['debut'] : 0;
     $param = isset($_GET['param']) ? $_GET['param'] : '';
 
-    include_once __DIR__ . '/include/functions.php';
+    include_once __DIR__ . '/class/util.php';
     $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
     include_once XOOPS_ROOT_PATH . '/header.php';
     include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
@@ -227,13 +228,13 @@ if (0 === strpos($op, 'show')) {
     $criteria = new Criteria('moderate', 0);
     $nbmsg    = $msgHandler->countMsg($criteria);
 
-    $xoopsTpl->assign('msg_message_count', sprintf(MD_XFGB_THEREIS, '<b>' . $nbmsg . '</b>'));
+    $xoopsTpl->assign('msg_message_count', sprintf(MD_XFGUESTBOOK_THEREIS, '<b>' . $nbmsg . '</b>'));
     $xoopsTpl->assign('msg_moderated', $xoopsModuleConfig['moderate']);
     $xoopsTpl->assign('msg_lang_name', $xoopsConfig['language']);
     $xoopsTpl->assign('xoops_pagetitle', $xoopsModule->name() . ' -messages');
     if ($adminview) {
         $nbwait = $msgHandler->countMsg(new Criteria('moderate', '1'));
-        $xoopsTpl->assign('msg_moderate_text', sprintf(MD_XFGB_MODERATING, "<font class='fg2'><a href='" . XOOPS_URL . "/modules/xfguestbook/index.php?op=show_waiting'>" . $nbwait . '</a></font>'));
+        $xoopsTpl->assign('msg_moderate_text', sprintf(MD_XFGUESTBOOK_MODERATING, "<font class='fg2'><a href='" . XOOPS_URL . "/modules/xfguestbook/index.php?op=show_waiting'>" . $nbwait . '</a></font>'));
     }
 }
 
@@ -342,7 +343,7 @@ switch ($op) {
 
     case 'cancel':
         $photos_dir     = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
-        $nb_removed_tmp = xfgb_clear_tmp_files($photos_dir);
+        $nb_removed_tmp = XfguestbookUtil::clear_tmp_files($photos_dir);
         redirect_header('index.php', 0);
         break;
 }

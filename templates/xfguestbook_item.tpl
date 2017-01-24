@@ -45,7 +45,7 @@
             </i>
         <hr>
             <i>
-                <{$smarty.const.MD_XFGB_NOTE}>
+                <{$smarty.const.MD_XFGUESTBOOK_NOTE}>
                 <{$msg.note_msg}>
             </i>
             <{/if}>
@@ -54,7 +54,7 @@
     </tr>
     <{if $xoops_isadmin and not $preview}>
         <tr valign='bottom'>
-            <td width="25%" class="foot"><br><{$smarty.const.MD_XFGB_COUNTRY}>: <{$msg.local}></td>
+            <td width="25%" class="foot"><br><{$smarty.const.MD_XFGUESTBOOK_COUNTRY}>: <{$msg.local}></td>
             <td class='foot' align="right">
                 <img src="<{$xoops_url}>/modules/xfguestbook/assets/images/ip.gif" border=0 title="<{$msg.poster_ip}>">&nbsp;&nbsp;
                 <a href="admin/main.php?op=edit&msg_id=<{$msg.msg_id}>"><img src="<{xoModuleIcons16 edit.png}>" border=0 alt="<{$smarty.const._EDIT}>"></a>&nbsp;

@@ -25,92 +25,161 @@
 //system menu
 $moduleDirName = basename(__DIR__);
 
-$modversion['version']        = '3.2';
-$modversion['status_version'] = 'Beta 1';
-$modversion['release_date']   = '2017/01/18';
-$modversion['name']           = MI_XFGB_NAME;
-$modversion['description']    = MI_XFGB_DESC;
-$modversion['credits']        = 'phppp : randomscript, randomimage';
-$modversion['author']         = 'the Cat';
-$modversion['contributors']   = 'Paul Mar alias Winsion';
-$modversion['help']           = 'page=help';
-$modversion['license']        = 'GNU GPL 2.0';
-$modversion['license_url']    = 'www.gnu.org/licenses/gpl-2.0.html/';
+// ------------------- Informations ------------------- //
+$modversion = [
+    'version'             => 3.2,
+    'module_status'       => 'Beta 1',
+    'release_date'        => '2017/01/23',
+    'name'                => MI_XFGUESTBOOK_NAME,
+    'description'         => MI_XFGUESTBOOK_DESC,
+    'official'            => 0,
+    //1 indicates official XOOPS module supported by XOOPS Dev Team, 0 means 3rd party supported
+    'author'              => 'the Cat',
+    'credits'             => 'XOOPS Development Team, phppp: randomscript, randomimage, Paul Mar alias Winsion',
+    'author_mail'         => 'author-email',
+    'author_website_url'  => 'http://xoops.org',
+    'author_website_name' => 'XOOPS',
+    'license'             => 'GPL 2.0 or later',
+    'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
+    'help'                => 'page=help',
+    // ------------------- Folders & Files -------------------
+    'release_info'        => 'Changelog',
+    'release_file'        => XOOPS_URL . "/modules/$moduleDirName/docs/changelog.txt",
+    //
+    'manual'              => 'link to manual file',
+    'manual_file'         => XOOPS_URL . "/modules/$moduleDirName/docs/install.txt",
+    // images
+    'image'               => 'assets/images/logoModule.png',
+    'iconsmall'           => 'assets/images/iconsmall.png',
+    'iconbig'             => 'assets/images/iconbig.png',
+    'dirname'             => $moduleDirName,
+    'modicons16'          => 'assets/images/icons/16',
+    'modicons32'          => 'assets/images/icons/32',
+    //About
+    'demo_site_url'       => 'http://www.xoops.org',
+    'demo_site_name'      => 'XOOPS Demo Site',
+    'support_url'         => 'http://xoops.org/modules/newbb/viewforum.php?forum=28/',
+    'support_name'        => 'Support Forum',
+    'module_website_url'  => 'www.xoops.org',
+    'module_website_name' => 'XOOPS Project',
+    // ------------------- Min Requirements -------------------
+    'min_php'             => '5.5',
+    'min_xoops'           => '2.5.8',
+    'min_admin'           => '1.2',
+    'min_db'              => ['mysql' => '5.1'],
+    // ------------------- Admin Menu -------------------
+    'system_menu'         => 1,
+    'hasAdmin'            => 1,
+    'adminindex'          => 'admin/index.php',
+    'adminmenu'           => 'admin/menu.php',
+    // ------------------- Main Menu -------------------
+    'hasMain'             => 1,
+    //    'sub'                 => [
+    //        [
+    //            'name' => MI_XFGUESTBOOK_VIEW_SEARCH,
+    //            'url'  => 'index.php'
+    //        ],
+    //    ],
 
-$modversion['official'] = 0;
-$modversion['image']    = 'assets/images/logoModule.png';
-$modversion['dirname']  = basename(__DIR__);
-//$modversion['dirmoduleadmin'] = 'Frameworks/moduleclasses';
-//$modversion['icons16']        = 'Frameworks/moduleclasses/icons/16';
-//$modversion['icons32']        = 'Frameworks/moduleclasses/icons/32';
-$modversion['modicons16'] = 'assets/images/icons/16';
-$modversion['modicons32'] = 'assets/images/icons/32';
-
-// ------------------- Mysql ------------------- //
-$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-
-// Tables created by sql file (without prefix!)
-$modversion['tables'] = [
-    $moduleDirName . '_' . 'msg',
-    $moduleDirName . '_' . 'config',
-    $moduleDirName . '_' . 'country',
-    $moduleDirName . '_' . 'badips',
+    // ------------------- Install/Update -------------------
+    'onInstall'           => 'include/oninstall.php',
+    'onUpdate'            => 'include/onupdate.php',
+    //  'onUninstall'         => 'include/onuninstall.php',
+    // -------------------  PayPal ---------------------------
+    'paypal'              => [
+        'business'      => 'foundation@xoops.org',
+        'item_name'     => 'Donation : ' . MI_XFGUESTBOOK_NAME,
+        'amount'        => 25,
+        'currency_code' => 'USD'
+    ],
+    // ------------------- Search ---------------------------
+    'hasSearch'           => 1,
+    'search'              => [
+        'file' => 'include/search.inc.php',
+        'func' => 'xfguestbook_search'
+    ],
+    // ------------------- Comments -------------------------
+    //    'hasComments'         => 1,
+    //    'comments'            => [
+    //        'pageName'     => 'dog.php',
+    //        'itemName'     => 'id',
+    //        'callbackFile' => 'include/comment_functions.php',
+    //        'callback'     => [
+    //            'approve' => 'picture_comments_approve',
+    //            'update'  => 'picture_comments_update'
+    //        ],
+    //    ],
+    // ------------------- Notification ----------------------
+//    'hasNotification'     => 1,
+    //    'notification'        => [
+    //        'lookup_file' => 'include/notification.inc.php',
+    //        'lookup_func' => 'lookup',
+    //        'category'    => [
+    //            'name'           => 'dog',
+    //            'title'          => MI_XFGUESTBOOK_DOG_NOTIFY,
+    //            'description'    => MI_XFGUESTBOOK_DOG_NOTIFY_DSC,
+    //            'subscribe_from' => [
+    //                'dog.php',
+    //                'pedigree.php'
+    //            ],
+    //            'item_name'      => 'id',
+    //            'allow_bookmark' => 1
+    //        ],
+    //        'event'       => [
+    //            'name'          => 'change_data',
+    //            'category'      => 'dog',
+    //            'title'         => MI_XFGUESTBOOK_DATA_NOTIFY,
+    //            'caption'       => MI_XFGUESTBOOK_DATA_NOTIFYCAP,
+    //            'description'   => MI_XFGUESTBOOK_DATA_NOTIFYDSC,
+    //            'mail_template' => 'dog_data_notify',
+    //            'mail_subject'  => MI_XFGUESTBOOK_DATA_NOTIFYSBJ
+    //        ],
+    //    ],
+    // ------------------- Mysql -----------------------------
+    'sqlfile'             => ['mysql' => 'sql/mysql.sql'],
+    // ------------------- Tables ----------------------------
+    'tables'              => [
+        $moduleDirName . '_' . 'msg',
+        $moduleDirName . '_' . 'config',
+        $moduleDirName . '_' . 'country',
+        $moduleDirName . '_' . 'badips',
+    ],
 ];
-
-//Admin things
-$modversion['hasAdmin']   = 1;
-$modversion['adminindex'] = 'admin/index.php';
-$modversion['adminmenu']  = 'admin/menu.php';
-
-// Menu
-$modversion['hasMain'] = 1;
 
 // ------------------- Help files ------------------- //
 $modversion['helpsection'] = [
-    ['name' => MI_XFGB_OVERVIEW, 'link' => 'page=help'],
-    ['name' => MI_XFGB_DISCLAIMER, 'link' => 'page=disclaimer'],
-    ['name' => MI_XFGB_LICENSE, 'link' => 'page=license'],
-    ['name' => MI_XFGB_SUPPORT, 'link' => 'page=support'],
-
-    //    array('name' => MI_XFGB_HELP1, 'link' => 'page=help1'),
-    //    array('name' => MI_XFGB_HELP2, 'link' => 'page=help2'),
-    //    array('name' => MI_XFGB_HELP3, 'link' => 'page=help3'),
-    //    array('name' => MI_XFGB_HELP4, 'link' => 'page=help4'),
-    //    array('name' => MI_XFGB_HOWTO, 'link' => 'page=__howto'),
-    //    array('name' => MI_XFGB_REQUIREMENTS, 'link' => 'page=__requirements'),
-    //    array('name' => MI_XFGB_CREDITS, 'link' => 'page=__credits'),
-
+    ['name' => MI_XFGUESTBOOK_OVERVIEW, 'link' => 'page=help'],
+    ['name' => MI_XFGUESTBOOK_DISCLAIMER, 'link' => 'page=disclaimer'],
+    ['name' => MI_XFGUESTBOOK_LICENSE, 'link' => 'page=license'],
+    ['name' => MI_XFGUESTBOOK_SUPPORT, 'link' => 'page=support'],
 ];
 
-// Search
-$modversion['hasSearch']      = 1;
-$modversion['search']['file'] = 'include/search.inc.php';
-$modversion['search']['func'] = 'xfguestbook_search';
+// ------------------- Templates ------------------- //
 
-// Templates
-$modversion['templates'][1]['file']        = 'xfguestbook_index.tpl';
-$modversion['templates'][1]['description'] = '';
-$modversion['templates'][2]['file']        = 'xfguestbook_item.tpl';
-$modversion['templates'][2]['description'] = '';
-$modversion['templates'][3]['file']        = 'xfguestbook_signform.tpl';
-$modversion['templates'][3]['description'] = '';
+$modversion['templates'] = [
+    ['file' => 'xfguestbook_index.tpl', 'description' => ''],
+    ['file' => 'xfguestbook_item.tpl', 'description' => ''],
+    ['file' => 'xfguestbook_signform.tpl', 'description' => ''],
+];
 
-//about
-$modversion['module_website_url']  = 'http://www.xoops.org/';
-$modversion['module_website_name'] = 'XOOPS';
-$modversion['author_website_url']  = 'http://www.FolsomLiving.com/';
-$modversion['author_website_name'] = 'Metalslug';
-$modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.8';
-$modversion['min_admin']           = '1.2';
-$modversion['min_db']              = ['mysql' => '5.1'];
-$modversion['system_menu']         = 1;
+// ------------------- Blocks ------------------- //
+
+$modversion['blocks'][] = [
+    'file'        => 'xfguestbook_new.php',
+    'name'        => MI_XFGUESTBOOK_BNAME1,
+    'description' => MI_XFGUESTBOOK_BNAME1_DESC,
+    'show_func'   => 'b_xfguestbook_show',
+    'edit_func'   => 'b_xfguestbook_edit',
+    'template'    => 'xfguestbook_block_new.tpl',
+    'can_clone'   => true,
+    'options'     => '5|19'
+];
 
 // Config Settings
 // anonymious can post
 $modversion['config'][1] = [
     'name'        => 'anonsign',
-    'title'       => 'MI_XFGB_ANONSIGN',
+    'title'       => 'MI_XFGUESTBOOK_ANONSIGN',
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
@@ -119,8 +188,8 @@ $modversion['config'][1] = [
 // Moderate
 $modversion['config'][] = [
     'name'        => 'moderate',
-    'title'       => 'MI_XFGB_MODERATE',
-    'description' => 'MI_XFGB_MODERATEDSC',
+    'title'       => 'MI_XFGUESTBOOK_MODERATE',
+    'description' => 'MI_XFGUESTBOOK_MODERATEDSC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '0'
@@ -128,7 +197,7 @@ $modversion['config'][] = [
 // send mail to webmaster
 $modversion['config'][] = [
     'name'        => 'sendmail2wm',
-    'title'       => 'MI_XFGB_SENDMAIL',
+    'title'       => 'MI_XFGUESTBOOK_SENDMAIL',
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
@@ -137,8 +206,8 @@ $modversion['config'][] = [
 // show mail
 $modversion['config'][] = [
     'name'        => 'showemail',
-    'title'       => 'MI_XFGB_SHOWEMAIL',
-    'description' => 'MI_XFGB_SHOWEMAIL_DESC',
+    'title'       => 'MI_XFGUESTBOOK_SHOWEMAIL',
+    'description' => 'MI_XFGUESTBOOK_SHOWEMAIL_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
     'default'     => '0'
@@ -146,7 +215,7 @@ $modversion['config'][] = [
 // number messages per page
 $modversion['config'][] = [
     'name'        => 'perpage',
-    'title'       => 'MI_XFGB_NBMSG',
+    'title'       => 'MI_XFGUESTBOOK_NBMSG',
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
@@ -155,7 +224,7 @@ $modversion['config'][] = [
 // number flags per row
 $modversion['config'][] = [
     'name'        => 'flagsperrow',
-    'title'       => 'MI_XFGB_NBFLAGS',
+    'title'       => 'MI_XFGUESTBOOK_NBFLAGS',
     'description' => '',
     'formtype'    => 'select',
     'valuetype'   => 'int',
@@ -165,7 +234,7 @@ $modversion['config'][] = [
 // Display avatar and rank
 $modversion['config'][] = [
     'name'        => 'display_avatar',
-    'title'       => 'MI_XFGB_AVATAR',
+    'title'       => 'MI_XFGUESTBOOK_AVATAR',
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
@@ -174,8 +243,8 @@ $modversion['config'][] = [
 // Photo max size
 $modversion['config'][] = [
     'name'        => 'photo_maxsize',
-    'title'       => 'MI_XFGB_MAXSIZEIMG',
-    'description' => 'MI_XFGB_MAXSIZEIMG_DESC',
+    'title'       => 'MI_XFGUESTBOOK_MAXSIZEIMG',
+    'description' => 'MI_XFGUESTBOOK_MAXSIZEIMG_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
     'default'     => '30000'
@@ -184,7 +253,7 @@ $modversion['config'][] = [
 // Photo max height
 $modversion['config'][] = [
     'name'        => 'photo_maxheight',
-    'title'       => 'MI_XFGB_MAXHEIGHTIMG',
+    'title'       => 'MI_XFGUESTBOOK_MAXHEIGHTIMG',
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
@@ -194,7 +263,7 @@ $modversion['config'][] = [
 // Photo max width
 $modversion['config'][] = [
     'name'        => 'photo_maxwidth',
-    'title'       => 'MI_XFGB_MAXWIDTHIMG',
+    'title'       => 'MI_XFGUESTBOOK_MAXWIDTHIMG',
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
@@ -204,31 +273,23 @@ $modversion['config'][] = [
 // name of flagpack
 $modversion['config'][] = [
     'name'        => 'country_caption',
-    'title'       => 'MI_XFGB_COUNTRY_CAPTION',
+    'title'       => 'MI_XFGUESTBOOK_COUNTRY_CAPTION',
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => MI_XFGB_COUNTRY
+    'default'     => MI_XFGUESTBOOK_COUNTRY
 ];
 
 // Directory and sql name of flagpack
 $modversion['config'][] = [
     'name'        => 'flagdir',
-    'title'       => 'MI_XFGB_FLAGDIR',
+    'title'       => 'MI_XFGUESTBOOK_FLAGDIR',
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
     'default'     => ''
 ];
 
-// Blocks
-$modversion['blocks'][1]['file']        = 'xfguestbook_new.php';
-$modversion['blocks'][1]['name']        = '_MB_XFGUESTBOOK_BNAME1';
-$modversion['blocks'][1]['description'] = 'Shows recently added donwload files';
-$modversion['blocks'][1]['show_func']   = 'b_xfguestbook_show';
-$modversion['blocks'][1]['edit_func']   = 'b_xfguestbook_edit';
-$modversion['blocks'][1]['options']     = '5|19';
-$modversion['blocks'][1]['template']    = 'xfguestbook_block_new.tpl';
 
 //if (!file_exists(XOOPS_ROOT_PATH . '/uploads/xfguestbook')) {
 //    mkdir(XOOPS_ROOT_PATH . '/uploads/xfguestbook', 0777);

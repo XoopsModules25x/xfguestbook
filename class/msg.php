@@ -208,7 +208,7 @@ class XfguestbookMsgHandler
     public function delete($msg)
     {
         global $xoopsModule;
-        if ('XfguestbookMsg' !== strtolower(get_class($msg))) {
+        if ('xfguestbookmsg' !== strtolower(get_class($msg))) {
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE msg_id = %u', $this->db->prefix('xfguestbook_msg'), $msg->getVar('msg_id'));

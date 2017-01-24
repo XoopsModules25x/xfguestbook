@@ -96,7 +96,7 @@ switch ($op) {
         $nt                        = 0;
         $nf                        = 0;
         $arr_table[$nt]['name']    = 'xfguestbook_config';
-        $arr_table[$nt]['version'] = AM_XFGB_ADDED . '2.10';
+        $arr_table[$nt]['version'] = AM_XFGUESTBOOK_ADDED . '2.10';
         if (!TableExist('xfguestbook_config')) {
             $arr_table[$nt]['to_update'] = 1;
             $update                      = true;
@@ -121,7 +121,7 @@ switch ($op) {
         }
 
         $arr_table[$nt]['field'][$nf]['name']    = 'gender';
-        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGB_ADDED . '2.10';
+        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGUESTBOOK_ADDED . '2.10';
         if (!FieldType('xfguestbook_msg', 'gender')) {
             $arr_table[$nt]['field'][$nf]['to_update'] = 1;
             $update                                    = true;
@@ -131,7 +131,7 @@ switch ($op) {
         $nf++;
 
         $arr_table[$nt]['field'][$nf]['name']    = 'country';
-        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGB_ADDED . '2.10 - ' . AM_XFGB_CHANGED . '2.30';
+        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGUESTBOOK_ADDED . '2.10 - ' . AM_XFGUESTBOOK_CHANGED . '2.30';
         $field                                   = FieldType('xfguestbook_msg', 'country');
         if (!$field) {
             $arr_table[$nt]['field'][$nf]['to_update'] = 1;
@@ -145,7 +145,7 @@ switch ($op) {
         $nf++;
 
         $arr_table[$nt]['field'][$nf]['name']    = 'photo';
-        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGB_ADDED . '2.20';
+        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGUESTBOOK_ADDED . '2.20';
         if (!FieldType('xfguestbook_msg', 'photo')) {
             $arr_table[$nt]['field'][$nf]['to_update'] = 1;
             $update                                    = true;
@@ -155,7 +155,7 @@ switch ($op) {
         $nf++;
 
         $arr_table[$nt]['field'][$nf]['name']    = 'flagdir';
-        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGB_ADDED . '2.30';
+        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGUESTBOOK_ADDED . '2.30';
         if (!FieldType('xfguestbook_msg', 'flagdir')) {
             $arr_table[$nt]['field'][$nf]['to_update'] = 1;
             $update                                    = true;
@@ -165,7 +165,7 @@ switch ($op) {
         $nf++;
 
         $arr_table[$nt]['field'][$nf]['name']    = 'other';
-        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGB_ADDED . '2.30';
+        $arr_table[$nt]['field'][$nf]['version'] = AM_XFGUESTBOOK_ADDED . '2.30';
         if (!FieldType('xfguestbook_msg', 'other')) {
             $arr_table[$nt]['field'][$nf]['to_update'] = 1;
             $update                                    = true;
@@ -178,7 +178,7 @@ switch ($op) {
         $nt++;
         $nf                        = 0;
         $arr_table[$nt]['name']    = 'xfguestbook_country';
-        $arr_table[$nt]['version'] = AM_XFGB_ADDED . '2.10';
+        $arr_table[$nt]['version'] = AM_XFGUESTBOOK_ADDED . '2.10';
 
         if (!TableExist('xfguestbook_country')) {
             $arr_table[$nt]['to_update'] = 1;
@@ -186,7 +186,7 @@ switch ($op) {
         } else {
             $arr_table[$nt]['to_update']             = 0;
             $arr_table[$nt]['field'][$nf]['name']    = 'country_code';
-            $arr_table[$nt]['field'][$nf]['version'] = AM_XFGB_CHANGED . '2.30';
+            $arr_table[$nt]['field'][$nf]['version'] = AM_XFGUESTBOOK_CHANGED . '2.30';
             $field                                   = FieldType('xfguestbook_country', 'country_code');
             if ('varchar(5)' !== $field) {
                 $arr_table[$nt]['field'][$nf]['to_update'] = 2;
@@ -200,7 +200,7 @@ switch ($op) {
         $nt++;
         $nf                        = 0;
         $arr_table[$nt]['name']    = 'xfguestbook_badips';
-        $arr_table[$nt]['version'] = AM_XFGB_ADDED . '2.40';
+        $arr_table[$nt]['version'] = AM_XFGUESTBOOK_ADDED . '2.40';
 
         if (!TableExist('xfguestbook_badips')) {
             $arr_table[$nt]['to_update'] = 1;
@@ -212,7 +212,7 @@ switch ($op) {
         foreach ($arr_table as $one_table) {
             echo "<table border='1' width='100%' cellpadding ='3' cellspacing='1'>";
             echo '<tr><td width="40%" class="even">';
-            echo '<b>' . AM_XFGB_TABLE . $xoopsDB->prefix($one_table['name']) . '</b>';
+            echo '<b>' . AM_XFGUESTBOOK_TABLE . $xoopsDB->prefix($one_table['name']) . '</b>';
             echo '</td>';
             //          echo '<td class="even">';
             if ($one_table['to_update'] > 0) {
@@ -228,7 +228,7 @@ switch ($op) {
             if (isset($one_table['field'])) {
                 foreach ($one_table['field'] as $one_field) {
                     echo '<tr><td width="40%" class = "odd">';
-                    echo AM_XFGB_FIELD . $one_field['name'];
+                    echo AM_XFGUESTBOOK_FIELD . $one_field['name'];
                     echo '</td>';
                     if ($one_field['to_update'] > 0) {
                         echo '<td width="20%" class = "odd"><img src=\'' . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/assets/images/ic15_notok.gif\' >';
@@ -241,7 +241,7 @@ switch ($op) {
                 }
             } else {
                 echo '<tr><td colspan="3" class = "odd">';
-                echo AM_XFGB_NOCHANGE;
+                echo AM_XFGUESTBOOK_NOCHANGE;
                 echo '</td>';
                 echo '</tr>';
             }
@@ -250,11 +250,11 @@ switch ($op) {
 
         echo "<table border='1' width='100%' ><tr><td class = 'odd'><div align='center'>";
         if ($update) {
-            echo AM_XFGB_WARNING_UPGRADE . '<br><br>';
+            echo AM_XFGUESTBOOK_WARNING_UPGRADE . '<br><br>';
             echo '<input type="hidden" name="op" value="upgrade" />';
-            echo '<input type="submit" name="Submit" value="' . AM_XFGB_UPGRADE_GO . '">';
+            echo '<input type="submit" name="Submit" value="' . AM_XFGUESTBOOK_UPGRADE_GO . '">';
         } else {
-            echo AM_XFGB_NO_UPGRADE . '<br><br>';
+            echo AM_XFGUESTBOOK_NO_UPGRADE . '<br><br>';
         }
         echo '</div></td></tr></table>';
         echo '</form>';
@@ -269,63 +269,63 @@ switch ($op) {
             $sql    = 'DROP TABLE ' . $xoopsDB->prefix('xfguestbook_config');
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
             $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/sql/update_config.sql';//create + insert values
             $error   = executeSQL($sqlfile);
-            $msg     .= AM_XFGB_ERROR . ' ' . $error . '<br>';
+            $msg     .= AM_XFGUESTBOOK_ERROR . ' ' . $error . '<br>';
         }
         if ($xfguestbook_msg_checked > 0) {
             $sql    = 'ALTER TABLE ' . $xoopsDB->prefix('xfguestbook') . ' RENAME ' . $xoopsDB->prefix('xfguestbook_msg');
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
             $sql    = 'ALTER TABLE ' . $xoopsDB->prefix('xfguestbook_msg') . ' CHANGE `xfguestbook_id` `msg_id` INT(11) NOT NULL AUTO_INCREMENT';
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
         }
         if ($xfguestbook_msg_photo_checked > 0) {
             $sql    = 'ALTER TABLE ' . $xoopsDB->prefix('xfguestbook_msg') . ' ADD `photo` VARCHAR(25) NOT NULL';
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
         }
         if ($xfguestbook_msg_gender_checked > 0) {
             $sql    = 'ALTER TABLE ' . $xoopsDB->prefix('xfguestbook_msg') . ' ADD `gender` TINYINT(1) NOT NULL';
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
         }
         if (1 == $xfguestbook_msg_country_checked) {
             $sql    = 'ALTER TABLE ' . $xoopsDB->prefix('xfguestbook_msg') . ' ADD `country` VARCHAR(5) NOT NULL';
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
         }
         if (2 == $xfguestbook_msg_country_checked) {
             $sql    = 'ALTER TABLE ' . $xoopsDB->prefix('xfguestbook_msg') . ' CHANGE `country` `country` CHAR(5) NOT NULL';
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
         }
         if ($xfguestbook_msg_flagdir_checked > 0) {
             $sql    = 'ALTER TABLE ' . $xoopsDB->prefix('xfguestbook_msg') . ' ADD `flagdir` VARCHAR(20) NOT NULL';
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
             if (0 == $xfguestbook_country_checked) {
                 $sql    = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_msg') . " SET flagdir = 'world_flags' ";
                 $result = $xoopsDB->queryF($sql);
                 if (!$result) {
-                    $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                    $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
                 }
                 //          $sqlfile = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname().'/assets/images/flags/world_flags/flags_data.sql';
                 //          $msg .= executeSQL($sqlfile);
@@ -345,30 +345,30 @@ switch ($op) {
             $sql    = 'ALTER TABLE ' . $xoopsDB->prefix('xfguestbook_msg') . ' ADD `other`VARCHAR(20) NOT NULL';
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
         }
 
         if ($xfguestbook_country_checked > 0) {
             $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/sql/create_country.sql';//create only
             $error   = executeSQL($sqlfile);
-            $msg     .= AM_XFGB_ERROR . ' ' . $error . '<br>';
+            $msg     .= AM_XFGUESTBOOK_ERROR . ' ' . $error . '<br>';
         } elseif ($xfguestbook_country_country_code_checked > 1) {
             $sql    = 'ALTER TABLE ' . $xoopsDB->prefix('xfguestbook_country') . ' CHANGE `country_code` `country_code` CHAR(5) NOT NULL';
             $result = $xoopsDB->queryF($sql);
             if (!$result) {
-                $msg .= AM_XFGB_ERROR . ' ' . $sql . '<br>';
+                $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
         }
 
         if ($xfguestbook_badips_checked > 0) {
             $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/sql/create_badips.sql';//create only
             $error   = executeSQL($sqlfile);
-            $msg     .= AM_XFGB_ERROR . ' ' . $error . '<br>';
+            $msg     .= AM_XFGUESTBOOK_ERROR . ' ' . $error . '<br>';
         }
 
         if ('' === $msg) {
-            echo AM_XFGB_UPGRADE_SUCCESS;
+            echo AM_XFGUESTBOOK_UPGRADE_SUCCESS;
         }
         xoops_cp_footer();
         break;
