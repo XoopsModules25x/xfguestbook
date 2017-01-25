@@ -23,7 +23,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include_once __DIR__ . '/admin_header.php';
+
 
 if (!isset($moduleDirName)) {
     $moduleDirName = basename(dirname(__DIR__));

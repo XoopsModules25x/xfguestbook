@@ -17,8 +17,7 @@
  * @author       XOOPS Development Team
  */
 
-global $xoopsModule;
-//$pathIcon32 = '../../../' . $xoopsModule->getInfo('sysicons32');
+$pathIcon32      = \Xmf\Module\Admin::iconUrl('', 32);
 
 echo "<div class='adminfooter'>\n"
      ."  <div style='text-align: center;'>\n"

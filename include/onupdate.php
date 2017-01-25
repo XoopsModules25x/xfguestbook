@@ -85,7 +85,7 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
     $moduleDirName = basename(dirname(__DIR__));
     $capsDirName   = strtoupper($moduleDirName);
 
-    if ($previousVersion < 330) {
+    if ($previousVersion < 230) {
 
         include_once __DIR__ . '/config.php';
         $configurator = new ModuleConfigurator();

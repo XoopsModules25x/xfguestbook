@@ -27,9 +27,9 @@ $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
 $modversion = [
-    'version'             => 3.2,
-    'module_status'       => 'Beta 1',
-    'release_date'        => '2017/01/23',
+    'version'             => 3.20,
+    'module_status'       => 'Final',
+    'release_date'        => '2017/01/25',
     'name'                => MI_XFGUESTBOOK_NAME,
     'description'         => MI_XFGUESTBOOK_DESC,
     'official'            => 0,
