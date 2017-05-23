@@ -89,8 +89,8 @@ function b_xfguestbook_show($options)
 function b_xfguestbook_edit($options)
 {
     $form = '' . MB_XFGUESTBOOK_DISP . '&nbsp;';
-    $form .= '<input type="text" name="options[]" value="' . $options[0] . '" />&nbsp;' . MB_XFGUESTBOOK_NBMSG . '';
-    $form .= '&nbsp;<br>' . MB_XFGUESTBOOK_CHARS . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . '\' />&nbsp;' . MB_XFGUESTBOOK_LENGTH . '';
+    $form .= '<input type="text" name="options[]" value="' . $options[0] . '">&nbsp;' . MB_XFGUESTBOOK_NBMSG . '';
+    $form .= '&nbsp;<br>' . MB_XFGUESTBOOK_CHARS . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . '\'>&nbsp;' . MB_XFGUESTBOOK_LENGTH . '';
 
     return $form;
 }

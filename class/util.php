@@ -23,7 +23,7 @@ class XfguestbookUtil extends XoopsObject
                 }
             }
         } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
+            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
         }
     }
 
@@ -42,7 +42,7 @@ class XfguestbookUtil extends XoopsObject
         //                return copy($file, $folder);
         //            }
         //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br/>";
+        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
         //        }
         //        return false;
     }
@@ -230,8 +230,8 @@ class XfguestbookUtil extends XoopsObject
             if ($xoopsModuleConfig['display_avatar']) {
                 $rank = $poster->rank();
                 $rank['title'] ? $a_poster['rank'] = $rank['title'] : $a_poster['rank'] = '';
-                $rank['image'] ? $a_poster['rank_img'] = "<img src='" . XOOPS_URL . '/uploads/' . $rank['image'] . '\' alt=\'\' />' : $a_poster['rank_img'] = '';
-                $poster->user_avatar() ? $a_poster['avatar'] = "<img src='" . XOOPS_URL . '/uploads/' . $poster->user_avatar() . '\' alt=\'\' />' : $a_poster['avatar'] = '';
+                $rank['image'] ? $a_poster['rank_img'] = "<img src='" . XOOPS_URL . '/uploads/' . $rank['image'] . '\' alt=\'\'>' : $a_poster['rank_img'] = '';
+                $poster->user_avatar() ? $a_poster['avatar'] = "<img src='" . XOOPS_URL . '/uploads/' . $poster->user_avatar() . '\' alt=\'\'>' : $a_poster['avatar'] = '';
             } else {
                 $a_poster['rank']     = '';
                 $a_poster['avatar']   = '';

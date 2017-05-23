@@ -60,14 +60,16 @@ if (!isset($_POST['flagdir'])) {
     $index_admin = new ModuleAdmin();
     echo $index_admin->addNavigation(basename(__FILE__));
 
-    $flagdir = $_POST['flagdir'];
+    //$flagdir = $_POST['flagdir'];
+    $flagdir = Xmf\Request::getString('flagdir', '', 'POST');
     $msg     = '';
 
     $sql    = 'TRUNCATE TABLE ' . $xoopsDB->prefix('xfguestbook_country');
     $result = $xoopsDB->queryF($sql);
     echo 'Table <b>' . $xoopsDB->prefix('xfguestbook_country') . '</b> deleted.<br>';
-    if ($flagdir !== '') {
+    if ($flagdir !== '' && (false !== $preg_match('/[\<\>\:\"\/\\\|\?\*]|[\001-\037]/', $flagdir))) {
         $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $flagdir . '/flags_data.sql';
+        $sqlfile = realpath($sqlfile);
         $msg     .= executeSQL($sqlfile);
     }
     if ($msg === '') {

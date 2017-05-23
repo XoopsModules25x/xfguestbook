@@ -126,7 +126,7 @@ function xfgb_getmsg($msg)
                               . XOOPS_URL
                               . '/images/icons/email.gif" alt="'
                               . _SENDEMAILTO
-                              . '" /></a>';
+                              . '"></a>';
         }
         // url
         if ($onemsg->getVar('url')) {

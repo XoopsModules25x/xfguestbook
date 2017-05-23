@@ -145,4 +145,4 @@ class ModuleConfigurator
 
 // module information
 $modCopyright = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
-                     <img src='" . constant($capsDirName . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>';
+                     <img src='" . constant($capsDirName . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\'></a>';

@@ -2,7 +2,7 @@
     <tr>
         <th width="25%" align="left">
         <{$msg.i}></td>
-        <img src='<{$xoops_url}>/images/icons/posticon.gif' alt=''/> <span class='comDate'>
+        <img src='<{$xoops_url}>/images/icons/posticon.gif' alt=''> <span class='comDate'>
       <{$msg.date}>
       </span>
         <th align="left">

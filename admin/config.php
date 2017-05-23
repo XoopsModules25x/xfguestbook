@@ -41,18 +41,20 @@ function getOptions4Admin($cat = 2)
         $arr_conf[$i]['conf_title']    = $myrow['conf_title'];
         $arr_conf[$i]['conf_desc']     = $myrow['conf_desc'];
         $arr_conf[$i]['conf_formtype'] = $myrow['conf_formtype'];
-        $i++;
+        ++$i ;
     }
 
     return $arr_conf;
 }
-
+/*
 if (isset($_POST)) {
     foreach ($_POST as $k => $v) {
         ${$k} = $v;
     }
 }
-
+*/
+$op = \Xmf\Request::getCmd('op', 'show');
+/*
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
 } elseif (isset($_POST['op'])) {
@@ -60,14 +62,14 @@ if (isset($_GET['op'])) {
 } else {
     $op = 'show';
 }
-
+*/
 switch ($op) {
 
     case 'save':
         $option = getOptions4Admin();
         $nb_opt = count($option);
 
-        for ($i = 0; $i < $nb_opt; $i++) {
+        for ($i = 0; $i < $nb_opt; ++$i) {
             $sql    = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_config') . " SET conf_value='" . ${$option[$i]['conf_name']} . '\' WHERE conf_id=' . $option[$i]['conf_id'];
             $result = $xoopsDB->query($sql);
         }
