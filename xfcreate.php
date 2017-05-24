@@ -218,7 +218,7 @@ switch ($op) {
             // Send mail to webmaster
             if (1 == $xoopsModuleConfig['sendmail2wm']) {
                 $subject     = $xoopsConfig['sitename'] . ' - ' . MD_XFGUESTBOOK_NAMEMODULE;
-                $xoopsMailer =& xoops_getMailer();
+                $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->useMail();
                 $xoopsMailer->setToEmails($xoopsConfig['adminmail']);
                 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);

@@ -28,7 +28,7 @@ include_once __DIR__ . '/../../../class/xoopsform/formselect.php';
 /**
  * Class XfgbFormSelectCountry
  */
-class xfgbformselectcountry extends XoopsFormSelect
+class XfgbFormSelectCountry extends XoopsFormSelect
 {
     /**
      * XfgbFormSelectCountry constructor.

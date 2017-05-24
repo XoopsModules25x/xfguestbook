@@ -178,7 +178,7 @@ function show()
     $criteria->setOrder('DESC');
     $criteria->setLimit($limit);
     $criteria->setStart($start);
-    $msg =& $msgHandler->getObjects($criteria);
+    $msg = $msgHandler->getObjects($criteria);
 
     $badips = XfguestbookUtil::get_badips();
 
