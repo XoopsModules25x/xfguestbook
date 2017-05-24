@@ -70,7 +70,7 @@ switch ($op) {
         $fullmsg .= '<hr><br>';
         $fullmsg .= MD_XFGUESTBOOK_CANJOINT . ' [email]' . $email_user . '[/email]';
 
-        $xoopsMailer =& xoops_getMailer();
+        $xoopsMailer = xoops_getMailer();
         $xoopsMailer->useMail();
         $xoopsMailer->setFromEmail($email_user);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);

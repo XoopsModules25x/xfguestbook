@@ -270,7 +270,7 @@ switch ($op) {
         $criteria->setOrder('DESC');
         $criteria->setLimit($xoopsModuleConfig['perpage']);
         $criteria->setStart($debut);
-        $msg    =& $msgHandler->getObjects($criteria);
+        $msg    = $msgHandler->getObjects($criteria);
         $nbwait -= $debut;
         $nbmsg  = $nbwait;
         xfgb_getmsg($msg);
@@ -283,7 +283,7 @@ switch ($op) {
             $criteria = new CriteriaCompo(new Criteria('moderate', '0'));
             $criteria->add(new Criteria('msg_id', $msg_id));
         }
-        $msg =& $msgHandler->getObjects($criteria);
+        $msg = $msgHandler->getObjects($criteria);
         xfgb_getmsg($msg);
         if ($options['opt_gender'] > 0) {
             xfgb_genderlist();
@@ -302,7 +302,7 @@ switch ($op) {
         $criteria->setOrder('DESC');
         $criteria->setLimit($xoopsModuleConfig['perpage']);
         $criteria->setStart($debut);
-        $msg   =& $msgHandler->getObjects($criteria);
+        $msg   = $msgHandler->getObjects($criteria);
         $nbmsg -= $debut;
         $xoopsTpl->assign('msg_page_nav', $pagenav->renderNav());
         xfgb_getmsg($msg);
@@ -316,7 +316,7 @@ switch ($op) {
         $criteria->setOrder('DESC');
         $criteria->setLimit($xoopsModuleConfig['perpage']);
         $criteria->setStart($debut);
-        $msg   =& $msgHandler->getObjects($criteria);
+        $msg   = $msgHandler->getObjects($criteria);
         $nbmsg -= $debut;
         $xoopsTpl->assign('msg_page_nav', $pagenav->renderNav());
         xfgb_getmsg($msg);
@@ -333,7 +333,7 @@ switch ($op) {
         $criteria->setOrder('DESC');
         $criteria->setLimit($xoopsModuleConfig['perpage']);
         $criteria->setStart($debut);
-        $msg   =& $msgHandler->getObjects($criteria);
+        $msg   = $msgHandler->getObjects($criteria);
         $nbmsg -= $debut;
         xfgb_getmsg($msg);
         if ($options['opt_gender'] > 0) {
