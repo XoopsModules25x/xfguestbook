@@ -22,8 +22,8 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include __DIR__ . '/../../mainfile.php';
-if (!is_object($xoopsUser) && 1 != $xoopsModuleConfig['anonsign']) {
+require __DIR__ . '/../../mainfile.php';
+if (!is_object($GLOBALS['xoopsUser']) && 1 != $GLOBALS['xoopsModuleConfig']['anonsign']) {
     redirect_header(XOOPS_URL . '/user.php', 2, MD_XFGUESTBOOK_MUSTREGFIRST);
 }
 
@@ -34,6 +34,18 @@ include_once __DIR__ . '/include/config.inc.php';
 $option     = getOptions();
 $msgHandler = xoops_getModuleHandler('msg');
 
+$confirm_code = Xmf\Request::getString('confirm_code', '', 'POST');
+$confirm_str  = Xmf\Request::getString('confirm_str', '', 'POST');
+$user_id      = Xmf\Request::getInt('user_id', 0, 'POST');
+$title        = Xmf\Request::getString('title', '', 'POST');
+$message      = Xmf\Request::getString('message', '', 'POST');
+$gender       = Xmf\Request::getString('gender', '', 'POST');
+$preview_name = Xmf\Request::getString('preview_name', '', 'POST');
+$email        = Xmf\Request::getEmail('email', '', 'POST');
+$name         = Xmf\Request::getString('name', '', 'POST');
+$url          = Xmf\Request::getUrl('url', '', 'POST');
+$country      = Xmf\Request::getString('country', '', 'POST');
+/*
 $confirm_code = isset($_POST['confirm_code']) ? $_POST['confirm_code'] : '';
 $confirm_str  = isset($_POST['confirm_str']) ? $_POST['confirm_str'] : '';
 $user_id      = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 0;
@@ -45,7 +57,11 @@ $email        = (isset($_POST['email']) ? $_POST['email'] : '');
 $name         = (isset($_POST['name']) ? $_POST['name'] : '');
 $url          = (isset($_POST['url']) ? $_POST['url'] : '');
 $country      = (isset($_POST['country']) ? $_POST['country'] : '');
-
+*/
+$op = Xmf\Request::getCmd('preview', null, 'POST');
+$op = Xmf\Request::getCmd('post', $op, 'POST');
+$op = (null === $op) ? 'form' : $op;
+/*
 if (isset($_POST['preview'])) {
     $op = 'preview';
 } elseif (isset($_POST['post'])) {
@@ -53,7 +69,7 @@ if (isset($_POST['preview'])) {
 } else {
     $op = 'form';
 }
-
+*/
 $badip = in_array($_SERVER['REMOTE_ADDR'], XfguestbookUtil::get_badips()) ? true : false;
 
 switch ($op) {
@@ -109,7 +125,7 @@ switch ($op) {
             $msgpost['gender'] = '<img src="assets/images/' . $gender . '.gif"';
         }
         if ($email) {
-            $msgpost['email'] = '<img src="' . XOOPS_URL . '/images/icons/email.gif" alt="' . _SENDEMAILTO . '" />';
+            $msgpost['email'] = '<img src="' . XOOPS_URL . '/images/icons/email.gif" alt="' . _SENDEMAILTO . '">';
         }
         if ($url) {
             $msgpost['url'] = '<img src="' . XOOPS_URL . '/images/icons/www.gif" alt="' . _VISITWEBSITE . '">';
@@ -154,7 +170,7 @@ switch ($op) {
         if ('' == $_POST['uman']) {
             redirect_header('index.php', 2, '');
         }
-        if (2 == $option['opt_url'] && preg_match('/(http)|(www)/i', $message)) {
+        if (2 == $option['opt_url'] && preg_match('/(http[s])|(www)/i', $message)) {
             $msgstop .= MD_XFGUESTBOOK_URL_DISABLED . '<br><br>';
         }
         if (!XfguestbookUtil::email_exist($email)) {

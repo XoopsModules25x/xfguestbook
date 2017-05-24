@@ -23,11 +23,15 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include __DIR__ . '/../../../include/cp_header.php';
+//include __DIR__ . '/../../../include/cp_header.php';
+require_once __DIR__ . '/admin_header.php';
 include_once __DIR__ . '/../include/cp_functions.php';
-include_once __DIR__ . '/admin_header.php';
-include_once __DIR__ . '/../class/util.php';
+include_once realpath(__DIR__ . '/../class/util.php');
 
+$op       = Xmf\Request::getString('op', 'badIpShow');
+$ip_id    = Xmf\Request::getArray('ip_id', array());
+$ip_value = Xmf\Request::getString('ip_value', '', 'POST');
+/*
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
 } elseif (isset($_POST['op'])) {
@@ -45,19 +49,27 @@ if (isset($_GET['ip_id'])) {
 }
 
 $ip_value = isset($_POST['ip_value']) ? $_POST['ip_value'] : '';
-
+*/
 /**
  * @param $ip_id
  */
 function badIpDel($ip_id)
 {
     global $xoopsDB;
-    $ip_count = (!empty($_POST['ip_id']) && is_array($_POST['ip_id'])) ? count($_POST['ip_id']) : 0;
+    $ip_count = count($ip_id);
+    //$ip_count = (!empty($_POST['ip_id']) && is_array($_POST['ip_id'])) ? count($_POST['ip_id']) : 0;
     if ($ip_count > 0) {
+        if (!$xoopsSecurity->check()) {
+            redirect_header($_SERVER['PHP_SELF'], XformsConstants::REDIRECT_DELAY_MEDIUM, implode('<br>', $xoopsSecurity->getErrors()));
+        }
         $messagesent = AM_XFGUESTBOOK_BADIP_DELETED;
-        for ($i = 0; $i < $ip_count; $i++) {
-            $sql = sprintf('DELETE FROM %s WHERE ip_id = %u', $xoopsDB->prefix('xfguestbook_badips'), $_POST['ip_id'][$i]);
-            if (!$result = $xoopsDB->query($sql)) {
+        for ($i = 0; $i < $ip_count; ++$i) {
+            if (isset($ip_id[$i]) && ((int)$ip_id[$i] > 0)) {
+                $sql = sprintf('DELETE FROM %s WHERE ip_id = %u', $xoopsDB->prefix('xfguestbook_badips'), $_POST['ip_id'][$i]);
+                if (!$result = $xoopsDB->query($sql)) {
+                    $messagesent = AM_XFGUESTBOOK_ERRORDEL;
+                }
+            } else {
                 $messagesent = AM_XFGUESTBOOK_ERRORDEL;
             }
         }
@@ -74,7 +86,7 @@ function badIpForm($ip_id = null)
 {
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     if ($ip_id) {
-        $sform    = new XoopsThemeForm(AM_XFGUESTBOOK_MOD_BADIP, 'op', xoops_getenv('PHP_SELF'));
+        $sform    = new XoopsThemeForm(AM_XFGUESTBOOK_MOD_BADIP, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $badips   = XfguestbookUtil::get_badips(true);
         $ip_value = $badips[$ip_id]['ip_value'];
     } else {
@@ -104,9 +116,12 @@ function badIpSave($ip_id, $ip_value)
 
     $myts = MyTextSanitizer::getInstance();
     //$ip_value=$myts->makeTboxData4Save($ip_value);
-    if (!empty($ip_id)) {
-        $sql = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_badips') . " SET ip_id='$ip_id', ip_value='$ip_value'";
-        $sql .= " WHERE ip_id = $ip_id";
+    if (!empty($ip_id) && filter_var($ip_value, FILTER_VALIDATE_IP)) {
+        if (!$xoopsSecurity->check()) {
+            redirect_header($_SERVER['PHP_SELF'], 3, implode('<br>', $xoopsSecurity->getErrors()));
+        }
+        $sql = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_badips') . " SET ip_id='" . (int)$ip_id . "', ip_value='" . $ip_value . "'";
+        $sql .= " WHERE ip_id = (int)$ip_id";
         $xoopsDB->query($sql);
         $messagesent = AM_XFGUESTBOOK_BADIP_UPDATED;
     } else {
@@ -149,11 +164,11 @@ function badIpShow()
     echo '</tr>';
 
     if ('0' != count($badips)) {
-        echo "<form name='badiplist' id='list' action='" . $_SERVER['PHP_SELF'] . '\' method=\'POST\' style=\'margin: 0;\'>';
+        echo "<form name='badiplist' id='list' action='" . $_SERVER['PHP_SELF'] . "' method='POST' style='margin: 0;'>";
 
         for ($i = 0; $i < $nb_badips; $i++) {
-            echo '<tr>';
-            echo "<td align='center' class='even'><input type='checkbox' name='ip_id[]' id='ip_id[]' value='" . $badips[$i]['ip_id'] . '\'/></td>';
+            echo "<tr>";
+            echo "<td class='center even'><input type='checkbox' name='ip_id[]' id='ip_id[]' value='" . $badips[$i]['ip_id'] . '\'></td>';
             echo "<td class = 'odd'>" . $badips[$i]['ip_value'] . '</td>';
             echo "<td align='center' class='even'><a href='ip_manager.php?op=badIpEdit&amp;ip_id=" . $badips[$i]['ip_id'] . '\'>' . _EDIT . '</a></td>';
             echo '</tr>';
@@ -162,11 +177,11 @@ function badIpShow()
         echo "<tr class='foot'><td><select name='op'>";
         echo "<option value='badIpDel'>" . _DELETE . '</option>';
         echo '</select>&nbsp;</td>';
-        echo "<td colspan='3'>" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "<input type='submit' value='" . _GO . '\' />';
+        echo "<td colspan='3'>" . $GLOBALS['xoopsSecurity']->getTokenHTML() . "<input type='submit' value='" . _GO . '\'>';
         echo '</td></tr>';
         echo '</form>';
     } else {
-        echo "<tr ><td align='center' colspan ='3' class = 'head'><b>" . AM_XFGUESTBOOK_NOBADIP . '</b></td></tr>';
+        echo "<tr ><td colspan='3' class='head center bold'>" . AM_XFGUESTBOOK_NOBADIP . '</td></tr>';
     }
     echo '</table><br>';
     echo '<br>';

@@ -101,8 +101,8 @@ function executeSQL($sql_file_path)
         //     $msg = "SQL file not found at <b>$sql_file_path</b><br>";
         $error = true;
     } else {
-        echo "SQL file found at <b>$sql_file_path</b>.<br  /> Creating tables...<br>";
-        //      $msg = "SQL file found at <b>$sql_file_path</b>.<br  /> Creating tables...<br>";
+        echo "SQL file found at <b>$sql_file_path</b>.<br> Creating tables...<br>";
+        //      $msg = "SQL file found at <b>$sql_file_path</b>.<br> Creating tables...<br>";
         include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
         $sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
         $sql_query = trim($sql_query);

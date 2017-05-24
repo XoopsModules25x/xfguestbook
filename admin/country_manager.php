@@ -24,7 +24,7 @@
 //  ------------------------------------------------------------------------ //
 
 //include __DIR__ . '/../../../include/cp_header.php';
-//include_once __DIR__ . '/../include/cp_functions.php';
+include_once __DIR__ . '/../include/cp_functions.php';
 include_once __DIR__ . '/admin_header.php';
 require __DIR__ . '/../class/util.php';
 
@@ -34,6 +34,12 @@ $maxheight = 50;
 $maxwidth  = 80;
 $format    = 'gif';
 
+Xmf\Request::getString('op', 'countryShow');
+Xmf\Request::getInt('country_id', 0);
+Xmf\Request::getString('country_code', '');
+Xmf\Request::getInt('start', 0, 'GET');
+Xmf\Request::getString('country_name', '', 'POST');
+/*
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
 } elseif (isset($_POST['op'])) {
@@ -60,7 +66,7 @@ if (isset($_GET['country_code'])) {
 
 $start        = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 $country_name = isset($_POST['country_name']) ? $_POST['country_name'] : '';
-
+*/
 /**
  * @param $country_code
  */
@@ -141,6 +147,9 @@ function flagDel($country_code)
     global $xoopsModule, $xoopsModuleConfig;
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
     if ($ok == 1) {
+        if (!$xoopsSecurity->check()) {
+            redirect_header($_SERVER['PHP_SELF'], 3, implode('<br>', $xoopsSecurity->getErrors()));
+        }
         $flag = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country_code . '.gif';
         if (file_exists(XOOPS_ROOT_PATH . $flag)) {
             unlink(XOOPS_ROOT_PATH . $flag);
@@ -223,6 +232,9 @@ function countryDel($country_id)
     global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
     if ($ok == 1) {
+        if (!$xoopsSecurity->check()) {
+            redirect_header($_SERVER['PHP_SELF'], 3, implode('<br>', $xoopsSecurity->getErrors()));
+        }
         $arr_country = XfguestbookUtil::getCountry('country_id=' . $country_id, 0, 0);
         $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $arr_country[0]['country_code'] . '.gif';
         $sql         = 'DELETE FROM ' . $xoopsDB->prefix('xfguestbook_country') . " WHERE country_id=$country_id";
