@@ -25,7 +25,7 @@
 
 include __DIR__ . '/../../mainfile.php';
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
-include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/util.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/utility.php';
 if (isset($_GET['msg_id'])) {
     $msg_id = (int)$_GET['msg_id'];
 } elseif (isset($_POST['msg_id'])) {
@@ -97,11 +97,11 @@ function xfgb_getmsg($msg)
 {
     global $nbmsg, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $xoopsConfig, $options, $opt, $xoopsDB;
 
-    $arr_country = XfguestbookUtil::getAllCountry();
+    $arr_country = XfguestbookUtility::getAllCountry();
     $xoopsTpl->assign('display_msg', true);
     foreach ($msg as $onemsg) {
-        if ($poster = XfguestbookUtil::get_user_data($onemsg->getVar('user_id'))) {
-            $a_msg = &$poster;
+        if ($poster = XfguestbookUtility::get_user_data($onemsg->getVar('user_id'))) {
+            $a_msg =& $poster;
         } else {
             $a_msg             = [];
             $a_msg['poster']   = $onemsg->getVar('uname');
@@ -116,17 +116,8 @@ function xfgb_getmsg($msg)
             || ($onemsg->getVar('email')
                 && (($user->getVar('user_viewemail') == 1
                      || $onemsg->getVar('user_id') == 0)
-                    && is_object($xoopsUser)))
-        ) {
-            $a_msg['email'] = "<a href=\"javascript:openWithSelfMain('"
-                              . XOOPS_URL
-                              . '/modules/xfguestbook/contact.php?msg_id='
-                              . $onemsg->getVar('msg_id')
-                              . '\', \'contact\', 600, 450);"><img src="'
-                              . XOOPS_URL
-                              . '/images/icons/email.gif" alt="'
-                              . _SENDEMAILTO
-                              . '"></a>';
+                    && is_object($xoopsUser)))) {
+            $a_msg['email'] = "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/modules/xfguestbook/contact.php?msg_id=' . $onemsg->getVar('msg_id') . '\', \'contact\', 600, 450);"><img src="' . XOOPS_URL . '/images/icons/email.gif" alt="' . _SENDEMAILTO . '"></a>';
         }
         // url
         if ($onemsg->getVar('url')) {
@@ -146,15 +137,7 @@ function xfgb_getmsg($msg)
                     $country_name = '';
                 }
                 if (file_exists($flag)) {
-                    $a_msg['country'] = '<img src="'
-                                        . XOOPS_URL
-                                        . '/modules/xfguestbook/assets/images/flags/'
-                                        . $onemsg->getVar('flagdir')
-                                        . '/'
-                                        . $onemsg->getVar('country')
-                                        . '.gif" alt="'
-                                        . $country_name
-                                        . '">';
+                    $a_msg['country'] = '<img src="' . XOOPS_URL . '/modules/xfguestbook/assets/images/flags/' . $onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country') . '.gif" alt="' . $country_name . '">';
                 } else {
                     $a_msg['country'] = $country_name;
                 }
@@ -189,7 +172,7 @@ function xfgb_genderlist()
     $criteria = new Criteria('moderate', 0);
     $arr_msg  = $msgHandler->countMsgByGender($criteria);
     $i        = 0;
-    $gender = [];
+    $gender   = [];
     foreach ($arr_msg as $k => $v) {
         if ($k === 'M') {
             $gender[$i] = MD_XFGUESTBOOK_MALES . '<br>';
@@ -218,11 +201,11 @@ if (0 === strpos($op, 'show')) {
     $debut = isset($_GET['debut']) ? (int)$_GET['debut'] : 0;
     $param = isset($_GET['param']) ? $_GET['param'] : '';
 
-    include_once __DIR__ . '/class/util.php';
+    require_once __DIR__ . '/class/utility.php';
     $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
-    include_once XOOPS_ROOT_PATH . '/header.php';
-    include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-    include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/config.inc.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+    require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/config.inc.php';
     $options = getOptions();
 
     $criteria = new Criteria('moderate', 0);
@@ -241,7 +224,7 @@ if (0 === strpos($op, 'show')) {
 switch ($op) {
     case 'delete':
         if ($adminview) {
-            include_once XOOPS_ROOT_PATH . '/header.php';
+            require_once XOOPS_ROOT_PATH . '/header.php';
             delete($msg_id);
         } else {
             redirect_header('index.php', 1, '');
@@ -250,7 +233,7 @@ switch ($op) {
 
     case 'approve':
         if ($adminview) {
-            include_once XOOPS_ROOT_PATH . '/header.php';
+            require_once XOOPS_ROOT_PATH . '/header.php';
             approve($msg_id);
         } else {
             redirect_header('index.php', 1, '');
@@ -343,7 +326,7 @@ switch ($op) {
 
     case 'cancel':
         $photos_dir     = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
-        $nb_removed_tmp = XfguestbookUtil::clear_tmp_files($photos_dir);
+        $nb_removed_tmp = XfguestbookUtility::clear_tmp_files($photos_dir);
         redirect_header('index.php', 0);
         break;
 }

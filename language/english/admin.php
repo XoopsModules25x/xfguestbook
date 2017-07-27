@@ -86,8 +86,7 @@ define('AM_XFGUESTBOOK_SEL_A0', 'no action');
 define('AM_XFGUESTBOOK_SEL_A1', 'nonindexable');
 define('AM_XFGUESTBOOK_SEL_A2', 'prohibited');
 define('AM_XFGUESTBOOK_CODE_OPT', 'Ask verification code');
-define('AM_XFGUESTBOOK_WARNING_MSG2',
-       "<span style='color: #FF0000; '>For Selection ' YES' you must install one<a href='" . XOOPS_URL . "/modules/xfguestbook/admin/flags_install.php'>Image Pack of (flags, ...)</a></span>");
+define('AM_XFGUESTBOOK_WARNING_MSG2', "<span style='color: #FF0000; '>For Selection ' YES' you must install one<a href='" . XOOPS_URL . "/modules/xfguestbook/admin/flags_install.php'>Image Pack of (flags, ...)</a></span>");
 // add v2.40
 define('AM_XFGUESTBOOK_WEBSITE_OPT', 'Field website authorised');
 define('AM_XFGUESTBOOK_SEL_W0', 'nobody');
@@ -138,8 +137,7 @@ define('AM_XFGUESTBOOK_IMG_DELETED', ' image(s) deleted');
 define('AM_XFGUESTBOOK_IMG_FILE', 'File');
 define('AM_XFGUESTBOOK_IMG_ORPHEAN', ' image(s) orphan(s)');
 define('AM_XFGUESTBOOK_NO_ORPHEAN', 'No orphan images');
-define('AM_XFGUESTBOOK_ORPHEAN_DSC',
-       ' This page enables you to post the images which are not attached to a message (orphan).<br>&nbsp;This can occur if a problem when sending a message.<br>&nbsp;Erase these useless images');
+define('AM_XFGUESTBOOK_ORPHEAN_DSC', ' This page enables you to post the images which are not attached to a message (orphan).<br>&nbsp;This can occur if a problem when sending a message.<br>&nbsp;Erase these useless images');
 // ip manager add V2.40
 define('AM_XFGUESTBOOK_DISP_BADIPS', 'IP addresses moderated automatically');
 define('AM_XFGUESTBOOK_IPS', 'IP Address');

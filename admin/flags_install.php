@@ -23,17 +23,16 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include_once __DIR__ . '/admin_header.php';
-include_once __DIR__ . '/../include/cp_functions.php';
-require __DIR__ . '/../class/util.php';
-
+require_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/../include/cp_functions.php';
+require_once __DIR__ . '/../class/utility.php';
 
 if (!isset($_POST['flagdir'])) {
     xoops_cp_header();
-    $index_admin = new ModuleAdmin();
-    echo $index_admin->addNavigation(basename(__FILE__));
-    include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $adminObject = \Xmf\Module\Admin::getInstance();
+    $adminObject->displayNavigation(basename(__FILE__));
+    require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     $form    = new XoopsThemeForm(AM_XFGUESTBOOK_INSTALL_FLAGS, 'selectflag', $_SERVER['PHP_SELF']);
     $sel_box = new XoopsFormSelect(AM_XFGUESTBOOK_SELECT_PACK, 'flagdir', $xoopsModuleConfig['flagdir']);
     $sel_box->addOption('', _NONE);
@@ -48,7 +47,7 @@ if (!isset($_POST['flagdir'])) {
     $form->addElement($button_tray);
 
     $form->display();
-    if (count(XfguestbookUtil::getCountry()) > 0) {
+    if (count(XfguestbookUtility::getCountry()) > 0) {
         $msg = sprintf(AM_XFGUESTBOOK_WARNING_MSG1, $xoopsDB->prefix('xfguestbook_country'));
         echo AM_XFGUESTBOOK_WARNING . '<br>' . $msg . '&nbsp;';
     }
@@ -57,19 +56,17 @@ if (!isset($_POST['flagdir'])) {
     include __DIR__ . '/admin_footer.php';
 } else {
     xoops_cp_header();
-    $index_admin = new ModuleAdmin();
-    echo $index_admin->addNavigation(basename(__FILE__));
+    $adminObject = \Xmf\Module\Admin::getInstance();
+    $adminObject->displayNavigation(basename(__FILE__));
 
-    //$flagdir = $_POST['flagdir'];
-    $flagdir = Xmf\Request::getString('flagdir', '', 'POST');
+    $flagdir = $_POST['flagdir'];
     $msg     = '';
 
     $sql    = 'TRUNCATE TABLE ' . $xoopsDB->prefix('xfguestbook_country');
     $result = $xoopsDB->queryF($sql);
     echo 'Table <b>' . $xoopsDB->prefix('xfguestbook_country') . '</b> deleted.<br>';
-    if ($flagdir !== '' && (false !== $preg_match('/[\<\>\:\"\/\\\|\?\*]|[\001-\037]/', $flagdir))) {
+    if ($flagdir !== '') {
         $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $flagdir . '/flags_data.sql';
-        $sqlfile = realpath($sqlfile);
         $msg     .= executeSQL($sqlfile);
     }
     if ($msg === '') {

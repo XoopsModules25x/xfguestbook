@@ -3,17 +3,19 @@
 #
 
 CREATE TABLE `xfguestbook_config` (
-  `conf_id` smallint(5) unsigned NOT NULL auto_increment,
-  `conf_cat` smallint(5) unsigned NOT NULL default '0',
-  `conf_name` varchar(25) NOT NULL default '',
-  `conf_title` varchar(30) NOT NULL default '',
-  `conf_desc` varchar(30) NOT NULL default '',
-  `conf_value` text NOT NULL,
-  `conf_formtype` varchar(15) NOT NULL default '',
-  `conf_valuetype` varchar(10) NOT NULL default '',
-  `conf_order` smallint(5) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`conf_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 ;
+  `conf_id`        SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `conf_cat`       SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+  `conf_name`      VARCHAR(25)          NOT NULL DEFAULT '',
+  `conf_title`     VARCHAR(30)          NOT NULL DEFAULT '',
+  `conf_desc`      VARCHAR(30)          NOT NULL DEFAULT '',
+  `conf_value`     TEXT                 NOT NULL,
+  `conf_formtype`  VARCHAR(15)          NOT NULL DEFAULT '',
+  `conf_valuetype` VARCHAR(10)          NOT NULL DEFAULT '',
+  `conf_order`     SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY (`conf_id`)
+)
+  ENGINE = MyISAM
+  AUTO_INCREMENT = 11;
 
 #
 # Contenu de la table `xfguestbook_config`

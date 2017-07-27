@@ -27,21 +27,21 @@
 function xoops_module_pre_install_xfguestbook(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $classUtil     = ucfirst($moduleDirName) . 'Util';
-    if (!class_exists($classUtil)) {
-        xoops_load('util', $moduleDirName);
+    $classUtility  = ucfirst($moduleDirName) . 'Utility';
+    if (!class_exists($classUtility)) {
+        xoops_load('utility', $moduleDirName);
     }
     //check for minimum XOOPS version
-    if (!$classUtil::checkVerXoops($module)) {
+    if (!$classUtility::checkVerXoops($module)) {
         return false;
     }
 
     // check for minimum PHP version
-    if (!$classUtil::checkVerPhp($module)) {
+    if (!$classUtility::checkVerPhp($module)) {
         return false;
     }
 
-    $mod_tables =& $module->getInfo('tables');
+    $mod_tables = $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -58,12 +58,10 @@ function xoops_module_pre_install_xfguestbook(XoopsModule $module)
  */
 function xoops_module_install_xfguestbook(XoopsModule $module)
 {
-    include_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-    include_once dirname(__DIR__) . '/include/config.php';
+    require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+    require_once dirname(__DIR__) . '/include/config.php';
 
-    if (!isset($moduleDirName)) {
-        $moduleDirName = basename(dirname(__DIR__));
-    }
+    $moduleDirName = basename(dirname(__DIR__));
 
     if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
     } else {
@@ -74,10 +72,11 @@ function xoops_module_install_xfguestbook(XoopsModule $module)
     $moduleHelper->loadLanguage('admin');
     $moduleHelper->loadLanguage('modinfo');
 
-    $configurator = new ModuleConfigurator();
-    $classUtil    = ucfirst($moduleDirName) . 'Util';
-    if (!class_exists($classUtil)) {
-        xoops_load('util', $moduleDirName);
+    $configurator = new XfguestbookConfigurator();
+    $classUtility = ucfirst($moduleDirName) . 'Utility';
+    ;
+    if (!class_exists($classUtility)) {
+        xoops_load('utility', $moduleDirName);
     }
 
     // default Permission Settings ----------------------
@@ -96,7 +95,7 @@ function xoops_module_install_xfguestbook(XoopsModule $module)
     if (count($configurator->uploadFolders) > 0) {
         //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
         foreach (array_keys($configurator->uploadFolders) as $i) {
-            $classUtil::createFolder($configurator->uploadFolders[$i]);
+            $classUtility::createFolder($configurator->uploadFolders[$i]);
         }
     }
 
@@ -105,7 +104,7 @@ function xoops_module_install_xfguestbook(XoopsModule $module)
         $file = __DIR__ . '/../assets/images/blank.png';
         foreach (array_keys($configurator->blankFiles) as $i) {
             $dest = $configurator->blankFiles[$i] . '/blank.png';
-            $classUtil::copyFile($file, $dest);
+            $classUtility::copyFile($file, $dest);
         }
     }
 

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class MyalbumUtil
+ * Class XfguestbookUtility
  */
-class XfguestbookUtil extends XoopsObject
+class XfguestbookUtility extends XoopsObject
 {
     /**
      * Function responsible for checking if a directory exists, we can also write in and create an index.html file
@@ -73,17 +73,24 @@ class XfguestbookUtil extends XoopsObject
      * @static
      * @param XoopsModule $module
      *
+     * @param null|string $requiredVer
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerXoops(XoopsModule $module)
+    public static function checkVerXoops(XoopsModule $module = null, $requiredVer = null)
     {
-        xoops_loadLanguage('admin', $module->dirname());
+        $moduleDirName = basename(dirname(__DIR__));
+        if (null === $module) {
+            $module = XoopsModule::getByDirname($moduleDirName);
+        }
+        xoops_loadLanguage('admin', $moduleDirName);
         //check for minimum XOOPS version
-        $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
-        $currArray   = explode('.', $currentVer);
-        $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
-        $reqArray    = explode('.', $requiredVer);
-        $success     = true;
+        $currentVer = substr(XOOPS_VERSION, 6); // get the numeric part of string
+        $currArray  = explode('.', $currentVer);
+        if (null === $requiredVer) {
+            $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
+        }
+        $reqArray = explode('.', $requiredVer);
+        $success  = true;
         foreach ($reqArray as $k => $v) {
             if (isset($currArray[$k])) {
                 if ($currArray[$k] > $v) {
@@ -122,8 +129,8 @@ class XfguestbookUtil extends XoopsObject
         xoops_loadLanguage('admin', $module->dirname());
         // check for minimum PHP version
         $success = true;
-        $verNum  = phpversion();
-        $reqVer  =& $module->getInfo('min_php');
+        $verNum  = PHP_VERSION;
+        $reqVer  = $module->getInfo('min_php');
         if (false !== $reqVer && '' !== $reqVer) {
             if (version_compare($verNum, $reqVer, '<')) {
                 $module->setErrors(sprintf(_AM_XFGUESTBOOK_ERROR_BAD_PHP, $reqVer, $verNum));
@@ -139,7 +146,7 @@ class XfguestbookUtil extends XoopsObject
         global $xoopsModule, $xoopsModuleConfig, $preview_name, $msgstop;
         $created = time();
         $ext     = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $_FILES['photo']['name']);
-        include_once XOOPS_ROOT_PATH . '/class/uploader.php';
+        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $field = $_POST['xoops_upload_file'][0];
         if (!empty($field) || $field !== '') {
             // Check if file uploaded
@@ -148,8 +155,7 @@ class XfguestbookUtil extends XoopsObject
             } else {
                 $photos_dir              = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
                 $array_allowed_mimetypes = ['image/gif', 'image/pjpeg', 'image/jpeg', 'image/x-png'];
-                $uploader                = new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $xoopsModuleConfig['photo_maxsize'], $xoopsModuleConfig['photo_maxwidth'],
-                                                                  $xoopsModuleConfig['photo_maxheight']);
+                $uploader                = new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $xoopsModuleConfig['photo_maxsize'], $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
                 if ($uploader->fetchMedia($field) && $uploader->upload()) {
                     if (isset($preview_name)) {
                         @unlink("$photos_dir/" . $preview_name);
@@ -245,6 +251,7 @@ class XfguestbookUtil extends XoopsObject
     }
 
     // Effacement fichiers temporaires
+
     /**
      * @param         $dir_path
      * @param  string $prefix
@@ -271,6 +278,7 @@ class XfguestbookUtil extends XoopsObject
     }
 
     // IP bannies (modérés automatiquement)
+
     /**
      * @param  null $all
      * @return array
@@ -308,5 +316,4 @@ class XfguestbookUtil extends XoopsObject
             return true;
         }
     }
-
 }

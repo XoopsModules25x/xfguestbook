@@ -57,9 +57,9 @@ function xfguestbook_admin_menu($currentoption = 0, $breadcrumb = '')
     $tblColors[0]              = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] = $tblColors[7] = $tblColors[8] = '';
     $tblColors[$currentoption] = 'current';
     //    if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
-    //        include_once XOOPS_ROOT_PATH . '/modules/xfguestbook/language/' . $xoopsConfig['language'] . '/modinfo.php';
+    //        require_once XOOPS_ROOT_PATH . '/modules/xfguestbook/language/' . $xoopsConfig['language'] . '/modinfo.php';
     //    } else {
-    //        include_once XOOPS_ROOT_PATH . '/modules/xfguestbook/english/modinfo.php';
+    //        require_once XOOPS_ROOT_PATH . '/modules/xfguestbook/english/modinfo.php';
     //    }
     xoops_loadLanguage('modinfo', $xoopsModule->getVar('dirname'));
 
@@ -101,9 +101,9 @@ function executeSQL($sql_file_path)
         //     $msg = "SQL file not found at <b>$sql_file_path</b><br>";
         $error = true;
     } else {
-        echo "SQL file found at <b>$sql_file_path</b>.<br> Creating tables...<br>";
-        //      $msg = "SQL file found at <b>$sql_file_path</b>.<br> Creating tables...<br>";
-        include_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
+        echo "SQL file found at <b>$sql_file_path</b>.<br > Creating tables...<br>";
+        //      $msg = "SQL file found at <b>$sql_file_path</b>.<br > Creating tables...<br>";
+        require_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
         $sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
         $sql_query = trim($sql_query);
         SqlUtility::splitMySqlFile($pieces, $sql_query);

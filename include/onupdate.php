@@ -18,8 +18,7 @@
  */
 
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()
-) {
+    || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
@@ -45,9 +44,9 @@ function tableExists($tablename)
 function xoops_module_pre_update_xfguestbook(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $className     = ucfirst($moduleDirName) . 'Util';
+    $className     = ucfirst($moduleDirName) . 'Utility';
     if (!class_exists($className)) {
-        xoops_load('util', $moduleDirName);
+        xoops_load('utility', $moduleDirName);
     }
     //check for minimum XOOPS version
     if (!$className::checkVerXoops($module)) {
@@ -61,11 +60,11 @@ function xoops_module_pre_update_xfguestbook(XoopsModule $module)
     global $xoopsDB;
     //delete .html entries from the tpl table
 
-//    $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.tpl%\'';
-//    $xoopsDB->queryF($sql);
-//
-//    $sql = 'DELETE FROM ' . $xoopsDB->prefix('newblocks') . " WHERE `dirname` = '" . $module->getVar('dirname', 'n') . "' AND `template` LIKE '%.tpl%'";
-//    $xoopsDB->queryF($sql);
+    //    $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.tpl%\'';
+    //    $xoopsDB->queryF($sql);
+    //
+    //    $sql = 'DELETE FROM ' . $xoopsDB->prefix('newblocks') . " WHERE `dirname` = '" . $module->getVar('dirname', 'n') . "' AND `template` LIKE '%.tpl%'";
+    //    $xoopsDB->queryF($sql);
 
     return true;
 }
@@ -86,12 +85,12 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
     $capsDirName   = strtoupper($moduleDirName);
 
     if ($previousVersion < 230) {
-
-        include_once __DIR__ . '/config.php';
-        $configurator = new ModuleConfigurator();
-        $classUtil    = ucfirst($moduleDirName) . 'Util';
-        if (!class_exists($classUtil)) {
-            xoops_load('util', $moduleDirName);
+        require_once __DIR__ . '/config.php';
+        $configurator = new XfguestbookConfigurator();
+        $classUtility = ucfirst($moduleDirName) . 'Utility';
+        ;
+        if (!class_exists($classUtility)) {
+            xoops_load('utility', $moduleDirName);
         }
 
         //delete old HTML templates
@@ -99,7 +98,7 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
             foreach ($configurator->templateFolders as $folder) {
                 $templateFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $folder);
                 if (is_dir($templateFolder)) {
-                    $templateList = array_diff(scandir($templateFolder), array('..', '.'));
+                    $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), array('..', '.'));
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new SplFileInfo($templateFolder . $v);
                         if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
@@ -139,7 +138,7 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
         if (count($configurator->uploadFolders) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->uploadFolders) as $i) {
-                $classUtil::createFolder($configurator->uploadFolders[$i]);
+                $classUtility::createFolder($configurator->uploadFolders[$i]);
             }
         }
 
@@ -148,7 +147,7 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
             $file = __DIR__ . '/../assets/images/blank.png';
             foreach (array_keys($configurator->blankFiles) as $i) {
                 $dest = $configurator->blankFiles[$i] . '/blank.png';
-                $classUtil::copyFile($file, $dest);
+                $classUtility::copyFile($file, $dest);
             }
         }
 
@@ -161,6 +160,5 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
         /** @var XoopsGroupPermHandler $gpermHandler */
         //        $gpermHandler = xoops_getHandler('groupperm');
         //        return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
-
     }
 }

@@ -56,7 +56,7 @@ $modversion = [
     'modicons16'          => 'assets/images/icons/16',
     'modicons32'          => 'assets/images/icons/32',
     //About
-    'demo_site_url'       => 'http://www.xoops.org',
+    'demo_site_url'       => 'https://xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',
     'support_url'         => 'https://xoops.org/modules/newbb/viewforum.php?forum=28/',
     'support_name'        => 'Support Forum',
@@ -64,9 +64,9 @@ $modversion = [
     'module_website_name' => 'XOOPS Project',
     // ------------------- Min Requirements -------------------
     'min_php'             => '5.5',
-    'min_xoops'           => '2.5.8',
+    'min_xoops'           => '2.5.9',
     'min_admin'           => '1.2',
-    'min_db'              => ['mysql' => '5.1'],
+    'min_db'              => ['mysql' => '5.5'],
     // ------------------- Admin Menu -------------------
     'system_menu'         => 1,
     'hasAdmin'            => 1,
@@ -110,7 +110,7 @@ $modversion = [
     //        ],
     //    ],
     // ------------------- Notification ----------------------
-//    'hasNotification'     => 1,
+    //    'hasNotification'     => 1,
     //    'notification'        => [
     //        'lookup_file' => 'include/notification.inc.php',
     //        'lookup_func' => 'lookup',

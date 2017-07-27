@@ -23,11 +23,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-
-
-if (!isset($moduleDirName)) {
-    $moduleDirName = basename(dirname(__DIR__));
-}
+$moduleDirName = basename(dirname(__DIR__));
 
 if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
 } else {
@@ -41,7 +37,7 @@ $pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 $moduleHelper->loadLanguage('admin');
 $moduleHelper->loadLanguage('modinfo');
 $moduleHelper->loadLanguage('main');
-
+$adminMenu              = [];
 $i                      = 1;
 $adminmenu[$i]['title'] = MI_XFGUESTBOOK_ADMIN_HOME;
 $adminmenu[$i]['link']  = 'admin/index.php';

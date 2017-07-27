@@ -96,9 +96,9 @@ return array(
 */
 
 /**
- * Class ModuleConfigurator
+ * Class XfguestbookConfigurator
  */
-class ModuleConfigurator
+class XfguestbookConfigurator
 {
     public $uploadFolders   = [];
     public $blankFiles      = [];
@@ -108,7 +108,7 @@ class ModuleConfigurator
     public $name;
 
     /**
-     * ModuleConfigurator constructor.
+     * XfguestbookConfigurator constructor.
      */
     public function __construct()
     {

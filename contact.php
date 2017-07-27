@@ -36,8 +36,8 @@ if (isset($preview)) {
 } elseif (isset($post)) {
     $op = 'post';
 }
-include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/util.php';
-include_once __DIR__ . '/include/config.inc.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/utility.php';
+require_once __DIR__ . '/include/config.inc.php';
 $option = getOptions();
 
 /**

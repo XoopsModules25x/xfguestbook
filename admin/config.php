@@ -23,7 +23,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 /**
  * @param  int $cat
  * @return mixed
@@ -41,20 +41,18 @@ function getOptions4Admin($cat = 2)
         $arr_conf[$i]['conf_title']    = $myrow['conf_title'];
         $arr_conf[$i]['conf_desc']     = $myrow['conf_desc'];
         $arr_conf[$i]['conf_formtype'] = $myrow['conf_formtype'];
-        ++$i ;
+        $i++;
     }
 
     return $arr_conf;
 }
-/*
+
 if (isset($_POST)) {
     foreach ($_POST as $k => $v) {
         ${$k} = $v;
     }
 }
-*/
-$op = \Xmf\Request::getCmd('op', 'show');
-/*
+
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
 } elseif (isset($_POST['op'])) {
@@ -62,14 +60,14 @@ if (isset($_GET['op'])) {
 } else {
     $op = 'show';
 }
-*/
+
 switch ($op) {
 
     case 'save':
         $option = getOptions4Admin();
         $nb_opt = count($option);
 
-        for ($i = 0; $i < $nb_opt; ++$i) {
+        for ($i = 0; $i < $nb_opt; $i++) {
             $sql    = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_config') . " SET conf_value='" . ${$option[$i]['conf_name']} . '\' WHERE conf_id=' . $option[$i]['conf_id'];
             $result = $xoopsDB->query($sql);
         }
@@ -79,23 +77,20 @@ switch ($op) {
     case 'show':
     default:
         xoops_cp_header();
-        $index_admin = new ModuleAdmin();
-        echo $index_admin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(1);
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/xfgbformselectcountry.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/xfgbformselectcountry.php';
 
         $option = getOptions4Admin();
         $nb_opt = count($option);
 
-        $sform = new XoopsThemeForm(AM_XFGUESTBOOK_FORMOPT, 'op', xoops_getenv('PHP_SELF'));
+        $sform = new XoopsThemeForm(AM_XFGUESTBOOK_FORMOPT, 'op', xoops_getenv('PHP_SELF'), 'post', true);
 
         for ($i = 0; $i < $nb_opt; $i++) {
             $title = (!defined($option[$i]['conf_desc'])
-                      || constant($option[$i]['conf_desc']) === '') ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title'])
-                                                                                                            . '<br><br><span style="font-weight:normal;">'
-                                                                                                            . constant($option[$i]['conf_desc'])
-                                                                                                            . '</span>';
+                      || constant($option[$i]['conf_desc']) === '') ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title']) . '<br><br><span style="font-weight:normal;">' . constant($option[$i]['conf_desc']) . '</span>';
             switch ($option[$i]['conf_formtype']) {
                 case 'yesno':
                     if ($xoopsModuleConfig['flagdir'] === '' && $option[$i]['conf_name'] === 'opt_country') {

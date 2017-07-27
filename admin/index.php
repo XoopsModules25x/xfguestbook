@@ -15,16 +15,16 @@
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
- * @author     XOOPS Development Team
+ * @author       XOOPS Development Team
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-//$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = \Xmf\Module\Admin::getInstance();
 
-$folder[]   = '/uploads/xfguestbook/';
-$result     = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xfguestbook_msg') . ' WHERE   moderate>0');
+$folder[] = '/uploads/xfguestbook/';
+$result   = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xfguestbook_msg') . ' WHERE   moderate>0');
 list($totalWaitingMsg) = $xoopsDB->fetchRow($result);
 if ($totalWaitingMsg > 0) {
     $totalWaitingMsg = "<span style='color: #ff0000; font-weight: bold;'>{$totalWaitingMsg}</span>";

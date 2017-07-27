@@ -24,9 +24,9 @@
 //  ------------------------------------------------------------------------ //
 
 //include __DIR__ . '/../../../include/cp_header.php';
-include_once __DIR__ . '/../include/cp_functions.php';
-include_once __DIR__ . '/admin_header.php';
-require __DIR__ . '/../class/util.php';
+//require_once __DIR__ . '/../include/cp_functions.php';
+require_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/../class/utility.php';
 
 // Flag
 $maxsize   = 2000;
@@ -34,12 +34,6 @@ $maxheight = 50;
 $maxwidth  = 80;
 $format    = 'gif';
 
-Xmf\Request::getString('op', 'countryShow');
-Xmf\Request::getInt('country_id', 0);
-Xmf\Request::getString('country_code', '');
-Xmf\Request::getInt('start', 0, 'GET');
-Xmf\Request::getString('country_name', '', 'POST');
-/*
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
 } elseif (isset($_POST['op'])) {
@@ -66,7 +60,7 @@ if (isset($_GET['country_code'])) {
 
 $start        = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 $country_name = isset($_POST['country_name']) ? $_POST['country_name'] : '';
-*/
+
 /**
  * @param $country_code
  */
@@ -77,7 +71,7 @@ function flagUpload($country_code)
     // photos
     if (!empty($_FILES['photo']['name'])) {
         $ext = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $_FILES['photo']['name']);
-        include_once XOOPS_ROOT_PATH . '/class/uploader.php';
+        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $field = $_POST['xoops_upload_file'][0];
         if (!empty($field) || $field !== '') {
             // Check if file uploaded
@@ -114,7 +108,7 @@ function flagForm($country_code)
     global $xoopsModule, $xoopsModuleConfig, $maxsize, $maxwidth, $maxheight, $format;
     include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    $flagform = new XoopsThemeForm(AM_XFGUESTBOOK_SUBMITFLAG, 'op', xoops_getenv('PHP_SELF'));
+    $flagform = new XoopsThemeForm(AM_XFGUESTBOOK_SUBMITFLAG, 'op', xoops_getenv('PHP_SELF'), 'post', true);
     $flagform->setExtra("enctype='multipart/form-data'");
 
     $flag = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country_code . '.gif';
@@ -147,9 +141,6 @@ function flagDel($country_code)
     global $xoopsModule, $xoopsModuleConfig;
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
     if ($ok == 1) {
-        if (!$xoopsSecurity->check()) {
-            redirect_header($_SERVER['PHP_SELF'], 3, implode('<br>', $xoopsSecurity->getErrors()));
-        }
         $flag = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country_code . '.gif';
         if (file_exists(XOOPS_ROOT_PATH . $flag)) {
             unlink(XOOPS_ROOT_PATH . $flag);
@@ -157,8 +148,8 @@ function flagDel($country_code)
         redirect_header('country_manager.php', 2, AM_XFGUESTBOOK_FLAGDELETED);
     } else {
         xoops_cp_header();
-        $index_admin = new ModuleAdmin();
-        echo $index_admin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
         xoops_confirm(['op' => 'flagDel', 'country_code' => $country_code, 'ok' => 1], 'country_manager.php', AM_XFGUESTBOOK_CONFDELFLAG);
         include __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
@@ -170,15 +161,15 @@ function flagDel($country_code)
  */
 function countryForm($country_id = null)
 {
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     if ($country_id) {
-        $sform        = new XoopsThemeForm(AM_XFGUESTBOOK_MODCOUNTRY, 'op', xoops_getenv('PHP_SELF'));
-        $arr_country  = XfguestbookUtil::getCountry('country_id=' . $country_id, 0, 0);
+        $sform        = new XoopsThemeForm(AM_XFGUESTBOOK_MODCOUNTRY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $arr_country  = XfguestbookUtility::getCountry('country_id=' . $country_id, 0, 0);
         $country_code = $arr_country[0]['country_code'];
         $country_name = $arr_country[0]['country_name'];
     } else {
-        $sform        = new XoopsThemeForm(AM_XFGUESTBOOK_ADDCOUNTRY, 'op', xoops_getenv('PHP_SELF'));
+        $sform        = new XoopsThemeForm(AM_XFGUESTBOOK_ADDCOUNTRY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $country_code = '';
         $country_name = '';
     }
@@ -232,10 +223,7 @@ function countryDel($country_id)
     global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
     if ($ok == 1) {
-        if (!$xoopsSecurity->check()) {
-            redirect_header($_SERVER['PHP_SELF'], 3, implode('<br>', $xoopsSecurity->getErrors()));
-        }
-        $arr_country = XfguestbookUtil::getCountry('country_id=' . $country_id, 0, 0);
+        $arr_country = XfguestbookUtility::getCountry('country_id=' . $country_id, 0, 0);
         $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $arr_country[0]['country_code'] . '.gif';
         $sql         = 'DELETE FROM ' . $xoopsDB->prefix('xfguestbook_country') . " WHERE country_id=$country_id";
         $result      = $xoopsDB->query($sql);
@@ -245,8 +233,8 @@ function countryDel($country_id)
         redirect_header('country_manager.php', 1, AM_XFGUESTBOOK_COUNTRYDELETED);
     } else {
         xoops_cp_header();
-        $index_admin = new ModuleAdmin();
-        echo $index_admin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
         xoops_confirm(['op' => 'countryDel', 'country_id' => $country_id, 'ok' => 1], 'country_manager.php', AM_XFGUESTBOOK_CONFDELCOUNTRY);
         include __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
@@ -278,8 +266,7 @@ function countrySave($country_id, $country_code, $country_name)
             $messagesent = '<span style="color: #FF0000; ">' . AM_XFGUESTBOOK_COUNTRY_EXIST . '</span>';
         } else {
             $country_id = $xoopsDB->genId('country_id_seq');
-            $sql        = sprintf("INSERT INTO %s (country_id, country_code, country_name) VALUES (%s, '%s', '%s')", $xoopsDB->prefix('xfguestbook_country'), $country_id, $country_code,
-                                  $country_name);
+            $sql        = sprintf("INSERT INTO %s (country_id, country_code, country_name) VALUES (%s, '%s', '%s')", $xoopsDB->prefix('xfguestbook_country'), $country_id, $country_code, $country_name);
             $xoopsDB->query($sql);
             $messagesent = AM_XFGUESTBOOK_COUNTRY_ADDED;
         }
@@ -292,9 +279,9 @@ function countryShow()
     global $action, $start, $xoopsModule, $xoopsModuleConfig, $pathIcon16;
     $myts        = MyTextSanitizer::getInstance();
     $limit       = 15;
-    $arr_country = XfguestbookUtil::getCountry('', $limit, $start);
-    $scount      = count(XfguestbookUtil::getCountry('', $limit, 0));
-    $totalcount  = count(XfguestbookUtil::getCountry('', 0, 0));
+    $arr_country = XfguestbookUtility::getCountry('', $limit, $start);
+    $scount      = count(XfguestbookUtility::getCountry('', $limit, 0));
+    $totalcount  = count(XfguestbookUtility::getCountry('', 0, 0));
 
     echo "
     <table width='100%' cellspacing='1' cellpadding='2' border='0' style='border-left: 1px solid silver; border-top: 1px solid silver; border-right: 1px solid silver;'>
@@ -346,7 +333,7 @@ function countryShow()
     echo '</table><br>';
 
     if ($totalcount > $scount) {
-        include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+        require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
         $pagenav = new XoopsPageNav($totalcount, $limit, $start, 'start', 'action=' . $action);
         echo "<div class='center;' class = 'head'>" . $pagenav->renderNav() . '</div><br>';
     } else {
@@ -358,8 +345,8 @@ function countryShow()
 switch ($op) {
     case 'flagForm':
         xoops_cp_header();
-        $index_admin = new ModuleAdmin();
-        echo $index_admin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(2);
         flagForm($country_code);
         include __DIR__ . '/admin_footer.php';
@@ -376,8 +363,8 @@ switch ($op) {
         break;
     case 'countryEdit':
         xoops_cp_header();
-        $index_admin = new ModuleAdmin();
-        echo $index_admin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(2);
         countryForm($country_id);
         include __DIR__ . '/admin_footer.php';
@@ -388,8 +375,8 @@ switch ($op) {
         break;
     case 'countryAdd':
         xoops_cp_header();
-        $index_admin = new ModuleAdmin();
-        echo $index_admin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(2);
         countryForm();
         include __DIR__ . '/admin_footer.php';
@@ -398,8 +385,8 @@ switch ($op) {
     case 'countryShow':
     default:
         xoops_cp_header();
-        $index_admin = new ModuleAdmin();
-        echo $index_admin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(2);
         countryShow();
         countryForm();
