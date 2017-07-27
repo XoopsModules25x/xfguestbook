@@ -37,7 +37,7 @@ $modversion = [
     'author'              => 'the Cat',
     'credits'             => 'XOOPS Development Team, phppp: randomscript, randomimage, Paul Mar alias Winsion',
     'author_mail'         => 'author-email',
-    'author_website_url'  => 'http://xoops.org',
+    'author_website_url'  => 'https://xoops.org',
     'author_website_name' => 'XOOPS',
     'license'             => 'GPL 2.0 or later',
     'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
@@ -58,7 +58,7 @@ $modversion = [
     //About
     'demo_site_url'       => 'http://www.xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',
-    'support_url'         => 'http://xoops.org/modules/newbb/viewforum.php?forum=28/',
+    'support_url'         => 'https://xoops.org/modules/newbb/viewforum.php?forum=28/',
     'support_name'        => 'Support Forum',
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
