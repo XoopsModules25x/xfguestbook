@@ -8,5 +8,3 @@ define('MB_XFGUESTBOOK_LENGTH', ' characters');
 define('MB_XFGUESTBOOK_GOTOGB', 'Go to the Guestbook');
 define('MB_XFGUESTBOOK_BNAME1', 'Visit Guestbook');
 define('MB_XFGUESTBOOK_BNAME1_DESC', 'Shows recently added download files');
-
-

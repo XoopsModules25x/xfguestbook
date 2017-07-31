@@ -36,12 +36,11 @@ define('MI_XFGUESTBOOK_ADMIN_HOME_DESC', 'Back to Home');
 define('MI_XFGUESTBOOK_ADMIN_ABOUT', 'About');
 define('MI_XFGUESTBOOK_IP', 'IP');
 
-
 define('MI_XFGUESTBOOK_SHOWEMAIL', 'Visualize the button email on the all messages');
 
 //Help
 define('MI_XFGUESTBOOK_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('MI_XFGUESTBOOK_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('MI_XFGUESTBOOK_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('MI_XFGUESTBOOK_BACK_2_ADMIN', 'Back to Administration of ');
 define('MI_XFGUESTBOOK_OVERVIEW', 'Overview');
 //help multi-page
