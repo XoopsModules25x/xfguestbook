@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * Class XfguestbookMsg
@@ -264,7 +264,7 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null|CriteriaElement  $criteria
+     * @param  null|CriteriaElement $criteria
      * @return array|bool
      */
     public function countMsgByCountry(CriteriaElement $criteria = null)

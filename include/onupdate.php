@@ -87,9 +87,10 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
     if ($previousVersion < 230) {
         require_once __DIR__ . '/config.php';
         $configurator = new XfguestbookConfigurator();
-        $classUtility = ucfirst($moduleDirName) . 'Utility';
+        /** @var XfguestbookUtility $utilityClass */
+        $utilityClass = ucfirst($moduleDirName) . 'Utility';
         ;
-        if (!class_exists($classUtility)) {
+        if (!class_exists($utilityClass)) {
             xoops_load('utility', $moduleDirName);
         }
 
@@ -98,7 +99,7 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
             foreach ($configurator->templateFolders as $folder) {
                 $templateFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $folder);
                 if (is_dir($templateFolder)) {
-                    $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), array('..', '.'));
+                    $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), ['..', '.']);
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new SplFileInfo($templateFolder . $v);
                         if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
@@ -138,7 +139,7 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
         if (count($configurator->uploadFolders) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->uploadFolders) as $i) {
-                $classUtility::createFolder($configurator->uploadFolders[$i]);
+                $utilityClass::createFolder($configurator->uploadFolders[$i]);
             }
         }
 
@@ -147,7 +148,7 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
             $file = __DIR__ . '/../assets/images/blank.png';
             foreach (array_keys($configurator->blankFiles) as $i) {
                 $dest = $configurator->blankFiles[$i] . '/blank.png';
-                $classUtility::copyFile($file, $dest);
+                $utilityClass::copyFile($file, $dest);
             }
         }
 

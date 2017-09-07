@@ -8,7 +8,6 @@
  * @link            https://xoops.org XOOPS
  */
 
-
 /**
  * Prepares system prior to attempting to uninstall module
  * @param XoopsModule $module {@link XoopsModule}
@@ -34,13 +33,9 @@ function xoops_module_uninstall_xfguestbook(XoopsModule $module)
     return true;
 }
 
-
-
 //=======================================================
 
-
-
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * @param XoopsModule $module
