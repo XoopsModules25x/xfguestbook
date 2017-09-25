@@ -37,7 +37,7 @@ $form_contact->addElement($name_text, true);
 $email_text = new XoopsFormText(MD_XFGUESTBOOK_YOUREMAIL, 'email_user', 35, 100, $email_user);
 $form_contact->addElement($email_text, true);
 
-if ($option['opt_icon'] == 0) {
+if (0 == $option['opt_icon']) {
     $annonce_text = new XoopsFormTextArea(MD_XFGUESTBOOK_YOURMESSAGE, 'message', $message);
 } else {
     $annonce_text = new XoopsFormDhtmlTextArea(MD_XFGUESTBOOK_YOURMESSAGE, 'message', $message, 10, 50);

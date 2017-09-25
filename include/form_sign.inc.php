@@ -60,7 +60,7 @@ if ($option['opt_mail'] > 0) {
     $signform->addElement($email_text, $option['opt_mail'] > 1);
 }
 
-if ($option['opt_website'] > 1 || ($option['opt_website'] == 1 && $xoopsUser)) {
+if ($option['opt_website'] > 1 || (1 == $option['opt_website'] && $xoopsUser)) {
     $url_text = new XoopsFormText(MD_XFGUESTBOOK_URL, 'url', 50, 100, $url);
     $signform->addElement($url_text);
 }
@@ -68,7 +68,7 @@ if ($option['opt_website'] > 1 || ($option['opt_website'] == 1 && $xoopsUser)) {
 $title_text = new XoopsFormText(MD_XFGUESTBOOK_TITLE, 'title', 60, 100, $title);
 $signform->addElement($title_text, true);
 
-if ($option['opt_icon'] == 0) {
+if (0 == $option['opt_icon']) {
     $signform->addElement(new XoopsFormTextArea(MD_XFGUESTBOOK_MESSAGE, 'message', $message, 6, 40), true);
 } else {
     $option['opt_icon'] = ($option['opt_url'] > 1) ? 0 : $option['opt_icon'];
@@ -87,12 +87,12 @@ if ($xoopsModuleConfig['photo_maxsize'] > 0) {
     $signform->addElement($file_tray);
 }
 
-if ($option['opt_url'] == 1 && $option['opt_icon'] > 0) {
+if (1 == $option['opt_url'] && $option['opt_icon'] > 0) {
     $xoopsTpl->assign('nofollow', true);
 }
 
 $button_tray = new XoopsFormElementTray('', '&nbsp;', 'button');
-if ($option['opt_code'] == 1) {
+if (1 == $option['opt_code']) {
     //$button_tray->addElement(new XoopsFormCaptcha('', 'xoopscaptcha', '',''), true);
     $button_tray->addElement(new XoopsFormCaptcha(), true);
 } else {
