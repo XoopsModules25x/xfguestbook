@@ -51,7 +51,7 @@ function xfguestbook_admin_menu($currentoption = 0, $breadcrumb = '')
     ";
 
     global $xoopsModule, $xoopsConfig;
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $tblColors                 = [];
     $tblColors[0]              = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] = $tblColors[7] = $tblColors[8] = '';
@@ -144,7 +144,7 @@ function executeSQL($sql_file_path)
             //      }
         }
         //      if there was an error, delete the tables created so far, so the next installation will not fail
-        if ($error === true) {
+        if (true === $error) {
             foreach ($created_tables as $ct) {
                 //echo $ct;
                 $GLOBALS['xoopsDB']->query('DROP TABLE ' . $GLOBALS['xoopsDB']->prefix($ct));

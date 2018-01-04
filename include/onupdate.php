@@ -43,30 +43,15 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_xfguestbook(XoopsModule $module)
 {
+    /** @var Xfguestbook\Helper $helper */
+    /** @var Xfguestbook\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $className     = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($className)) {
-        xoops_load('utility', $moduleDirName);
-    }
-    //check for minimum XOOPS version
-    if (!$className::checkVerXoops($module)) {
-        return false;
-    }
+    $helper       = Xfguestbook\Helper::getInstance();
+    $utility      = new Xfguestbook\Utility();
 
-    // check for minimum PHP version
-    if (!$className::checkVerPhp($module)) {
-        return false;
-    }
-    global $xoopsDB;
-    //delete .html entries from the tpl table
-
-    //    $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.tpl%\'';
-    //    $xoopsDB->queryF($sql);
-    //
-    //    $sql = 'DELETE FROM ' . $xoopsDB->prefix('newblocks') . " WHERE `dirname` = '" . $module->getVar('dirname', 'n') . "' AND `template` LIKE '%.tpl%'";
-    //    $xoopsDB->queryF($sql);
-
-    return true;
+    $xoopsSuccess = $utility::checkVerXoops($module);
+    $phpSuccess   = $utility::checkVerPhp($module);
+    return $xoopsSuccess && $phpSuccess;
 }
 
 /**
@@ -84,15 +69,14 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
     $moduleDirName = basename(dirname(__DIR__));
     $capsDirName   = strtoupper($moduleDirName);
 
+    /** @var Xfguestbook\Helper $helper */
+    /** @var Xfguestbook\Utility $utility */
+    /** @var Xfguestbook\Configurator $configurator */
+    $helper  = Xfguestbook\Helper::getInstance();
+    $utility = new Xfguestbook\Utility();
+    $configurator = new Xfguestbook\Configurator();
+
     if ($previousVersion < 230) {
-        require_once __DIR__ . '/config.php';
-        $configurator = new XfguestbookConfigurator();
-        /** @var XfguestbookUtility $utilityClass */
-        $utilityClass = ucfirst($moduleDirName) . 'Utility';
-        ;
-        if (!class_exists($utilityClass)) {
-            xoops_load('utility', $moduleDirName);
-        }
 
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
@@ -102,7 +86,7 @@ function xoops_module_update_xfguestbook(XoopsModule $module, $previousVersion =
                     $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), ['..', '.']);
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new SplFileInfo($templateFolder . $v);
-                        if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
+                        if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
                             if (file_exists($templateFolder . $v)) {
                                 unlink($templateFolder . $v);
                             }

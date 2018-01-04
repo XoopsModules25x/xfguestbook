@@ -31,7 +31,7 @@ if (!isset($xoopsModuleConfig['flagdir'])) {
     redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, AM_XFGUESTBOOK_MUST_UPDATE);
 }
 
-require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/Utility.php';
 //include_once("../class/msg.php");
 
 if (isset($_GET['op'])) {

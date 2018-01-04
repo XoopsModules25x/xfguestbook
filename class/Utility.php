@@ -1,145 +1,22 @@
-<?php
+<?php namespace XoopsModules\Xfguestbook;
+
+use Xmf\Request;
+use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Common;
 
 /**
- * Class XfguestbookUtility
+ * Class Utility
  */
-class XfguestbookUtility extends XoopsObject
+class Utility
 {
-    /**
-     * Function responsible for checking if a directory exists, we can also write in and create an index.html file
-     *
-     * @param string $folder The full path of the directory to check
-     *
-     * @return void
-     */
-    public static function createFolder($folder)
-    {
-        try {
-            if (!file_exists($folder)) {
-                if (!mkdir($folder) && !is_dir($folder)) {
-                    throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-                } else {
-                    file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-                }
-            }
-        } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
-        }
-    }
+    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
 
-    /**
-     * @param $file
-     * @param $folder
-     * @return bool
-     */
-    public static function copyFile($file, $folder)
-    {
-        return copy($file, $folder);
-        //        try {
-        //            if (!is_dir($folder)) {
-        //                throw new \RuntimeException(sprintf('Unable to copy file as: %s ', $folder));
-        //            } else {
-        //                return copy($file, $folder);
-        //            }
-        //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
-        //        }
-        //        return false;
-    }
+    use common\ServerStats; // getServerStats Trait
 
-    /**
-     * @param $src
-     * @param $dst
-     */
-    public static function recurseCopy($src, $dst)
-    {
-        $dir = opendir($src);
-        //    @mkdir($dst);
-        while (false !== ($file = readdir($dir))) {
-            if (($file !== '.') && ($file !== '..')) {
-                if (is_dir($src . '/' . $file)) {
-                    self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
-                } else {
-                    copy($src . '/' . $file, $dst . '/' . $file);
-                }
-            }
-        }
-        closedir($dir);
-    }
+    use common\FilesManagement; // Files Management Trait
 
-    /**
-     *
-     * Verifies XOOPS version meets minimum requirements for this module
-     * @static
-     * @param XoopsModule $module
-     *
-     * @param null|string $requiredVer
-     * @return bool true if meets requirements, false if not
-     */
-    public static function checkVerXoops(XoopsModule $module = null, $requiredVer = null)
-    {
-        $moduleDirName = basename(dirname(__DIR__));
-        if (null === $module) {
-            $module = XoopsModule::getByDirname($moduleDirName);
-        }
-        xoops_loadLanguage('admin', $moduleDirName);
-        //check for minimum XOOPS version
-        $currentVer = substr(XOOPS_VERSION, 6); // get the numeric part of string
-        $currArray  = explode('.', $currentVer);
-        if (null === $requiredVer) {
-            $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
-        }
-        $reqArray = explode('.', $requiredVer);
-        $success  = true;
-        foreach ($reqArray as $k => $v) {
-            if (isset($currArray[$k])) {
-                if ($currArray[$k] > $v) {
-                    break;
-                } elseif ($currArray[$k] == $v) {
-                    continue;
-                } else {
-                    $success = false;
-                    break;
-                }
-            } else {
-                if ((int)$v > 0) { // handles versions like x.x.x.0_RC2
-                    $success = false;
-                    break;
-                }
-            }
-        }
+    //--------------- Custom module methods -----------------------------
 
-        if (false === $success) {
-            $module->setErrors(sprintf(_AM_XFGUESTBOOK_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
-        }
-
-        return $success;
-    }
-
-    /**
-     *
-     * Verifies PHP version meets minimum requirements for this module
-     * @static
-     * @param XoopsModule $module
-     *
-     * @return bool true if meets requirements, false if not
-     */
-    public static function checkVerPhp(XoopsModule $module)
-    {
-        xoops_loadLanguage('admin', $module->dirname());
-        // check for minimum PHP version
-        $success = true;
-        $verNum  = PHP_VERSION;
-        $reqVer  = $module->getInfo('min_php');
-        if (false !== $reqVer && '' !== $reqVer) {
-            if (version_compare($verNum, $reqVer, '<')) {
-                $module->setErrors(sprintf(_AM_XFGUESTBOOK_ERROR_BAD_PHP, $reqVer, $verNum));
-                $success = false;
-            }
-        }
-
-        return $success;
-    }
 
     public static function upload()
     {
@@ -148,9 +25,9 @@ class XfguestbookUtility extends XoopsObject
         $ext     = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $_FILES['photo']['name']);
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $field = $_POST['xoops_upload_file'][0];
-        if (!empty($field) || $field !== '') {
+        if (!empty($field) || '' !== $field) {
             // Check if file uploaded
-            if ($_FILES[$field]['tmp_name'] === '' || !is_readable($_FILES[$field]['tmp_name'])) {
+            if ('' === $_FILES[$field]['tmp_name'] || !is_readable($_FILES[$field]['tmp_name'])) {
                 $msgstop .= sprintf(MD_XFGUESTBOOK_FILEERROR, $xoopsModuleConfig['photo_maxsize']);
             } else {
                 $photos_dir              = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
@@ -182,7 +59,7 @@ class XfguestbookUtility extends XoopsObject
         global $xoopsDB, $action;
         $ret = [];
         $sql = 'SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_country');
-        if (isset($criteria) && $criteria !== '') {
+        if (isset($criteria) && '' !== $criteria) {
             $sql .= ' WHERE ' . $criteria;
         }
         $sql    .= ' ORDER BY country_code ASC';
@@ -205,7 +82,7 @@ class XfguestbookUtility extends XoopsObject
         global $xoopsDB, $action, $xoopsModuleConfig;
         $ret = [];
         $sql = 'SELECT country_code, country_name FROM ' . $xoopsDB->prefix('xfguestbook_country');
-        if (isset($criteria) && $criteria !== '') {
+        if (isset($criteria) && '' !== $criteria) {
             $sql .= ' WHERE ' . $criteria;
         }
         $sql    .= ' ORDER BY country_code ASC';
@@ -264,7 +141,7 @@ class XfguestbookUtility extends XoopsObject
         }
         $ret        = 0;
         $prefix_len = strlen($prefix);
-        while (($file = readdir($dir)) !== false) {
+        while (false !== ($file = readdir($dir))) {
             //        if (strncmp($file, $prefix, $prefix_len) === 0) {
             if (0 === strpos($file, $prefix)) {
                 if (@unlink("$dir_path/$file")) {

@@ -204,7 +204,7 @@ class XfguestbookMsgHandler
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE msg_id = %u', $this->db->prefix('xfguestbook_msg'), $msg->getVar('msg_id'));
-        if (isset($this->commentstable) && $this->commentstable !== '') {
+        if (isset($this->commentstable) && '' !== $this->commentstable) {
             xoops_comment_delete($xoopsModule->getVar('mid'), $msg_id);
         }
 
@@ -224,9 +224,9 @@ class XfguestbookMsgHandler
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql   .= ' ' . $criteria->renderWhere();
-            $sort  = ($criteria->getSort() !== '') ? $criteria->getSort() : 'msg_id';
+            $sort  = ('' !== $criteria->getSort()) ? $criteria->getSort() : 'msg_id';
             $sql   .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
@@ -252,7 +252,7 @@ class XfguestbookMsgHandler
     public function countMsg(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -271,7 +271,7 @@ class XfguestbookMsgHandler
     {
         $arr = [];
         $sql = 'SELECT country, flagdir FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -294,7 +294,7 @@ class XfguestbookMsgHandler
     {
         $arr = [];
         $sql = 'SELECT gender FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -316,7 +316,7 @@ class XfguestbookMsgHandler
     {
         $arr = [];
         $sql = 'SELECT photo FROM ' . $this->db->prefix('xfguestbook_msg') . " WHERE `photo` LIKE 'msg_%'";
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {

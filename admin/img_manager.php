@@ -65,8 +65,8 @@ switch ($op) {
             <th align='center'>" . AM_XFGUESTBOOK_IMG . "</th>
             <th align='center'>" . AM_XFGUESTBOOK_IMG_FILE . '</th></tr>';
             foreach ($all_img as $one_img) {
-                if (count($msg_img) === 0 || count($msg_img) > 0 && !in_array($one_img, $msg_img)) {
-                    ($cpt1 % 2 == 0) ? $class = 'even' : $class = 'odd';
+                if (0 === count($msg_img) || count($msg_img) > 0 && !in_array($one_img, $msg_img)) {
+                    (0 == $cpt1 % 2) ? $class = 'even' : $class = 'odd';
                     echo "<tr class='$class'><td align='center'><input type='checkbox' name='imglist_id[]' id='imglist_id[]' value='" . $one_img . '\' checked=\'checked\'></td>';
                     echo '<td><img src = "' . XOOPS_UPLOAD_URL . '/' . $xoopsModule->getVar('dirname') . '/' . $one_img . '">';
                     echo '</td>';

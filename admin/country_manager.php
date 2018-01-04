@@ -26,7 +26,7 @@
 //include __DIR__ . '/../../../include/cp_header.php';
 //require_once __DIR__ . '/../include/cp_functions.php';
 require_once __DIR__ . '/admin_header.php';
-require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/Utility.php';
 
 // Flag
 $maxsize   = 2000;
@@ -73,9 +73,9 @@ function flagUpload($country_code)
         $ext = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $_FILES['photo']['name']);
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $field = $_POST['xoops_upload_file'][0];
-        if (!empty($field) || $field !== '') {
+        if (!empty($field) || '' !== $field) {
             // Check if file uploaded
-            if ($_FILES[$field]['tmp_name'] === '' || !is_readable($_FILES[$field]['tmp_name'])) {
+            if ('' === $_FILES[$field]['tmp_name'] || !is_readable($_FILES[$field]['tmp_name'])) {
                 redirect_header('country_manager.php', 2, MD_XFGUESTBOOK_FILEERROR);
             }
             $photos_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'];
@@ -140,7 +140,7 @@ function flagDel($country_code)
 {
     global $xoopsModule, $xoopsModuleConfig;
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
-    if ($ok == 1) {
+    if (1 == $ok) {
         $flag = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country_code . '.gif';
         if (file_exists(XOOPS_ROOT_PATH . $flag)) {
             unlink(XOOPS_ROOT_PATH . $flag);
@@ -203,7 +203,7 @@ function xfgb_getCountry($criteria = null, $limit = 0, $start = 0)
     $ret = [];
 
     $sql = 'SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_country');
-    if (isset($criteria) && $criteria !== '') {
+    if (isset($criteria) && '' !== $criteria) {
         $sql .= ' WHERE ' . $criteria;
     }
     $sql    .= ' ORDER BY country_name ASC';
@@ -222,7 +222,7 @@ function countryDel($country_id)
 {
     global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
-    if ($ok == 1) {
+    if (1 == $ok) {
         $arr_country = XfguestbookUtility::getCountry('country_id=' . $country_id, 0, 0);
         $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $arr_country[0]['country_code'] . '.gif';
         $sql         = 'DELETE FROM ' . $xoopsDB->prefix('xfguestbook_country') . " WHERE country_id=$country_id";
@@ -250,7 +250,7 @@ function countrySave($country_id, $country_code, $country_name)
 {
     global $xoopsDB;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     //$country_code=$myts->makeTboxData4Save::$country_code;
     //$country_name=$myts->makeTboxData4Save::$country_name;
     echo $country_code;
@@ -277,7 +277,7 @@ function countrySave($country_id, $country_code, $country_name)
 function countryShow()
 {
     global $action, $start, $xoopsModule, $xoopsModuleConfig, $pathIcon16;
-    $myts        = MyTextSanitizer::getInstance();
+    $myts        = \MyTextSanitizer::getInstance();
     $limit       = 15;
     $arr_country = XfguestbookUtility::getCountry('', $limit, $start);
     $scount      = count(XfguestbookUtility::getCountry('', $limit, 0));
@@ -301,7 +301,7 @@ function countryShow()
     echo "<td align='center'><b>" . AM_XFGUESTBOOK_FLAGIMG . '</td></b>';
     echo '</tr>';
 
-    if (count($arr_country) == '0') {
+    if ('0' == count($arr_country)) {
         echo "<tr ><td align='center' colspan ='10' class = 'head'><b>" . AM_XFGUESTBOOK_NOFLAG . '</b></td></tr>';
     }
 

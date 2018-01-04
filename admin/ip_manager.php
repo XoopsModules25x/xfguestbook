@@ -26,7 +26,7 @@
 include __DIR__ . '/../../../include/cp_header.php';
 require_once __DIR__ . '/../include/cp_functions.php';
 require_once __DIR__ . '/admin_header.php';
-require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/Utility.php';
 
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
@@ -102,8 +102,8 @@ function badIpSave($ip_id, $ip_value)
 {
     global $xoopsDB;
 
-    $myts = MyTextSanitizer::getInstance();
-    //$ip_value=$myts->makeTboxData4Save($ip_value);
+    $myts = \MyTextSanitizer::getInstance();
+    //$ip_value=$myts->addSlashes($ip_value);
     if (!empty($ip_id)) {
         $sql = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_badips') . " SET ip_id='$ip_id', ip_value='$ip_value'";
         $sql .= " WHERE ip_id = $ip_id";
@@ -127,7 +127,7 @@ function badIpSave($ip_id, $ip_value)
 function badIpShow()
 {
     global $action, $start, $xoopsModule, $xoopsModuleConfig;
-    $myts      = MyTextSanitizer::getInstance();
+    $myts      = \MyTextSanitizer::getInstance();
     $limit     = 15;
     $badips    = XfguestbookUtility::get_badips(true);
     $nb_badips = count($badips);

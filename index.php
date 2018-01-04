@@ -25,7 +25,7 @@
 
 include __DIR__ . '/../../mainfile.php';
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
-require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/utility.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/Utility.php';
 if (isset($_GET['msg_id'])) {
     $msg_id = (int)$_GET['msg_id'];
 } elseif (isset($_POST['msg_id'])) {
@@ -54,11 +54,11 @@ function delete($msg_id)
 {
     global $msgHandler, $xoopsModule;
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
-    if ($ok == 1) {
+    if (1 == $ok) {
         $msg        = $msgHandler->get($msg_id);
         $del_msg_ok = $msgHandler->delete($msg);
         $filename   = $msg->getVar('photo');
-        if ($filename !== '') {
+        if ('' !== $filename) {
             $filename = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $filename;
             unlink($filename);
         }
@@ -114,8 +114,8 @@ function xfgb_getmsg($msg)
         // email
         if ($xoopsModuleConfig['showemail']
             || ($onemsg->getVar('email')
-                && (($user->getVar('user_viewemail') == 1
-                     || $onemsg->getVar('user_id') == 0)
+                && ((1 == $user->getVar('user_viewemail')
+                     || 0 == $onemsg->getVar('user_id'))
                     && is_object($xoopsUser)))) {
             $a_msg['email'] = "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/modules/xfguestbook/contact.php?msg_id=' . $onemsg->getVar('msg_id') . '\', \'contact\', 600, 450);"><img src="' . XOOPS_URL . '/images/icons/email.gif" alt="' . _SENDEMAILTO . '"></a>';
         }
@@ -124,12 +124,12 @@ function xfgb_getmsg($msg)
             $a_msg['url'] = '<a href="' . $onemsg->getVar('url') . '" target="_blank"><img src="' . XOOPS_URL . '/images/icons/www.gif" alt="' . _VISITWEBSITE . '"></a>';
         }
         // gender
-        if ($onemsg->getVar('gender') !== '') {
+        if ('' !== $onemsg->getVar('gender')) {
             $a_msg['gender'] = '<a href="index.php?op=show_gender&param=' . $onemsg->getVar('gender') . '"><img src="assets/images/' . $onemsg->getVar('gender') . '.gif"</a>';
         }
         // flag
-        if ($onemsg->getVar('country') !== '') {
-            if ($onemsg->getVar('country') !== 'other') {
+        if ('' !== $onemsg->getVar('country')) {
+            if ('other' !== $onemsg->getVar('country')) {
                 $flag = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country') . '.gif';
                 if (array_key_exists($onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country'), $arr_country)) {
                     $country_name = $arr_country[$onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country')];
@@ -151,7 +151,7 @@ function xfgb_getmsg($msg)
         $a_msg['title']   = $onemsg->getVar('title');
         $a_msg['date']    = formatTimestamp($onemsg->getVar('post_time'), 's');
         $a_msg['message'] = $onemsg->getVar('message');
-        if ($options['opt_url'] == 1) {
+        if (1 == $options['opt_url']) {
             $a_msg['message'] = str_replace('target="_blank"', 'target="_blank" rel="nofollow"', $a_msg['message']);
         }
         $a_msg['note_msg']  = $onemsg->getVar('note');
@@ -174,11 +174,11 @@ function xfgb_genderlist()
     $i        = 0;
     $gender   = [];
     foreach ($arr_msg as $k => $v) {
-        if ($k === 'M') {
+        if ('M' === $k) {
             $gender[$i] = MD_XFGUESTBOOK_MALES . '<br>';
             $gender[$i] .= '<img src="assets/images/M.gif" alt="' . MD_XFGUESTBOOK_MALES . '"><br><br>';
             $gender[$i] .= '<a href="index.php?op=show_gender&param=M">' . $v . MD_XFGUESTBOOK_MESSAGES . '</a>';
-        } elseif ($k === 'F') {
+        } elseif ('F' === $k) {
             $gender[$i] = MD_XFGUESTBOOK_FEMALES . '<br>';
             $gender[$i] .= '<img src="assets/images/F.gif" alt="' . MD_XFGUESTBOOK_FEMALES . '"><br><br>';
             $gender[$i] .= '<a href="index.php?op=show_gender&param=F">' . $v . MD_XFGUESTBOOK_MESSAGES . '</a>';
@@ -201,7 +201,7 @@ if (0 === strpos($op, 'show')) {
     $debut = isset($_GET['debut']) ? (int)$_GET['debut'] : 0;
     $param = isset($_GET['param']) ? $_GET['param'] : '';
 
-    require_once __DIR__ . '/class/utility.php';
+    require_once __DIR__ . '/class/Utility.php';
     $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
     require_once XOOPS_ROOT_PATH . '/header.php';
     require_once XOOPS_ROOT_PATH . '/class/pagenav.php';

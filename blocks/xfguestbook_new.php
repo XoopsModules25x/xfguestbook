@@ -59,7 +59,7 @@ function b_xfguestbook_show($options)
 
     if ($nbmsg > 0) {
         $msg = $msg_hnd->getObjects($criteria);
-        $ts  = MyTextSanitizer::getInstance();
+        $ts  = \MyTextSanitizer::getInstance();
         foreach ($msg as $onemsg) {
             $msg_id          = $onemsg->getVar('msg_id');
             $a_item['id']    = $msg_id;

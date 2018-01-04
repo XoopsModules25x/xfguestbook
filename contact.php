@@ -36,7 +36,7 @@ if (isset($preview)) {
 } elseif (isset($post)) {
     $op = 'post';
 }
-require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/utility.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/Utility.php';
 require_once __DIR__ . '/include/config.inc.php';
 $option = getOptions();
 
@@ -53,10 +53,10 @@ switch ($op) {
 
     case 'post':
         global $xoopsConfig;
-        $ts = MyTextSanitizer::getInstance();
+        $ts = \MyTextSanitizer::getInstance();
         xoops_header();
 
-        if ($option['opt_code'] == 1) {
+        if (1 == $option['opt_code']) {
             xoops_load('XoopsCaptcha');
             $xoopsCaptcha = XoopsCaptcha::getInstance();
             if (!$xoopsCaptcha->verify()) {
@@ -90,10 +90,10 @@ switch ($op) {
 
     case 'preview':
 
-        $ts = MyTextSanitizer::getInstance();
+        $ts = \MyTextSanitizer::getInstance();
         xoops_header();
 
-        if ($option['opt_code'] == 1) {
+        if (1 == $option['opt_code']) {
             xoops_load('XoopsCaptcha');
             $xoopsCaptcha = XoopsCaptcha::getInstance();
             if (!$xoopsCaptcha->verify()) {
@@ -135,10 +135,10 @@ switch ($op) {
         $email_author = $msg->getVar('email');
         $title        = $msg->getVar('title');
         if ($xoopsUser) {
-            $name_user  = ($xoopsUser->getVar('name') !== '') ? $xoopsUser->getVar('name') : $xoopsUser->getVar('uname');
+            $name_user  = ('' !== $xoopsUser->getVar('name')) ? $xoopsUser->getVar('name') : $xoopsUser->getVar('uname');
             $email_user = $xoopsUser->getVar('email', 'E');
         }
-        if ($option['opt_code'] == 1) {
+        if (1 == $option['opt_code']) {
             xoops_load('XoopsCaptcha');
             $xoopsCaptcha = XoopsCaptcha::getInstance();
         }

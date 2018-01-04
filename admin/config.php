@@ -90,10 +90,10 @@ switch ($op) {
 
         for ($i = 0; $i < $nb_opt; $i++) {
             $title = (!defined($option[$i]['conf_desc'])
-                      || constant($option[$i]['conf_desc']) === '') ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title']) . '<br><br><span style="font-weight:normal;">' . constant($option[$i]['conf_desc']) . '</span>';
+                      || '' === constant($option[$i]['conf_desc'])) ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title']) . '<br><br><span style="font-weight:normal;">' . constant($option[$i]['conf_desc']) . '</span>';
             switch ($option[$i]['conf_formtype']) {
                 case 'yesno':
-                    if ($xoopsModuleConfig['flagdir'] === '' && $option[$i]['conf_name'] === 'opt_country') {
+                    if ('' === $xoopsModuleConfig['flagdir'] && 'opt_country' === $option[$i]['conf_name']) {
                         $title .= '<br><span style="font-weight:normal;">' . AM_XFGUESTBOOK_WARNING_MSG2 . '</span>';
                     }
                     $ele = new XoopsFormRadioYN($title, $option[$i]['conf_name'], $option[$i]['conf_value'], _YES, _NO);

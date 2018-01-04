@@ -25,7 +25,7 @@
 
 require_once __DIR__ . '/admin_header.php';
 require_once __DIR__ . '/../include/cp_functions.php';
-require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/Utility.php';
 
 if (!isset($_POST['flagdir'])) {
     xoops_cp_header();
@@ -65,11 +65,11 @@ if (!isset($_POST['flagdir'])) {
     $sql    = 'TRUNCATE TABLE ' . $xoopsDB->prefix('xfguestbook_country');
     $result = $xoopsDB->queryF($sql);
     echo 'Table <b>' . $xoopsDB->prefix('xfguestbook_country') . '</b> deleted.<br>';
-    if ($flagdir !== '') {
+    if ('' !== $flagdir) {
         $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $flagdir . '/flags_data.sql';
         $msg     .= executeSQL($sqlfile);
     }
-    if ($msg === '') {
+    if ('' === $msg) {
         $configHandler = xoops_getHandler('config');
         $criteria      = new CriteriaCompo(new Criteria('conf_modid', $xoopsModule->mid()));
         $criteria->add(new Criteria('conf_name', 'flagdir'));
