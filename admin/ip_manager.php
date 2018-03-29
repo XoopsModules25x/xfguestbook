@@ -26,7 +26,7 @@
 include __DIR__ . '/../../../include/cp_header.php';
 require_once __DIR__ . '/../include/cp_functions.php';
 require_once __DIR__ . '/admin_header.php';
-require_once __DIR__ . '/../class/Utility.php';
+// require_once __DIR__ . '/../class/Utility.php';
 
 if (isset($_GET['op'])) {
     $op = $_GET['op'];
@@ -74,22 +74,22 @@ function badIpForm($ip_id = null)
 {
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     if ($ip_id) {
-        $sform    = new XoopsThemeForm(AM_XFGUESTBOOK_MOD_BADIP, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform    = new \XoopsThemeForm(AM_XFGUESTBOOK_MOD_BADIP, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $badips   = XfguestbookUtility::get_badips(true);
         $ip_value = $badips[$ip_id]['ip_value'];
     } else {
-        $sform    = new XoopsThemeForm(AM_XFGUESTBOOK_ADD_BADIP, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform    = new \XoopsThemeForm(AM_XFGUESTBOOK_ADD_BADIP, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $ip_value = '';
     }
 
-    $sform->addElement(new XoopsFormText(AM_XFGUESTBOOK_VALUE, 'ip_value', 50, 50, $ip_value), true);
+    $sform->addElement(new \XoopsFormText(AM_XFGUESTBOOK_VALUE, 'ip_value', 50, 50, $ip_value), true);
 
-    $button_tray = new XoopsFormElementTray('', '');
-    $button_tray->addElement(new XoopsFormButton('', 'save', _SUBMIT, 'submit'));
+    $button_tray = new \XoopsFormElementTray('', '');
+    $button_tray->addElement(new \XoopsFormButton('', 'save', _SUBMIT, 'submit'));
     if ($ip_id) {
-        $button_tray->addElement(new XoopsFormHidden('ip_id', $ip_id));
+        $button_tray->addElement(new \XoopsFormHidden('ip_id', $ip_id));
     }
-    $button_tray->addElement(new XoopsFormHidden('op', 'badIpSave'));
+    $button_tray->addElement(new \XoopsFormHidden('op', 'badIpSave'));
     $sform->addElement($button_tray);
     $sform->display();
 }

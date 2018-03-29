@@ -17,7 +17,7 @@
  * @author       XOOPS Development Team
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Class XfguestbookMsg
@@ -61,7 +61,7 @@ class XfguestbookMsgHandler
      * XfguestbookMsgHandler constructor.
      * @param XoopsDatabase $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db)
     {
         $this->db = $db;
     }
@@ -102,7 +102,7 @@ class XfguestbookMsgHandler
      * @param XoopsObject $msg
      * @return bool
      */
-    public function insert(XoopsObject $msg)
+    public function insert(\XoopsObject $msg)
     {
         if ('xfguestbookmsg' !== strtolower(get_class($msg))) {
             return false;
@@ -197,7 +197,7 @@ class XfguestbookMsgHandler
      * @param XoopsObject $msg
      * @return bool
      */
-    public function delete(XoopsObject $msg)
+    public function delete(\XoopsObject $msg)
     {
         global $xoopsModule;
         if ('xfguestbookmsg' !== strtolower(get_class($msg))) {
@@ -235,7 +235,7 @@ class XfguestbookMsgHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $msg = new XfguestbookMsg();
             $msg->assignVars($myrow);
             $ret[] = $msg;
@@ -277,7 +277,7 @@ class XfguestbookMsgHandler
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        while (list($country, $flagdir) = $this->db->fetchRow($result)) {
+        while (false !== (list($country, $flagdir) = $this->db->fetchRow($result))) {
             $arr[] = $flagdir . '/' . $country;
         }
         $ret = array_count_values($arr);
@@ -300,7 +300,7 @@ class XfguestbookMsgHandler
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        while (list($gender) = $this->db->fetchRow($result)) {
+        while (false !== (list($gender) = $this->db->fetchRow($result))) {
             $arr[] = $gender;
         }
         $ret = array_count_values($arr);
@@ -322,7 +322,7 @@ class XfguestbookMsgHandler
         if (!$result = $this->db->query($sql)) {
             return 0;
         }
-        while (list($photo) = $this->db->fetchRow($result)) {
+        while (false !== (list($photo) = $this->db->fetchRow($result))) {
             $arr[] = $photo;
         }
 

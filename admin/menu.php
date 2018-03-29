@@ -25,7 +25,7 @@
 
 use XoopsModules\Xfguestbook;
 
-require_once __DIR__ . '/../class/Helper.php';
+// require_once __DIR__ . '/../class/Helper.php';
 //require_once __DIR__ . '/../include/common.php';
 $helper = Xfguestbook\Helper::getInstance();
 

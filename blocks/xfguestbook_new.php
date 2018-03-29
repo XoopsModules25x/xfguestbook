@@ -49,7 +49,7 @@ function b_xfguestbook_show($options)
     }
 
     $msg_hnd  = xoops_getModuleHandler('msg', 'xfguestbook');
-    $criteria = new Criteria('moderate', '0', '=');
+    $criteria = new \Criteria('moderate', '0', '=');
     $criteria->setSort('post_time');
     $criteria->setOrder('DESC');
     $criteria->setLimit($options[0]);

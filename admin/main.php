@@ -23,15 +23,19 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use XoopsModules\Xfguestbook;
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
+
 include __DIR__ . '/../../../include/cp_header.php';
 require_once __DIR__ . '/../include/cp_functions.php';
 require_once __DIR__ . '/admin_header.php';
 
-if (!isset($xoopsModuleConfig['flagdir'])) {
+if (!isset($helper->getConfig('flagdir'))) {
     redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, AM_XFGUESTBOOK_MUST_UPDATE);
 }
 
-require_once __DIR__ . '/../class/Utility.php';
+// require_once __DIR__ . '/../class/Utility.php';
 //include_once("../class/msg.php");
 
 if (isset($_GET['op'])) {
@@ -142,21 +146,21 @@ function show()
         case 0:
             $status_option0 = 'selected';
             $title          = AM_XFGUESTBOOK_ALLMSG;
-            $criteria       = new Criteria('msg_id', 0, '>');
+            $criteria       = new \Criteria('msg_id', 0, '>');
             $criteria->setSort('post_time');
             break;
 
         case 1:
             $status_option1 = 'selected';
             $title          = AM_XFGUESTBOOK_PUBMSG;
-            $criteria       = new Criteria('moderate', '0');
+            $criteria       = new \Criteria('moderate', '0');
             $criteria->setSort('post_time');
             break;
 
         case 2:
             $status_option2 = 'selected';
             $title          = AM_XFGUESTBOOK_WAITMSG;
-            $criteria       = new Criteria('moderate', '1');
+            $criteria       = new \Criteria('moderate', '1');
             $criteria->setSort('post_time');
             break;
 
@@ -274,7 +278,7 @@ function show()
     echo '</table><br>';
     if ($totalcount > $limit) {
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new XoopsPageNav($totalcount, $limit, $start, 'start', 'sel_status=' . $sel_status . '&sel_order=' . $sel_order);
+        $pagenav = new \XoopsPageNav($totalcount, $limit, $start, 'start', 'sel_status=' . $sel_status . '&sel_order=' . $sel_order);
         echo "<div class='center;' class = 'head'>" . $pagenav->renderNav() . '</div><br>';
     } else {
         echo '';
@@ -329,7 +333,7 @@ switch ($op) {
         $msg->setVar('gender', $gender);
         if ('' !== $country) {
             $msg->setVar('country', $country);
-            $msg->setVar('flagdir', $xoopsModuleConfig['flagdir']);
+            $msg->setVar('flagdir', $helper->getConfig('flagdir'));
         }
         $msg->setVar('other', $other);
         $msg->setVar('moderate', $moderate);

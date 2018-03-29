@@ -41,7 +41,7 @@ class XfgbFormSelectCountry extends XoopsFormSelect
      */
     public function __construct($caption, $name, $value = null, $size = 1, $nullopt = false)
     {
-        $db = XoopsDatabaseFactory::getDatabaseConnection();
+        $db = \XoopsDatabaseFactory::getDatabaseConnection();
         parent::__construct($caption, $name, $value, $size);
         $sql    = 'SELECT country_code, country_name FROM ' . $db->prefix('xfguestbook_country') . ' ORDER BY country_name';
         $result = $db->query($sql);
@@ -49,7 +49,7 @@ class XfgbFormSelectCountry extends XoopsFormSelect
             $this->addOption('', '-');
         }
         $this->addOption('other', MI_XFGUESTBOOK_OTHER);
-        while ($myrow = $db->fetchArray($result)) {
+        while (false !== ($myrow = $db->fetchArray($result))) {
             $this->addOption($myrow['country_code'], $myrow['country_name']);
         }
     }

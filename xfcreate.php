@@ -22,8 +22,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use XoopsModules\Xfguestbook;
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
+
 include __DIR__ . '/../../mainfile.php';
-if (!is_object($xoopsUser) && 1 != $xoopsModuleConfig['anonsign']) {
+if (!is_object($xoopsUser) && 1 != $helper->getConfig('anonsign')) {
     redirect_header(XOOPS_URL . '/user.php', 2, MD_XFGUESTBOOK_MUSTREGFIRST);
 }
 
@@ -115,11 +119,11 @@ switch ($op) {
             $msgpost['url'] = '<img src="' . XOOPS_URL . '/images/icons/www.gif" alt="' . _VISITWEBSITE . '">';
         }
         if ($country) {
-            $flag         = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country . '.gif';
+            $flag         = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $helper->getConfig('flagdir') . '/' . $country . '.gif';
             $arr_country  = XfguestbookUtility::getCountry("country_code ='" . $country . '\'');
             $country_name = (count($arr_country) > 0) ? $arr_country[0]['country_name'] : '';
             if (file_exists($flag)) {
-                $msgpost['country'] = '<img src="' . XOOPS_URL . '/modules/xfguestbook/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country . '.gif" alt="' . $country_name . '">';
+                $msgpost['country'] = '<img src="' . XOOPS_URL . '/modules/xfguestbook/assets/images/flags/' . $helper->getConfig('flagdir') . '/' . $country . '.gif" alt="' . $country_name . '">';
             } else {
                 $msgpost['country'] = $country_name;
             }
@@ -187,7 +191,7 @@ switch ($op) {
         $msgpost->setVar('url', $url);
         $msgpost->setVar('poster_ip', $_SERVER['REMOTE_ADDR']);
         $msgpost->setVar('country', $country);
-        $msgpost->setVar('flagdir', $xoopsModuleConfig['flagdir']);
+        $msgpost->setVar('flagdir', $helper->getConfig('flagdir'));
         $msgpost->setVar('gender', $gender);
         if (!isset($photo)) {
             $photo = '';
@@ -197,18 +201,18 @@ switch ($op) {
         if ($badip) {
             $msgpost->setVar('moderate', 1);
         } else {
-            $msgpost->setVar('moderate', $xoopsModuleConfig['moderate']);
+            $msgpost->setVar('moderate', $helper->getConfig('moderate'));
         }
         $nb_removed_tmp = XfguestbookUtility::clear_tmp_files($photos_dir);
         $messagesent    = MD_XFGUESTBOOK_MESSAGESENT;
 
         if ($msgHandler->insert($msgpost)) {
-            if ($badip || $xoopsModuleConfig['moderate']) {
+            if ($badip || $helper->getConfig('moderate')) {
                 $messagesent .= '<br>' . MD_XFGUESTBOOK_AFTERMODERATE;
             }
 
             // Send mail to webmaster
-            if (1 == $xoopsModuleConfig['sendmail2wm']) {
+            if (1 == $helper->getConfig('sendmail2wm')) {
                 $subject     = $xoopsConfig['sitename'] . ' - ' . MD_XFGUESTBOOK_NAMEMODULE;
                 $xoopsMailer = xoops_getMailer();
                 $xoopsMailer->useMail();
@@ -243,7 +247,7 @@ switch ($op) {
             xoops_load('XoopsCaptcha');
             $xoopsCaptcha = XoopsCaptcha::getInstance();
         }
-        if ($badip || $xoopsModuleConfig['moderate']) {
+        if ($badip || $helper->getConfig('moderate')) {
             $xoopsTpl->assign('moderate', MD_XFGUESTBOOK_MODERATED);
         }
 

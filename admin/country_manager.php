@@ -23,10 +23,14 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use XoopsModules\Xfguestbook;
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
+
 //include __DIR__ . '/../../../include/cp_header.php';
 //require_once __DIR__ . '/../include/cp_functions.php';
 require_once __DIR__ . '/admin_header.php';
-require_once __DIR__ . '/../class/Utility.php';
+// require_once __DIR__ . '/../class/Utility.php';
 
 // Flag
 $maxsize   = 2000;
@@ -66,7 +70,10 @@ $country_name = isset($_POST['country_name']) ? $_POST['country_name'] : '';
  */
 function flagUpload($country_code)
 {
-    global $xoopsModule, $xoopsModuleConfig, $maxsize, $maxwidth, $maxheight, $format;
+    global $xoopsModule,  $maxsize, $maxwidth, $maxheight, $format;
+    /** @var Xfguestbook\Helper $helper */
+    $helper = Xfguestbook\Helper::getInstance();
+
     $array_allowed_mimetypes = ['image/' . $format];
     // photos
     if (!empty($_FILES['photo']['name'])) {
@@ -78,8 +85,8 @@ function flagUpload($country_code)
             if ('' === $_FILES[$field]['tmp_name'] || !is_readable($_FILES[$field]['tmp_name'])) {
                 redirect_header('country_manager.php', 2, MD_XFGUESTBOOK_FILEERROR);
             }
-            $photos_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'];
-            $uploader   = new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $maxsize, $maxwidth, $maxheight);
+            $photos_dir = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $helper->getConfig('flagdir');
+            $uploader   = new \XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $maxsize, $maxwidth, $maxheight);
             $uploader->setPrefix('tmp');
             if ($uploader->fetchMedia($field) && $uploader->upload()) {
                 $tmp_name = $uploader->getSavedFileName();
@@ -105,29 +112,32 @@ function flagUpload($country_code)
  */
 function flagForm($country_code)
 {
-    global $xoopsModule, $xoopsModuleConfig, $maxsize, $maxwidth, $maxheight, $format;
+    global $xoopsModule,  $maxsize, $maxwidth, $maxheight, $format;
+    /** @var Xfguestbook\Helper $helper */
+    $helper = Xfguestbook\Helper::getInstance();
+
     include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    $flagform = new XoopsThemeForm(AM_XFGUESTBOOK_SUBMITFLAG, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+    $flagform = new \XoopsThemeForm(AM_XFGUESTBOOK_SUBMITFLAG, 'op', xoops_getenv('PHP_SELF'), 'post', true);
     $flagform->setExtra("enctype='multipart/form-data'");
 
-    $flag = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country_code . '.gif';
+    $flag = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $helper->getConfig('flagdir') . '/' . $country_code . '.gif';
     if (file_exists(XOOPS_ROOT_PATH . $flag)) {
         $flag_img = "<img src='" . XOOPS_URL . $flag . '\'>';
-        $img_flag = new XoopsFormLabel('', '<br>' . $flag_img . '<br>');
+        $img_flag = new \XoopsFormLabel('', '<br>' . $flag_img . '<br>');
         $flagform->addElement($img_flag);
     }
     $flag_desc = sprintf(AM_XFGUESTBOOK_FLAGDSC, $maxsize, $maxwidth, $maxheight, $format);
-    $flagform->addElement(new XoopsFormLabel('', $flag_desc));
+    $flagform->addElement(new \XoopsFormLabel('', $flag_desc));
 
-    $img_text = new XoopsFormFile(AM_XFGUESTBOOK_ADDIMG, 'photo', 30000);
+    $img_text = new \XoopsFormFile(AM_XFGUESTBOOK_ADDIMG, 'photo', 30000);
     $img_text->setExtra("size ='60'");
     $flagform->addElement($img_text);
 
-    $button_tray = new XoopsFormElementTray('', '');
-    $button_tray->addElement(new XoopsFormButton('', 'post', _SUBMIT, 'submit'));
-    $button_tray->addElement(new XoopsFormHidden('country_code', $country_code));
-    $button_tray->addElement(new XoopsFormHidden('op', 'flagUpload'));
+    $button_tray = new \XoopsFormElementTray('', '');
+    $button_tray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
+    $button_tray->addElement(new \XoopsFormHidden('country_code', $country_code));
+    $button_tray->addElement(new \XoopsFormHidden('op', 'flagUpload'));
     $flagform->addElement($button_tray);
 
     $flagform->display();
@@ -138,10 +148,13 @@ function flagForm($country_code)
  */
 function flagDel($country_code)
 {
-    global $xoopsModule, $xoopsModuleConfig;
+    global $xoopsModule;
+    /** @var Xfguestbook\Helper $helper */
+    $helper = Xfguestbook\Helper::getInstance();
+
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
     if (1 == $ok) {
-        $flag = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $country_code . '.gif';
+        $flag = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $helper->getConfig('flagdir') . '/' . $country_code . '.gif';
         if (file_exists(XOOPS_ROOT_PATH . $flag)) {
             unlink(XOOPS_ROOT_PATH . $flag);
         }
@@ -164,29 +177,29 @@ function countryForm($country_id = null)
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     if ($country_id) {
-        $sform        = new XoopsThemeForm(AM_XFGUESTBOOK_MODCOUNTRY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform        = new \XoopsThemeForm(AM_XFGUESTBOOK_MODCOUNTRY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $arr_country  = XfguestbookUtility::getCountry('country_id=' . $country_id, 0, 0);
         $country_code = $arr_country[0]['country_code'];
         $country_name = $arr_country[0]['country_name'];
     } else {
-        $sform        = new XoopsThemeForm(AM_XFGUESTBOOK_ADDCOUNTRY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform        = new \XoopsThemeForm(AM_XFGUESTBOOK_ADDCOUNTRY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $country_code = '';
         $country_name = '';
     }
 
-    $text_code = new XoopsFormText(AM_XFGUESTBOOK_FLAGCODE, 'country_code', 5, 5, $country_code);
+    $text_code = new \XoopsFormText(AM_XFGUESTBOOK_FLAGCODE, 'country_code', 5, 5, $country_code);
     if ($country_id) {
         $text_code->setExtra("readonly = 'readonly'");
     }
     $sform->addElement($text_code, true);
-    $sform->addElement(new XoopsFormText(AM_XFGUESTBOOK_FLAGNAME, 'country_name', 50, 50, $country_name), true);
+    $sform->addElement(new \XoopsFormText(AM_XFGUESTBOOK_FLAGNAME, 'country_name', 50, 50, $country_name), true);
 
-    $button_tray = new XoopsFormElementTray('', '');
-    $button_tray->addElement(new XoopsFormButton('', 'save', _SUBMIT, 'submit'));
+    $button_tray = new \XoopsFormElementTray('', '');
+    $button_tray->addElement(new \XoopsFormButton('', 'save', _SUBMIT, 'submit'));
     if ($country_id) {
-        $button_tray->addElement(new XoopsFormHidden('country_id', $country_id));
+        $button_tray->addElement(new \XoopsFormHidden('country_id', $country_id));
     }
-    $button_tray->addElement(new XoopsFormHidden('op', 'countrySave'));
+    $button_tray->addElement(new \XoopsFormHidden('op', 'countrySave'));
     $sform->addElement($button_tray);
     $sform->display();
 }
@@ -208,7 +221,7 @@ function xfgb_getCountry($criteria = null, $limit = 0, $start = 0)
     }
     $sql    .= ' ORDER BY country_name ASC';
     $result = $xoopsDB->query($sql, $limit, $start);
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         array_push($ret, $myrow);
     }
 
@@ -220,11 +233,14 @@ function xfgb_getCountry($criteria = null, $limit = 0, $start = 0)
  */
 function countryDel($country_id)
 {
-    global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+    global $xoopsDB, $xoopsModule;
+    /** @var Xfguestbook\Helper $helper */
+    $helper = Xfguestbook\Helper::getInstance();
+
     $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
     if (1 == $ok) {
         $arr_country = XfguestbookUtility::getCountry('country_id=' . $country_id, 0, 0);
-        $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $arr_country[0]['country_code'] . '.gif';
+        $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $helper->getConfig('flagdir') . '/' . $arr_country[0]['country_code'] . '.gif';
         $sql         = 'DELETE FROM ' . $xoopsDB->prefix('xfguestbook_country') . " WHERE country_id=$country_id";
         $result      = $xoopsDB->query($sql);
         if (file_exists(XOOPS_ROOT_PATH . $flag)) {
@@ -276,7 +292,10 @@ function countrySave($country_id, $country_code, $country_name)
 
 function countryShow()
 {
-    global $action, $start, $xoopsModule, $xoopsModuleConfig, $pathIcon16;
+    global $action, $start, $xoopsModule,  $pathIcon16;
+    /** @var Xfguestbook\Helper $helper */
+    $helper = Xfguestbook\Helper::getInstance();
+
     $myts        = \MyTextSanitizer::getInstance();
     $limit       = 15;
     $arr_country = XfguestbookUtility::getCountry('', $limit, $start);
@@ -307,7 +326,7 @@ function countryShow()
 
     for ($i = 0, $iMax = count($arr_country); $i < $iMax; ++$i) {
         $all_country = [];
-        $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $xoopsModuleConfig['flagdir'] . '/' . $arr_country[$i]['country_code'] . '.gif';
+        $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $helper->getConfig('flagdir') . '/' . $arr_country[$i]['country_code'] . '.gif';
         if (file_exists(XOOPS_ROOT_PATH . $flag)) {
             $all_country['flag_img'] = "<img src='" . XOOPS_URL . $flag . '\'>';
         } else {
@@ -334,7 +353,7 @@ function countryShow()
 
     if ($totalcount > $scount) {
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new XoopsPageNav($totalcount, $limit, $start, 'start', 'action=' . $action);
+        $pagenav = new \XoopsPageNav($totalcount, $limit, $start, 'start', 'action=' . $action);
         echo "<div class='center;' class = 'head'>" . $pagenav->renderNav() . '</div><br>';
     } else {
         echo '';

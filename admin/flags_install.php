@@ -23,9 +23,13 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use XoopsModules\Xfguestbook;
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
+
 require_once __DIR__ . '/admin_header.php';
 require_once __DIR__ . '/../include/cp_functions.php';
-require_once __DIR__ . '/../class/Utility.php';
+// require_once __DIR__ . '/../class/Utility.php';
 
 if (!isset($_POST['flagdir'])) {
     xoops_cp_header();
@@ -33,15 +37,15 @@ if (!isset($_POST['flagdir'])) {
     $adminObject->displayNavigation(basename(__FILE__));
     require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $form    = new XoopsThemeForm(AM_XFGUESTBOOK_INSTALL_FLAGS, 'selectflag', $_SERVER['PHP_SELF']);
-    $sel_box = new XoopsFormSelect(AM_XFGUESTBOOK_SELECT_PACK, 'flagdir', $xoopsModuleConfig['flagdir']);
+    $form    = new \XoopsThemeForm(AM_XFGUESTBOOK_INSTALL_FLAGS, 'selectflag', $_SERVER['PHP_SELF']);
+    $sel_box = new \XoopsFormSelect(AM_XFGUESTBOOK_SELECT_PACK, 'flagdir', $helper->getConfig('flagdir'));
     $sel_box->addOption('', _NONE);
-    $sel_box->addOptionArray(XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/'));
+    $sel_box->addOptionArray(\XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/'));
     $form->addElement($sel_box);
 
-    $button_tray = new XoopsFormElementTray('', '');
-    $button_tray->addElement(new XoopsFormButton('', 'post', _SUBMIT, 'submit'));
-    $button_cancel = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
+    $button_tray = new \XoopsFormElementTray('', '');
+    $button_tray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
+    $button_cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
     $button_cancel->setExtra('\' onclick=\'javascript: history.go(-1)\'');
     $button_tray->addElement($button_cancel);
     $form->addElement($button_tray);
@@ -71,8 +75,8 @@ if (!isset($_POST['flagdir'])) {
     }
     if ('' === $msg) {
         $configHandler = xoops_getHandler('config');
-        $criteria      = new CriteriaCompo(new Criteria('conf_modid', $xoopsModule->mid()));
-        $criteria->add(new Criteria('conf_name', 'flagdir'));
+        $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $xoopsModule->mid()));
+        $criteria->add(new \Criteria('conf_name', 'flagdir'));
         $config = $configHandler->getConfigs($criteria);
         $value  = [$config[0]->getConfValueForOutput()];
         $config[0]->setVar('conf_value', $flagdir);

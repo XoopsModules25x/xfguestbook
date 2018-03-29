@@ -25,7 +25,7 @@
 
 require_once __DIR__ . '/../../../mainfile.php';
 require_once __DIR__ . '/admin_header.php';
-//require_once __DIR__ . '/../class/msg.php';
+// require_once __DIR__ . '/../class/msg.php';
 require_once __DIR__ . '/../../../include/cp_functions.php';
 require_once __DIR__ . '/../include/cp_functions.php';
 
@@ -331,8 +331,8 @@ switch ($op) {
                 //          $msg .= executeSQL($sqlfile);
 
                 $configHandler = xoops_getHandler('config');
-                $criteria      = new CriteriaCompo(new Criteria('conf_modid', $xoopsModule->mid()));
-                $criteria->add(new Criteria('conf_name', 'flagdir'));
+                $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $xoopsModule->mid()));
+                $criteria->add(new \Criteria('conf_name', 'flagdir'));
                 $config =& $configHandler->getConfigs($criteria);
                 $value  = [$config[0]->getConfValueForOutput()];
                 $config[0]->setVar('conf_value', 'world_flags');

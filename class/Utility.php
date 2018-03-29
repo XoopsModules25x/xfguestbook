@@ -3,24 +3,29 @@
 use Xmf\Request;
 use XoopsModules\Xfguestbook;
 use XoopsModules\Xfguestbook\Common;
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
 
 /**
  * Class Utility
  */
 class Utility
 {
-    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
 
-    use common\ServerStats; // getServerStats Trait
+    use Common\ServerStats; // getServerStats Trait
 
-    use common\FilesManagement; // Files Management Trait
+    use Common\FilesManagement; // Files Management Trait
 
     //--------------- Custom module methods -----------------------------
 
 
     public static function upload()
     {
-        global $xoopsModule, $xoopsModuleConfig, $preview_name, $msgstop;
+        global $xoopsModule,  $preview_name, $msgstop;
+        /** @var Xfguestbook\Helper $helper */
+        $helper = Xfguestbook\Helper::getInstance();
+
         $created = time();
         $ext     = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $_FILES['photo']['name']);
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
@@ -28,11 +33,11 @@ class Utility
         if (!empty($field) || '' !== $field) {
             // Check if file uploaded
             if ('' === $_FILES[$field]['tmp_name'] || !is_readable($_FILES[$field]['tmp_name'])) {
-                $msgstop .= sprintf(MD_XFGUESTBOOK_FILEERROR, $xoopsModuleConfig['photo_maxsize']);
+                $msgstop .= sprintf(MD_XFGUESTBOOK_FILEERROR, $helper->getConfig('photo_maxsize'));
             } else {
                 $photos_dir              = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
                 $array_allowed_mimetypes = ['image/gif', 'image/pjpeg', 'image/jpeg', 'image/x-png'];
-                $uploader                = new XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $xoopsModuleConfig['photo_maxsize'], $xoopsModuleConfig['photo_maxwidth'], $xoopsModuleConfig['photo_maxheight']);
+                $uploader                = new \XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $helper->getConfig('photo_maxsize'), $helper->getConfig('photo_maxwidth'), $helper->getConfig('photo_maxheight'));
                 if ($uploader->fetchMedia($field) && $uploader->upload()) {
                     if (isset($preview_name)) {
                         @unlink("$photos_dir/" . $preview_name);
@@ -64,7 +69,7 @@ class Utility
         }
         $sql    .= ' ORDER BY country_code ASC';
         $result = $xoopsDB->query($sql, $limit, $start);
-        while ($myrow = $xoopsDB->fetchArray($result)) {
+        while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
             array_push($ret, $myrow);
         }
 
@@ -79,7 +84,10 @@ class Utility
      */
     public static function getAllCountry($criteria = null, $limit = 0, $start = 0)
     {
-        global $xoopsDB, $action, $xoopsModuleConfig;
+        global $xoopsDB, $action;
+        /** @var Xfguestbook\Helper $helper */
+        $helper = Xfguestbook\Helper::getInstance();
+
         $ret = [];
         $sql = 'SELECT country_code, country_name FROM ' . $xoopsDB->prefix('xfguestbook_country');
         if (isset($criteria) && '' !== $criteria) {
@@ -87,9 +95,9 @@ class Utility
         }
         $sql    .= ' ORDER BY country_code ASC';
         $result = $xoopsDB->query($sql, $limit, $start);
-        while ($myrow = $xoopsDB->fetchArray($result)) {
+        while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
             //      $ret[$myrow['country_code']] = $myrow['country_name'];
-            $ret[$xoopsModuleConfig['flagdir'] . '/' . $myrow['country_code']] = $myrow['country_name'];
+            $ret[$helper->getConfig('flagdir') . '/' . $myrow['country_code']] = $myrow['country_name'];
         }
 
         return $ret;
@@ -101,16 +109,18 @@ class Utility
      */
     public static function get_user_data($user_id)
     {
-        global $xoopsUser, $xoopsModuleConfig;
+        global $xoopsUser;
+        /** @var Xfguestbook\Helper $helper */
+        $helper = Xfguestbook\Helper::getInstance();
 
         if (!(int)$user_id) {
             return false;
         }
 
-        $poster = new XoopsUser($user_id);
+        $poster = new \XoopsUser($user_id);
         if ($poster->isActive()) {
             $xoopsUser ? $a_poster['poster'] = "<a href='../../userinfo.php?uid=$user_id'>" . $poster->uname() . '</a>' : $a_poster['poster'] = $poster->uname();
-            if ($xoopsModuleConfig['display_avatar']) {
+            if ($helper->getConfig('display_avatar')) {
                 $rank = $poster->rank();
                 $rank['title'] ? $a_poster['rank'] = $rank['title'] : $a_poster['rank'] = '';
                 $rank['image'] ? $a_poster['rank_img'] = "<img src='" . XOOPS_URL . '/uploads/' . $rank['image'] . '\' alt=\'\'>' : $a_poster['rank_img'] = '';
@@ -167,11 +177,11 @@ class Utility
         $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_badips');
         $result = $xoopsDB->query($sql);
         if ($all) {
-            while ($myrow = $xoopsDB->fetchArray($result)) {
+            while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
                 array_push($ret, $myrow);
             }
         } else {
-            while (list($ip_id, $ip_value) = $xoopsDB->fetchRow($result)) {
+            while (false !== (list($ip_id, $ip_value) = $xoopsDB->fetchRow($result))) {
                 $ret[] = $ip_value;
             }
         }

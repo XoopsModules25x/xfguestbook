@@ -23,6 +23,10 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use XoopsModules\Xfguestbook;
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
+
 include __DIR__ . '/../../mainfile.php';
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/Utility.php';
@@ -95,7 +99,9 @@ function approve($msg_id)
  */
 function xfgb_getmsg($msg)
 {
-    global $nbmsg, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $xoopsConfig, $options, $opt, $xoopsDB;
+    global $nbmsg, $xoopsModule, $xoopsUser,  $xoopsTpl, $xoopsConfig, $options, $opt, $xoopsDB;
+    /** @var Xfguestbook\Helper $helper */
+    $helper = Xfguestbook\Helper::getInstance();
 
     $arr_country = XfguestbookUtility::getAllCountry();
     $xoopsTpl->assign('display_msg', true);
@@ -112,7 +118,7 @@ function xfgb_getmsg($msg)
         $memberHandler = xoops_getHandler('member');
         $user          = $memberHandler->getUser($onemsg->getVar('user_id'));
         // email
-        if ($xoopsModuleConfig['showemail']
+        if ($helper->getConfig('showemail')
             || ($onemsg->getVar('email')
                 && ((1 == $user->getVar('user_viewemail')
                      || 0 == $onemsg->getVar('user_id'))
@@ -168,8 +174,10 @@ function xfgb_getmsg($msg)
 
 function xfgb_genderlist()
 {
-    global $options, $xoopsTpl, $xoopsModuleConfig, $xoopsModule, $msgHandler;
-    $criteria = new Criteria('moderate', 0);
+    global $options, $xoopsTpl,  $xoopsModule, $msgHandler;
+    /** @var Xfguestbook\Helper $helper */
+    $helper = Xfguestbook\Helper::getInstance();
+    $criteria = new \Criteria('moderate', 0);
     $arr_msg  = $msgHandler->countMsgByGender($criteria);
     $i        = 0;
     $gender   = [];
@@ -208,15 +216,15 @@ if (0 === strpos($op, 'show')) {
     require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/config.inc.php';
     $options = getOptions();
 
-    $criteria = new Criteria('moderate', 0);
+    $criteria = new \Criteria('moderate', 0);
     $nbmsg    = $msgHandler->countMsg($criteria);
 
     $xoopsTpl->assign('msg_message_count', sprintf(MD_XFGUESTBOOK_THEREIS, '<b>' . $nbmsg . '</b>'));
-    $xoopsTpl->assign('msg_moderated', $xoopsModuleConfig['moderate']);
+    $xoopsTpl->assign('msg_moderated', $helper->getConfig('moderate'));
     $xoopsTpl->assign('msg_lang_name', $xoopsConfig['language']);
     $xoopsTpl->assign('xoops_pagetitle', $xoopsModule->name() . ' -messages');
     if ($adminview) {
-        $nbwait = $msgHandler->countMsg(new Criteria('moderate', '1'));
+        $nbwait = $msgHandler->countMsg(new \Criteria('moderate', '1'));
         $xoopsTpl->assign('msg_moderate_text', sprintf(MD_XFGUESTBOOK_MODERATING, "<font class='fg2'><a href='" . XOOPS_URL . "/modules/xfguestbook/index.php?op=show_waiting'>" . $nbwait . '</a></font>'));
     }
 }
@@ -247,11 +255,11 @@ switch ($op) {
         break;
 
     case 'show_waiting':
-        $pagenav = new XoopsPageNav($nbwait, $xoopsModuleConfig['perpage'], $debut, 'debut', 'op=show_waiting');
+        $pagenav = new \XoopsPageNav($nbwait, $helper->getConfig('perpage'), $debut, 'debut', 'op=show_waiting');
         $xoopsTpl->assign('msg_page_nav', $pagenav->renderNav());
-        $criteria = new Criteria('moderate', 1);
+        $criteria = new \Criteria('moderate', 1);
         $criteria->setOrder('DESC');
-        $criteria->setLimit($xoopsModuleConfig['perpage']);
+        $criteria->setLimit($helper->getConfig('perpage'));
         $criteria->setStart($debut);
         $msg    = $msgHandler->getObjects($criteria);
         $nbwait -= $debut;
@@ -261,10 +269,10 @@ switch ($op) {
 
     case 'show_one':
         if ($adminview) {
-            $criteria = new Criteria('msg_id', $msg_id);
+            $criteria = new \Criteria('msg_id', $msg_id);
         } else {
-            $criteria = new CriteriaCompo(new Criteria('moderate', '0'));
-            $criteria->add(new Criteria('msg_id', $msg_id));
+            $criteria = new \CriteriaCompo(new \Criteria('moderate', '0'));
+            $criteria->add(new \Criteria('msg_id', $msg_id));
         }
         $msg = $msgHandler->getObjects($criteria);
         xfgb_getmsg($msg);
@@ -275,15 +283,15 @@ switch ($op) {
 
     case 'show_country':
         list($flagdir, $country) = explode('/', $param);
-        $criteria = new CriteriaCompo(new Criteria('moderate', '0'));
-        if ($flagdir == $xoopsModuleConfig['flagdir']) {
-            $criteria->add(new Criteria('flagdir', $flagdir));
+        $criteria = new \CriteriaCompo(new \Criteria('moderate', '0'));
+        if ($flagdir == $helper->getConfig('flagdir')) {
+            $criteria->add(new \Criteria('flagdir', $flagdir));
         }
-        $criteria->add(new Criteria('country', $country));
+        $criteria->add(new \Criteria('country', $country));
         $nbmsg   = $msgHandler->countMsg($criteria);
-        $pagenav = new XoopsPageNav($nbmsg, $xoopsModuleConfig['perpage'], $debut, 'debut', 'op=show_country&param=' . $param);
+        $pagenav = new \XoopsPageNav($nbmsg, $helper->getConfig('perpage'), $debut, 'debut', 'op=show_country&param=' . $param);
         $criteria->setOrder('DESC');
-        $criteria->setLimit($xoopsModuleConfig['perpage']);
+        $criteria->setLimit($helper->getConfig('perpage'));
         $criteria->setStart($debut);
         $msg   = $msgHandler->getObjects($criteria);
         $nbmsg -= $debut;
@@ -292,12 +300,12 @@ switch ($op) {
         break;
 
     case 'show_gender':
-        $criteria = new CriteriaCompo(new Criteria('moderate', '0'));
-        $criteria->add(new Criteria('gender', $param));
+        $criteria = new \CriteriaCompo(new \Criteria('moderate', '0'));
+        $criteria->add(new \Criteria('gender', $param));
         $nbmsg   = $msgHandler->countMsg($criteria);
-        $pagenav = new XoopsPageNav($nbmsg, $xoopsModuleConfig['perpage'], $debut, 'debut', 'op=show_gender&param=' . $param);
+        $pagenav = new \XoopsPageNav($nbmsg, $helper->getConfig('perpage'), $debut, 'debut', 'op=show_gender&param=' . $param);
         $criteria->setOrder('DESC');
-        $criteria->setLimit($xoopsModuleConfig['perpage']);
+        $criteria->setLimit($helper->getConfig('perpage'));
         $criteria->setStart($debut);
         $msg   = $msgHandler->getObjects($criteria);
         $nbmsg -= $debut;
@@ -310,11 +318,11 @@ switch ($op) {
 
     case 'show_all':
     default:
-        $pagenav = new XoopsPageNav($nbmsg, $xoopsModuleConfig['perpage'], $debut, 'debut', '');
+        $pagenav = new \XoopsPageNav($nbmsg, $helper->getConfig('perpage'), $debut, 'debut', '');
         $xoopsTpl->assign('msg_page_nav', $pagenav->renderNav());
-        $criteria = new Criteria('moderate', 0);
+        $criteria = new \Criteria('moderate', 0);
         $criteria->setOrder('DESC');
-        $criteria->setLimit($xoopsModuleConfig['perpage']);
+        $criteria->setLimit($helper->getConfig('perpage'));
         $criteria->setStart($debut);
         $msg   = $msgHandler->getObjects($criteria);
         $nbmsg -= $debut;
@@ -332,12 +340,12 @@ switch ($op) {
 }
 $sql = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_country') . ' ORDER BY country_name ASC');
 
-while ($coun = $xoopsDB->fetchArray($sql)) {
+while (false !== ($coun = $xoopsDB->fetchArray($sql))) {
     $sql2 = $xoopsDB->query('SELECT COUNT(country) tot FROM ' . $xoopsDB->prefix('xfguestbook_msg') . " WHERE country='" . $coun['country_code'] . '\'');
     list($tlocal) = $xoopsDB->fetchRow($sql2);
     $tlocal = $tlocal ?: '0';
     if ($tlocal > 0) {
-        $opt['<a href="index.php?op=show_country&param=' . $xoopsModuleConfig['flagdir'] . '/' . $coun['country_code'] . '">' . $coun['country_name'] . '</a>'] = $tlocal;
+        $opt['<a href="index.php?op=show_country&param=' . $helper->getConfig('flagdir') . '/' . $coun['country_code'] . '">' . $coun['country_name'] . '</a>'] = $tlocal;
     } else {
         $opt[$coun['country_name']] = $tlocal;
     }
