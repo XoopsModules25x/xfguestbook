@@ -44,7 +44,7 @@ if (isset($_GET['ip_id'])) {
     $ip_id = 0;
 }
 
-$ip_value = isset($_POST['ip_value']) ? $_POST['ip_value'] : '';
+$ip_value = \Xmf\Request::getString('ip_value', '', 'POST');
 
 /**
  * @param $ip_id

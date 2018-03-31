@@ -62,8 +62,8 @@ if (isset($_GET['country_code'])) {
     $country_code = '';
 }
 
-$start        = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-$country_name = isset($_POST['country_name']) ? $_POST['country_name'] : '';
+$start        = \Xmf\Request::getInt('start', 0, 'GET');
+$country_name = \Xmf\Request::getString('country_name', '', 'POST');
 
 /**
  * @param $country_code
@@ -152,7 +152,7 @@ function flagDel($country_code)
     /** @var Xfguestbook\Helper $helper */
     $helper = Xfguestbook\Helper::getInstance();
 
-    $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
+    $ok = \Xmf\Request::getInt('ok', 0, 'POST');
     if (1 == $ok) {
         $flag = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $helper->getConfig('flagdir') . '/' . $country_code . '.gif';
         if (file_exists(XOOPS_ROOT_PATH . $flag)) {
@@ -237,7 +237,7 @@ function countryDel($country_id)
     /** @var Xfguestbook\Helper $helper */
     $helper = Xfguestbook\Helper::getInstance();
 
-    $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
+    $ok = \Xmf\Request::getInt('ok', 0, 'POST');
     if (1 == $ok) {
         $arr_country = XfguestbookUtility::getCountry('country_id=' . $country_id, 0, 0);
         $flag        = '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $helper->getConfig('flagdir') . '/' . $arr_country[0]['country_code'] . '.gif';

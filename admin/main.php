@@ -31,7 +31,7 @@ include __DIR__ . '/../../../include/cp_header.php';
 require_once __DIR__ . '/../include/cp_functions.php';
 require_once __DIR__ . '/admin_header.php';
 
-if (!isset($helper->getConfig('flagdir'))) {
+if (null !== ($helper->getConfig('flagdir'))) {
     redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, AM_XFGUESTBOOK_MUST_UPDATE);
 }
 
@@ -131,10 +131,10 @@ function banish()
 function show()
 {
     global $msgHandler, $xoopsModule, $pathIcon16;
-    $pick              = isset($_GET['pick']) ? (int)$_GET['pick'] : 0;
-    $start             = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-    $sel_status        = isset($_GET['sel_status']) ? $_GET['sel_status'] : 0;
-    $sel_order         = isset($_GET['sel_order']) ? $_GET['sel_order'] : 0;
+    $pick              = \Xmf\Request::getInt('pick', 0, 'GET');
+    $start             = \Xmf\Request::getInt('start', 0, 'GET');
+    $sel_status        = \Xmf\Request::getInt('sel_status', 0, GET);
+    $sel_order         = \Xmf\Request::getInt('sel_order', 0, GET);
     $limit             = 10;
     $status_option0    = '';
     $status_option1    = '';
@@ -294,7 +294,7 @@ switch ($op) {
         }
         $msgstop = '';
         $msg     = $msgHandler->get($msg_id);
-        $del_img = isset($_POST['del_img']) ? (int)$_POST['del_img'] : 0;
+        $del_img = \Xmf\Request::getInt('del_img', 0, 'POST');
         if ($del_img) {
             $filename = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $msg->getVar('photo');
             unlink($filename);
@@ -313,16 +313,16 @@ switch ($op) {
         if (!empty($msgstop)) {
             redirect_header('main.php?op=edit&msg_id=' . $msg_id, 2, $msgstop);
         }
-        $uname    = isset($_POST['uname']) ? $_POST['uname'] : '';
-        $email    = isset($_POST['email']) ? $_POST['email'] : '';
-        $url      = isset($_POST['url']) ? $_POST['url'] : '';
-        $title    = isset($_POST['title']) ? $_POST['title'] : '';
-        $message  = isset($_POST['message']) ? $_POST['message'] : '';
-        $note     = isset($_POST['note']) ? $_POST['note'] : '';
-        $gender   = isset($_POST['gender']) ? $_POST['gender'] : '';
-        $country  = isset($_POST['country']) ? $_POST['country'] : '';
-        $other    = isset($_POST['other']) ? $_POST['other'] : '';
-        $moderate = isset($_POST['moderate']) ? (int)$_POST['moderate'] : 0;
+        $uname    = \Xmf\Request::getString('uname', '', 'POST');
+        $email    = \Xmf\Request::getString('email', '', 'POST');
+        $url      = \Xmf\Request::getString('url', '', 'POST');
+        $title    = \Xmf\Request::getString('title', '', 'POST');
+        $message  = \Xmf\Request::getString('message', '', 'POST');
+        $note     = \Xmf\Request::getString('note', '', 'POST');
+        $gender   = \Xmf\Request::getString('gender', '', 'POST');
+        $country  = \Xmf\Request::getString('country', '', 'POST');
+        $other    = \Xmf\Request::getString('other', '', 'POST');
+        $moderate = \Xmf\Request::getInt('moderate', 0, 'POST');
 
         $msg->setVar('uname', $uname);
         $msg->setVar('email', $email);

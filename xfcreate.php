@@ -38,9 +38,9 @@ require_once __DIR__ . '/include/config.inc.php';
 $option     = getOptions();
 $msgHandler = xoops_getModuleHandler('msg');
 
-$confirm_code = isset($_POST['confirm_code']) ? $_POST['confirm_code'] : '';
-$confirm_str  = isset($_POST['confirm_str']) ? $_POST['confirm_str'] : '';
-$user_id      = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 0;
+$confirm_code = \Xmf\Request::getString('confirm_code', '', 'POST');
+$confirm_str  = \Xmf\Request::getString('confirm_str', '', 'POST');
+$user_id      = \Xmf\Request::getInt('user_id', 0, 'POST');
 $title        = (isset($_POST['title']) ? $_POST['title'] : '');
 $message      = (isset($_POST['message']) ? $_POST['message'] : '');
 $gender       = (isset($_POST['gender']) ? $_POST['gender'] : '');

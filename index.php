@@ -57,7 +57,7 @@ $xoopsUser ? $adminview = $xoopsUser->isAdmin() : $adminview = 0;
 function delete($msg_id)
 {
     global $msgHandler, $xoopsModule;
-    $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
+    $ok = \Xmf\Request::getInt('ok', 0, 'POST');
     if (1 == $ok) {
         $msg        = $msgHandler->get($msg_id);
         $del_msg_ok = $msgHandler->delete($msg);
@@ -206,8 +206,8 @@ function xfgb_genderlist()
 // if op = show_***, functions needed
 //if (substr($op, 0, 4) == 'show') {
 if (0 === strpos($op, 'show')) {
-    $debut = isset($_GET['debut']) ? (int)$_GET['debut'] : 0;
-    $param = isset($_GET['param']) ? $_GET['param'] : '';
+    $debut = \Xmf\Request::getInt('debut', 0, 'GET');
+    $param = \Xmf\Request::getString('param', '', 'GET');
 
     require_once __DIR__ . '/class/Utility.php';
     $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
