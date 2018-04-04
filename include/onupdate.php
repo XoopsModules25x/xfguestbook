@@ -17,6 +17,8 @@
  * @author       XOOPS Development Team
  */
 
+use XoopsModules\Xfguestbook;
+
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
@@ -60,7 +62,7 @@ function xoops_module_pre_update_xfguestbook(\XoopsModule $module)
  * @param XoopsModule $module {@link XoopsModule}
  * @param null        $previousVersion
  *
- * @return bool true if update successful, false if not
+ * @return void true if update successful, false if not
  */
 
 function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion = null)
@@ -71,10 +73,10 @@ function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion 
 
     /** @var Xfguestbook\Helper $helper */
     /** @var Xfguestbook\Utility $utility */
-    /** @var Xfguestbook\Configurator $configurator */
+    /** @var Xfguestbook\Common\Configurator $configurator */
     $helper  = Xfguestbook\Helper::getInstance();
     $utility = new Xfguestbook\Utility();
-    $configurator = new Xfguestbook\Configurator();
+    $configurator = new Xfguestbook\Common\Configurator();
 
     if ($previousVersion < 230) {
 
@@ -123,7 +125,7 @@ function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion 
         if (count($configurator->uploadFolders) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->uploadFolders) as $i) {
-                $utilityClass::createFolder($configurator->uploadFolders[$i]);
+                $utility::createFolder($configurator->uploadFolders[$i]);
             }
         }
 
@@ -132,7 +134,7 @@ function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion 
             $file = __DIR__ . '/../assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
-                $utilityClass::copyFile($file, $dest);
+                $utility::copyFile($file, $dest);
             }
         }
 
@@ -142,8 +144,8 @@ function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion 
         $sql = 'DELETE FROM ' . $xoopsDB->prefix('newblocks') . " WHERE `dirname` = '" . $module->getVar('dirname', 'n') . "' AND `template` LIKE '%.html%'";
         $xoopsDB->queryF($sql);
 
-        /** @var XoopsGroupPermHandler $gpermHandler */
-        //        $gpermHandler = xoops_getHandler('groupperm');
-        //        return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
+        /** @var XoopsGroupPermHandler $grouppermHandler */
+        //        $grouppermHandler = xoops_getHandler('groupperm');
+        //        return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
 }

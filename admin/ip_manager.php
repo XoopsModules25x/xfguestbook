@@ -56,7 +56,7 @@ function badIpDel($ip_id)
     if ($ip_count > 0) {
         $messagesent = AM_XFGUESTBOOK_BADIP_DELETED;
         for ($i = 0; $i < $ip_count; $i++) {
-            $sql = sprintf('DELETE FROM %s WHERE ip_id = %u', $xoopsDB->prefix('xfguestbook_badips'), $_POST['ip_id'][$i]);
+            $sql = sprintf('DELETE FROM `%s` WHERE ip_id = %u', $xoopsDB->prefix('xfguestbook_badips'), $_POST['ip_id'][$i]);
             if (!$result = $xoopsDB->query($sql)) {
                 $messagesent = AM_XFGUESTBOOK_ERRORDEL;
             }

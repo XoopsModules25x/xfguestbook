@@ -133,8 +133,8 @@ function show()
     global $msgHandler, $xoopsModule, $pathIcon16;
     $pick              = \Xmf\Request::getInt('pick', 0, 'GET');
     $start             = \Xmf\Request::getInt('start', 0, 'GET');
-    $sel_status        = \Xmf\Request::getInt('sel_status', 0, GET);
-    $sel_order         = \Xmf\Request::getInt('sel_order', 0, GET);
+    $sel_status        = \Xmf\Request::getInt('sel_status', 0, 'GET');
+    $sel_order         = \Xmf\Request::getInt('sel_order', 0, 'GET');
     $limit             = 10;
     $status_option0    = '';
     $status_option1    = '';

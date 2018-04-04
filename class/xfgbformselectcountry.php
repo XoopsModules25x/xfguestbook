@@ -37,7 +37,6 @@ class XfgbFormSelectCountry extends XoopsFormSelect
      * @param null $value
      * @param int  $size
      * @param bool $nullopt
-     * @return XfgbFormSelectCountry
      */
     public function __construct($caption, $name, $value = null, $size = 1, $nullopt = false)
     {

@@ -203,7 +203,7 @@ class XfguestbookMsgHandler
         if ('xfguestbookmsg' !== strtolower(get_class($msg))) {
             return false;
         }
-        $sql = sprintf('DELETE FROM %s WHERE msg_id = %u', $this->db->prefix('xfguestbook_msg'), $msg->getVar('msg_id'));
+        $sql = sprintf('DELETE FROM `%s` WHERE msg_id = %u', $this->db->prefix('xfguestbook_msg'), $msg->getVar('msg_id'));
         if (isset($this->commentstable) && '' !== $this->commentstable) {
             xoops_comment_delete($xoopsModule->getVar('mid'), $msg_id);
         }
@@ -287,7 +287,7 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null CriteriaElement $criteria
+     * @param \CriteriaElement|null $criteria
      * @return array|bool
      */
     public function countMsgByGender(CriteriaElement $criteria = null)
