@@ -29,13 +29,8 @@ require_once __DIR__ . '/../../../class/xoopslists.php';
 
 $msgHandler = xoops_getModuleHandler('msg');
 require_once __DIR__ . '/admin_header.php';
-if (isset($_GET['op'])) {
-    $op = $_GET['op'];
-} elseif (isset($_POST['op'])) {
-    $op = $_POST['op'];
-} else {
-    $op = 'show';
-}
+
+$op    = \Xmf\Request::getCmd('op', 'show');
 
 switch ($op) {
 

@@ -57,13 +57,7 @@ if (isset($_POST)) {
     }
 }
 
-if (isset($_GET['op'])) {
-    $op = $_GET['op'];
-} elseif (isset($_POST['op'])) {
-    $op = $_POST['op'];
-} else {
-    $op = 'show';
-}
+$op    = \Xmf\Request::getCmd('op', 'show');
 
 switch ($op) {
 

@@ -30,12 +30,11 @@ $helper = Xfguestbook\Helper::getInstance();
 include __DIR__ . '/../../mainfile.php';
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/Utility.php';
-if (isset($_GET['msg_id'])) {
-    $msg_id = (int)$_GET['msg_id'];
-} elseif (isset($_POST['msg_id'])) {
-    $msg_id = (int)$_POST['msg_id'];
+
+if (\Xmf\Request::hasVar('msg_id', 'GET')) {
+    $msg_id = \Xmf\Request::getInt('msg_id', 0, 'GET');
 } else {
-    $msg_id = 0;
+    $msg_id = \Xmf\Request::getInt('msg_id', 0, 'POST');
 }
 
 if (isset($_GET['op'])) {

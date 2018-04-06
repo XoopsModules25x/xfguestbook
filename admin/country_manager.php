@@ -46,12 +46,10 @@ if (isset($_GET['op'])) {
     $op = 'countryShow';
 }
 
-if (isset($_GET['country_id'])) {
-    $country_id = (int)$_GET['country_id'];
-} elseif (isset($_POST['country_id'])) {
-    $country_id = (int)$_POST['country_id'];
+if (\Xmf\Request::hasVar('country_id', 'GET')) {
+ $country_id = \Xmf\Request::getInt('country_id', 0, 'GET');
 } else {
-    $country_id = 0;
+    $country_id = \Xmf\Request::getInt('country_id', 0, 'POST');
 }
 
 if (isset($_GET['country_code'])) {

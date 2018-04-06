@@ -36,13 +36,12 @@ if (isset($_GET['op'])) {
     $op = 'badIpShow';
 }
 
-if (isset($_GET['ip_id'])) {
-    $ip_id = (int)$_GET['ip_id'];
-} elseif (isset($_POST['ip_id'])) {
-    $ip_id = (int)$_POST['ip_id'];
+if (\Xmf\Request::hasVar('ip_id', 'GET')) {
+    $ip_id = \Xmf\Request::getInt('ip_id', 0, 'GET');
 } else {
-    $ip_id = 0;
+    $ip_id = \Xmf\Request::getInt('ip_id', 0, 'POST');
 }
+
 
 $ip_value = \Xmf\Request::getString('ip_value', '', 'POST');
 
