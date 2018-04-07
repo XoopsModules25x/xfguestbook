@@ -280,7 +280,7 @@ function countrySave($country_id, $country_code, $country_name)
             $messagesent = '<span style="color: #FF0000; ">' . AM_XFGUESTBOOK_COUNTRY_EXIST . '</span>';
         } else {
             $country_id = $xoopsDB->genId('country_id_seq');
-            $sql        = sprintf("INSERT INTO %s (country_id, country_code, country_name) VALUES (%s, '%s', '%s')", $xoopsDB->prefix('xfguestbook_country'), $country_id, $country_code, $country_name);
+            $sql        = sprintf("INSERT INTO `%s` (country_id, country_code, country_name) VALUES (%s, '%s', '%s')", $xoopsDB->prefix('xfguestbook_country'), $country_id, $country_code, $country_name);
             $xoopsDB->query($sql);
             $messagesent = AM_XFGUESTBOOK_COUNTRY_ADDED;
         }

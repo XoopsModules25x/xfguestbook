@@ -35,7 +35,7 @@ $op    = \Xmf\Request::getCmd('op', 'show');
 switch ($op) {
 
     case 'delete':
-        if (!empty($_POST['imglist_id'])) {
+       if (\Xmf\Request::hasVar('imglist_id', 'POST')) {
             $img_count = count($_POST['imglist_id']);
             for ($i = 0; $i < $img_count; $i++) {
                 unlink(XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $_POST['imglist_id'][$i]);

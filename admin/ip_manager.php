@@ -115,7 +115,7 @@ function badIpSave($ip_id, $ip_value)
             $messagesent = '<span style="color: #FF0000; ">' . AM_XFGUESTBOOK_BADIP_EXIST . '</span>';
         } else {
             $country_id = $xoopsDB->genId('ip_id_seq');
-            $sql        = sprintf("INSERT INTO %s (ip_id, ip_value) VALUES (%s, '%s')", $xoopsDB->prefix('xfguestbook_badips'), $ip_id, $ip_value);
+            $sql        = sprintf("INSERT INTO `%s` (ip_id, ip_value) VALUES (%s, '%s')", $xoopsDB->prefix('xfguestbook_badips'), $ip_id, $ip_value);
             $xoopsDB->query($sql);
             $messagesent = AM_XFGUESTBOOK_BADIP_ADDED;
         }
