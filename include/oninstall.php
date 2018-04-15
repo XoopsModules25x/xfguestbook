@@ -28,11 +28,9 @@ use XoopsModules\Xfguestbook;
  */
 function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
 {
-    $moduleDirName = basename(dirname(__DIR__));
-    $utility  = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utility)) {
-        xoops_load('utility', $moduleDirName);
-    }
+    /** @var \XoopsModules\Xfguestbook\Utility $utility */
+    $utility = new \XoopsModules\Xfguestbook\Utility();
+
     //check for minimum XOOPS version
     if (!$utility::checkVerXoops($module)) {
         return false;
@@ -71,12 +69,8 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
     $helper->loadLanguage('modinfo');
 
     $configurator = new Xfguestbook\Common\Configurator();
-    /** @var Xfguestbook\Utility $utility */
-    $utility = ucfirst($moduleDirName) . 'Utility';
-    ;
-    if (!class_exists($utility)) {
-        xoops_load('utility', $moduleDirName);
-    }
+    /** @var \XoopsModules\Xfguestbook\Utility $utility */
+    $utility = new \XoopsModules\Xfguestbook\Utility();
 
     // default Permission Settings ----------------------
     global $xoopsModule;
@@ -100,7 +94,7 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
 
     //  ---  COPY blank.png FILES ---------------
     if (count($configurator->copyBlankFiles) > 0) {
-        $file = __DIR__ . '/../assets/images/blank.png';
+        $file =  dirname(__DIR__) . '/assets/images/blank.png';
         foreach (array_keys($configurator->copyBlankFiles) as $i) {
             $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utility::copyFile($file, $dest);

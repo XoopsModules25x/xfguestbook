@@ -24,12 +24,13 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
 
-include __DIR__ . '/../../mainfile.php';
+include  dirname(dirname(__DIR__)) . '/mainfile.php';
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/Utility.php';
+
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
 
 if (\Xmf\Request::hasVar('msg_id', 'GET')) {
     $msg_id = \Xmf\Request::getInt('msg_id', 0, 'GET');

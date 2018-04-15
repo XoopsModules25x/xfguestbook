@@ -20,10 +20,10 @@
 
 use XoopsModules\Xfguestbook;
 
-require_once __DIR__ . '/../../../include/cp_header.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
-// require_once __DIR__ . '/../class/Utility.php';
-//require_once __DIR__ . '/../include/common.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
+//require_once  dirname(__DIR__) . '/include/common.php';
 $moduleDirName = basename(dirname(__DIR__));
 $helper = Xfguestbook\Helper::getInstance();
 $adminObject = \Xmf\Module\Admin::getInstance();

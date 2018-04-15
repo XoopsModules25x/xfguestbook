@@ -22,7 +22,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  * Class XfguestbookMsg
  */
-class XfguestbookMsg extends XoopsObject
+class XfguestbookMsg extends \XoopsObject
 {
     // constructor
     /**

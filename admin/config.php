@@ -24,10 +24,12 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+
+require_once __DIR__ . '/admin_header.php';
+
 /** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
 
-require_once __DIR__ . '/admin_header.php';
 /**
  * @param  int $cat
  * @return mixed

@@ -23,9 +23,9 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include __DIR__ . '/../../../include/cp_header.php';
-require_once __DIR__ . '/../include/cp_functions.php';
-require_once __DIR__ . '/../../../class/xoopslists.php';
+include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once  dirname(__DIR__) . '/include/cp_functions.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopslists.php';
 
 $msgHandler = xoops_getModuleHandler('msg');
 require_once __DIR__ . '/admin_header.php';
@@ -49,7 +49,7 @@ switch ($op) {
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         $cpt1    = $cpt2 = 0;
-        $all_img = XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/');
+        $all_img = \XoopsLists::getImgListAsArray(XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/');
         echo AM_XFGUESTBOOK_ORPHEAN_DSC . '<br>';
         $msg_img = $msgHandler->getMsgImg();
         if (count($all_img) > count($msg_img)) {

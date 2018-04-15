@@ -23,12 +23,12 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-require_once __DIR__ . '/../../../class/xoopsform/formselect.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/formselect.php';
 
 /**
  * Class XfgbFormSelectCountry
  */
-class XfgbFormSelectCountry extends XoopsFormSelect
+class XfgbFormSelectCountry extends \XoopsFormSelect
 {
     /**
      * XfgbFormSelectCountry constructor.

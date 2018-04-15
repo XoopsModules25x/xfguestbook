@@ -3,8 +3,7 @@
 use Xmf\Request;
 use XoopsModules\Xfguestbook;
 use XoopsModules\Xfguestbook\Common;
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+
 
 /**
  * Class Utility

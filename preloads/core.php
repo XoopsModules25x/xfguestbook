@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  * Class XfguestbookCorePreload
  */
-class XfguestbookCorePreload extends XoopsPreloadItem
+class XfguestbookCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**

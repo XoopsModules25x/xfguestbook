@@ -23,10 +23,10 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include __DIR__ . '/../../../include/cp_header.php';
-require_once __DIR__ . '/../include/cp_functions.php';
+include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once  dirname(__DIR__) . '/include/cp_functions.php';
 require_once __DIR__ . '/admin_header.php';
-// require_once __DIR__ . '/../class/Utility.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
 
 if (isset($_GET['op'])) {
     $op = $_GET['op'];

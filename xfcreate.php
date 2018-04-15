@@ -23,10 +23,8 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
 
-include __DIR__ . '/../../mainfile.php';
+include  dirname(dirname(__DIR__)) . '/mainfile.php';
 if (!is_object($xoopsUser) && 1 != $helper->getConfig('anonsign')) {
     redirect_header(XOOPS_URL . '/user.php', 2, MD_XFGUESTBOOK_MUSTREGFIRST);
 }
@@ -34,6 +32,9 @@ if (!is_object($xoopsUser) && 1 != $helper->getConfig('anonsign')) {
 //include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/Utility.php';
 require_once __DIR__ . '/include/config.inc.php';
+
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
 
 $option     = getOptions();
 $msgHandler = xoops_getModuleHandler('msg');

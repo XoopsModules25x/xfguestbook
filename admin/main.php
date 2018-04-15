@@ -24,18 +24,19 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+
+include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once  dirname(__DIR__) . '/include/cp_functions.php';
+require_once __DIR__ . '/admin_header.php';
+
 /** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
-
-include __DIR__ . '/../../../include/cp_header.php';
-require_once __DIR__ . '/../include/cp_functions.php';
-require_once __DIR__ . '/admin_header.php';
 
 if (null !== ($helper->getConfig('flagdir'))) {
     redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, AM_XFGUESTBOOK_MUST_UPDATE);
 }
 
-// require_once __DIR__ . '/../class/Utility.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
 //include_once("../class/msg.php");
 
 if (isset($_GET['op'])) {
@@ -227,7 +228,7 @@ function show()
             $all_msg              = [];
             $all_msg['post_time'] = formatTimestamp($onemsg->getVar('post_time'));
             $all_msg['msg_id']    = $onemsg->getVar('msg_id');
-            $all_msg['user']      = ($onemsg->getVar('user_id') > 0) ? XoopsUser::getUnameFromId($onemsg->getVar('user_id')) : $onemsg->getVar('uname');
+            $all_msg['user']      = ($onemsg->getVar('user_id') > 0) ? \XoopsUser::getUnameFromId($onemsg->getVar('user_id')) : $onemsg->getVar('uname');
             $all_msg['action']    = "<a href='main.php?op=edit&amp;msg_id=" . $onemsg->getVar('msg_id') . '\'><img src=\'' . $pathIcon16 . "/edit.png'></a>";
             $img_status           = "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/assets/images/';
             if ($onemsg->getVar('moderate')) {
@@ -348,7 +349,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(0);
         $msg = $msgHandler->get($msg_id);
-        require_once __DIR__ . '/../include/form_edit.inc.php';
+        require_once  dirname(__DIR__) . '/include/form_edit.inc.php';
         $msg_form->display();
         include __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();

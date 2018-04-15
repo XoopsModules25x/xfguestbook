@@ -24,13 +24,14 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+
+//include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+//require_once  dirname(__DIR__) . '/include/cp_functions.php';
+require_once __DIR__ . '/admin_header.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
+
 /** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
-
-//include __DIR__ . '/../../../include/cp_header.php';
-//require_once __DIR__ . '/../include/cp_functions.php';
-require_once __DIR__ . '/admin_header.php';
-// require_once __DIR__ . '/../class/Utility.php';
 
 // Flag
 $maxsize   = 2000;
