@@ -30,6 +30,8 @@
 function b_xfguestbook_show($options)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
+    /** @var \XoopsModules\Xfguestbook\Helper $helper */
+    $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
     if (empty($xoopsModule) || 'xfguestbook' !== $xoopsModule->getVar('dirname')) {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
