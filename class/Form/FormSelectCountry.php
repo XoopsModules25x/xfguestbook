@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Xfguestbook\Form;
+
 //
 //  ------------------------------------------------------------------------ //
 //             XF Guestbook                                                  //
@@ -23,15 +24,15 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/formselect.php';
+require_once dirname(dirname(dirname(dirname(__DIR__)))) . '/class/xoopsform/formselect.php';
 
 /**
- * Class XfgbFormSelectCountry
+ * Class FormSelectCountry
  */
-class XfgbFormSelectCountry extends \XoopsFormSelect
+class FormSelectCountry extends \XoopsFormSelect
 {
     /**
-     * XfgbFormSelectCountry constructor.
+     * FormSelectCountry constructor.
      * @param      $caption
      * @param      $name
      * @param null $value

@@ -27,7 +27,6 @@ use XoopsModules\Xfguestbook;
 
 require_once __DIR__ . '/admin_header.php';
 require_once  dirname(__DIR__) . '/include/cp_functions.php';
-// require_once  dirname(__DIR__) . '/class/Utility.php';
 
 /** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
@@ -52,13 +51,13 @@ if (!isset($_POST['flagdir'])) {
     $form->addElement($button_tray);
 
     $form->display();
-    if (count(XfguestbookUtility::getCountry()) > 0) {
+    if (count(Xfguestbook\Utility::getCountry()) > 0) {
         $msg = sprintf(AM_XFGUESTBOOK_WARNING_MSG1, $xoopsDB->prefix('xfguestbook_country'));
         echo AM_XFGUESTBOOK_WARNING . '<br>' . $msg . '&nbsp;';
     }
     //xoops_cp_footer();
     echo '<br><br>';
-    include __DIR__ . '/admin_footer.php';
+    require_once __DIR__   . '/admin_footer.php';
 } else {
     xoops_cp_header();
     $adminObject = \Xmf\Module\Admin::getInstance();
@@ -93,5 +92,5 @@ if (!isset($_POST['flagdir'])) {
     }
     //xoops_cp_footer();
     echo '<br><br>';
-    include __DIR__ . '/admin_footer.php';
+    require_once __DIR__   . '/admin_footer.php';
 }

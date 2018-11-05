@@ -36,7 +36,7 @@ define('MI_XFGUESTBOOK_ADMIN_HOME_DESC', 'Back to Home');
 define('MI_XFGUESTBOOK_ADMIN_ABOUT', 'About');
 define('MI_XFGUESTBOOK_IP', 'IP');
 
-define('MI_XFGUESTBOOK_SHOWEMAIL', 'Visualize the button email on the all messages');
+define('MI_XFGUESTBOOK_SHOWEMAIL', 'Show the email button on all messages');
 
 //Help
 define('MI_XFGUESTBOOK_DIRNAME', basename(dirname(dirname(__DIR__))));
@@ -47,3 +47,6 @@ define('MI_XFGUESTBOOK_OVERVIEW', 'Overview');
 define('MI_XFGUESTBOOK_DISCLAIMER', 'Disclaimer');
 define('MI_XFGUESTBOOK_LICENSE', 'License');
 define('MI_XFGUESTBOOK_SUPPORT', 'Support');
+
+define('MI_XFGUESTBOOK_CREATE', 'Create new entry');
+

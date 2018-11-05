@@ -33,7 +33,7 @@ function tableExists($tablename)
 {
     $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
 
-    return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) ? true : false;
+    return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
 }
 
 /**
@@ -69,7 +69,7 @@ function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion 
 {
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
-    $capsDirName   = strtoupper($moduleDirName);
+    $moduleDirNameUpper   = strtoupper($moduleDirName);
 
     /** @var Xfguestbook\Helper $helper */
     /** @var Xfguestbook\Utility $utility */

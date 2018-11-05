@@ -23,9 +23,8 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //---------------------------------------------------------------------------//
 
-require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+//require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 require_once __DIR__ . '/admin_header.php';
-// require_once  dirname(__DIR__) . '/class/msg.php';
 require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_functions.php';
 require_once  dirname(__DIR__) . '/include/cp_functions.php';
 
@@ -55,11 +54,11 @@ function FieldType($tablename, $fieldname)
     $result = $xoopsDB->queryF($sql);
     if (!$result) {
         return false;
-    } else {
-        $myrow = $xoopsDB->fetchArray($result);
-
-        return $myrow['Type'];
     }
+
+    $myrow = $xoopsDB->fetchArray($result);
+
+    return $myrow['Type'];
 }
 
 /**

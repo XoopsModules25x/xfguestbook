@@ -25,23 +25,19 @@
 
 use XoopsModules\Xfguestbook;
 
-include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once  dirname(__DIR__) . '/include/cp_functions.php';
 require_once __DIR__ . '/admin_header.php';
+require_once  dirname(__DIR__) . '/include/cp_functions.php';
 
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+/** @var \XoopsModules\Xfguestbook\Helper $helper */
+$helper = \XoopsModules\Xfguestbook\Helper::getInstance();
 
-if (null !== ($helper->getConfig('flagdir'))) {
+if (null === $helper->getConfig('flagdir')) {
     redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, AM_XFGUESTBOOK_MUST_UPDATE);
 }
 
-// require_once  dirname(__DIR__) . '/class/Utility.php';
-//include_once("../class/msg.php");
-
-if (isset($_GET['op'])) {
+if (\Xmf\Request::hasVar('op', 'GET')) {
     $op = $_GET['op'];
-} elseif (isset($_POST['op'])) {
+} elseif (\Xmf\Request::hasVar('op', 'POST')) {
     $op = $_POST['op'];
 } else {
     $op = 'show';
@@ -53,7 +49,7 @@ if (\Xmf\Request::hasVar('msg_id', 'GET')) {
     $msg_id = \Xmf\Request::getInt('msg_id', 0, 'POST');
 }
 
-$msgHandler = xoops_getModuleHandler('msg');
+$msgHandler = $helper->getHandler('Message');
 
 function delete()
 {
@@ -113,7 +109,7 @@ function banish()
             }
         }
         $ip     = array_unique($ip);
-        $badips = XfguestbookUtility::get_badips();
+        $badips = Xfguestbook\Utility::get_badips();
         foreach ($ip as $oneip) {
             if (!in_array($oneip, $badips)) {
                 $sql    = 'INSERT INTO ' . $xoopsDB->prefix('xfguestbook_badips') . " (ip_value) VALUES ('$oneip')";
@@ -183,13 +179,13 @@ function show()
     $criteria->setStart($start);
     $msg = $msgHandler->getObjects($criteria);
 
-    $badips = XfguestbookUtility::get_badips();
+    $badips = Xfguestbook\Utility::get_badips();
 
     /* -- Code to show selected terms -- */
     echo "<form name='pick' id='pick' action='" . $_SERVER['PHP_SELF'] . '\' method=\'GET\' style=\'margin: 0;\'>';
 
     echo "
-        <table width='100%' cellspacing='1' cellpadding='2' border='0' style='border-left: 1px solid silver; border-top: 1px solid silver; border-right: 1px solid silver;'>
+        <table width='100%' cellspacing='1' cellpadding='2' border='0' style='border-left: 1px solid #c0c0c0; border-top: 1px solid #c0c0c0; border-right: 1px solid #c0c0c0;'>
             <tr>
                 <td><span style='font-weight: bold; font-size: 12px; font-variant: small-caps;'>" . $title . ' : ' . $totalcount . "</span></td>
                 <td align='right'>
@@ -236,7 +232,7 @@ function show()
             } else {
                 $img_status .= "ic15_ok.gif'>";
             }
-            $all_msg['title']   = "<a href='../main.php?op=show_one&msg_id=" . $onemsg->getVar('msg_id') . '\'>' . $onemsg->getVar('title') . '</a>';
+            $all_msg['title']   = "<a href='../index.php?op=show_one&msg_id=" . $onemsg->getVar('msg_id') . '\'>' . $onemsg->getVar('title') . '</a>';
             $all_msg['message'] = $onemsg->getVar('message');
 
             if ($onemsg->getVar('photo')) {
@@ -299,7 +295,7 @@ switch ($op) {
             unlink($filename);
             $msg->setVar('photo', '');
         } elseif (!empty($_FILES['photo']['name'])) {
-            XfguestbookUtility::upload();
+            Xfguestbook\Utility::upload();
             $photo      = str_replace('tmp_', 'msg_', $preview_name);
             $photos_dir = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/';
             rename($photos_dir . $preview_name, $photos_dir . $photo);
@@ -351,7 +347,7 @@ switch ($op) {
         $msg = $msgHandler->get($msg_id);
         require_once  dirname(__DIR__) . '/include/form_edit.inc.php';
         $msg_form->display();
-        include __DIR__ . '/admin_footer.php';
+        require_once __DIR__   . '/admin_footer.php';
         //xoops_cp_footer();
         break;
 
@@ -374,7 +370,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(0);
         show();
-        include __DIR__ . '/admin_footer.php';
+        require_once __DIR__   . '/admin_footer.php';
         //xoops_cp_footer();
         break;
 }

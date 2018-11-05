@@ -38,7 +38,7 @@ class Utility
                 $array_allowed_mimetypes = ['image/gif', 'image/pjpeg', 'image/jpeg', 'image/x-png'];
                 $uploader                = new \XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $helper->getConfig('photo_maxsize'), $helper->getConfig('photo_maxwidth'), $helper->getConfig('photo_maxheight'));
                 if ($uploader->fetchMedia($field) && $uploader->upload()) {
-                    if (isset($preview_name)) {
+                    if (null !== $preview_name) {
                         @unlink("$photos_dir/" . $preview_name);
                     }
                     $tmp_name     = $uploader->getSavedFileName();
@@ -63,13 +63,13 @@ class Utility
         global $xoopsDB, $action;
         $ret = [];
         $sql = 'SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_country');
-        if (isset($criteria) && '' !== $criteria) {
+        if (null !== $criteria && '' !== $criteria) {
             $sql .= ' WHERE ' . $criteria;
         }
         $sql    .= ' ORDER BY country_code ASC';
         $result = $xoopsDB->query($sql, $limit, $start);
         while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
-            array_push($ret, $myrow);
+            $ret[] = $myrow;
         }
 
         return $ret;
@@ -89,7 +89,7 @@ class Utility
 
         $ret = [];
         $sql = 'SELECT country_code, country_name FROM ' . $xoopsDB->prefix('xfguestbook_country');
-        if (isset($criteria) && '' !== $criteria) {
+        if (null !== $criteria && '' !== $criteria) {
             $sql .= ' WHERE ' . $criteria;
         }
         $sql    .= ' ORDER BY country_code ASC';
@@ -131,9 +131,9 @@ class Utility
             }
 
             return $a_poster;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     // Effacement fichiers temporaires
@@ -177,7 +177,7 @@ class Utility
         $result = $xoopsDB->query($sql);
         if ($all) {
             while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
-                array_push($ret, $myrow);
+                $ret[] = $myrow;
             }
         } else {
             while (false !== (list($ip_id, $ip_value) = $xoopsDB->fetchRow($result))) {

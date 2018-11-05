@@ -48,7 +48,7 @@ function b_xfguestbook_show($options)
         $block['full_view'] = false;
     }
 
-    $msg_hnd  = xoops_getModuleHandler('msg', 'xfguestbook');
+    $msg_hnd  = $helper->getHandler('Message');
     $criteria = new \Criteria('moderate', '0', '=');
     $criteria->setSort('post_time');
     $criteria->setOrder('DESC');

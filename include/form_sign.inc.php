@@ -26,7 +26,6 @@
 use XoopsModules\Xfguestbook;
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/xfgbformselectcountry.php';
 
 /** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
@@ -51,7 +50,7 @@ if ($option['opt_gender']) {
 
 // affichage pays
 if ($option['opt_country']) {
-    $country_text = new XfgbFormSelectCountry($helper->getConfig('country_caption'), 'country', $country, 1, true);
+    $country_text = new \XoopsModules\Xfguestbook\Form\FormSelectCountry($helper->getConfig('country_caption'), 'country', $country, 1, true);
     $country_text->setExtra('onchange="test_other(this.value)"');
     $signform->addElement($country_text, true);
     //  $other_text = new \XoopsFormText('other', 'other', 50, 50, $other);

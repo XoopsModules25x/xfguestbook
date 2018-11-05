@@ -57,4 +57,4 @@ foreach (array_keys($folder) as $i) {
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
 
-include __DIR__ . '/admin_footer.php';
+require_once __DIR__   . '/admin_footer.php';

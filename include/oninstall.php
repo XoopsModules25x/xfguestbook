@@ -28,25 +28,23 @@ use XoopsModules\Xfguestbook;
  */
 function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
 {
+    include __DIR__ . '/common.php';
     /** @var \XoopsModules\Xfguestbook\Utility $utility */
     $utility = new \XoopsModules\Xfguestbook\Utility();
-
     //check for minimum XOOPS version
-    if (!$utility::checkVerXoops($module)) {
-        return false;
-    }
+    $xoopsSuccess = $utility::checkVerXoops($module);
 
     // check for minimum PHP version
-    if (!$utility::checkVerPhp($module)) {
-        return false;
+    $phpSuccess   = $utility::checkVerPhp($module);
+
+    if (false !== $xoopsSuccess && false !==  $phpSuccess) {
+        $moduleTables =& $module->getInfo('tables');
+        foreach ($moduleTables as $table) {
+            $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
+        }
     }
 
-    $mod_tables = $module->getInfo('tables');
-    foreach ($mod_tables as $table) {
-        $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
-    }
-
-    return true;
+    return $xoopsSuccess && $phpSuccess;
 }
 
 /**
@@ -58,24 +56,25 @@ function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
  */
 function xoops_module_install_xfguestbook(\XoopsModule $module)
 {
-    require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-    require_once dirname(__DIR__) . '/include/config.php';
+    require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
     $moduleDirName = basename(dirname(__DIR__));
-    $helper = Xfguestbook\Helper::getInstance();
+    /** @var \XoopsModules\Xfguestbook\Helper $helper */
+    $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
 
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
 
+    /** @var Xfguestbook\Common\Configurator $configurator */
     $configurator = new Xfguestbook\Common\Configurator();
     /** @var \XoopsModules\Xfguestbook\Utility $utility */
     $utility = new \XoopsModules\Xfguestbook\Utility();
 
     // default Permission Settings ----------------------
     global $xoopsModule;
-    $moduleId     = $xoopsModule->getVar('mid');
-    $moduleId2    = $helper->getModule()->mid();
+    $moduleId     = $module->getVar('mid');
+//    $moduleId2    = $helper->getModule()->mid();
     $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
     $grouppermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
@@ -98,6 +97,15 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
         foreach (array_keys($configurator->copyBlankFiles) as $i) {
             $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utility::copyFile($file, $dest);
+        }
+    }
+
+    //  ---  COPY test msg image ---------------
+    if (is_array ($configurator->copyTestFolders) && count($configurator->copyTestFolders) > 0) {
+        foreach (array_keys($configurator->copyTestFolders) as $i) {
+            $src  = $configurator->copyTestFolders[$i][0];
+            $dest = $configurator->copyTestFolders[$i][1];
+            $utility::rcopy($src, $dest);
         }
     }
 

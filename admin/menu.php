@@ -25,12 +25,14 @@
 
 use XoopsModules\Xfguestbook;
 
-// require_once  dirname(__DIR__) . '/class/Helper.php';
 //require_once  dirname(__DIR__) . '/include/common.php';
+/** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+}
 
 
 $adminmenu[] = [

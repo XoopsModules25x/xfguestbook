@@ -67,7 +67,7 @@ switch ($op) {
         $option = getOptions4Admin();
         $nb_opt = count($option);
 
-        for ($i = 0; $i < $nb_opt; $i++) {
+        foreach ($option as $i => $iValue) {
             $sql    = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_config') . " SET conf_value='" . ${$option[$i]['conf_name']} . '\' WHERE conf_id=' . $option[$i]['conf_id'];
             $result = $xoopsDB->query($sql);
         }
@@ -81,7 +81,6 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(1);
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/xfgbformselectcountry.php';
 
         $option = getOptions4Admin();
         $nb_opt = count($option);
@@ -99,7 +98,7 @@ switch ($op) {
                     $ele = new \XoopsFormRadioYN($title, $option[$i]['conf_name'], $option[$i]['conf_value'], _YES, _NO);
                     break;
                 case 'selectcountry':
-                    $ele = new XfgbFormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
+                    $ele = new \XoopsModules\Xfguestbook\Form\FormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
                     break;
                 case 'selectmail':
                     $ele     = new \XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
@@ -133,4 +132,4 @@ switch ($op) {
         break;
 
 }
-include __DIR__ . '/admin_footer.php';
+require_once __DIR__   . '/admin_footer.php';

@@ -29,9 +29,9 @@ $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
 $modversion = [
-    'version'             => 3.20,
-    'module_status'       => 'Final',
-    'release_date'        => '2017/01/25',
+    'version'             => 3.21,
+    'module_status'       => 'Beta 1',
+    'release_date'        => '2018/11/05',
     'name'                => MI_XFGUESTBOOK_NAME,
     'description'         => MI_XFGUESTBOOK_DESC,
     'official'            => 0,
@@ -76,12 +76,16 @@ $modversion = [
     'adminmenu'           => 'admin/menu.php',
     // ------------------- Main Menu -------------------
     'hasMain'             => 1,
-    //    'sub'                 => [
+        'sub'                 => [
     //        [
     //            'name' => MI_XFGUESTBOOK_VIEW_SEARCH,
     //            'url'  => 'index.php'
     //        ],
-    //    ],
+            [
+                'name' => MI_XFGUESTBOOK_CREATE,
+                'url'  => 'xfcreate.php'
+            ],
+        ],
 
     // ------------------- Install/Update -------------------
     'onInstall'           => 'include/oninstall.php',

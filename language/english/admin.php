@@ -37,7 +37,7 @@ define('AM_XFGUESTBOOK_COUNTRY_ADDED', 'Country added successfully!');
 define('AM_XFGUESTBOOK_COUNTRYDELETED', 'Country deleted');
 define('AM_XFGUESTBOOK_MSGERROR', 'ERROR : Could not update message in the database!');
 //add V2.30
-define('AM_XFGUESTBOOK_MUST_UPDATE', 'You have installeeacute;  files of version 2.30. <br> Veuillez faire une mise &agrave; jour du module');
+define('AM_XFGUESTBOOK_MUST_UPDATE', 'You have installed files of version 2.30. <br> Please update the module');
 //add V2.40
 define('AM_XFGUESTBOOK_BANISHED', 'IP address saved in the database');
 define('AM_XFGUESTBOOK_ERRORBANISHED', 'Error');

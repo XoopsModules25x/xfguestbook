@@ -30,14 +30,18 @@
 
 use XoopsModules\Xfguestbook;
 
+/**
+ * @param int    $currentoption
+ * @param string $breadcrumb
+ */
 function xfguestbook_admin_menu($currentoption = 0, $breadcrumb = '')
 {
 
     /* Nice buttons styles */
     echo "
         <style type='text/css'>
-        #buttontop { float:left; width:100%; background: #e7e7e7; font-size:93%; line-height:normal; border-top: 1px solid black; border-left: 1px solid black; border-right: 1px solid black; margin: 0; }
-        #buttonbar { float:left; width:100%; background: #e7e7e7 url('" . XOOPS_URL . "/modules/xfguestbook/assets/images/bg.gif') repeat-x left bottom; font-size:93%; line-height:normal; border-left: 1px solid black; border-right: 1px solid black; margin-bottom: 12px; }
+        #buttontop { float:left; width:100%; background: #e7e7e7; font-size:93%; line-height:normal; border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; margin: 0; }
+        #buttonbar { float:left; width:100%; background: #e7e7e7 url('" . XOOPS_URL . "/modules/xfguestbook/assets/images/bg.gif') repeat-x left bottom; font-size:93%; line-height:normal; border-left: 1px solid #000000; border-right: 1px solid #000000; margin-bottom: 12px; }
         #buttonbar ul { margin:0; margin-top: 15px; padding:10px 10px 0; list-style:none; }
         #buttonbar li { display:inline; margin:0; padding:0; }
         #buttonbar a { float:left; background:url('" . XOOPS_URL . "/modules/xfguestbook/assets/images/left_both.gif') no-repeat left top; margin:0; padding:0 0 0 9px; border-bottom:1px solid #000; text-decoration:none; }
@@ -105,7 +109,7 @@ function executeSQL($sql_file_path)
         echo "SQL file found at <b>$sql_file_path</b>.<br > Creating tables...<br>";
         //      $msg = "SQL file found at <b>$sql_file_path</b>.<br > Creating tables...<br>";
         require_once XOOPS_ROOT_PATH . '/class/database/sqlutility.php';
-        $sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
+        $sql_query = fread(fopen($sql_file_path, 'rb'), filesize($sql_file_path));
         $sql_query = trim($sql_query);
         SqlUtility::splitMySqlFile($pieces, $sql_query);
         $created_tables = [];

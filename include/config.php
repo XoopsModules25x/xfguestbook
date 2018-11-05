@@ -17,8 +17,6 @@
  * @author       XOOPS Development Team
  */
 
-
-
 function getConfig()
 {
     $moduleDirName      = basename(dirname(__DIR__));
@@ -34,24 +32,24 @@ function getConfig()
             'uploadUrl'  => XOOPS_UPLOAD_URL . '/' . $moduleDirName,
         ],
         'uploadFolders'  => [
-            constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/midsize',
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/thumbs',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/midsize',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
         'copyBlankFiles' => [
-            constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/midsize',
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/thumbs',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/midsize',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
 
         'copyTestFolders' => [
-            //        constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            //[
-            //    constant($moduleDirNameUpper . '_PATH') . '/testdata/images',
-            //    constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/images',
-            //]
+
+            [
+                constant($moduleDirNameUpper . '_PATH') . '/testdata/uploads',
+                XOOPS_UPLOAD_PATH . '/' . $moduleDirName ,
+            ]
         ],
 
         'templateFolders' => [
@@ -75,6 +73,9 @@ function getConfig()
             '/js',
             '/tcpdf',
             '/images',
+        ],
+        'renameTables'    => [
+            //         'XX_archive'     => 'ZZZZ_archive',
         ],
         'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',

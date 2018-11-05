@@ -1,6 +1,6 @@
 <?php
-/**
- *
+
+/*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
  * which is considered copyrighted (c) material of the original comment or credit authors.
@@ -11,30 +11,41 @@
  */
 
 /**
- * @copyright    XOOPS Project (https://xoops.org)
+ * @copyright    XOOPS Project https://xoops.org/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
- * @author       XOOPS Development Team
+ * @author     XOOPS Development Team
  */
 
 use XoopsModules\Xfguestbook;
 
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
-require_once  dirname(__DIR__) . '/include/common.php';
-$moduleDirName = basename(dirname(__DIR__));
+require  dirname(dirname(__DIR__)) .'/mainfile.php';
+require XOOPS_ROOT_PATH . '/header.php';
+
+$moduleDirName = basename(__DIR__);
+
 /** @var \XoopsModules\Xfguestbook\Helper $helper */
 $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
-/** @var \Xmf\Module\Admin $adminObject */
-$adminObject = \Xmf\Module\Admin::getInstance();
 
+$modulePath = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName;
+require __DIR__ . '/include/config.php';
+
+$myts = \MyTextSanitizer::getInstance();
+
+//Handlers
+//$XXXHandler = xoops_getModuleHandler('XXX', $moduleDirName);
 
 // Load language files
-$helper->loadLanguage('admin');
-$helper->loadLanguage('modinfo');
-$helper->loadLanguage('common');
 $helper->loadLanguage('main');
-xoops_loadLanguage('user');
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}
+
+//if ($publisher->getConfig('seo_url_rewrite') != 'none') {
+//    require PUBLISHER_ROOT_PATH . '/include/seo.inc.php';
+//}
 
 

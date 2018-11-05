@@ -23,7 +23,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 $form_contact = new \XoopsThemeForm(MD_XFGUESTBOOK_CONTACTAUTOR, 'form_contact', 'contact.php');
 

@@ -23,14 +23,15 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once  dirname(__DIR__) . '/include/cp_functions.php';
-require_once __DIR__ . '/admin_header.php';
-// require_once  dirname(__DIR__) . '/class/Utility.php';
+use XoopsModules\Xfguestbook;
 
-if (isset($_GET['op'])) {
+require_once __DIR__ . '/admin_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once  dirname(__DIR__) . '/include/cp_functions.php';
+
+if (\Xmf\Request::hasVar('op', 'GET')) {
     $op = $_GET['op'];
-} elseif (isset($_POST['op'])) {
+} elseif (\Xmf\Request::hasVar('op', 'POST')) {
     $op = $_POST['op'];
 } else {
     $op = 'badIpShow';
@@ -74,7 +75,7 @@ function badIpForm($ip_id = null)
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     if ($ip_id) {
         $sform    = new \XoopsThemeForm(AM_XFGUESTBOOK_MOD_BADIP, 'op', xoops_getenv('PHP_SELF'), 'post', true);
-        $badips   = XfguestbookUtility::get_badips(true);
+        $badips   = Xfguestbook\Utility::get_badips(true);
         $ip_value = $badips[$ip_id]['ip_value'];
     } else {
         $sform    = new \XoopsThemeForm(AM_XFGUESTBOOK_ADD_BADIP, 'op', xoops_getenv('PHP_SELF'), 'post', true);
@@ -128,11 +129,11 @@ function badIpShow()
     global $action, $start, $xoopsModule, $xoopsModuleConfig;
     $myts      = \MyTextSanitizer::getInstance();
     $limit     = 15;
-    $badips    = XfguestbookUtility::get_badips(true);
+    $badips    = Xfguestbook\Utility::get_badips(true);
     $nb_badips = count($badips);
 
     echo "
-    <table width='100%' cellspacing='1' cellpadding='2' border='0' style='border-left: 1px solid silver; border-top: 1px solid silver; border-right: 1px solid silver;'>
+    <table width='100%' cellspacing='1' cellpadding='2' border='0' style='border-left: 1px solid #c0c0c0; border-top: 1px solid #c0c0c0; border-right: 1px solid #c0c0c0;'>
         <tr>
             <td><span style='font-weight: bold; font-size: 12px; font-variant: small-caps;'>" . AM_XFGUESTBOOK_DISP_BADIPS . ' : ' . $nb_badips . "</span></td>
             <td align='right'>
@@ -178,7 +179,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpForm($ip_id);
-        include __DIR__ . '/admin_footer.php';
+        require_once __DIR__   . '/admin_footer.php';
         //xoops_cp_footer();
         break;
     case 'badIpDel':
@@ -190,7 +191,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpForm($ip_id);
-        include __DIR__ . '/admin_footer.php';
+        require_once __DIR__   . '/admin_footer.php';
         //xoops_cp_footer();
         break;
     case 'badIpSave':
@@ -202,7 +203,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpForm();
-        include __DIR__ . '/admin_footer.php';
+        require_once __DIR__   . '/admin_footer.php';
         //xoops_cp_footer();
         break;
     case 'badIpShow':
@@ -213,7 +214,7 @@ switch ($op) {
         //xfguestbook_admin_menu(3);
         badIpShow();
         badIpForm();
-        include __DIR__ . '/admin_footer.php';
+        require_once __DIR__   . '/admin_footer.php';
         //xoops_cp_footer();
         break;
 }
