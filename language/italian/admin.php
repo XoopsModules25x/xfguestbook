@@ -86,8 +86,7 @@ define('AM_XFGUESTBOOK_SEL_A0', 'nessuna azione');
 define('AM_XFGUESTBOOK_SEL_A1', 'nonindicizzabili');
 define('AM_XFGUESTBOOK_SEL_A2', 'proibiti');
 define('AM_XFGUESTBOOK_CODE_OPT', 'Chiedi codice di sicurezza');
-define('AM_XFGUESTBOOK_WARNING_MSG2',
-       "<span style='color: #FF0000; '>Se scegli ' SI ' devi installare un<a href=\"" . XOOPS_URL . '/modules/xfguestbook/admin/flags_install.php">pacchetto immagine di (bandiere, ...)</a></span>');
+define('AM_XFGUESTBOOK_WARNING_MSG2', "<span style='color: #FF0000; '>Se scegli ' SI ' devi installare un<a href=\"" . XOOPS_URL . '/modules/xfguestbook/admin/flags_install.php">pacchetto immagine di (bandiere, ...)</a></span>');
 // add v2.40
 define('AM_XFGUESTBOOK_WEBSITE_OPT', 'Campo sito web autorizzato');
 define('AM_XFGUESTBOOK_SEL_W0', 'a nessuno');
@@ -129,8 +128,7 @@ define('AM_XFGUESTBOOK_NO_UPGRADE', 'Aggiornamento non necessario');
 define('AM_XFGUESTBOOK_INSTALL_FLAGS', 'Installa un pacchetto immagini (bandiere, mappe, ...)');
 define('AM_XFGUESTBOOK_SELECT_PACK', 'Scegli un pacchetto da installare');
 define('AM_XFGUESTBOOK_WARNING', '<b>&nbsp;Attenzione</b>');
-define('AM_XFGUESTBOOK_WARNING_MSG1',
-       "<span style='color: #FF0000; '>&nbsp;Questa operazione canceller&agrave; i contenuti della tabella</span> %s <span style='color: #FF0000; '> e la sostituir&agrave;.</span>");
+define('AM_XFGUESTBOOK_WARNING_MSG1', "<span style='color: #FF0000; '>&nbsp;Questa operazione canceller&agrave; i contenuti della tabella</span> %s <span style='color: #FF0000; '> e la sostituir&agrave;.</span>");
 define('AM_XFGUESTBOOK_GOFORMOPT', ' Vai al modulo opzioni');
 define('AM_XFGUESTBOOK_GO_UPGRADE', " Per ripristinare le tabelle, vai all'Aggiornamento");
 define('AM_XFGUESTBOOK_ERROR_FLAGS', "<span style='color: #FF0000; '> Errore inserimento dati di %s.sql <br> Tabella %s cancellata</span>");

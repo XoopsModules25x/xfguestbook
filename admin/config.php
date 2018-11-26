@@ -23,7 +23,13 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include_once __DIR__ . '/admin_header.php';
+use XoopsModules\Xfguestbook;
+
+require_once __DIR__ . '/admin_header.php';
+
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
+
 /**
  * @param  int $cat
  * @return mixed
@@ -34,42 +40,34 @@ function getOptions4Admin($cat = 2)
     $sql    = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ' . $xoopsDB->prefix('xfguestbook_config') . ' WHERE conf_cat=' . $cat . ' ORDER BY conf_order ASC';
     $result = $xoopsDB->query($sql);
     $i      = 0;
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $arr_conf[$i]['conf_id']       = $myrow['conf_id'];
         $arr_conf[$i]['conf_name']     = $myrow['conf_name'];
         $arr_conf[$i]['conf_value']    = $myrow['conf_value'];
         $arr_conf[$i]['conf_title']    = $myrow['conf_title'];
         $arr_conf[$i]['conf_desc']     = $myrow['conf_desc'];
         $arr_conf[$i]['conf_formtype'] = $myrow['conf_formtype'];
-        ++$i ;
+        $i++;
     }
 
     return $arr_conf;
 }
-/*
+
 if (isset($_POST)) {
     foreach ($_POST as $k => $v) {
         ${$k} = $v;
     }
 }
-*/
-$op = \Xmf\Request::getCmd('op', 'show');
-/*
-if (isset($_GET['op'])) {
-    $op = $_GET['op'];
-} elseif (isset($_POST['op'])) {
-    $op = $_POST['op'];
-} else {
-    $op = 'show';
-}
-*/
+
+$op    = \Xmf\Request::getCmd('op', 'show');
+
 switch ($op) {
 
     case 'save':
         $option = getOptions4Admin();
         $nb_opt = count($option);
 
-        for ($i = 0; $i < $nb_opt; ++$i) {
+        foreach ($option as $i => $iValue) {
             $sql    = 'UPDATE ' . $xoopsDB->prefix('xfguestbook_config') . " SET conf_value='" . ${$option[$i]['conf_name']} . '\' WHERE conf_id=' . $option[$i]['conf_id'];
             $result = $xoopsDB->query($sql);
         }
@@ -79,63 +77,59 @@ switch ($op) {
     case 'show':
     default:
         xoops_cp_header();
-        $index_admin = new ModuleAdmin();
-        echo $index_admin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(1);
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/xfgbformselectcountry.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
         $option = getOptions4Admin();
         $nb_opt = count($option);
 
-        $sform = new XoopsThemeForm(AM_XFGUESTBOOK_FORMOPT, 'op', xoops_getenv('PHP_SELF'));
+        $sform = new \XoopsThemeForm(AM_XFGUESTBOOK_FORMOPT, 'op', xoops_getenv('PHP_SELF'), 'post', true);
 
         for ($i = 0; $i < $nb_opt; $i++) {
             $title = (!defined($option[$i]['conf_desc'])
-                      || constant($option[$i]['conf_desc']) === '') ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title'])
-                                                                                                            . '<br><br><span style="font-weight:normal;">'
-                                                                                                            . constant($option[$i]['conf_desc'])
-                                                                                                            . '</span>';
+                      || '' === constant($option[$i]['conf_desc'])) ? constant($option[$i]['conf_title']) : constant($option[$i]['conf_title']) . '<br><br><span style="font-weight:normal;">' . constant($option[$i]['conf_desc']) . '</span>';
             switch ($option[$i]['conf_formtype']) {
                 case 'yesno':
-                    if ($xoopsModuleConfig['flagdir'] === '' && $option[$i]['conf_name'] === 'opt_country') {
+                    if ('' === $helper->getConfig('flagdir') && 'opt_country' === $option[$i]['conf_name']) {
                         $title .= '<br><span style="font-weight:normal;">' . AM_XFGUESTBOOK_WARNING_MSG2 . '</span>';
                     }
-                    $ele = new XoopsFormRadioYN($title, $option[$i]['conf_name'], $option[$i]['conf_value'], _YES, _NO);
+                    $ele = new \XoopsFormRadioYN($title, $option[$i]['conf_name'], $option[$i]['conf_value'], _YES, _NO);
                     break;
                 case 'selectcountry':
-                    $ele = new XfgbFormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
+                    $ele = new \XoopsModules\Xfguestbook\Form\FormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
                     break;
                 case 'selectmail':
-                    $ele     = new XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
+                    $ele     = new \XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
                     $options = [0 => AM_XFGUESTBOOK_SEL_R0, 1 => AM_XFGUESTBOOK_SEL_R1, 2 => AM_XFGUESTBOOK_SEL_R2];
                     $ele->addOptionArray($options);
                     break;
                 case 'selectaction':
-                    $ele     = new XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
+                    $ele     = new \XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
                     $options = [0 => AM_XFGUESTBOOK_SEL_A0, 1 => AM_XFGUESTBOOK_SEL_A1, 2 => AM_XFGUESTBOOK_SEL_A2];
                     $ele->addOptionArray($options);
                     break;
                 case 'selectwebsite':
-                    $ele     = new XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
+                    $ele     = new \XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);
                     $options = [0 => AM_XFGUESTBOOK_SEL_W0, 1 => AM_XFGUESTBOOK_SEL_W1, 2 => AM_XFGUESTBOOK_SEL_W2];
                     $ele->addOptionArray($options);
                     break;
             }
-            $old_opt = new XoopsFormHidden('old_' . $option[$i]['conf_name'], $option[$i]['conf_value']);
-            $hidden  = new XoopsFormHidden('conf_ids[]', $option[$i]['conf_id']);
+            $old_opt = new \XoopsFormHidden('old_' . $option[$i]['conf_name'], $option[$i]['conf_value']);
+            $hidden  = new \XoopsFormHidden('conf_ids[]', $option[$i]['conf_id']);
             $sform->addElement($ele);
             $sform->addElement($hidden);
             unset($ele, $hidden);
         }
 
-        $button_tray = new XoopsFormElementTray('', '');
-        $hidden      = new XoopsFormHidden('op', 'save');
+        $button_tray = new \XoopsFormElementTray('', '');
+        $hidden      = new \XoopsFormHidden('op', 'save');
         $button_tray->addElement($hidden);
-        $button_tray->addElement(new XoopsFormButton('', 'post', _GO, 'submit'));
+        $button_tray->addElement(new \XoopsFormButton('', 'post', _GO, 'submit'));
         $sform->addElement($button_tray);
         $sform->display();
         break;
 
 }
-include __DIR__ . '/admin_footer.php';
+require_once __DIR__   . '/admin_footer.php';

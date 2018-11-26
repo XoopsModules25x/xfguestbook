@@ -3,11 +3,10 @@
  * uninstall.php - cleanup on module uninstall
  *
  * @author          XOOPS Module Development Team
- * @copyright       {@link http://xoops.org 2001-2016 XOOPS Project}
+ * @copyright       {@link https://xoops.org 2001-2016 XOOPS Project}
  * @license         {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
- * @link            http://xoops.org XOOPS
+ * @link            https://xoops.org XOOPS
  */
-
 
 /**
  * Prepares system prior to attempting to uninstall module
@@ -16,7 +15,7 @@
  * @return bool true if ready to uninstall, false if not
  */
 
-function xoops_module_pre_uninstall_xfguestbook(XoopsModule $module)
+function xoops_module_pre_uninstall_xfguestbook(\XoopsModule $module)
 {
     // Do some synchronization
     return true;
@@ -29,25 +28,21 @@ function xoops_module_pre_uninstall_xfguestbook(XoopsModule $module)
  *
  * @return bool true if uninstallation successful, false if not
  */
-function xoops_module_uninstall_xfguestbook(XoopsModule $module)
+function xoops_module_uninstall_xfguestbook(\XoopsModule $module)
 {
     return true;
 }
 
-
-
 //=======================================================
 
-
-
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * @param XoopsModule $module
  *
  * @return bool
  */
-function xoops_module_uninstall_XXXX(XoopsModule $module)
+function xoops_module_uninstall_XXXX(\XoopsModule $module)
 {
     // global $xoopsDB,$xoopsConfig;
     //
@@ -93,7 +88,7 @@ function rmdirr($dirname)
     $dir = dir($dirname);
     while (false !== $entry = $dir->read()) {
         // Skip pointers
-        if ($entry == '.' || $entry == '..') {
+        if ('.' === $entry || '..' === $entry) {
             continue;
         }
 

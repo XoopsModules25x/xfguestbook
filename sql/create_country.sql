@@ -3,9 +3,11 @@
 #
 
 CREATE TABLE `xfguestbook_country` (
-  `country_id` mediumint(8) unsigned NOT NULL auto_increment,
-  `country_code` varchar(5) NOT NULL default '0',
-  `country_name` varchar(50) NOT NULL default '',
-  PRIMARY KEY  (`country_id`),
+  `country_id`   MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `country_code` VARCHAR(5)            NOT NULL DEFAULT '0',
+  `country_name` VARCHAR(50)           NOT NULL DEFAULT '',
+  PRIMARY KEY (`country_id`),
   KEY `country_code` (`country_code`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 ;
+)
+  ENGINE = MyISAM
+  AUTO_INCREMENT = 51;

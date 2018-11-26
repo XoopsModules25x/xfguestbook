@@ -23,13 +23,15 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 //system menu
+require_once __DIR__ . '/preloads/autoloader.php';
+
 $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
 $modversion = [
-    'version'             => 3.20,
-    'module_status'       => 'Final',
-    'release_date'        => '2017/01/25',
+    'version'             => 3.21,
+    'module_status'       => 'Beta 1',
+    'release_date'        => '2018/11/05',
     'name'                => MI_XFGUESTBOOK_NAME,
     'description'         => MI_XFGUESTBOOK_DESC,
     'official'            => 0,
@@ -37,7 +39,7 @@ $modversion = [
     'author'              => 'the Cat',
     'credits'             => 'XOOPS Development Team, phppp: randomscript, randomimage, Paul Mar alias Winsion',
     'author_mail'         => 'author-email',
-    'author_website_url'  => 'http://xoops.org',
+    'author_website_url'  => 'https://xoops.org',
     'author_website_name' => 'XOOPS',
     'license'             => 'GPL 2.0 or later',
     'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
@@ -56,17 +58,17 @@ $modversion = [
     'modicons16'          => 'assets/images/icons/16',
     'modicons32'          => 'assets/images/icons/32',
     //About
-    'demo_site_url'       => 'http://www.xoops.org',
+    'demo_site_url'       => 'https://xoops.org',
     'demo_site_name'      => 'XOOPS Demo Site',
-    'support_url'         => 'http://xoops.org/modules/newbb/viewforum.php?forum=28/',
+    'support_url'         => 'https://xoops.org/modules/newbb/viewforum.php?forum=28/',
     'support_name'        => 'Support Forum',
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
     // ------------------- Min Requirements -------------------
     'min_php'             => '5.5',
-    'min_xoops'           => '2.5.8',
+    'min_xoops'           => '2.5.9',
     'min_admin'           => '1.2',
-    'min_db'              => ['mysql' => '5.1'],
+    'min_db'              => ['mysql' => '5.5'],
     // ------------------- Admin Menu -------------------
     'system_menu'         => 1,
     'hasAdmin'            => 1,
@@ -74,12 +76,16 @@ $modversion = [
     'adminmenu'           => 'admin/menu.php',
     // ------------------- Main Menu -------------------
     'hasMain'             => 1,
-    //    'sub'                 => [
+        'sub'                 => [
     //        [
     //            'name' => MI_XFGUESTBOOK_VIEW_SEARCH,
     //            'url'  => 'index.php'
     //        ],
-    //    ],
+            [
+                'name' => MI_XFGUESTBOOK_CREATE,
+                'url'  => 'xfcreate.php'
+            ],
+        ],
 
     // ------------------- Install/Update -------------------
     'onInstall'           => 'include/oninstall.php',
@@ -110,7 +116,7 @@ $modversion = [
     //        ],
     //    ],
     // ------------------- Notification ----------------------
-//    'hasNotification'     => 1,
+    //    'hasNotification'     => 1,
     //    'notification'        => [
     //        'lookup_file' => 'include/notification.inc.php',
     //        'lookup_func' => 'lookup',

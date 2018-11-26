@@ -1,3 +1,15 @@
+<h5>3.21 Beta 1   [WORK IN PROGRESS - NOT RELEASED]</h5>  Dev: XOOPS 2.5.9, PHP 7.2.11
+<hr>
+- namespaces (mamba)
+- class autoloading (mamba)
+- converted RGB color to #HEX (mamba)
+- fix: Anonymous can not add msg even if you enable it (xsell/mamba)
+- fix: still asking for email, even if disabled (xsell/mamba)
+- test data (mamba)
+- Yoda (mamba)
+
+WORK IN PROGRESS
+
 3.20. Final      2017-01-25
 ---------------------------
 fix menu.php bug (xsell)

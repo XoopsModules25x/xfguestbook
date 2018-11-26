@@ -10,12 +10,14 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
+ * @copyright    XOOPS Project https://xoops.org/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
  */
+
+use XoopsModules\Xfguestbook;
 
 /**
  *
@@ -24,29 +26,25 @@
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_install_xfguestbook(XoopsModule $module)
+function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
 {
-    $moduleDirName = basename(dirname(__DIR__));
-    $classUtil     = ucfirst($moduleDirName) . 'Util';
-    if (!class_exists($classUtil)) {
-        xoops_load('util', $moduleDirName);
-    }
+    include __DIR__ . '/common.php';
+    /** @var \XoopsModules\Xfguestbook\Utility $utility */
+    $utility = new \XoopsModules\Xfguestbook\Utility();
     //check for minimum XOOPS version
-    if (!$classUtil::checkVerXoops($module)) {
-        return false;
-    }
+    $xoopsSuccess = $utility::checkVerXoops($module);
 
     // check for minimum PHP version
-    if (!$classUtil::checkVerPhp($module)) {
-        return false;
+    $phpSuccess   = $utility::checkVerPhp($module);
+
+    if (false !== $xoopsSuccess && false !==  $phpSuccess) {
+        $moduleTables =& $module->getInfo('tables');
+        foreach ($moduleTables as $table) {
+            $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
+        }
     }
 
-    $mod_tables =& $module->getInfo('tables');
-    foreach ($mod_tables as $table) {
-        $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
-    }
-
-    return true;
+    return $xoopsSuccess && $phpSuccess;
 }
 
 /**
@@ -56,56 +54,58 @@ function xoops_module_pre_install_xfguestbook(XoopsModule $module)
  *
  * @return bool true if installation successful, false if not
  */
-function xoops_module_install_xfguestbook(XoopsModule $module)
+function xoops_module_install_xfguestbook(\XoopsModule $module)
 {
-    include_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-    include_once dirname(__DIR__) . '/include/config.php';
+    require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
-    if (!isset($moduleDirName)) {
-        $moduleDirName = basename(dirname(__DIR__));
-    }
-
-    if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-    } else {
-        $moduleHelper = Xmf\Module\Helper::getHelper('system');
-    }
+    $moduleDirName = basename(dirname(__DIR__));
+    /** @var \XoopsModules\Xfguestbook\Helper $helper */
+    $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
 
     // Load language files
-    $moduleHelper->loadLanguage('admin');
-    $moduleHelper->loadLanguage('modinfo');
+    $helper->loadLanguage('admin');
+    $helper->loadLanguage('modinfo');
 
-    $configurator = new ModuleConfigurator();
-    $classUtil    = ucfirst($moduleDirName) . 'Util';
-    if (!class_exists($classUtil)) {
-        xoops_load('util', $moduleDirName);
-    }
+    /** @var Xfguestbook\Common\Configurator $configurator */
+    $configurator = new Xfguestbook\Common\Configurator();
+    /** @var \XoopsModules\Xfguestbook\Utility $utility */
+    $utility = new \XoopsModules\Xfguestbook\Utility();
 
     // default Permission Settings ----------------------
     global $xoopsModule;
-    $moduleId     = $xoopsModule->getVar('mid');
-    $moduleId2    = $moduleHelper->getModule()->mid();
-    $gpermHandler = xoops_getHandler('groupperm');
+    $moduleId     = $module->getVar('mid');
+//    $moduleId2    = $helper->getModule()->mid();
+    $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
-    $gpermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
 
     //  ---  CREATE FOLDERS ---------------
     if (count($configurator->uploadFolders) > 0) {
         //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
         foreach (array_keys($configurator->uploadFolders) as $i) {
-            $classUtil::createFolder($configurator->uploadFolders[$i]);
+            $utility::createFolder($configurator->uploadFolders[$i]);
         }
     }
 
     //  ---  COPY blank.png FILES ---------------
-    if (count($configurator->blankFiles) > 0) {
-        $file = __DIR__ . '/../assets/images/blank.png';
-        foreach (array_keys($configurator->blankFiles) as $i) {
-            $dest = $configurator->blankFiles[$i] . '/blank.png';
-            $classUtil::copyFile($file, $dest);
+    if (count($configurator->copyBlankFiles) > 0) {
+        $file =  dirname(__DIR__) . '/assets/images/blank.png';
+        foreach (array_keys($configurator->copyBlankFiles) as $i) {
+            $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
+            $utility::copyFile($file, $dest);
+        }
+    }
+
+    //  ---  COPY test msg image ---------------
+    if (is_array ($configurator->copyTestFolders) && count($configurator->copyTestFolders) > 0) {
+        foreach (array_keys($configurator->copyTestFolders) as $i) {
+            $src  = $configurator->copyTestFolders[$i][0];
+            $dest = $configurator->copyTestFolders[$i][1];
+            $utility::rcopy($src, $dest);
         }
     }
 

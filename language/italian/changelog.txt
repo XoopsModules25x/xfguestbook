@@ -1,8 +1,8 @@
 Version 2.8 2011/11/21:
 =================================
-- modify deprecated Database::getInstance() 
+- modify deprecated Database::getInstance()
 
 Version 2.49 2011/04/12:
 =================================
-- added new Admin Menu Class 
+- added new Admin Menu Class
 

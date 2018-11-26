@@ -4,7 +4,7 @@
  */
 function b_waiting_xfguestbook()
 {
-    $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
     $block   = [];
 
     $result = $xoopsDB->query('SELECT count(*) FROM ' . $xoopsDB->prefix('xfguestbook_msg') . ' WHERE moderate = 1');

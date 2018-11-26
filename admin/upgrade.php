@@ -23,11 +23,10 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //---------------------------------------------------------------------------//
 
-require_once realpath(__DIR__ . '/../../../mainfile.php');
+//require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 require_once __DIR__ . '/admin_header.php';
-//include_once __DIR__ . '/../class/msg.php';
-//require_once __DIR__ . '/../../../include/cp_functions.php';
-include_once __DIR__ . '/../include/cp_functions.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_functions.php';
+require_once  dirname(__DIR__) . '/include/cp_functions.php';
 
 /**
  * @param $tablename
@@ -55,11 +54,11 @@ function FieldType($tablename, $fieldname)
     $result = $xoopsDB->queryF($sql);
     if (!$result) {
         return false;
-    } else {
-        $myrow = $xoopsDB->fetchArray($result);
-
-        return $myrow['Type'];
     }
+
+    $myrow = $xoopsDB->fetchArray($result);
+
+    return $myrow['Type'];
 }
 
 /**
@@ -80,8 +79,7 @@ function CountRows($tablename)
     }
 }
 
-$op = Xmf\Request::getCmd('op', 'check', 'POST');
-//$op = (isset($_POST['op']) ? $_POST['op'] : 'check');
+$op = (isset($_POST['op']) ? $_POST['op'] : 'check');
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
@@ -332,13 +330,13 @@ switch ($op) {
                 //          $msg .= executeSQL($sqlfile);
 
                 $configHandler = xoops_getHandler('config');
-                $criteria      = new CriteriaCompo(new Criteria('conf_modid', $xoopsModule->mid()));
-                $criteria->add(new Criteria('conf_name', 'flagdir'));
+                $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $xoopsModule->mid()));
+                $criteria->add(new \Criteria('conf_name', 'flagdir'));
                 $config =& $configHandler->getConfigs($criteria);
                 $value  = [$config[0]->getConfValueForOutput()];
                 $config[0]->setVar('conf_value', 'world_flags');
                 if (!$configHandler->insertConfig($config[0])) {
-                    $msg .= 'Could not insert flagdir config <br>';
+                    $msg .= 'Could not insert flagdir config <bt>';
                 }
             }
         }

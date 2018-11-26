@@ -45,4 +45,4 @@
             <td width='100%' align='right'><{$msg_page_nav}></td>
         </tr>
     </table>
-<{/if}> 
+<{/if}>

@@ -52,7 +52,7 @@ function xfguestbook_search($queryarray, $andor, $limit, $offset, $user_id)
     $result = $xoopsDB->query($sql, $limit, $offset);
     $ret    = [];
     $i      = 0;
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $ret[$i]['image'] = 'assets/images/xfguestbook.gif';
         $ret[$i]['link']  = 'index.php?op=show_one&msg_id=' . $myrow['msg_id'] . '';
         $ret[$i]['title'] = $myrow['title'];

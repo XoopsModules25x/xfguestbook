@@ -30,6 +30,8 @@
 function b_xfguestbook_show($options)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
+    /** @var \XoopsModules\Xfguestbook\Helper $helper */
+    $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
     if (empty($xoopsModule) || 'xfguestbook' !== $xoopsModule->getVar('dirname')) {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
@@ -48,8 +50,8 @@ function b_xfguestbook_show($options)
         $block['full_view'] = false;
     }
 
-    $msg_hnd  = xoops_getModuleHandler('msg', 'xfguestbook');
-    $criteria = new Criteria('moderate', '0', '=');
+    $msg_hnd  = $helper->getHandler('Message');
+    $criteria = new \Criteria('moderate', '0', '=');
     $criteria->setSort('post_time');
     $criteria->setOrder('DESC');
     $criteria->setLimit($options[0]);
@@ -59,7 +61,7 @@ function b_xfguestbook_show($options)
 
     if ($nbmsg > 0) {
         $msg = $msg_hnd->getObjects($criteria);
-        $ts  = MyTextSanitizer::getInstance();
+        $ts  = \MyTextSanitizer::getInstance();
         foreach ($msg as $onemsg) {
             $msg_id          = $onemsg->getVar('msg_id');
             $a_item['id']    = $msg_id;

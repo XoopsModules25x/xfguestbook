@@ -23,55 +23,63 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use XoopsModules\Xfguestbook;
 
+//require_once  dirname(__DIR__) . '/include/common.php';
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
 
-if (!isset($moduleDirName)) {
-    $moduleDirName = basename(dirname(__DIR__));
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }
 
-if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-} else {
-    $moduleHelper = Xmf\Module\Helper::getHelper('system');
-}
-$adminObject = \Xmf\Module\Admin::getInstance();
 
-$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+$adminmenu[] = [
+    'title' => MI_XFGUESTBOOK_ADMIN_HOME,
+    'link'  => 'admin/index.php',
+    'desc'  => MI_XFGUESTBOOK_ADMIN_HOME_DESC,
+    'icon'  => $pathIcon32 . '/home.png',
+];
 
-$moduleHelper->loadLanguage('admin');
-$moduleHelper->loadLanguage('modinfo');
-$moduleHelper->loadLanguage('main');
+$adminmenu[] = [
+    'title' => MI_XFGUESTBOOK_MSG_MANAGE,
+    'link'  => 'admin/main.php',
+    'icon'  => 'assets/images/admin/manage.png',
+];
 
-$i                      = 1;
-$adminmenu[$i]['title'] = MI_XFGUESTBOOK_ADMIN_HOME;
-$adminmenu[$i]['link']  = 'admin/index.php';
-$adminmenu[$i]['desc']  = MI_XFGUESTBOOK_ADMIN_HOME_DESC;
-$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
-$i++;
-$adminmenu[$i]['title'] = MI_XFGUESTBOOK_MSG_MANAGE;
-$adminmenu[$i]['link']  = 'admin/main.php';
-$adminmenu[$i]['icon']  = 'assets/images/admin/manage.png';
-$i++;
-$adminmenu[$i]['title'] = MI_XFGUESTBOOK_CONF_FORM;
-$adminmenu[$i]['link']  = 'admin/config.php';
-$adminmenu[$i]['icon']  = 'assets/images/admin/config.png';
-$i++;
-$adminmenu[$i]['title'] = MI_XFGUESTBOOK_COUNTRYMANAGE;
-$adminmenu[$i]['link']  = 'admin/country_manager.php';
-$adminmenu[$i]['icon']  = 'assets/images/admin/flag.png';
-$i++;
-$adminmenu[$i]['title'] = AM_XFGUESTBOOK_INSTALL_IMG;
-$adminmenu[$i]['link']  = 'admin/flags_install.php';
-$adminmenu[$i]['icon']  = 'assets/images/admin/flag_in.png';
-$i++;
-$adminmenu[$i]['title'] = AM_XFGUESTBOOK_IMG_MANAGER;
-$adminmenu[$i]['link']  = 'admin/img_manager.php';
-$adminmenu[$i]['icon']  = 'assets/images/admin/image.png';
-$i++;
-$adminmenu[$i]['title'] = MI_XFGUESTBOOK_IP;
-$adminmenu[$i]['link']  = 'admin/ip_manager.php';
-$adminmenu[$i]['icon']  = 'assets/images/admin/stop.png';
-$i++;
-$adminmenu[$i]['title'] = MI_XFGUESTBOOK_ADMIN_ABOUT;
-$adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';
+$adminmenu[] = [
+    'title' => MI_XFGUESTBOOK_CONF_FORM,
+    'link'  => 'admin/config.php',
+    'icon'  => 'assets/images/admin/config.png',
+];
+
+$adminmenu[] = [
+    'title' => MI_XFGUESTBOOK_COUNTRYMANAGE,
+    'link'  => 'admin/country_manager.php',
+    'icon'  => 'assets/images/admin/flag.png',
+];
+
+$adminmenu[] = [
+    'title' => AM_XFGUESTBOOK_INSTALL_IMG,
+    'link'  => 'admin/flags_install.php',
+    'icon'  => 'assets/images/admin/flag_in.png',
+];
+
+$adminmenu[] = [
+    'title' => AM_XFGUESTBOOK_IMG_MANAGER,
+    'link'  => 'admin/img_manager.php',
+    'icon'  => 'assets/images/admin/image.png',
+];
+
+$adminmenu[] = [
+    'title' => MI_XFGUESTBOOK_IP,
+    'link'  => 'admin/ip_manager.php',
+    'icon'  => 'assets/images/admin/stop.png',
+];
+
+$adminmenu[] = [
+    'title' => MI_XFGUESTBOOK_ADMIN_ABOUT,
+    'link'  => 'admin/about.php',
+    'icon'  => $pathIcon32 . '/about.png',
+];

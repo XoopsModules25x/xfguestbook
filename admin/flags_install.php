@@ -23,59 +23,60 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include_once __DIR__ . '/admin_header.php';
-include_once __DIR__ . '/../include/cp_functions.php';
-require __DIR__ . '/../class/util.php';
+use XoopsModules\Xfguestbook;
 
+require_once __DIR__ . '/admin_header.php';
+require_once  dirname(__DIR__) . '/include/cp_functions.php';
+
+/** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
 
 if (!isset($_POST['flagdir'])) {
     xoops_cp_header();
-    $index_admin = new ModuleAdmin();
-    echo $index_admin->addNavigation(basename(__FILE__));
-    include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $form    = new XoopsThemeForm(AM_XFGUESTBOOK_INSTALL_FLAGS, 'selectflag', $_SERVER['PHP_SELF']);
-    $sel_box = new XoopsFormSelect(AM_XFGUESTBOOK_SELECT_PACK, 'flagdir', $xoopsModuleConfig['flagdir']);
+    $adminObject = \Xmf\Module\Admin::getInstance();
+    $adminObject->displayNavigation(basename(__FILE__));
+    require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    $form    = new \XoopsThemeForm(AM_XFGUESTBOOK_INSTALL_FLAGS, 'selectflag', $_SERVER['PHP_SELF']);
+    $sel_box = new \XoopsFormSelect(AM_XFGUESTBOOK_SELECT_PACK, 'flagdir', $helper->getConfig('flagdir'));
     $sel_box->addOption('', _NONE);
-    $sel_box->addOptionArray(XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/'));
+    $sel_box->addOptionArray(\XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/'));
     $form->addElement($sel_box);
 
-    $button_tray = new XoopsFormElementTray('', '');
-    $button_tray->addElement(new XoopsFormButton('', 'post', _SUBMIT, 'submit'));
-    $button_cancel = new XoopsFormButton('', 'cancel', _CANCEL, 'button');
+    $button_tray = new \XoopsFormElementTray('', '');
+    $button_tray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
+    $button_cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
     $button_cancel->setExtra('\' onclick=\'javascript: history.go(-1)\'');
     $button_tray->addElement($button_cancel);
     $form->addElement($button_tray);
 
     $form->display();
-    if (count(XfguestbookUtil::getCountry()) > 0) {
+    if (count(Xfguestbook\Utility::getCountry()) > 0) {
         $msg = sprintf(AM_XFGUESTBOOK_WARNING_MSG1, $xoopsDB->prefix('xfguestbook_country'));
         echo AM_XFGUESTBOOK_WARNING . '<br>' . $msg . '&nbsp;';
     }
     //xoops_cp_footer();
     echo '<br><br>';
-    include __DIR__ . '/admin_footer.php';
+    require_once __DIR__   . '/admin_footer.php';
 } else {
     xoops_cp_header();
-    $index_admin = new ModuleAdmin();
-    echo $index_admin->addNavigation(basename(__FILE__));
+    $adminObject = \Xmf\Module\Admin::getInstance();
+    $adminObject->displayNavigation(basename(__FILE__));
 
-    //$flagdir = $_POST['flagdir'];
-    $flagdir = Xmf\Request::getString('flagdir', '', 'POST');
+    $flagdir = $_POST['flagdir'];
     $msg     = '';
 
     $sql    = 'TRUNCATE TABLE ' . $xoopsDB->prefix('xfguestbook_country');
     $result = $xoopsDB->queryF($sql);
     echo 'Table <b>' . $xoopsDB->prefix('xfguestbook_country') . '</b> deleted.<br>';
-    if ($flagdir !== '' && (false !== $preg_match('/[\<\>\:\"\/\\\|\?\*]|[\001-\037]/', $flagdir))) {
+    if ('' !== $flagdir) {
         $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $flagdir . '/flags_data.sql';
-        $sqlfile = realpath($sqlfile);
         $msg     .= executeSQL($sqlfile);
     }
-    if ($msg === '') {
+    if ('' === $msg) {
         $configHandler = xoops_getHandler('config');
-        $criteria      = new CriteriaCompo(new Criteria('conf_modid', $xoopsModule->mid()));
-        $criteria->add(new Criteria('conf_name', 'flagdir'));
+        $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $xoopsModule->mid()));
+        $criteria->add(new \Criteria('conf_name', 'flagdir'));
         $config = $configHandler->getConfigs($criteria);
         $value  = [$config[0]->getConfValueForOutput()];
         $config[0]->setVar('conf_value', $flagdir);
@@ -91,5 +92,5 @@ if (!isset($_POST['flagdir'])) {
     }
     //xoops_cp_footer();
     echo '<br><br>';
-    include __DIR__ . '/admin_footer.php';
+    require_once __DIR__   . '/admin_footer.php';
 }

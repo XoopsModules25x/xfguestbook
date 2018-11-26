@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Xfguestbook;
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -10,73 +11,45 @@
  */
 
 /**
- * @copyright    {@link http://xoops.org/ XOOPS Project}
+ * @copyright    {@link https://xoops.org/ XOOPS Project}
  * @license      {@link http://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
  * @package
  * @since
  * @author       XOOPS Development Team
  */
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+use XoopsModules\Xfguestbook;
+
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 /**
- * Class XfguestbookMsg
+ * Class MessageHandler
  */
-class XfguestbookMsg extends XoopsObject
-{
-    // constructor
-    /**
-     * XfguestbookMsg constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->initVar('msg_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('user_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('uname', XOBJ_DTYPE_TXTBOX, '', false);
-        $this->initVar('title', XOBJ_DTYPE_TXTBOX, '', true);
-        $this->initVar('message', XOBJ_DTYPE_TXTAREA, '', false);
-        $this->initVar('note', XOBJ_DTYPE_TXTAREA, '', false);
-        $this->initVar('post_time', XOBJ_DTYPE_STIME, null, false);
-        $this->initVar('email', XOBJ_DTYPE_EMAIL, '', false);
-        $this->initVar('url', XOBJ_DTYPE_URL, '', false);
-        $this->initVar('poster_ip', XOBJ_DTYPE_OTHER, '', false);
-        $this->initVar('moderate', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('gender', XOBJ_DTYPE_TXTBOX, '', false, 1);
-        $this->initVar('country', XOBJ_DTYPE_TXTBOX, '', false, 5);
-        $this->initVar('photo', XOBJ_DTYPE_TXTBOX, '', false); // added v2.20
-        $this->initVar('flagdir', XOBJ_DTYPE_TXTBOX, '', false); // added v2.30
-        $this->initVar('other', XOBJ_DTYPE_TXTBOX, '', false); // added v2.30
-    }
-}
-
-/**
- * Class XfguestbookMsgHandler
- */
-class XfguestbookMsgHandler
+class MessageHandler
 {
     public $db;
 
     /**
-     * XfguestbookMsgHandler constructor.
-     * @param XoopsDatabase $db
+     * MessageHandler constructor.
+     * @param \XoopsDatabase|null $db
      */
-    public function __construct(XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db = null)
     {
         $this->db = $db;
     }
 
     /**
-     * @return XfguestbookMsg
+     * @return Message
      */
     public function create()
     {
-        return new XfguestbookMsg();
+        return new Message();
     }
 
     /**
      * @param $id
-     * @return bool|XfguestbookMsg
+     * @return bool|Message
      */
     public function get($id)
     {
@@ -88,7 +61,7 @@ class XfguestbookMsgHandler
             }
             $numrows = $this->db->getRowsNum($result);
             if (1 == $numrows) {
-                $msg = new XfguestbookMsg();
+                $msg = new Message();
                 $msg->assignVars($this->db->fetchArray($result));
 
                 return $msg;
@@ -99,12 +72,12 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param XoopsObject $msg
+     * @param \XoopsObject $msg
      * @return bool
      */
-    public function insert(XoopsObject $msg)
+    public function insert(\XoopsObject $msg)
     {
-        if ('xfguestbookmsg' !== strtolower(get_class($msg))) {
+        if (Message::class !== get_class($msg)) {
             return false;
         }
         if (!$msg->cleanVars()) {
@@ -194,17 +167,17 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param XoopsObject $msg
+     * @param \XoopsObject $msg
      * @return bool
      */
-    public function delete(XoopsObject $msg)
+    public function delete(\XoopsObject $msg)
     {
         global $xoopsModule;
-        if ('xfguestbookmsg' !== strtolower(get_class($msg))) {
+        if (Message::class !== get_class($msg)) {
             return false;
         }
-        $sql = sprintf('DELETE FROM %s WHERE msg_id = %u', $this->db->prefix('xfguestbook_msg'), $msg->getVar('msg_id'));
-        if (isset($this->commentstable) && $this->commentstable !== '') {
+        $sql = sprintf('DELETE FROM `%s` WHERE msg_id = %u', $this->db->prefix('xfguestbook_msg'), $msg->getVar('msg_id'));
+        if (isset($this->commentstable) && '' !== $this->commentstable) {
             xoops_comment_delete($xoopsModule->getVar('mid'), $msg_id);
         }
 
@@ -216,17 +189,17 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null|CriteriaElement $criteria
+     * @param  null|\CriteriaElement $criteria
      * @return array
      */
-    public function &getObjects(CriteriaElement $criteria = null)
+    public function &getObjects(\CriteriaElement $criteria = null)
     {
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql   .= ' ' . $criteria->renderWhere();
-            $sort  = ($criteria->getSort() !== '') ? $criteria->getSort() : 'msg_id';
+            $sort  = ('' !== $criteria->getSort()) ? $criteria->getSort() : 'msg_id';
             $sql   .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
@@ -235,8 +208,8 @@ class XfguestbookMsgHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
-            $msg = new XfguestbookMsg();
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
+            $msg = new Message();
             $msg->assignVars($myrow);
             $ret[] = $msg;
             unset($msg);
@@ -246,13 +219,13 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null|CriteriaElement $criteria
+     * @param  null|\CriteriaElement $criteria
      * @return int
      */
-    public function countMsg(CriteriaElement $criteria = null)
+    public function countMsg(\CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -264,20 +237,20 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null|CriteriaElement  $criteria
+     * @param  null|\CriteriaElement $criteria
      * @return array|bool
      */
-    public function countMsgByCountry(CriteriaElement $criteria = null)
+    public function countMsgByCountry(\CriteriaElement $criteria = null)
     {
         $arr = [];
         $sql = 'SELECT country, flagdir FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        while (list($country, $flagdir) = $this->db->fetchRow($result)) {
+        while (false !== (list($country, $flagdir) = $this->db->fetchRow($result))) {
             $arr[] = $flagdir . '/' . $country;
         }
         $ret = array_count_values($arr);
@@ -287,20 +260,20 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null CriteriaElement $criteria
+     * @param \CriteriaElement|null $criteria
      * @return array|bool
      */
-    public function countMsgByGender(CriteriaElement $criteria = null)
+    public function countMsgByGender(\CriteriaElement $criteria = null)
     {
         $arr = [];
         $sql = 'SELECT gender FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        while (list($gender) = $this->db->fetchRow($result)) {
+        while (false !== (list($gender) = $this->db->fetchRow($result))) {
             $arr[] = $gender;
         }
         $ret = array_count_values($arr);
@@ -309,20 +282,20 @@ class XfguestbookMsgHandler
     }
 
     /**
-     * @param  null|CriteriaElement $criteria
+     * @param  null|\CriteriaElement $criteria
      * @return array|int
      */
-    public function getMsgImg(CriteriaElement $criteria = null)
+    public function getMsgImg(\CriteriaElement $criteria = null)
     {
         $arr = [];
         $sql = 'SELECT photo FROM ' . $this->db->prefix('xfguestbook_msg') . " WHERE `photo` LIKE 'msg_%'";
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
             return 0;
         }
-        while (list($photo) = $this->db->fetchRow($result)) {
+        while (false !== (list($photo) = $this->db->fetchRow($result))) {
             $arr[] = $photo;
         }
 

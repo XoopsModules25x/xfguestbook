@@ -23,26 +23,28 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-include __DIR__ . '/../../mainfile.php';
-//include_once(XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/class/msg.php");
-include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/util.php';
-if (isset($_GET['msg_id'])) {
-    $msg_id = (int)$_GET['msg_id'];
-} elseif (isset($_POST['msg_id'])) {
-    $msg_id = (int)$_POST['msg_id'];
+use XoopsModules\Xfguestbook;
+
+require_once __DIR__ . '/header.php';
+
+//** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
+
+if (\Xmf\Request::hasVar('msg_id', 'GET')) {
+    $msg_id = \Xmf\Request::getInt('msg_id', 0, 'GET');
 } else {
-    $msg_id = 0;
+    $msg_id = \Xmf\Request::getInt('msg_id', 0, 'POST');
 }
 
-if (isset($_GET['op'])) {
+if (\Xmf\Request::hasVar('op', 'GET')) {
     $op = $_GET['op'];
-} elseif (isset($_POST['op'])) {
+} elseif (\Xmf\Request::hasVar('op', 'POST')) {
     $op = $_POST['op'];
 } else {
     $op = 'show_all';
 }
 
-$msgHandler = xoops_getModuleHandler('msg');
+$msgHandler = $helper->getHandler('Message');
 
 //Admin or not
 $xoopsUser ? $adminview = $xoopsUser->isAdmin() : $adminview = 0;
@@ -53,12 +55,12 @@ $xoopsUser ? $adminview = $xoopsUser->isAdmin() : $adminview = 0;
 function delete($msg_id)
 {
     global $msgHandler, $xoopsModule;
-    $ok = isset($_POST['ok']) ? (int)$_POST['ok'] : 0;
-    if ($ok == 1) {
+    $ok = \Xmf\Request::getInt('ok', 0, 'POST');
+    if (1 == $ok) {
         $msg        = $msgHandler->get($msg_id);
         $del_msg_ok = $msgHandler->delete($msg);
         $filename   = $msg->getVar('photo');
-        if ($filename !== '') {
+        if ('' !== $filename) {
             $filename = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $filename;
             unlink($filename);
         }
@@ -95,13 +97,15 @@ function approve($msg_id)
  */
 function xfgb_getmsg($msg)
 {
-    global $nbmsg, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $xoopsConfig, $options, $opt, $xoopsDB;
+    global $nbmsg, $xoopsModule, $xoopsUser,  $xoopsTpl, $xoopsConfig, $options, $opt, $xoopsDB;
+    /** @var Xfguestbook\Helper $helper */
+    $helper = Xfguestbook\Helper::getInstance();
 
-    $arr_country = XfguestbookUtil::getAllCountry();
+    $arr_country = Xfguestbook\Utility::getAllCountry();
     $xoopsTpl->assign('display_msg', true);
     foreach ($msg as $onemsg) {
-        if ($poster = XfguestbookUtil::get_user_data($onemsg->getVar('user_id'))) {
-            $a_msg = &$poster;
+        if ($poster = Xfguestbook\Utility::get_user_data($onemsg->getVar('user_id'))) {
+            $a_msg =& $poster;
         } else {
             $a_msg             = [];
             $a_msg['poster']   = $onemsg->getVar('uname');
@@ -112,49 +116,31 @@ function xfgb_getmsg($msg)
         $memberHandler = xoops_getHandler('member');
         $user          = $memberHandler->getUser($onemsg->getVar('user_id'));
         // email
-        if ($xoopsModuleConfig['showemail']
+        if ($helper->getConfig('showemail')
             || ($onemsg->getVar('email')
-                && (($user->getVar('user_viewemail') == 1
-                     || $onemsg->getVar('user_id') == 0)
-                    && is_object($xoopsUser)))
-        ) {
-            $a_msg['email'] = "<a href=\"javascript:openWithSelfMain('"
-                              . XOOPS_URL
-                              . '/modules/xfguestbook/contact.php?msg_id='
-                              . $onemsg->getVar('msg_id')
-                              . '\', \'contact\', 600, 450);"><img src="'
-                              . XOOPS_URL
-                              . '/images/icons/email.gif" alt="'
-                              . _SENDEMAILTO
-                              . '"></a>';
+                && ((1 == $user->getVar('user_viewemail')
+                     || 0 == $onemsg->getVar('user_id'))
+                    && is_object($xoopsUser)))) {
+            $a_msg['email'] = "<a href=\"javascript:openWithSelfMain('" . XOOPS_URL . '/modules/xfguestbook/contact.php?msg_id=' . $onemsg->getVar('msg_id') . '\', \'contact\', 600, 450);"><img src="' . XOOPS_URL . '/images/icons/email.gif" alt="' . _SENDEMAILTO . '"></a>';
         }
         // url
         if ($onemsg->getVar('url')) {
             $a_msg['url'] = '<a href="' . $onemsg->getVar('url') . '" target="_blank"><img src="' . XOOPS_URL . '/images/icons/www.gif" alt="' . _VISITWEBSITE . '"></a>';
         }
         // gender
-        if ($onemsg->getVar('gender') !== '') {
+        if ('' !== $onemsg->getVar('gender')) {
             $a_msg['gender'] = '<a href="index.php?op=show_gender&param=' . $onemsg->getVar('gender') . '"><img src="assets/images/' . $onemsg->getVar('gender') . '.gif"</a>';
         }
         // flag
-        if ($onemsg->getVar('country') !== '') {
-            if ($onemsg->getVar('country') !== 'other') {
+        $country_name = '';
+        if ('' !== $onemsg->getVar('country')) {
+            if ('other' !== $onemsg->getVar('country')) {
                 $flag = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country') . '.gif';
                 if (array_key_exists($onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country'), $arr_country)) {
                     $country_name = $arr_country[$onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country')];
-                } else {
-                    $country_name = '';
                 }
                 if (file_exists($flag)) {
-                    $a_msg['country'] = '<img src="'
-                                        . XOOPS_URL
-                                        . '/modules/xfguestbook/assets/images/flags/'
-                                        . $onemsg->getVar('flagdir')
-                                        . '/'
-                                        . $onemsg->getVar('country')
-                                        . '.gif" alt="'
-                                        . $country_name
-                                        . '">';
+                    $a_msg['country'] = '<img src="' . XOOPS_URL . '/modules/xfguestbook/assets/images/flags/' . $onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country') . '.gif" alt="' . $country_name . '">';
                 } else {
                     $a_msg['country'] = $country_name;
                 }
@@ -168,13 +154,13 @@ function xfgb_getmsg($msg)
         $a_msg['title']   = $onemsg->getVar('title');
         $a_msg['date']    = formatTimestamp($onemsg->getVar('post_time'), 's');
         $a_msg['message'] = $onemsg->getVar('message');
-        if ($options['opt_url'] == 1) {
+        if (1 == $options['opt_url']) {
             $a_msg['message'] = str_replace('target="_blank"', 'target="_blank" rel="nofollow"', $a_msg['message']);
         }
         $a_msg['note_msg']  = $onemsg->getVar('note');
         $a_msg['poster_ip'] = $onemsg->getVar('poster_ip');
         $a_msg['moderate']  = $onemsg->getVar('moderate');
-        if (isset($country_name)) {
+        if (null !== $country_name) {
             $a_msg['local'] = '<a href="index.php?op=show_country&param=' . $onemsg->getVar('flagdir') . '/' . $onemsg->getVar('country') . '">' . $country_name . '</a>';
         }
         $a_msg['photo'] = $onemsg->getVar('photo');
@@ -185,17 +171,19 @@ function xfgb_getmsg($msg)
 
 function xfgb_genderlist()
 {
-    global $options, $xoopsTpl, $xoopsModuleConfig, $xoopsModule, $msgHandler;
-    $criteria = new Criteria('moderate', 0);
+    global $options, $xoopsTpl,  $xoopsModule, $msgHandler;
+    /** @var Xfguestbook\Helper $helper */
+    $helper = Xfguestbook\Helper::getInstance();
+    $criteria = new \Criteria('moderate', 0);
     $arr_msg  = $msgHandler->countMsgByGender($criteria);
     $i        = 0;
-    $gender = [];
+    $gender   = [];
     foreach ($arr_msg as $k => $v) {
-        if ($k === 'M') {
+        if ('M' === $k) {
             $gender[$i] = MD_XFGUESTBOOK_MALES . '<br>';
             $gender[$i] .= '<img src="assets/images/M.gif" alt="' . MD_XFGUESTBOOK_MALES . '"><br><br>';
             $gender[$i] .= '<a href="index.php?op=show_gender&param=M">' . $v . MD_XFGUESTBOOK_MESSAGES . '</a>';
-        } elseif ($k === 'F') {
+        } elseif ('F' === $k) {
             $gender[$i] = MD_XFGUESTBOOK_FEMALES . '<br>';
             $gender[$i] .= '<img src="assets/images/F.gif" alt="' . MD_XFGUESTBOOK_FEMALES . '"><br><br>';
             $gender[$i] .= '<a href="index.php?op=show_gender&param=F">' . $v . MD_XFGUESTBOOK_MESSAGES . '</a>';
@@ -214,34 +202,33 @@ function xfgb_genderlist()
 
 // if op = show_***, functions needed
 //if (substr($op, 0, 4) == 'show') {
-if (0 === strpos($op, 'show')) {
-    $debut = isset($_GET['debut']) ? (int)$_GET['debut'] : 0;
-    $param = isset($_GET['param']) ? $_GET['param'] : '';
+if (0 === strncmp($op, 'show', 4)) {
+    $debut = \Xmf\Request::getInt('debut', 0, 'GET');
+    $param = \Xmf\Request::getString('param', '', 'GET');
 
-    include_once __DIR__ . '/class/util.php';
     $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
-    include_once XOOPS_ROOT_PATH . '/header.php';
-    include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-    include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/config.inc.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+    require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/config.inc.php';
     $options = getOptions();
 
-    $criteria = new Criteria('moderate', 0);
+    $criteria = new \Criteria('moderate', 0);
     $nbmsg    = $msgHandler->countMsg($criteria);
 
     $xoopsTpl->assign('msg_message_count', sprintf(MD_XFGUESTBOOK_THEREIS, '<b>' . $nbmsg . '</b>'));
-    $xoopsTpl->assign('msg_moderated', $xoopsModuleConfig['moderate']);
+    $xoopsTpl->assign('msg_moderated', $helper->getConfig('moderate'));
     $xoopsTpl->assign('msg_lang_name', $xoopsConfig['language']);
     $xoopsTpl->assign('xoops_pagetitle', $xoopsModule->name() . ' -messages');
     if ($adminview) {
-        $nbwait = $msgHandler->countMsg(new Criteria('moderate', '1'));
-        $xoopsTpl->assign('msg_moderate_text', sprintf(MD_XFGUESTBOOK_MODERATING, "<font class='fg2'><a href='" . XOOPS_URL . "/modules/xfguestbook/index.php?op=show_waiting'>" . $nbwait . '</a></font>'));
+        $nbwait = $msgHandler->countMsg(new \Criteria('moderate', '1'));
+        $xoopsTpl->assign('msg_moderate_text', sprintf(MD_XFGUESTBOOK_MODERATING, "<span class='fg2'><a href='" . XOOPS_URL . "/modules/xfguestbook/index.php?op=show_waiting'>" . $nbwait . '</a></span>'));
     }
 }
 
 switch ($op) {
     case 'delete':
         if ($adminview) {
-            include_once XOOPS_ROOT_PATH . '/header.php';
+            require_once XOOPS_ROOT_PATH . '/header.php';
             delete($msg_id);
         } else {
             redirect_header('index.php', 1, '');
@@ -250,7 +237,7 @@ switch ($op) {
 
     case 'approve':
         if ($adminview) {
-            include_once XOOPS_ROOT_PATH . '/header.php';
+            require_once XOOPS_ROOT_PATH . '/header.php';
             approve($msg_id);
         } else {
             redirect_header('index.php', 1, '');
@@ -264,11 +251,11 @@ switch ($op) {
         break;
 
     case 'show_waiting':
-        $pagenav = new XoopsPageNav($nbwait, $xoopsModuleConfig['perpage'], $debut, 'debut', 'op=show_waiting');
+        $pagenav = new \XoopsPageNav($nbwait, $helper->getConfig('perpage'), $debut, 'debut', 'op=show_waiting');
         $xoopsTpl->assign('msg_page_nav', $pagenav->renderNav());
-        $criteria = new Criteria('moderate', 1);
+        $criteria = new \Criteria('moderate', 1);
         $criteria->setOrder('DESC');
-        $criteria->setLimit($xoopsModuleConfig['perpage']);
+        $criteria->setLimit($helper->getConfig('perpage'));
         $criteria->setStart($debut);
         $msg    = $msgHandler->getObjects($criteria);
         $nbwait -= $debut;
@@ -278,10 +265,10 @@ switch ($op) {
 
     case 'show_one':
         if ($adminview) {
-            $criteria = new Criteria('msg_id', $msg_id);
+            $criteria = new \Criteria('msg_id', $msg_id);
         } else {
-            $criteria = new CriteriaCompo(new Criteria('moderate', '0'));
-            $criteria->add(new Criteria('msg_id', $msg_id));
+            $criteria = new \CriteriaCompo(new \Criteria('moderate', '0'));
+            $criteria->add(new \Criteria('msg_id', $msg_id));
         }
         $msg = $msgHandler->getObjects($criteria);
         xfgb_getmsg($msg);
@@ -292,15 +279,15 @@ switch ($op) {
 
     case 'show_country':
         list($flagdir, $country) = explode('/', $param);
-        $criteria = new CriteriaCompo(new Criteria('moderate', '0'));
-        if ($flagdir == $xoopsModuleConfig['flagdir']) {
-            $criteria->add(new Criteria('flagdir', $flagdir));
+        $criteria = new \CriteriaCompo(new \Criteria('moderate', '0'));
+        if ($flagdir == $helper->getConfig('flagdir')) {
+            $criteria->add(new \Criteria('flagdir', $flagdir));
         }
-        $criteria->add(new Criteria('country', $country));
+        $criteria->add(new \Criteria('country', $country));
         $nbmsg   = $msgHandler->countMsg($criteria);
-        $pagenav = new XoopsPageNav($nbmsg, $xoopsModuleConfig['perpage'], $debut, 'debut', 'op=show_country&param=' . $param);
+        $pagenav = new \XoopsPageNav($nbmsg, $helper->getConfig('perpage'), $debut, 'debut', 'op=show_country&param=' . $param);
         $criteria->setOrder('DESC');
-        $criteria->setLimit($xoopsModuleConfig['perpage']);
+        $criteria->setLimit($helper->getConfig('perpage'));
         $criteria->setStart($debut);
         $msg   = $msgHandler->getObjects($criteria);
         $nbmsg -= $debut;
@@ -309,12 +296,12 @@ switch ($op) {
         break;
 
     case 'show_gender':
-        $criteria = new CriteriaCompo(new Criteria('moderate', '0'));
-        $criteria->add(new Criteria('gender', $param));
+        $criteria = new \CriteriaCompo(new \Criteria('moderate', '0'));
+        $criteria->add(new \Criteria('gender', $param));
         $nbmsg   = $msgHandler->countMsg($criteria);
-        $pagenav = new XoopsPageNav($nbmsg, $xoopsModuleConfig['perpage'], $debut, 'debut', 'op=show_gender&param=' . $param);
+        $pagenav = new \XoopsPageNav($nbmsg, $helper->getConfig('perpage'), $debut, 'debut', 'op=show_gender&param=' . $param);
         $criteria->setOrder('DESC');
-        $criteria->setLimit($xoopsModuleConfig['perpage']);
+        $criteria->setLimit($helper->getConfig('perpage'));
         $criteria->setStart($debut);
         $msg   = $msgHandler->getObjects($criteria);
         $nbmsg -= $debut;
@@ -327,11 +314,11 @@ switch ($op) {
 
     case 'show_all':
     default:
-        $pagenav = new XoopsPageNav($nbmsg, $xoopsModuleConfig['perpage'], $debut, 'debut', '');
+        $pagenav = new \XoopsPageNav($nbmsg, $helper->getConfig('perpage'), $debut, 'debut', '');
         $xoopsTpl->assign('msg_page_nav', $pagenav->renderNav());
-        $criteria = new Criteria('moderate', 0);
+        $criteria = new \Criteria('moderate', 0);
         $criteria->setOrder('DESC');
-        $criteria->setLimit($xoopsModuleConfig['perpage']);
+        $criteria->setLimit($helper->getConfig('perpage'));
         $criteria->setStart($debut);
         $msg   = $msgHandler->getObjects($criteria);
         $nbmsg -= $debut;
@@ -343,22 +330,22 @@ switch ($op) {
 
     case 'cancel':
         $photos_dir     = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
-        $nb_removed_tmp = XfguestbookUtil::clear_tmp_files($photos_dir);
+        $nb_removed_tmp = Xfguestbook\Utility::clear_tmp_files($photos_dir);
         redirect_header('index.php', 0);
         break;
 }
 $sql = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_country') . ' ORDER BY country_name ASC');
 
-while ($coun = $xoopsDB->fetchArray($sql)) {
+while (false !== ($coun = $xoopsDB->fetchArray($sql))) {
     $sql2 = $xoopsDB->query('SELECT COUNT(country) tot FROM ' . $xoopsDB->prefix('xfguestbook_msg') . " WHERE country='" . $coun['country_code'] . '\'');
     list($tlocal) = $xoopsDB->fetchRow($sql2);
     $tlocal = $tlocal ?: '0';
     if ($tlocal > 0) {
-        $opt['<a href="index.php?op=show_country&param=' . $xoopsModuleConfig['flagdir'] . '/' . $coun['country_code'] . '">' . $coun['country_name'] . '</a>'] = $tlocal;
+        $opt['<a href="index.php?op=show_country&param=' . $helper->getConfig('flagdir') . '/' . $coun['country_code'] . '">' . $coun['country_name'] . '</a>'] = $tlocal;
     } else {
         $opt[$coun['country_name']] = $tlocal;
     }
 }
 $xoopsTpl->assign('country_l', $opt);
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

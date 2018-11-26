@@ -22,7 +22,13 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //---------------------------------------------------------------------------//
-include __DIR__ . '/../../mainfile.php';
+
+use XoopsModules\Xfguestbook;
+
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+//** @var Xfguestbook\Helper $helper */
+$helper = Xfguestbook\Helper::getInstance();
+
 $op = 'form';
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
@@ -36,8 +42,7 @@ if (isset($preview)) {
 } elseif (isset($post)) {
     $op = 'post';
 }
-include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/class/util.php';
-include_once __DIR__ . '/include/config.inc.php';
+require_once __DIR__ . '/include/config.inc.php';
 $option = getOptions();
 
 /**
@@ -53,10 +58,10 @@ switch ($op) {
 
     case 'post':
         global $xoopsConfig;
-        $ts = MyTextSanitizer::getInstance();
+        $ts = \MyTextSanitizer::getInstance();
         xoops_header();
 
-        if ($option['opt_code'] == 1) {
+        if (1 == $option['opt_code']) {
             xoops_load('XoopsCaptcha');
             $xoopsCaptcha = XoopsCaptcha::getInstance();
             if (!$xoopsCaptcha->verify()) {
@@ -90,10 +95,10 @@ switch ($op) {
 
     case 'preview':
 
-        $ts = MyTextSanitizer::getInstance();
+        $ts = \MyTextSanitizer::getInstance();
         xoops_header();
 
-        if ($option['opt_code'] == 1) {
+        if (1 == $option['opt_code']) {
             xoops_load('XoopsCaptcha');
             $xoopsCaptcha = XoopsCaptcha::getInstance();
             if (!$xoopsCaptcha->verify()) {
@@ -115,7 +120,7 @@ switch ($op) {
         $title   = $ts->htmlSpecialChars($ts->stripSlashesGPC($title));
         $message = $ts->htmlSpecialChars($ts->stripSlashesGPC($message));
 
-        include __DIR__ . '/include/form_contact.inc.php';
+        require_once __DIR__   . '/include/form_contact.inc.php';
         xoops_footer();
         break;
 
@@ -123,7 +128,7 @@ switch ($op) {
     default:
 
         xoops_header();
-        $msgHandler = xoops_getModuleHandler('msg');
+        $msgHandler = $helper->getHandler('Message');
         $msg        = $msgHandler->get($msg_id);
         if (!$msg) {
             redirect_header('index.php', 3, _NOPERM);
@@ -135,14 +140,14 @@ switch ($op) {
         $email_author = $msg->getVar('email');
         $title        = $msg->getVar('title');
         if ($xoopsUser) {
-            $name_user  = ($xoopsUser->getVar('name') !== '') ? $xoopsUser->getVar('name') : $xoopsUser->getVar('uname');
+            $name_user  = ('' !== $xoopsUser->getVar('name')) ? $xoopsUser->getVar('name') : $xoopsUser->getVar('uname');
             $email_user = $xoopsUser->getVar('email', 'E');
         }
-        if ($option['opt_code'] == 1) {
+        if (1 == $option['opt_code']) {
             xoops_load('XoopsCaptcha');
             $xoopsCaptcha = XoopsCaptcha::getInstance();
         }
-        include __DIR__ . '/include/form_contact.inc.php';
+        require_once __DIR__   . '/include/form_contact.inc.php';
         xoops_footer();
         break;
 }
