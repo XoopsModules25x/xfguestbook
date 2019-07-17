@@ -26,7 +26,7 @@
 use XoopsModules\Xfguestbook;
 
 require_once __DIR__ . '/admin_header.php';
-require_once  dirname(__DIR__) . '/include/cp_functions.php';
+require_once dirname(__DIR__) . '/include/cp_functions.php';
 
 /** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
@@ -43,12 +43,12 @@ if (!isset($_POST['flagdir'])) {
     $sel_box->addOptionArray(\XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/'));
     $form->addElement($sel_box);
 
-    $button_tray = new \XoopsFormElementTray('', '');
-    $button_tray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
+    $buttonTray = new \XoopsFormElementTray('', '');
+    $buttonTray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
     $button_cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
     $button_cancel->setExtra('\' onclick=\'javascript: history.go(-1)\'');
-    $button_tray->addElement($button_cancel);
-    $form->addElement($button_tray);
+    $buttonTray->addElement($button_cancel);
+    $form->addElement($buttonTray);
 
     $form->display();
     if (count(Xfguestbook\Utility::getCountry()) > 0) {
@@ -57,7 +57,7 @@ if (!isset($_POST['flagdir'])) {
     }
     //xoops_cp_footer();
     echo '<br><br>';
-    require_once __DIR__   . '/admin_footer.php';
+    require_once __DIR__ . '/admin_footer.php';
 } else {
     xoops_cp_header();
     $adminObject = \Xmf\Module\Admin::getInstance();
@@ -74,14 +74,17 @@ if (!isset($_POST['flagdir'])) {
         $msg     .= executeSQL($sqlfile);
     }
     if ('' === $msg) {
+        /** @var \XoopsConfigHandler $configHandler */
         $configHandler = xoops_getHandler('config');
         $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $xoopsModule->mid()));
         $criteria->add(new \Criteria('conf_name', 'flagdir'));
         $config = $configHandler->getConfigs($criteria);
-        $value  = [$config[0]->getConfValueForOutput()];
-        $config[0]->setVar('conf_value', $flagdir);
-        //  $config[0]->setConfValueForInput($value[0]);
-        if (!$configHandler->insertConfig($config[0])) {
+        /** @var \XoopsConfigItem $configItem */
+        $configItem = $config[0];
+        $value      = [$configItem->getConfValueForOutput()];
+        $configItem->setVar('conf_value', $flagdir);
+        //  $configItem->setConfValueForInput($value[0]);
+        if (!$configHandler->insertConfig($configItem)) {
             $msg .= 'Could not insert flagdir config <br>';
         }
         echo $msg;
@@ -92,5 +95,5 @@ if (!isset($_POST['flagdir'])) {
     }
     //xoops_cp_footer();
     echo '<br><br>';
-    require_once __DIR__   . '/admin_footer.php';
+    require_once __DIR__ . '/admin_footer.php';
 }

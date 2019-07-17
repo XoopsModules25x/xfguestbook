@@ -15,12 +15,9 @@
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
- * @author     XOOPS Development Team
+ * @author       XOOPS Development Team
  */
-
-use XoopsModules\Xfguestbook;
-
-require  dirname(dirname(__DIR__)) .'/mainfile.php';
+require dirname(dirname(__DIR__)) . '/mainfile.php';
 require XOOPS_ROOT_PATH . '/header.php';
 
 $moduleDirName = basename(__DIR__);
@@ -47,5 +44,3 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
 //if ($publisher->getConfig('seo_url_rewrite') != 'none') {
 //    require PUBLISHER_ROOT_PATH . '/include/seo.inc.php';
 //}
-
-

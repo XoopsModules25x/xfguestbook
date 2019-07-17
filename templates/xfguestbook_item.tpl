@@ -52,7 +52,7 @@
             <p><i> </i></p>
         </td>
     </tr>
-    <{if $xoops_isadmin and not $preview}>
+    <{if $xoops_isadmin && not $preview}>
         <tr valign='bottom'>
             <td width="25%" class="foot"><br><{$smarty.const.MD_XFGUESTBOOK_COUNTRY}>: <{$msg.local}></td>
             <td class='foot' align="right">

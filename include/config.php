@@ -16,13 +16,13 @@
  * @since
  * @author       XOOPS Development Team
  */
-
 function getConfig()
 {
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = strtoupper($moduleDirName);
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
     return (object)[
-        'name'           => strtoupper($moduleDirName) . ' Module Configurator',
+        'name'           => mb_strtoupper($moduleDirName) . ' Module Configurator',
         'paths'          => [
             'dirname'    => $moduleDirName,
             'admin'      => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/admin',
@@ -45,18 +45,16 @@ function getConfig()
         ],
 
         'copyTestFolders' => [
-
             [
                 constant($moduleDirNameUpper . '_PATH') . '/testdata/uploads',
-                XOOPS_UPLOAD_PATH . '/' . $moduleDirName ,
-            ]
+                XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+            ],
         ],
 
         'templateFolders' => [
             '/templates/',
             '/templates/blocks/',
-            '/templates/admin/'
-
+            '/templates/admin/',
         ],
         'oldFiles'        => [
             '/class/request.php',
@@ -74,10 +72,9 @@ function getConfig()
             '/tcpdf',
             '/images',
         ],
-        'renameTables'    => [
-            //         'XX_archive'     => 'ZZZZ_archive',
+        'renameTables'    => [//         'XX_archive'     => 'ZZZZ_archive',
         ],
         'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
-                     <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',
+                     <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . "' alt='XOOPS Project'></a>",
     ];
 }

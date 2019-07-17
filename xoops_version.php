@@ -29,9 +29,9 @@ $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
 $modversion = [
-    'version'             => 3.21,
-    'module_status'       => 'Beta 1',
-    'release_date'        => '2018/11/05',
+    'version'             => '3.21.0',
+    'module_status'       => 'RC 1',
+    'release_date'        => '2019/07/16',
     'name'                => MI_XFGUESTBOOK_NAME,
     'description'         => MI_XFGUESTBOOK_DESC,
     'official'            => 0,
@@ -47,7 +47,7 @@ $modversion = [
     // ------------------- Folders & Files -------------------
     'release_info'        => 'Changelog',
     'release_file'        => XOOPS_URL . "/modules/$moduleDirName/docs/changelog.txt",
-    //
+
     'manual'              => 'link to manual file',
     'manual_file'         => XOOPS_URL . "/modules/$moduleDirName/docs/install.txt",
     // images
@@ -66,7 +66,7 @@ $modversion = [
     'module_website_name' => 'XOOPS Project',
     // ------------------- Min Requirements -------------------
     'min_php'             => '5.5',
-    'min_xoops'           => '2.5.9',
+    'min_xoops'           => '2.5.10',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5'],
     // ------------------- Admin Menu -------------------
@@ -76,16 +76,16 @@ $modversion = [
     'adminmenu'           => 'admin/menu.php',
     // ------------------- Main Menu -------------------
     'hasMain'             => 1,
-        'sub'                 => [
-    //        [
-    //            'name' => MI_XFGUESTBOOK_VIEW_SEARCH,
-    //            'url'  => 'index.php'
-    //        ],
-            [
-                'name' => MI_XFGUESTBOOK_CREATE,
-                'url'  => 'xfcreate.php'
-            ],
+    'sub'                 => [
+        //        [
+        //            'name' => MI_XFGUESTBOOK_VIEW_SEARCH,
+        //            'url'  => 'index.php'
+        //        ],
+        [
+            'name' => MI_XFGUESTBOOK_CREATE,
+            'url'  => 'xfcreate.php',
         ],
+    ],
 
     // ------------------- Install/Update -------------------
     'onInstall'           => 'include/oninstall.php',
@@ -96,13 +96,13 @@ $modversion = [
         'business'      => 'foundation@xoops.org',
         'item_name'     => 'Donation : ' . MI_XFGUESTBOOK_NAME,
         'amount'        => 25,
-        'currency_code' => 'USD'
+        'currency_code' => 'USD',
     ],
     // ------------------- Search ---------------------------
     'hasSearch'           => 1,
     'search'              => [
         'file' => 'include/search.inc.php',
-        'func' => 'xfguestbook_search'
+        'func' => 'xfguestbook_search',
     ],
     // ------------------- Comments -------------------------
     //    'hasComments'         => 1,
@@ -178,7 +178,7 @@ $modversion['blocks'][] = [
     'edit_func'   => 'b_xfguestbook_edit',
     'template'    => 'xfguestbook_block_new.tpl',
     'can_clone'   => true,
-    'options'     => '5|19'
+    'options'     => '5|19',
 ];
 
 // Config Settings
@@ -189,7 +189,7 @@ $modversion['config'][1] = [
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '0'
+    'default'     => '0',
 ];
 // Moderate
 $modversion['config'][] = [
@@ -198,7 +198,7 @@ $modversion['config'][] = [
     'description' => 'MI_XFGUESTBOOK_MODERATEDSC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '0'
+    'default'     => '0',
 ];
 // send mail to webmaster
 $modversion['config'][] = [
@@ -207,7 +207,7 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '0'
+    'default'     => '0',
 ];
 // show mail
 $modversion['config'][] = [
@@ -216,7 +216,7 @@ $modversion['config'][] = [
     'description' => 'MI_XFGUESTBOOK_SHOWEMAIL_DESC',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '0'
+    'default'     => '0',
 ];
 // number messages per page
 $modversion['config'][] = [
@@ -225,7 +225,7 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '5'
+    'default'     => '5',
 ];
 // number flags per row
 $modversion['config'][] = [
@@ -235,7 +235,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => '3',
-    'options'     => [4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9]
+    'options'     => [4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9],
 ];
 // Display avatar and rank
 $modversion['config'][] = [
@@ -244,7 +244,7 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'yesno',
     'valuetype'   => 'int',
-    'default'     => '1'
+    'default'     => '1',
 ];
 // Photo max size
 $modversion['config'][] = [
@@ -253,7 +253,7 @@ $modversion['config'][] = [
     'description' => 'MI_XFGUESTBOOK_MAXSIZEIMG_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '30000'
+    'default'     => '30000',
 ];
 
 // Photo max height
@@ -263,7 +263,7 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '120'
+    'default'     => '120',
 ];
 
 // Photo max width
@@ -273,7 +273,7 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'int',
-    'default'     => '200'
+    'default'     => '200',
 ];
 
 // name of flagpack
@@ -283,7 +283,7 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => MI_XFGUESTBOOK_COUNTRY
+    'default'     => MI_XFGUESTBOOK_COUNTRY,
 ];
 
 // Directory and sql name of flagpack
@@ -293,9 +293,8 @@ $modversion['config'][] = [
     'description' => '',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => ''
+    'default'     => '',
 ];
-
 
 //if (!file_exists(XOOPS_ROOT_PATH . '/uploads/xfguestbook')) {
 //    mkdir(XOOPS_ROOT_PATH . '/uploads/xfguestbook', 0777);

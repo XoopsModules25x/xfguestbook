@@ -34,7 +34,6 @@ if (is_object($helper->getModule())) {
     $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }
 
-
 $adminmenu[] = [
     'title' => MI_XFGUESTBOOK_ADMIN_HOME,
     'link'  => 'admin/index.php',

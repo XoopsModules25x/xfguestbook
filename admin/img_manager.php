@@ -24,18 +24,17 @@
 //  ------------------------------------------------------------------------ //
 
 require_once __DIR__ . '/admin_header.php';
-require_once  dirname(__DIR__) . '/include/cp_functions.php';
-require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopslists.php';
+require_once dirname(__DIR__) . '/include/cp_functions.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopslists.php';
 
 $msgHandler = $helper->getHandler('Message');
 require_once __DIR__ . '/admin_header.php';
 
-$op    = \Xmf\Request::getCmd('op', 'show');
+$op = \Xmf\Request::getCmd('op', 'show');
 
 switch ($op) {
-
     case 'delete':
-       if (\Xmf\Request::hasVar('imglist_id', 'POST')) {
+        if (\Xmf\Request::hasVar('imglist_id', 'POST')) {
             $img_count = count($_POST['imglist_id']);
             for ($i = 0; $i < $img_count; $i++) {
                 unlink(XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $_POST['imglist_id'][$i]);
@@ -79,8 +78,7 @@ switch ($op) {
         } else {
             echo '<br>' . AM_XFGUESTBOOK_NO_ORPHEAN;
         }
-        require_once __DIR__   . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
         break;
-
 }

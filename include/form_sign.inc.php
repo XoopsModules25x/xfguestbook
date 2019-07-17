@@ -95,19 +95,19 @@ if (1 == $option['opt_url'] && $option['opt_icon'] > 0) {
     $xoopsTpl->assign('nofollow', true);
 }
 
-$button_tray = new \XoopsFormElementTray('', '&nbsp;', 'button');
+$buttonTray = new \XoopsFormElementTray('', '&nbsp;', 'button');
 if (1 == $option['opt_code']) {
-    //$button_tray->addElement(new \XoopsFormCaptcha('', 'xoopscaptcha', '',''), true);
-    $button_tray->addElement(new \XoopsFormCaptcha(), true);
+    //$buttonTray->addElement(new \XoopsFormCaptcha('', 'xoopscaptcha', '',''), true);
+    $buttonTray->addElement(new \XoopsFormCaptcha(), true);
 } else {
     $xoopsTpl->assign('reg_form', '*');
 }
-$button_tray->addElement(new \XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
-$button_tray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
+$buttonTray->addElement(new \XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
+$buttonTray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
 $button_cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
 $button_cancel->setExtra("onclick='location=\"index.php?op=cancel\";'");
-$button_tray->addElement($button_cancel);
-$signform->addElement($button_tray);
+$buttonTray->addElement($button_cancel);
+$signform->addElement($buttonTray);
 
 $signform->addElement(new \XoopsFormHidden('user_id', $user_id));
 $signform->addElement(new \XoopsFormHidden('preview_name', $preview_name));

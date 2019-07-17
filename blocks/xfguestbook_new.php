@@ -33,9 +33,10 @@ function b_xfguestbook_show($options)
     /** @var \XoopsModules\Xfguestbook\Helper $helper */
     $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
     if (empty($xoopsModule) || 'xfguestbook' !== $xoopsModule->getVar('dirname')) {
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname('xfguestbook');
+        /** @var \XoopsConfigHandler $configHandler */
         $configHandler = xoops_getHandler('config');
         $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
@@ -50,26 +51,29 @@ function b_xfguestbook_show($options)
         $block['full_view'] = false;
     }
 
-    $msg_hnd  = $helper->getHandler('Message');
-    $criteria = new \Criteria('moderate', '0', '=');
+    /** @var \XoopsModules\Xfguestbook\MessageHandler $messageHandler */
+    $messageHandler = $helper->getHandler('Message');
+    $criteria       = new \Criteria('moderate', '0', '=');
     $criteria->setSort('post_time');
     $criteria->setOrder('DESC');
     $criteria->setLimit($options[0]);
-    $nbmsg = $msg_hnd->countMsg($criteria);
+    $nbmsg = $messageHandler->countMsg($criteria);
 
     $a_item = [];
 
     if ($nbmsg > 0) {
-        $msg = $msg_hnd->getObjects($criteria);
+        $msg = $messageHandler->getObjects($criteria);
         $ts  = \MyTextSanitizer::getInstance();
+
+        /** @var \XoopsModules\Xfguestbook\Message $onemsg */
         foreach ($msg as $onemsg) {
             $msg_id          = $onemsg->getVar('msg_id');
             $a_item['id']    = $msg_id;
             $a_item['title'] = $onemsg->getVar('title');
             if (!XOOPS_USE_MULTIBYTES) {
-                $length = strlen($onemsg->getVar('title'));
+                $length = mb_strlen($onemsg->getVar('title'));
                 if ($length >= $options[1]) {
-                    $a_item['title'] = substr($a_item['title'], 0, $options[1] - $length) . '...';
+                    $a_item['title'] = mb_substr($a_item['title'], 0, $options[1] - $length) . '...';
                 }
             }
             $a_item['name']   = $onemsg->getVar('uname');

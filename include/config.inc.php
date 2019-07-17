@@ -29,6 +29,7 @@
 function getOptions()
 {
     global $xoopsDB;
+    $arr_conf = [];
     $sql    = 'SELECT conf_name, conf_value FROM ' . $xoopsDB->prefix('xfguestbook_config');
     $result = $xoopsDB->query($sql);
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
@@ -44,6 +45,7 @@ function getOptions()
 function getOptions4Admin()
 {
     global $xoopsDB;
+    $arr_conf = [];
     $sql    = 'SELECT conf_id, conf_name, conf_value FROM ' . $xoopsDB->prefix('xfguestbook_config');
     $result = $xoopsDB->query($sql);
     $i      = 0;

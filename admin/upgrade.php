@@ -25,8 +25,8 @@
 
 //require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 require_once __DIR__ . '/admin_header.php';
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_functions.php';
-require_once  dirname(__DIR__) . '/include/cp_functions.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_functions.php';
+require_once dirname(__DIR__) . '/include/cp_functions.php';
 
 /**
  * @param $tablename
@@ -72,11 +72,10 @@ function CountRows($tablename)
     $result = $xoopsDB->queryF($sql);
     if (!$result) {
         return 0;
-    } else {
-        $nbr = $xoopsDB->getRowsNum($result);
-
-        return $nbr;
     }
+    $nbr = $xoopsDB->getRowsNum($result);
+
+    return $nbr;
 }
 
 $op = (isset($_POST['op']) ? $_POST['op'] : 'check');
@@ -259,7 +258,6 @@ switch ($op) {
         echo '</form>';
         xoops_cp_footer();
         break;
-
     case 'upgrade':
         xoops_cp_header();
         xfguestbook_admin_menu(99);
@@ -270,7 +268,7 @@ switch ($op) {
             if (!$result) {
                 $msg .= AM_XFGUESTBOOK_ERROR . ' ' . $sql . '<br>';
             }
-            $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/sql/update_config.sql';//create + insert values
+            $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/sql/update_config.sql'; //create + insert values
             $error   = executeSQL($sqlfile);
             $msg     .= AM_XFGUESTBOOK_ERROR . ' ' . $error . '<br>';
         }
@@ -329,13 +327,16 @@ switch ($op) {
                 //          $sqlfile = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname().'/assets/images/flags/world_flags/flags_data.sql';
                 //          $msg .= executeSQL($sqlfile);
 
+                /** @var \XoopsConfigHandler $configHandler */
                 $configHandler = xoops_getHandler('config');
                 $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $xoopsModule->mid()));
                 $criteria->add(new \Criteria('conf_name', 'flagdir'));
-                $config =& $configHandler->getConfigs($criteria);
-                $value  = [$config[0]->getConfValueForOutput()];
-                $config[0]->setVar('conf_value', 'world_flags');
-                if (!$configHandler->insertConfig($config[0])) {
+                $config = &$configHandler->getConfigs($criteria);
+                /** @var \XoopsConfigItem $configItem */
+                $configItem = $config[0];
+                $value      = [$configItem->getConfValueForOutput()];
+                $configItem->setVar('conf_value', 'world_flags');
+                if (!$configHandler->insertConfig($configItem)) {
                     $msg .= 'Could not insert flagdir config <bt>';
                 }
             }
@@ -349,7 +350,7 @@ switch ($op) {
         }
 
         if ($xfguestbook_country_checked > 0) {
-            $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/sql/create_country.sql';//create only
+            $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/sql/create_country.sql'; //create only
             $error   = executeSQL($sqlfile);
             $msg     .= AM_XFGUESTBOOK_ERROR . ' ' . $error . '<br>';
         } elseif ($xfguestbook_country_country_code_checked > 1) {
@@ -361,7 +362,7 @@ switch ($op) {
         }
 
         if ($xfguestbook_badips_checked > 0) {
-            $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/sql/create_badips.sql';//create only
+            $sqlfile = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/sql/create_badips.sql'; //create only
             $error   = executeSQL($sqlfile);
             $msg     .= AM_XFGUESTBOOK_ERROR . ' ' . $error . '<br>';
         }

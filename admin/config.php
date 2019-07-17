@@ -37,6 +37,7 @@ $helper = Xfguestbook\Helper::getInstance();
 function getOptions4Admin($cat = 2)
 {
     global $xoopsDB;
+    $arr_conf = [];
     $sql    = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ' . $xoopsDB->prefix('xfguestbook_config') . ' WHERE conf_cat=' . $cat . ' ORDER BY conf_order ASC';
     $result = $xoopsDB->query($sql);
     $i      = 0;
@@ -59,10 +60,9 @@ if (isset($_POST)) {
     }
 }
 
-$op    = \Xmf\Request::getCmd('op', 'show');
+$op = \Xmf\Request::getCmd('op', 'show');
 
 switch ($op) {
-
     case 'save':
         $option = getOptions4Admin();
         $nb_opt = count($option);
@@ -73,7 +73,6 @@ switch ($op) {
         }
         redirect_header('config.php', 1, AM_XFGUESTBOOK_DBUPDATED);
         break;
-
     case 'show':
     default:
         xoops_cp_header();
@@ -123,13 +122,12 @@ switch ($op) {
             unset($ele, $hidden);
         }
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $hidden      = new \XoopsFormHidden('op', 'save');
-        $button_tray->addElement($hidden);
-        $button_tray->addElement(new \XoopsFormButton('', 'post', _GO, 'submit'));
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $hidden     = new \XoopsFormHidden('op', 'save');
+        $buttonTray->addElement($hidden);
+        $buttonTray->addElement(new \XoopsFormButton('', 'post', _GO, 'submit'));
+        $sform->addElement($buttonTray);
         $sform->display();
         break;
-
 }
-require_once __DIR__   . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

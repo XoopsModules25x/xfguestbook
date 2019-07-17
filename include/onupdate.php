@@ -37,9 +37,8 @@ function tableExists($tablename)
 }
 
 /**
- *
  * Prepares system prior to attempting to install module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link \XoopsModule}
  *
  * @return bool true if ready to install, false if not
  */
@@ -48,38 +47,34 @@ function xoops_module_pre_update_xfguestbook(\XoopsModule $module)
     /** @var Xfguestbook\Helper $helper */
     /** @var Xfguestbook\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $helper       = Xfguestbook\Helper::getInstance();
-    $utility      = new Xfguestbook\Utility();
+    $helper        = Xfguestbook\Helper::getInstance();
+    $utility       = new Xfguestbook\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
     return $xoopsSuccess && $phpSuccess;
 }
 
 /**
- *
  * Performs tasks required during update of the module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link \XoopsModule}
  * @param null        $previousVersion
- *
- * @return void true if update successful, false if not
  */
-
 function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion = null)
 {
     global $xoopsDB;
-    $moduleDirName = basename(dirname(__DIR__));
-    $moduleDirNameUpper   = strtoupper($moduleDirName);
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
     /** @var Xfguestbook\Helper $helper */
     /** @var Xfguestbook\Utility $utility */
     /** @var Xfguestbook\Common\Configurator $configurator */
-    $helper  = Xfguestbook\Helper::getInstance();
-    $utility = new Xfguestbook\Utility();
+    $helper       = Xfguestbook\Helper::getInstance();
+    $utility      = new Xfguestbook\Utility();
     $configurator = new Xfguestbook\Common\Configurator();
 
     if ($previousVersion < 230) {
-
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
             foreach ($configurator->templateFolders as $folder) {
@@ -131,7 +126,7 @@ function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion 
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file =  dirname(__DIR__) . '/assets/images/blank.png';
+            $file = dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
@@ -144,7 +139,7 @@ function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion 
         $sql = 'DELETE FROM ' . $xoopsDB->prefix('newblocks') . " WHERE `dirname` = '" . $module->getVar('dirname', 'n') . "' AND `template` LIKE '%.html%'";
         $xoopsDB->queryF($sql);
 
-        /** @var XoopsGroupPermHandler $grouppermHandler */
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         //        $grouppermHandler = xoops_getHandler('groupperm');
         //        return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }

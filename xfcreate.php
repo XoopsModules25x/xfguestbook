@@ -66,7 +66,6 @@ switch ($op) {
         $nb_removed_tmp = Xfguestbook\Utility::clear_tmp_files($photos_dir);
         redirect_header('index.php', 0);
         break;
-
     case 'preview':
         $ts                                      = \MyTextSanitizer::getInstance();
         $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
@@ -131,12 +130,11 @@ switch ($op) {
 
         $xoopsTpl->assign('preview', true);
         $xoopsTpl->assign('msgstop', $msgstop);
-        require_once __DIR__   . '/include/form_sign.inc.php';
+        require_once __DIR__ . '/include/form_sign.inc.php';
         $xoopsTpl->assign('msg', $msgpost);
         $signform->assign($xoopsTpl);
         require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
-
     case 'post':
         $msgstop = '';
         if (1 == $option['opt_code']) {
@@ -154,17 +152,12 @@ switch ($op) {
             $msgstop .= MD_XFGUESTBOOK_URL_DISABLED . '<br><br>';
         }
 
-
-
         if (2 == $option['opt_mail'] && !Xfguestbook\Utility::email_exist($email)) {
             $msgstop .= MD_XFGUESTBOOK_INVALIDMAIL . '<br><br>';
         }
         if (2 == $option['opt_mail'] && '' !== $email && !checkEmail($email)) {
             $msgstop .= MD_XFGUESTBOOK_INVALIDMAIL . '<br><br>';
         }
-
-
-
 
         if (!empty($_FILES['photo']['name'])) {
             Xfguestbook\Utility::upload();
@@ -238,7 +231,6 @@ switch ($op) {
             redirect_header('index.php', 2, $messagesent);
         }
         break;
-
     case 'form':
     default:
         $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
@@ -258,7 +250,7 @@ switch ($op) {
             $xoopsTpl->assign('moderate', MD_XFGUESTBOOK_MODERATED);
         }
 
-        require_once __DIR__   . '/include/form_sign.inc.php';
+        require_once __DIR__ . '/include/form_sign.inc.php';
         $signform->assign($xoopsTpl);
         require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
