@@ -26,7 +26,7 @@ $moduleDirName = basename(__DIR__);
 $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
 
 $modulePath = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName;
-require __DIR__ . '/include/config.php';
+require __DIR__ . '/config/config.php';
 
 $myts = \MyTextSanitizer::getInstance();
 

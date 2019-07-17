@@ -47,7 +47,7 @@ class Configurator
         $moduleDirName      = basename(dirname(dirname(__DIR__)));
         $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-        require dirname(dirname(__DIR__)) . '/include/config.php';
+        require dirname(dirname(__DIR__)) . '/config/config.php';
         $config = getConfig();
 
         $this->name            = $config->name;

@@ -25,9 +25,15 @@
 
 use XoopsModules\Xfguestbook;
 
+include dirname(__DIR__) . '/preloads/autoloader.php';
+
+$moduleDirName = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
 //require_once  dirname(__DIR__) . '/include/common.php';
 /** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
+$helper->loadLanguage('common');
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
@@ -76,6 +82,15 @@ $adminmenu[] = [
     'link'  => 'admin/ip_manager.php',
     'icon'  => 'assets/images/admin/stop.png',
 ];
+
+
+if ($helper->getConfig('displayDeveloperTools')) {
+    $adminmenu[] = [
+        'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'ADMENU_MIGRATE'),
+        'link' => 'admin/migrate.php',
+        'icon' => $pathIcon32 . '/database_go.png',
+    ];
+}
 
 $adminmenu[] = [
     'title' => MI_XFGUESTBOOK_ADMIN_ABOUT,

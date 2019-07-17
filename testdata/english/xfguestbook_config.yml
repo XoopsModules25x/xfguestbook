@@ -1,0 +1,80 @@
+-
+    conf_id: '1'
+    conf_cat: '2'
+    conf_name: opt_mail
+    conf_title: AM_XFGUESTBOOK_MAILTRUE
+    conf_desc: ''
+    conf_value: '1'
+    conf_formtype: selectmail
+    conf_valuetype: int
+    conf_order: '1'
+-
+    conf_id: '2'
+    conf_cat: '2'
+    conf_name: opt_gender
+    conf_title: AM_XFGUESTBOOK_GENDER_OPT
+    conf_desc: ''
+    conf_value: '1'
+    conf_formtype: yesno
+    conf_valuetype: int
+    conf_order: '2'
+-
+    conf_id: '3'
+    conf_cat: '2'
+    conf_name: opt_country
+    conf_title: AM_XFGUESTBOOK_COUNTRY_OPT
+    conf_desc: ''
+    conf_value: '1'
+    conf_formtype: yesno
+    conf_valuetype: text
+    conf_order: '3'
+-
+    conf_id: '4'
+    conf_cat: '2'
+    conf_name: opt_icon
+    conf_title: AM_XFGUESTBOOK_OPT1
+    conf_desc: ''
+    conf_value: '1'
+    conf_formtype: yesno
+    conf_valuetype: int
+    conf_order: '5'
+-
+    conf_id: '7'
+    conf_cat: '2'
+    conf_name: opt_url
+    conf_title: AM_XFGUESTBOOK_URL_OPT
+    conf_desc: ''
+    conf_value: '1'
+    conf_formtype: selectaction
+    conf_valuetype: int
+    conf_order: '8'
+-
+    conf_id: '8'
+    conf_cat: '2'
+    conf_name: opt_code
+    conf_title: AM_XFGUESTBOOK_CODE_OPT
+    conf_desc: ''
+    conf_value: '1'
+    conf_formtype: yesno
+    conf_valuetype: int
+    conf_order: '9'
+-
+    conf_id: '9'
+    conf_cat: '2'
+    conf_name: countrybydefault
+    conf_title: AM_XFGUESTBOOK_COUNTRYDEF
+    conf_desc: ''
+    conf_value: US
+    conf_formtype: selectcountry
+    conf_valuetype: text
+    conf_order: '4'
+-
+    conf_id: '10'
+    conf_cat: '2'
+    conf_name: opt_website
+    conf_title: AM_XFGUESTBOOK_WEBSITE_OPT
+    conf_desc: ''
+    conf_value: '2'
+    conf_formtype: selectwebsite
+    conf_valuetype: int
+    conf_order: '10'
