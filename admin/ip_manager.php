@@ -29,12 +29,11 @@ require_once __DIR__ . '/admin_header.php';
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once dirname(__DIR__) . '/include/cp_functions.php';
 
+$op = 'badIpShow';
 if (\Xmf\Request::hasVar('op', 'GET')) {
     $op = $_GET['op'];
 } elseif (\Xmf\Request::hasVar('op', 'POST')) {
     $op = $_POST['op'];
-} else {
-    $op = 'badIpShow';
 }
 
 if (\Xmf\Request::hasVar('ip_id', 'GET')) {

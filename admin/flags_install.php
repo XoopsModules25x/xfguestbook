@@ -63,7 +63,7 @@ if (!isset($_POST['flagdir'])) {
     $adminObject = \Xmf\Module\Admin::getInstance();
     $adminObject->displayNavigation(basename(__FILE__));
 
-    $flagdir = $_POST['flagdir'];
+    $flagdir = \Xmf\Request::getString('flagdir', '', 'POST');
     $msg     = '';
 
     $sql    = 'TRUNCATE TABLE ' . $xoopsDB->prefix('xfguestbook_country');

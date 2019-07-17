@@ -115,7 +115,6 @@ switch ($op) {
         }
 
         $p_title = $title;
-        $p_title = $ts->htmlSpecialChars($ts->stripSlashesGPC($p_title));
         $p_msg   = MD_XFGUESTBOOK_FROMUSER . " $name_user " . MD_XFGUESTBOOK_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br>';
         $p_msg   .= $title . '<br>';
         $p_msg   .= '<hr><br>';

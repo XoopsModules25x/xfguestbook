@@ -37,12 +37,11 @@ if (\Xmf\Request::hasVar('msg_id', 'GET')) {
     $msg_id = \Xmf\Request::getInt('msg_id', 0, 'POST');
 }
 
+$op = 'show_all';
 if (\Xmf\Request::hasVar('op', 'GET')) {
-    $op = $_GET['op'];
+    $op = \Xmf\Request::getString('op', '', 'GET');
 } elseif (\Xmf\Request::hasVar('op', 'POST')) {
-    $op = $_POST['op'];
-} else {
-    $op = 'show_all';
+    $op = \Xmf\Request::getString('op', '', 'POST');
 }
 
 /** @var \XoopsModules\Xfguestbook\MessageHandler $msgHandler */

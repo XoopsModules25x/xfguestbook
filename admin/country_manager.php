@@ -38,12 +38,11 @@ $maxheight = 50;
 $maxwidth  = 80;
 $format    = 'gif';
 
+$op = 'countryShow';
 if (\Xmf\Request::hasVar('op', 'GET')) {
     $op = $_GET['op'];
 } elseif (\Xmf\Request::hasVar('op', 'POST')) {
     $op = $_POST['op'];
-} else {
-    $op = 'countryShow';
 }
 
 if (\Xmf\Request::hasVar('country_id', 'GET')) {
@@ -52,12 +51,11 @@ if (\Xmf\Request::hasVar('country_id', 'GET')) {
     $country_id = \Xmf\Request::getInt('country_id', 0, 'POST');
 }
 
+$country_code = '';
 if (\Xmf\Request::hasVar('country_code', 'GET')) {
     $country_code = $_GET['country_code'];
 } elseif (\Xmf\Request::hasVar('country_code', 'POST')) {
     $country_code = $_POST['country_code'];
-} else {
-    $country_code = '';
 }
 
 $start        = \Xmf\Request::getInt('start', 0, 'GET');
