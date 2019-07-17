@@ -49,4 +49,3 @@ define('MI_XFGUESTBOOK_LICENSE', 'License');
 define('MI_XFGUESTBOOK_SUPPORT', 'Support');
 
 define('MI_XFGUESTBOOK_CREATE', 'Create new entry');
-

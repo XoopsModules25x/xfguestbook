@@ -46,23 +46,27 @@ function getConfig()
 
         'copyTestFolders' => [
             [
-                constant($moduleDirNameUpper . '_PATH') . '/testdata/uploads',
+                XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/testdata/uploads',
                 XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
             ],
+            //            [
+            //                XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/testdata/thumbs',
+            //                XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
+            //            ],
         ],
 
         'templateFolders' => [
             '/templates/',
-            '/templates/blocks/',
-            '/templates/admin/',
+            //            '/templates/blocks/',
+            //            '/templates/admin/'
         ],
         'oldFiles'        => [
             '/class/request.php',
             '/class/registry.php',
             '/class/utilities.php',
             '/class/util.php',
-            '/include/constants.php',
-            '/include/functions.php',
+            //            '/include/constants.php',
+            //            '/include/functions.php',
             '/ajaxrating.txt',
         ],
         'oldFolders'      => [
@@ -70,11 +74,16 @@ function getConfig()
             '/css',
             '/js',
             '/tcpdf',
-            '/images',
         ],
-        'renameTables'    => [//         'XX_archive'     => 'ZZZZ_archive',
+
+        'renameTables' => [//         'XX_archive'     => 'ZZZZ_archive',
         ],
-        'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
+        'moduleStats'     => [
+//            'totalcategories' => $helper->getHandler('Category')->getCategoriesCount(-1),
+//            'totalitems'      => $helper->getHandler('Item')->getItemsCount(),
+//            'totalsubmitted'  => $helper->getHandler('Item')->getItemsCount(-1, [Constants::PUBLISHER_STATUS_SUBMITTED]),
+        ],
+        'modCopyright' => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($moduleDirNameUpper . '_AUTHOR_LOGOIMG') . "' alt='XOOPS Project'></a>",
     ];
 }

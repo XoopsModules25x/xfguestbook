@@ -24,6 +24,7 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+$GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
 
 require_once __DIR__ . '/header.php';
 
@@ -36,14 +37,14 @@ if (\Xmf\Request::hasVar('msg_id', 'GET')) {
     $msg_id = \Xmf\Request::getInt('msg_id', 0, 'POST');
 }
 
+$op = 'show_all';
 if (\Xmf\Request::hasVar('op', 'GET')) {
-    $op = $_GET['op'];
+    $op = \Xmf\Request::getString('op', '', 'GET');
 } elseif (\Xmf\Request::hasVar('op', 'POST')) {
-    $op = $_POST['op'];
-} else {
-    $op = 'show_all';
+    $op = \Xmf\Request::getString('op', '', 'POST');
 }
 
+/** @var \XoopsModules\Xfguestbook\MessageHandler $msgHandler */
 $msgHandler = $helper->getHandler('Message');
 
 //Admin or not
@@ -97,7 +98,7 @@ function approve($msg_id)
  */
 function xfgb_getmsg($msg)
 {
-    global $nbmsg, $xoopsModule, $xoopsUser,  $xoopsTpl, $xoopsConfig, $options, $opt, $xoopsDB;
+    global $nbmsg, $xoopsModule, $xoopsUser, $xoopsTpl, $xoopsConfig, $options, $opt, $xoopsDB;
     /** @var Xfguestbook\Helper $helper */
     $helper = Xfguestbook\Helper::getInstance();
 
@@ -105,7 +106,7 @@ function xfgb_getmsg($msg)
     $xoopsTpl->assign('display_msg', true);
     foreach ($msg as $onemsg) {
         if ($poster = Xfguestbook\Utility::get_user_data($onemsg->getVar('user_id'))) {
-            $a_msg =& $poster;
+            $a_msg = &$poster;
         } else {
             $a_msg             = [];
             $a_msg['poster']   = $onemsg->getVar('uname');
@@ -113,6 +114,7 @@ function xfgb_getmsg($msg)
             $a_msg['rank_img'] = '';
             $a_msg['avatar']   = '';
         }
+        /** @var \XoopsMemberHandler $memberHandler */
         $memberHandler = xoops_getHandler('member');
         $user          = $memberHandler->getUser($onemsg->getVar('user_id'));
         // email
@@ -171,9 +173,9 @@ function xfgb_getmsg($msg)
 
 function xfgb_genderlist()
 {
-    global $options, $xoopsTpl,  $xoopsModule, $msgHandler;
+    global $options, $xoopsTpl, $xoopsModule, $msgHandler;
     /** @var Xfguestbook\Helper $helper */
-    $helper = Xfguestbook\Helper::getInstance();
+    $helper   = Xfguestbook\Helper::getInstance();
     $criteria = new \Criteria('moderate', 0);
     $arr_msg  = $msgHandler->countMsgByGender($criteria);
     $i        = 0;
@@ -206,7 +208,6 @@ if (0 === strncmp($op, 'show', 4)) {
     $debut = \Xmf\Request::getInt('debut', 0, 'GET');
     $param = \Xmf\Request::getString('param', '', 'GET');
 
-    $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
     require_once XOOPS_ROOT_PATH . '/header.php';
     require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
     require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/include/config.inc.php';
@@ -234,7 +235,6 @@ switch ($op) {
             redirect_header('index.php', 1, '');
         }
         break;
-
     case 'approve':
         if ($adminview) {
             require_once XOOPS_ROOT_PATH . '/header.php';
@@ -243,13 +243,11 @@ switch ($op) {
             redirect_header('index.php', 1, '');
         }
         break;
-
     case 'show_stat':
         if ($options['opt_gender'] > 0) {
             xfgb_genderlist();
         }
         break;
-
     case 'show_waiting':
         $pagenav = new \XoopsPageNav($nbwait, $helper->getConfig('perpage'), $debut, 'debut', 'op=show_waiting');
         $xoopsTpl->assign('msg_page_nav', $pagenav->renderNav());
@@ -262,7 +260,6 @@ switch ($op) {
         $nbmsg  = $nbwait;
         xfgb_getmsg($msg);
         break;
-
     case 'show_one':
         if ($adminview) {
             $criteria = new \Criteria('msg_id', $msg_id);
@@ -276,7 +273,6 @@ switch ($op) {
             xfgb_genderlist();
         }
         break;
-
     case 'show_country':
         list($flagdir, $country) = explode('/', $param);
         $criteria = new \CriteriaCompo(new \Criteria('moderate', '0'));
@@ -294,7 +290,6 @@ switch ($op) {
         $xoopsTpl->assign('msg_page_nav', $pagenav->renderNav());
         xfgb_getmsg($msg);
         break;
-
     case 'show_gender':
         $criteria = new \CriteriaCompo(new \Criteria('moderate', '0'));
         $criteria->add(new \Criteria('gender', $param));
@@ -311,7 +306,6 @@ switch ($op) {
             xfgb_genderlist();
         }
         break;
-
     case 'show_all':
     default:
         $pagenav = new \XoopsPageNav($nbmsg, $helper->getConfig('perpage'), $debut, 'debut', '');
@@ -327,7 +321,6 @@ switch ($op) {
             xfgb_genderlist();
         }
         break;
-
     case 'cancel':
         $photos_dir     = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
         $nb_removed_tmp = Xfguestbook\Utility::clear_tmp_files($photos_dir);

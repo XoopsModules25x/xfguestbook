@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xfguestbook;
+<?php
+
+namespace XoopsModules\Xfguestbook;
 
 /*
  * You may not change or alter any portion of this comment or credits
@@ -17,17 +19,14 @@
  * @since
  * @author       XOOPS Development Team
  */
-
-use XoopsModules\Xfguestbook;
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 
 /**
  * Class MessageHandler
  */
-class MessageHandler
+class MessageHandler extends \XoopsPersistableObjectHandler
 {
+    /** @var \XoopsMySQLDatabase $db */
     public $db;
 
     /**
@@ -40,18 +39,20 @@ class MessageHandler
     }
 
     /**
+     * @param bool $isNew
      * @return Message
      */
-    public function create()
+    public function create($isNew = true)
     {
         return new Message();
     }
 
     /**
-     * @param $id
-     * @return bool|Message
+     * @param int|null $id
+     * @param null     $fields
+     * @return bool|string
      */
-    public function get($id)
+    public function get($id = null, $fields = null)
     {
         $id = (int)$id;
         if ($id > 0) {
@@ -73,9 +74,10 @@ class MessageHandler
 
     /**
      * @param \XoopsObject $msg
+     * @param bool         $force
      * @return bool
      */
-    public function insert(\XoopsObject $msg)
+    public function insert(\XoopsObject $msg, $force = true)
     {
         if (Message::class !== get_class($msg)) {
             return false;
@@ -168,9 +170,10 @@ class MessageHandler
 
     /**
      * @param \XoopsObject $msg
+     * @param bool         $force
      * @return bool
      */
-    public function delete(\XoopsObject $msg)
+    public function delete(\XoopsObject $msg, $force = false)
     {
         global $xoopsModule;
         if (Message::class !== get_class($msg)) {
@@ -189,10 +192,12 @@ class MessageHandler
     }
 
     /**
-     * @param  null|\CriteriaElement $criteria
+     * @param null|\CriteriaElement|\CriteriaCompo $criteria
+     * @param bool                                 $id_as_key
+     * @param bool                                 $as_object
      * @return array
      */
-    public function &getObjects(\CriteriaElement $criteria = null)
+    public function &getObjects(\CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)//getObjects(\CriteriaElement $criteria = null)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -219,7 +224,7 @@ class MessageHandler
     }
 
     /**
-     * @param  null|\CriteriaElement $criteria
+     * @param  null|\CriteriaElement|\CriteriaCompo $criteria
      * @return int
      */
     public function countMsg(\CriteriaElement $criteria = null)
@@ -237,7 +242,7 @@ class MessageHandler
     }
 
     /**
-     * @param  null|\CriteriaElement $criteria
+     * @param  null|\CriteriaElement|\CriteriaCompo $criteria
      * @return array|bool
      */
     public function countMsgByCountry(\CriteriaElement $criteria = null)
@@ -250,7 +255,7 @@ class MessageHandler
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        while (false !== (list($country, $flagdir) = $this->db->fetchRow($result))) {
+        while (list($country, $flagdir) = $this->db->fetchRow($result)) {
             $arr[] = $flagdir . '/' . $country;
         }
         $ret = array_count_values($arr);
@@ -260,7 +265,7 @@ class MessageHandler
     }
 
     /**
-     * @param \CriteriaElement|null $criteria
+     * @param \CriteriaElement|\CriteriaCompo|null $criteria
      * @return array|bool
      */
     public function countMsgByGender(\CriteriaElement $criteria = null)
@@ -273,7 +278,7 @@ class MessageHandler
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        while (false !== (list($gender) = $this->db->fetchRow($result))) {
+        while (list($gender) = $this->db->fetchRow($result)) {
             $arr[] = $gender;
         }
         $ret = array_count_values($arr);
@@ -282,7 +287,7 @@ class MessageHandler
     }
 
     /**
-     * @param  null|\CriteriaElement $criteria
+     * @param  null|\CriteriaElement|\CriteriaCompo $criteria
      * @return array|int
      */
     public function getMsgImg(\CriteriaElement $criteria = null)
@@ -295,7 +300,7 @@ class MessageHandler
         if (!$result = $this->db->query($sql)) {
             return 0;
         }
-        while (false !== (list($photo) = $this->db->fetchRow($result))) {
+        while (list($photo) = $this->db->fetchRow($result)) {
             $arr[] = $photo;
         }
 

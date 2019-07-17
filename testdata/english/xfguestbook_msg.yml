@@ -1,0 +1,119 @@
+-
+    msg_id: '1'
+    user_id: '0'
+    uname: 'Joe Doe PHP team'
+    title: Welcome
+    message: ':-) Welcome in your Guestbook'
+    note: 'You can delete this message'
+    post_time: '1073730287'
+    email: ''
+    url: ''
+    poster_ip: 127.0.0.1
+    moderate: '0'
+    gender: M
+    country: FR
+    photo: msg_1000000000.jpg
+    flagdir: world_flags
+    other: ''
+-
+    msg_id: '2'
+    user_id: '0'
+    uname: Jose
+    title: 'Mensaje de Jose'
+    message: 'This is message from Jose'
+    note: ''
+    post_time: '1541331345'
+    email: name@email.com
+    url: ''
+    poster_ip: '::1'
+    moderate: '0'
+    gender: F
+    country: ES
+    photo: ''
+    flagdir: world_flags
+    other: ''
+-
+    msg_id: '3'
+    user_id: '0'
+    uname: Ivan
+    title: 'Hello from Ivan'
+    message: 'This is message from Ivan'
+    note: ''
+    post_time: '1541332641'
+    email: joe@mea.com
+    url: ''
+    poster_ip: '::1'
+    moderate: '0'
+    gender: M
+    country: RU
+    photo: ''
+    flagdir: world_flags
+    other: ''
+-
+    msg_id: '4'
+    user_id: '0'
+    uname: Hans
+    title: 'Hello von Hans'
+    message: 'This is message from Hans'
+    note: ''
+    post_time: '1541365253'
+    email: joe@email.com
+    url: ''
+    poster_ip: '::1'
+    moderate: '1'
+    gender: M
+    country: DE
+    photo: ''
+    flagdir: world_flags
+    other: ''
+-
+    msg_id: '5'
+    user_id: '0'
+    uname: Jane
+    title: 'Message from Jane'
+    message: 'This is message from Jane'
+    note: ''
+    post_time: '1541366026'
+    email: bingo@bongo.com
+    url: 'http://xoops.org'
+    poster_ip: '::1'
+    moderate: '1'
+    gender: F
+    country: LU
+    photo: ''
+    flagdir: world_flags
+    other: ''
+-
+    msg_id: '6'
+    user_id: '0'
+    uname: Pierre
+    title: 'Hello from Pierre'
+    message: 'This is message from Pierre'
+    note: ''
+    post_time: '1541365253'
+    email: joe@email.com
+    url: ''
+    poster_ip: '::1'
+    moderate: '0'
+    gender: M
+    country: FR
+    photo: ''
+    flagdir: world_flags
+    other: ''
+-
+    msg_id: '7'
+    user_id: '0'
+    uname: Joe
+    title: 'Greetings from Joe'
+    message: 'This is message from Joe'
+    note: ''
+    post_time: '1541414016'
+    email: ''
+    url: ''
+    poster_ip: '::1'
+    moderate: '1'
+    gender: M
+    country: DZ
+    photo: ''
+    flagdir: world_flags
+    other: ''

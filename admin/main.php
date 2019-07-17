@@ -26,7 +26,7 @@
 use XoopsModules\Xfguestbook;
 
 require_once __DIR__ . '/admin_header.php';
-require_once  dirname(__DIR__) . '/include/cp_functions.php';
+require_once dirname(__DIR__) . '/include/cp_functions.php';
 
 /** @var \XoopsModules\Xfguestbook\Helper $helper */
 $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
@@ -144,21 +144,18 @@ function show()
             $criteria       = new \Criteria('msg_id', 0, '>');
             $criteria->setSort('post_time');
             break;
-
         case 1:
             $status_option1 = 'selected';
             $title          = AM_XFGUESTBOOK_PUBMSG;
             $criteria       = new \Criteria('moderate', '0');
             $criteria->setSort('post_time');
             break;
-
         case 2:
             $status_option2 = 'selected';
             $title          = AM_XFGUESTBOOK_WAITMSG;
             $criteria       = new \Criteria('moderate', '1');
             $criteria->setSort('post_time');
             break;
-
     }
 
     switch ($sel_order) {
@@ -166,7 +163,6 @@ function show()
             $order_option_asc = 'selected';
             $criteria->setOrder('ASC');
             break;
-
         case 0:
             $order_option_desc = 'selected';
             $criteria->setOrder('DESC');
@@ -220,6 +216,7 @@ function show()
     if ('0' != $totalcount) {
         echo "<form name='msglist' id='list' action='" . $_SERVER['PHP_SELF'] . '\' method=\'POST\' style=\'margin: 0;\'>';
 
+        /** @var \XoopsModules\Xfguestbook\Message $onemsg */
         foreach ($msg as $onemsg) {
             $all_msg              = [];
             $all_msg['post_time'] = formatTimestamp($onemsg->getVar('post_time'));
@@ -338,31 +335,26 @@ switch ($op) {
             redirect_header('main.php?op=show', 2, AM_XFGUESTBOOK_MSGERROR);
         }
         break;
-
     case 'edit':
         xoops_cp_header();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(0);
         $msg = $msgHandler->get($msg_id);
-        require_once  dirname(__DIR__) . '/include/form_edit.inc.php';
+        require_once dirname(__DIR__) . '/include/form_edit.inc.php';
         $msg_form->display();
-        require_once __DIR__   . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
         break;
-
     case 'approve':
         approve();
         break;
-
     case 'delete':
         delete();
         break;
-
     case 'banish':
         banish();
         break;
-
     case 'show':
     default:
         xoops_cp_header();
@@ -370,7 +362,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(0);
         show();
-        require_once __DIR__   . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
         break;
 }

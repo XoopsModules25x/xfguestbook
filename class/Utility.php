@@ -1,9 +1,8 @@
-<?php namespace XoopsModules\Xfguestbook;
+<?php
 
-use Xmf\Request;
+namespace XoopsModules\Xfguestbook;
+
 use XoopsModules\Xfguestbook;
-use XoopsModules\Xfguestbook\Common;
-
 
 /**
  * Class Utility
@@ -18,15 +17,14 @@ class Utility
 
     //--------------- Custom module methods -----------------------------
 
-
     public static function upload()
     {
-        global $xoopsModule,  $preview_name, $msgstop;
+        global $xoopsModule, $preview_name, $msgstop;
         /** @var Xfguestbook\Helper $helper */
         $helper = Xfguestbook\Helper::getInstance();
 
         $created = time();
-        $ext     = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $_FILES['photo']['name']);
+        $ext     = preg_replace("/^.+\.([^.]+)$/sU", '\\1', $_FILES['photo']['name']);
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $field = $_POST['xoops_upload_file'][0];
         if (!empty($field) || '' !== $field) {
@@ -42,7 +40,7 @@ class Utility
                         @unlink("$photos_dir/" . $preview_name);
                     }
                     $tmp_name     = $uploader->getSavedFileName();
-                    $ext          = preg_replace("/^.+\.([^.]+)$/sU", "\\1", $tmp_name);
+                    $ext          = preg_replace("/^.+\.([^.]+)$/sU", '\\1', $tmp_name);
                     $preview_name = 'tmp_' . $created . '.' . $ext;
                     rename("$photos_dir/$tmp_name", "$photos_dir/$preview_name");
                 } else {
@@ -149,10 +147,10 @@ class Utility
             return 0;
         }
         $ret        = 0;
-        $prefix_len = strlen($prefix);
+        $prefix_len = mb_strlen($prefix);
         while (false !== ($file = readdir($dir))) {
             //        if (strncmp($file, $prefix, $prefix_len) === 0) {
-            if (0 === strpos($file, $prefix)) {
+            if (0 === mb_strpos($file, $prefix)) {
                 if (@unlink("$dir_path/$file")) {
                     $ret++;
                 }
@@ -180,7 +178,7 @@ class Utility
                 $ret[] = $myrow;
             }
         } else {
-            while (false !== (list($ip_id, $ip_value) = $xoopsDB->fetchRow($result))) {
+            while (list($ip_id, $ip_value) = $xoopsDB->fetchRow($result)) {
                 $ret[] = $ip_value;
             }
         }
@@ -198,8 +196,8 @@ class Utility
             return false;
         } elseif (!checkdnsrr(array_pop(explode('@', $email)), 'MX')) {
             return false;
-        } else {
-            return true;
         }
+
+        return true;
     }
 }

@@ -37,6 +37,16 @@ foreach ($_GET as $k => $v) {
     ${$k} = $v;
 }
 
+$email_user = \Xmf\Request::getString('email_user', '');
+$title = \Xmf\Request::getString('title', '');
+$message = \Xmf\Request::getString('message', '');
+
+$phone        = \Xmf\Request::getString('phone', '');
+$name_user    = \Xmf\Request::getString('name_user', '');
+$email_author = \Xmf\Request::getString('email_author', '');
+$preview        = \Xmf\Request::getString('preview', '');
+$post        = \Xmf\Request::getString('post', '');
+
 if (isset($preview)) {
     $op = 'preview';
 } elseif (isset($post)) {
@@ -55,7 +65,6 @@ function displaypost($title, $content)
 }
 
 switch ($op) {
-
     case 'post':
         global $xoopsConfig;
         $ts = \MyTextSanitizer::getInstance();
@@ -92,7 +101,6 @@ switch ($op) {
         $msgsend .= '<br><br><a href="javascript:window.close();">' . MD_XFGUESTBOOK_CLOSEWINDOW . '</a></div>';
         echo $msgsend;
         break;
-
     case 'preview':
 
         $ts = \MyTextSanitizer::getInstance();
@@ -105,8 +113,8 @@ switch ($op) {
                 redirect_header('index.php', 3, $xoopsCaptcha->getMessage());
             }
         }
+
         $p_title = $title;
-        $p_title = $ts->htmlSpecialChars($ts->stripSlashesGPC($p_title));
         $p_msg   = MD_XFGUESTBOOK_FROMUSER . " $name_user " . MD_XFGUESTBOOK_YOURMSG . ' ' . $xoopsConfig['sitename'] . ' :<br>';
         $p_msg   .= $title . '<br>';
         $p_msg   .= '<hr><br>';
@@ -117,13 +125,9 @@ switch ($op) {
         $p_msg .= '<br>';
         displaypost($p_title, $p_msg);
 
-        $title   = $ts->htmlSpecialChars($ts->stripSlashesGPC($title));
-        $message = $ts->htmlSpecialChars($ts->stripSlashesGPC($message));
-
-        require_once __DIR__   . '/include/form_contact.inc.php';
+        require_once __DIR__ . '/include/form_contact.inc.php';
         xoops_footer();
         break;
-
     case 'form':
     default:
 
@@ -147,7 +151,7 @@ switch ($op) {
             xoops_load('XoopsCaptcha');
             $xoopsCaptcha = XoopsCaptcha::getInstance();
         }
-        require_once __DIR__   . '/include/form_contact.inc.php';
+        require_once __DIR__ . '/include/form_contact.inc.php';
         xoops_footer();
         break;
 }

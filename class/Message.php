@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xfguestbook;
+<?php
+
+namespace XoopsModules\Xfguestbook;
 
 /*
  * You may not change or alter any portion of this comment or credits
@@ -17,7 +19,6 @@
  * @since
  * @author       XOOPS Development Team
  */
-
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
@@ -26,6 +27,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 class Message extends \XoopsObject
 {
     // constructor
+
     /**
      * Message constructor.
      */

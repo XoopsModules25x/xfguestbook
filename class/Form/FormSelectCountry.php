@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xfguestbook\Form;
+<?php
+
+namespace XoopsModules\Xfguestbook\Form;
 
 //
 //  ------------------------------------------------------------------------ //
@@ -41,6 +43,7 @@ class FormSelectCountry extends \XoopsFormSelect
      */
     public function __construct($caption, $name, $value = null, $size = 1, $nullopt = false)
     {
+        /** @var \XoopsMySQLDatabase $db */
         $db = \XoopsDatabaseFactory::getDatabaseConnection();
         parent::__construct($caption, $name, $value, $size);
         $sql    = 'SELECT country_code, country_name FROM ' . $db->prefix('xfguestbook_country') . ' ORDER BY country_name';

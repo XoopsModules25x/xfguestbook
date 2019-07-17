@@ -36,7 +36,6 @@ use XoopsModules\Xfguestbook;
  */
 function xfguestbook_admin_menu($currentoption = 0, $breadcrumb = '')
 {
-
     /* Nice buttons styles */
     echo "
         <style type='text/css'>
@@ -131,16 +130,16 @@ function executeSQL($sql_file_path)
                 echo 'erreur<br>';
                 $error = true;
                 break;
-            } else {
-                if (!in_array($prefixed_query[4], $created_tables)) {
-                    //                  $msg = '&nbsp;&nbsp;Table <b>'.$GLOBALS['xoopsDB']->prefix($prefixed_query[4]).'</b> created.<br>';
-                    echo '&nbsp;&nbsp;Table <b>' . $GLOBALS['xoopsDB']->prefix($prefixed_query[4]) . '</b> created.<br>';
-                    $created_tables[] = $prefixed_query[4];
-                } else {
-                    echo '&nbsp;&nbsp;Data inserted to table <b>' . $GLOBALS['xoopsDB']->prefix($prefixed_query[4]) . '</b>.<br>';
-                    //                  $msg = '&nbsp;&nbsp;Data inserted to table <b>'.$GLOBALS['xoopsDB']->prefix($prefixed_query[4]).'</b>.<br>';
-                }
             }
+            if (!in_array($prefixed_query[4], $created_tables)) {
+                //                  $msg = '&nbsp;&nbsp;Table <b>'.$GLOBALS['xoopsDB']->prefix($prefixed_query[4]).'</b> created.<br>';
+                echo '&nbsp;&nbsp;Table <b>' . $GLOBALS['xoopsDB']->prefix($prefixed_query[4]) . '</b> created.<br>';
+                $created_tables[] = $prefixed_query[4];
+            } else {
+                echo '&nbsp;&nbsp;Data inserted to table <b>' . $GLOBALS['xoopsDB']->prefix($prefixed_query[4]) . '</b>.<br>';
+                //                  $msg = '&nbsp;&nbsp;Data inserted to table <b>'.$GLOBALS['xoopsDB']->prefix($prefixed_query[4]).'</b>.<br>';
+            }
+
             //      } else {
             //          the table name is reserved, so halt the installation
             //          $this->setErrors('<b>'.$prefixed_query[4]."</b> is a reserved table!");

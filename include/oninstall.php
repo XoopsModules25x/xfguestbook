@@ -20,9 +20,8 @@
 use XoopsModules\Xfguestbook;
 
 /**
- *
  * Prepares system prior to attempting to install module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link \XoopsModule}
  *
  * @return bool true if ready to install, false if not
  */
@@ -35,10 +34,10 @@ function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
     $xoopsSuccess = $utility::checkVerXoops($module);
 
     // check for minimum PHP version
-    $phpSuccess   = $utility::checkVerPhp($module);
+    $phpSuccess = $utility::checkVerPhp($module);
 
-    if (false !== $xoopsSuccess && false !==  $phpSuccess) {
-        $moduleTables =& $module->getInfo('tables');
+    if (false !== $xoopsSuccess && false !== $phpSuccess) {
+        $moduleTables = &$module->getInfo('tables');
         foreach ($moduleTables as $table) {
             $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
         }
@@ -48,9 +47,8 @@ function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during installation of the module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link \XoopsModule}
  *
  * @return bool true if installation successful, false if not
  */
@@ -73,8 +71,9 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
 
     // default Permission Settings ----------------------
     global $xoopsModule;
-    $moduleId     = $module->getVar('mid');
-//    $moduleId2    = $helper->getModule()->mid();
+    $moduleId = $module->getVar('mid');
+    //    $moduleId2    = $helper->getModule()->mid();
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
     $grouppermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
@@ -93,7 +92,7 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
 
     //  ---  COPY blank.png FILES ---------------
     if (count($configurator->copyBlankFiles) > 0) {
-        $file =  dirname(__DIR__) . '/assets/images/blank.png';
+        $file = dirname(__DIR__) . '/assets/images/blank.png';
         foreach (array_keys($configurator->copyBlankFiles) as $i) {
             $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utility::copyFile($file, $dest);
@@ -101,7 +100,7 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
     }
 
     //  ---  COPY test msg image ---------------
-    if (is_array ($configurator->copyTestFolders) && count($configurator->copyTestFolders) > 0) {
+    if ($configurator->copyTestFolders && is_array($configurator->copyTestFolders)) {
         foreach (array_keys($configurator->copyTestFolders) as $i) {
             $src  = $configurator->copyTestFolders[$i][0];
             $dest = $configurator->copyTestFolders[$i][1];

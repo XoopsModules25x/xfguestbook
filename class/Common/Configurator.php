@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Xfguestbook\Common;
+<?php
+
+namespace XoopsModules\Xfguestbook\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -17,7 +19,6 @@
  * @author      XOOPS Development Team
  * @package     Publisher
  * @since       1.05
- *
  */
 
 //require_once dirname(dirname(__DIR__)) . '/include/common.php';
@@ -43,10 +44,10 @@ class Configurator
      */
     public function __construct()
     {
-        $moduleDirName = basename(dirname(dirname(__DIR__)));
-        $moduleDirNameUpper   = strtoupper($moduleDirName);
+        $moduleDirName      = basename(dirname(dirname(__DIR__)));
+        $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-        require dirname(dirname(__DIR__)) . '/include/config.php';
+        require dirname(dirname(__DIR__)) . '/config/config.php';
         $config = getConfig();
 
         $this->name            = $config->name;
@@ -59,6 +60,5 @@ class Configurator
         $this->oldFolders      = $config->oldFolders;
         $this->renameTables    = $config->renameTables;
         $this->modCopyright    = $config->modCopyright;
-
     }
 }

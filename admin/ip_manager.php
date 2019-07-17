@@ -27,14 +27,13 @@ use XoopsModules\Xfguestbook;
 
 require_once __DIR__ . '/admin_header.php';
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once  dirname(__DIR__) . '/include/cp_functions.php';
+require_once dirname(__DIR__) . '/include/cp_functions.php';
 
+$op = 'badIpShow';
 if (\Xmf\Request::hasVar('op', 'GET')) {
     $op = $_GET['op'];
 } elseif (\Xmf\Request::hasVar('op', 'POST')) {
     $op = $_POST['op'];
-} else {
-    $op = 'badIpShow';
 }
 
 if (\Xmf\Request::hasVar('ip_id', 'GET')) {
@@ -42,7 +41,6 @@ if (\Xmf\Request::hasVar('ip_id', 'GET')) {
 } else {
     $ip_id = \Xmf\Request::getInt('ip_id', 0, 'POST');
 }
-
 
 $ip_value = \Xmf\Request::getString('ip_value', '', 'POST');
 
@@ -84,13 +82,13 @@ function badIpForm($ip_id = null)
 
     $sform->addElement(new \XoopsFormText(AM_XFGUESTBOOK_VALUE, 'ip_value', 50, 50, $ip_value), true);
 
-    $button_tray = new \XoopsFormElementTray('', '');
-    $button_tray->addElement(new \XoopsFormButton('', 'save', _SUBMIT, 'submit'));
+    $buttonTray = new \XoopsFormElementTray('', '');
+    $buttonTray->addElement(new \XoopsFormButton('', 'save', _SUBMIT, 'submit'));
     if ($ip_id) {
-        $button_tray->addElement(new \XoopsFormHidden('ip_id', $ip_id));
+        $buttonTray->addElement(new \XoopsFormHidden('ip_id', $ip_id));
     }
-    $button_tray->addElement(new \XoopsFormHidden('op', 'badIpSave'));
-    $sform->addElement($button_tray);
+    $buttonTray->addElement(new \XoopsFormHidden('op', 'badIpSave'));
+    $sform->addElement($buttonTray);
     $sform->display();
 }
 
@@ -179,7 +177,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpForm($ip_id);
-        require_once __DIR__   . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
         break;
     case 'badIpDel':
@@ -191,7 +189,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpForm($ip_id);
-        require_once __DIR__   . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
         break;
     case 'badIpSave':
@@ -203,7 +201,7 @@ switch ($op) {
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpForm();
-        require_once __DIR__   . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
         break;
     case 'badIpShow':
@@ -214,7 +212,7 @@ switch ($op) {
         //xfguestbook_admin_menu(3);
         badIpShow();
         badIpForm();
-        require_once __DIR__   . '/admin_footer.php';
+        require_once __DIR__ . '/admin_footer.php';
         //xoops_cp_footer();
         break;
 }

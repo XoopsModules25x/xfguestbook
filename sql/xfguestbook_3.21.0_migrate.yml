@@ -1,0 +1,124 @@
+xfguestbook_msg:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8mb4'
+    columns:
+        -
+            name: msg_id
+            attributes: ' int(11)  NOT NULL auto_increment'
+        -
+            name: user_id
+            attributes: ' int(11)  DEFAULT ''0'' '
+        -
+            name: uname
+            attributes: ' varchar(150) '
+        -
+            name: title
+            attributes: ' varchar(150) '
+        -
+            name: message
+            attributes: ' longtext '
+        -
+            name: note
+            attributes: ' longtext '
+        -
+            name: post_time
+            attributes: ' int(10)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: email
+            attributes: ' varchar(60) '
+        -
+            name: url
+            attributes: ' varchar(100) '
+        -
+            name: poster_ip
+            attributes: ' varchar(15) '
+        -
+            name: moderate
+            attributes: ' tinyint(1) '
+        -
+            name: gender
+            attributes: ' char(1)  NOT NULL  DEFAULT '''' '
+        -
+            name: country
+            attributes: ' char(5) '
+        -
+            name: photo
+            attributes: ' varchar(25) '
+        -
+            name: flagdir
+            attributes: ' varchar(20)  NOT NULL  DEFAULT '''' '
+        -
+            name: other
+            attributes: ' varchar(20)  NOT NULL  DEFAULT '''' '
+    keys:
+        PRIMARY:
+            columns: msg_id
+            unique: true
+xfguestbook_config:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8mb4'
+    columns:
+        -
+            name: conf_id
+            attributes: ' smallint(5) unsigned  NOT NULL auto_increment'
+        -
+            name: conf_cat
+            attributes: ' smallint(5) unsigned  NOT NULL  DEFAULT ''0'' '
+        -
+            name: conf_name
+            attributes: ' varchar(25)  NOT NULL  DEFAULT '''' '
+        -
+            name: conf_title
+            attributes: ' varchar(30)  NOT NULL  DEFAULT '''' '
+        -
+            name: conf_desc
+            attributes: ' varchar(30)  NOT NULL  DEFAULT '''' '
+        -
+            name: conf_value
+            attributes: ' text  NOT NULL '
+        -
+            name: conf_formtype
+            attributes: ' varchar(15)  NOT NULL  DEFAULT '''' '
+        -
+            name: conf_valuetype
+            attributes: ' varchar(10)  NOT NULL  DEFAULT '''' '
+        -
+            name: conf_order
+            attributes: ' smallint(5) unsigned  NOT NULL  DEFAULT ''0'' '
+    keys:
+        PRIMARY:
+            columns: conf_id
+            unique: true
+xfguestbook_country:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8mb4'
+    columns:
+        -
+            name: country_id
+            attributes: ' mediumint(8) unsigned  NOT NULL auto_increment'
+        -
+            name: country_code
+            attributes: ' varchar(5)  NOT NULL  DEFAULT ''0'' '
+        -
+            name: country_name
+            attributes: ' varchar(50)  NOT NULL  DEFAULT '''' '
+    keys:
+        country_code:
+            columns: country_code
+            unique: false
+        PRIMARY:
+            columns: country_id
+            unique: true
+xfguestbook_badips:
+    options: 'ENGINE=MyISAM DEFAULT CHARSET=utf8mb4'
+    columns:
+        -
+            name: ip_id
+            attributes: ' mediumint(8) unsigned  NOT NULL auto_increment'
+        -
+            name: ip_value
+            attributes: ' varchar(50)  NOT NULL  DEFAULT '''' '
+    keys:
+        country_code:
+            columns: ip_value
+            unique: false
+        PRIMARY:
+            columns: ip_id
+            unique: true

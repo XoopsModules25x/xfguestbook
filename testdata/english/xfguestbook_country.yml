@@ -1,0 +1,960 @@
+-
+    country_id: '1'
+    country_code: AF
+    country_name: AFGHANISTAN
+-
+    country_id: '2'
+    country_code: AX
+    country_name: 'ALAND ISLANDS'
+-
+    country_id: '3'
+    country_code: AL
+    country_name: ALBANIA
+-
+    country_id: '4'
+    country_code: DZ
+    country_name: ALGERIA
+-
+    country_id: '5'
+    country_code: AS
+    country_name: 'AMERICAN SAMOA'
+-
+    country_id: '6'
+    country_code: AD
+    country_name: ANDORRA
+-
+    country_id: '7'
+    country_code: AO
+    country_name: ANGOLA
+-
+    country_id: '8'
+    country_code: AI
+    country_name: ANGUILLA
+-
+    country_id: '9'
+    country_code: AQ
+    country_name: ANTARCTICA
+-
+    country_id: '10'
+    country_code: AG
+    country_name: 'ANTIGUA AND BARBUDA'
+-
+    country_id: '11'
+    country_code: AR
+    country_name: ARGENTINA
+-
+    country_id: '12'
+    country_code: AM
+    country_name: ARMENIA
+-
+    country_id: '13'
+    country_code: AW
+    country_name: ARUBA
+-
+    country_id: '14'
+    country_code: AU
+    country_name: AUSTRALIA
+-
+    country_id: '15'
+    country_code: AT
+    country_name: AUSTRIA
+-
+    country_id: '16'
+    country_code: AZ
+    country_name: AZERBAIJAN
+-
+    country_id: '17'
+    country_code: BS
+    country_name: BAHAMAS
+-
+    country_id: '18'
+    country_code: BH
+    country_name: BAHRAIN
+-
+    country_id: '19'
+    country_code: BD
+    country_name: BANGLADESH
+-
+    country_id: '20'
+    country_code: BB
+    country_name: BARBADOS
+-
+    country_id: '21'
+    country_code: BY
+    country_name: BELARUS
+-
+    country_id: '22'
+    country_code: BE
+    country_name: BELGIUM
+-
+    country_id: '23'
+    country_code: BZ
+    country_name: BELIZE
+-
+    country_id: '24'
+    country_code: BJ
+    country_name: BENIN
+-
+    country_id: '25'
+    country_code: BM
+    country_name: BERMUDA
+-
+    country_id: '26'
+    country_code: BT
+    country_name: BHUTAN
+-
+    country_id: '27'
+    country_code: BO
+    country_name: BOLIVIA
+-
+    country_id: '28'
+    country_code: BA
+    country_name: 'BOSNIA AND HERZEGOVINA'
+-
+    country_id: '29'
+    country_code: BW
+    country_name: BOTSWANA
+-
+    country_id: '30'
+    country_code: BV
+    country_name: 'BOUVET ISLAND'
+-
+    country_id: '31'
+    country_code: BR
+    country_name: BRAZIL
+-
+    country_id: '32'
+    country_code: IO
+    country_name: 'BRITISH INDIAN OCEAN TERRITORY'
+-
+    country_id: '33'
+    country_code: BN
+    country_name: 'BRUNEI DARUSSALAM'
+-
+    country_id: '34'
+    country_code: BG
+    country_name: BULGARIA
+-
+    country_id: '35'
+    country_code: BF
+    country_name: 'BURKINA FASO'
+-
+    country_id: '36'
+    country_code: BI
+    country_name: BURUNDI
+-
+    country_id: '37'
+    country_code: KH
+    country_name: CAMBODIA
+-
+    country_id: '38'
+    country_code: CM
+    country_name: CAMEROON
+-
+    country_id: '39'
+    country_code: CA
+    country_name: CANADA
+-
+    country_id: '40'
+    country_code: CV
+    country_name: 'CAPE VERDE'
+-
+    country_id: '41'
+    country_code: KY
+    country_name: 'CAYMAN ISLANDS'
+-
+    country_id: '42'
+    country_code: CF
+    country_name: 'CENTRAL AFRICAN REPUBLIC'
+-
+    country_id: '43'
+    country_code: TD
+    country_name: CHAD
+-
+    country_id: '44'
+    country_code: CL
+    country_name: CHILE
+-
+    country_id: '45'
+    country_code: CN
+    country_name: CHINA
+-
+    country_id: '46'
+    country_code: CX
+    country_name: 'CHRISTMAS ISLAND'
+-
+    country_id: '47'
+    country_code: CC
+    country_name: 'COCOS (KEELING) ISLANDS'
+-
+    country_id: '48'
+    country_code: CO
+    country_name: COLOMBIA
+-
+    country_id: '49'
+    country_code: KM
+    country_name: COMOROS
+-
+    country_id: '50'
+    country_code: CG
+    country_name: CONGO
+-
+    country_id: '51'
+    country_code: CD
+    country_name: 'CONGO, THE DEMOCRATIC REPUBLIC'
+-
+    country_id: '52'
+    country_code: CK
+    country_name: 'COOK ISLANDS'
+-
+    country_id: '53'
+    country_code: CR
+    country_name: 'COSTA RICA'
+-
+    country_id: '54'
+    country_code: CI
+    country_name: 'COTE D''IVOIRE'
+-
+    country_id: '55'
+    country_code: HR
+    country_name: CROATIA
+-
+    country_id: '56'
+    country_code: CU
+    country_name: CUBA
+-
+    country_id: '57'
+    country_code: CY
+    country_name: CYPRUS
+-
+    country_id: '58'
+    country_code: CZ
+    country_name: 'CZECH REPUBLIC'
+-
+    country_id: '59'
+    country_code: DK
+    country_name: DENMARK
+-
+    country_id: '60'
+    country_code: DJ
+    country_name: DJIBOUTI
+-
+    country_id: '61'
+    country_code: DM
+    country_name: DOMINICA
+-
+    country_id: '62'
+    country_code: DO
+    country_name: 'DOMINICAN REPUBLIC'
+-
+    country_id: '63'
+    country_code: EC
+    country_name: ECUADOR
+-
+    country_id: '64'
+    country_code: EG
+    country_name: EGYPT
+-
+    country_id: '65'
+    country_code: SV
+    country_name: 'EL SALVADOR'
+-
+    country_id: '66'
+    country_code: GQ
+    country_name: 'EQUATORIAL GUINEA'
+-
+    country_id: '67'
+    country_code: ER
+    country_name: ERITREA
+-
+    country_id: '68'
+    country_code: EE
+    country_name: ESTONIA
+-
+    country_id: '69'
+    country_code: ET
+    country_name: ETHIOPIA
+-
+    country_id: '70'
+    country_code: FK
+    country_name: 'FALKLAND ISLANDS (MALVINAS)'
+-
+    country_id: '71'
+    country_code: FO
+    country_name: 'FAROE ISLANDS'
+-
+    country_id: '72'
+    country_code: FJ
+    country_name: FIJI
+-
+    country_id: '73'
+    country_code: FI
+    country_name: FINLAND
+-
+    country_id: '74'
+    country_code: FR
+    country_name: FRANCE
+-
+    country_id: '75'
+    country_code: GF
+    country_name: 'FRENCH GUIANA'
+-
+    country_id: '76'
+    country_code: PF
+    country_name: 'FRENCH POLYNESIA'
+-
+    country_id: '77'
+    country_code: TF
+    country_name: 'FRENCH SOUTHERN TERRITORIES'
+-
+    country_id: '78'
+    country_code: GA
+    country_name: GABON
+-
+    country_id: '79'
+    country_code: GM
+    country_name: GAMBIA
+-
+    country_id: '80'
+    country_code: GE
+    country_name: GEORGIA
+-
+    country_id: '81'
+    country_code: DE
+    country_name: GERMANY
+-
+    country_id: '82'
+    country_code: GH
+    country_name: GHANA
+-
+    country_id: '83'
+    country_code: GI
+    country_name: GIBRALTAR
+-
+    country_id: '84'
+    country_code: GR
+    country_name: GREECE
+-
+    country_id: '85'
+    country_code: GL
+    country_name: GREENLAND
+-
+    country_id: '86'
+    country_code: GD
+    country_name: GRENADA
+-
+    country_id: '87'
+    country_code: GP
+    country_name: GUADELOUPE
+-
+    country_id: '88'
+    country_code: GU
+    country_name: GUAM
+-
+    country_id: '89'
+    country_code: GT
+    country_name: GUATEMALA
+-
+    country_id: '90'
+    country_code: GN
+    country_name: GUINEA
+-
+    country_id: '91'
+    country_code: GW
+    country_name: GUINEA-BISSAU
+-
+    country_id: '92'
+    country_code: GY
+    country_name: GUYANA
+-
+    country_id: '93'
+    country_code: HT
+    country_name: HAITI
+-
+    country_id: '94'
+    country_code: HM
+    country_name: 'HEARD ISLAND AND MCDONALD ISLA'
+-
+    country_id: '95'
+    country_code: VA
+    country_name: 'HOLY SEE (VATICAN CITY STATE)'
+-
+    country_id: '96'
+    country_code: HN
+    country_name: HONDURAS
+-
+    country_id: '97'
+    country_code: HK
+    country_name: 'HONG KONG'
+-
+    country_id: '98'
+    country_code: HU
+    country_name: HUNGARY
+-
+    country_id: '99'
+    country_code: IS
+    country_name: ICELAND
+-
+    country_id: '100'
+    country_code: IN
+    country_name: INDIA
+-
+    country_id: '101'
+    country_code: ID
+    country_name: INDONESIA
+-
+    country_id: '102'
+    country_code: IR
+    country_name: 'IRAN, ISLAMIC REPUBLIC OF'
+-
+    country_id: '103'
+    country_code: IQ
+    country_name: IRAQ
+-
+    country_id: '104'
+    country_code: IE
+    country_name: IRELAND
+-
+    country_id: '105'
+    country_code: IL
+    country_name: ISRAEL
+-
+    country_id: '106'
+    country_code: IT
+    country_name: ITALY
+-
+    country_id: '107'
+    country_code: JM
+    country_name: JAMAICA
+-
+    country_id: '108'
+    country_code: JP
+    country_name: JAPAN
+-
+    country_id: '109'
+    country_code: JO
+    country_name: JORDAN
+-
+    country_id: '110'
+    country_code: KZ
+    country_name: KAZAKHSTAN
+-
+    country_id: '111'
+    country_code: KE
+    country_name: KENYA
+-
+    country_id: '112'
+    country_code: KI
+    country_name: KIRIBATI
+-
+    country_id: '113'
+    country_code: KP
+    country_name: 'KOREA, DEMOCRATIC PEOPLE''S REP'
+-
+    country_id: '114'
+    country_code: KR
+    country_name: 'KOREA, REPUBLIC OF'
+-
+    country_id: '115'
+    country_code: KW
+    country_name: KUWAIT
+-
+    country_id: '116'
+    country_code: KG
+    country_name: KYRGYZSTAN
+-
+    country_id: '117'
+    country_code: LA
+    country_name: 'LAO PEOPLE''S DEMOCRATIC REPUBL'
+-
+    country_id: '118'
+    country_code: LV
+    country_name: LATVIA
+-
+    country_id: '119'
+    country_code: LB
+    country_name: LEBANON
+-
+    country_id: '120'
+    country_code: LS
+    country_name: LESOTHO
+-
+    country_id: '121'
+    country_code: LR
+    country_name: LIBERIA
+-
+    country_id: '122'
+    country_code: LY
+    country_name: 'LIBYAN ARAB JAMAHIRIYA'
+-
+    country_id: '123'
+    country_code: LI
+    country_name: LIECHTENSTEIN
+-
+    country_id: '124'
+    country_code: LT
+    country_name: LITHUANIA
+-
+    country_id: '125'
+    country_code: LU
+    country_name: LUXEMBOURG
+-
+    country_id: '126'
+    country_code: MO
+    country_name: MACAO
+-
+    country_id: '127'
+    country_code: MK
+    country_name: 'MACEDONIA, THE FORMER YUGOSLAV'
+-
+    country_id: '128'
+    country_code: MG
+    country_name: MADAGASCAR
+-
+    country_id: '129'
+    country_code: MW
+    country_name: MALAWI
+-
+    country_id: '130'
+    country_code: MY
+    country_name: MALAYSIA
+-
+    country_id: '131'
+    country_code: MV
+    country_name: MALDIVES
+-
+    country_id: '132'
+    country_code: ML
+    country_name: MALI
+-
+    country_id: '133'
+    country_code: MT
+    country_name: MALTA
+-
+    country_id: '134'
+    country_code: MH
+    country_name: 'MARSHALL ISLANDS'
+-
+    country_id: '135'
+    country_code: MQ
+    country_name: MARTINIQUE
+-
+    country_id: '136'
+    country_code: MR
+    country_name: MAURITANIA
+-
+    country_id: '137'
+    country_code: MU
+    country_name: MAURITIUS
+-
+    country_id: '138'
+    country_code: YT
+    country_name: MAYOTTE
+-
+    country_id: '139'
+    country_code: MX
+    country_name: MEXICO
+-
+    country_id: '140'
+    country_code: FM
+    country_name: 'MICRONESIA, FEDERATED STATES O'
+-
+    country_id: '141'
+    country_code: MD
+    country_name: 'MOLDOVA, REPUBLIC OF'
+-
+    country_id: '142'
+    country_code: MC
+    country_name: MONACO
+-
+    country_id: '143'
+    country_code: MN
+    country_name: MONGOLIA
+-
+    country_id: '144'
+    country_code: MS
+    country_name: MONTSERRAT
+-
+    country_id: '145'
+    country_code: MA
+    country_name: MOROCCO
+-
+    country_id: '146'
+    country_code: MZ
+    country_name: MOZAMBIQUE
+-
+    country_id: '147'
+    country_code: MM
+    country_name: MYANMAR
+-
+    country_id: '148'
+    country_code: NA
+    country_name: NAMIBIA
+-
+    country_id: '149'
+    country_code: NR
+    country_name: NAURU
+-
+    country_id: '150'
+    country_code: NP
+    country_name: NEPAL
+-
+    country_id: '151'
+    country_code: NL
+    country_name: NETHERLANDS
+-
+    country_id: '152'
+    country_code: AN
+    country_name: 'NETHERLANDS ANTILLES'
+-
+    country_id: '153'
+    country_code: NC
+    country_name: 'NEW CALEDONIA'
+-
+    country_id: '154'
+    country_code: NZ
+    country_name: 'NEW ZEALAND'
+-
+    country_id: '155'
+    country_code: NI
+    country_name: NICARAGUA
+-
+    country_id: '156'
+    country_code: NE
+    country_name: NIGER
+-
+    country_id: '157'
+    country_code: NG
+    country_name: NIGERIA
+-
+    country_id: '158'
+    country_code: NU
+    country_name: NIUE
+-
+    country_id: '159'
+    country_code: NF
+    country_name: 'NORFOLK ISLAND'
+-
+    country_id: '160'
+    country_code: MP
+    country_name: 'NORTHERN MARIANA ISLANDS'
+-
+    country_id: '161'
+    country_code: 'NO'
+    country_name: NORWAY
+-
+    country_id: '162'
+    country_code: OM
+    country_name: OMAN
+-
+    country_id: '163'
+    country_code: PK
+    country_name: PAKISTAN
+-
+    country_id: '164'
+    country_code: PW
+    country_name: PALAU
+-
+    country_id: '165'
+    country_code: PS
+    country_name: 'PALESTINIAN TERRITORY, OCCUPIE'
+-
+    country_id: '166'
+    country_code: PA
+    country_name: PANAMA
+-
+    country_id: '167'
+    country_code: PG
+    country_name: 'PAPUA NEW GUINEA'
+-
+    country_id: '168'
+    country_code: PY
+    country_name: PARAGUAY
+-
+    country_id: '169'
+    country_code: PE
+    country_name: PERU
+-
+    country_id: '170'
+    country_code: PH
+    country_name: PHILIPPINES
+-
+    country_id: '171'
+    country_code: PN
+    country_name: PITCAIRN
+-
+    country_id: '172'
+    country_code: PL
+    country_name: POLAND
+-
+    country_id: '173'
+    country_code: PT
+    country_name: PORTUGAL
+-
+    country_id: '174'
+    country_code: PR
+    country_name: 'PUERTO RICO'
+-
+    country_id: '175'
+    country_code: QA
+    country_name: QATAR
+-
+    country_id: '176'
+    country_code: RE
+    country_name: REUNION
+-
+    country_id: '177'
+    country_code: RO
+    country_name: ROMANIA
+-
+    country_id: '178'
+    country_code: RU
+    country_name: 'RUSSIAN FEDERATION'
+-
+    country_id: '179'
+    country_code: RW
+    country_name: RWANDA
+-
+    country_id: '180'
+    country_code: SH
+    country_name: 'SAINT HELENA'
+-
+    country_id: '181'
+    country_code: KN
+    country_name: 'SAINT KITTS AND NEVIS'
+-
+    country_id: '182'
+    country_code: LC
+    country_name: 'SAINT LUCIA'
+-
+    country_id: '183'
+    country_code: PM
+    country_name: 'SAINT PIERRE AND MIQUELON'
+-
+    country_id: '184'
+    country_code: VC
+    country_name: 'SAINT VINCENT AND THE GRENADIN'
+-
+    country_id: '185'
+    country_code: WS
+    country_name: SAMOA
+-
+    country_id: '186'
+    country_code: SM
+    country_name: 'SAN MARINO'
+-
+    country_id: '187'
+    country_code: ST
+    country_name: 'SAO TOME AND PRINCIPE'
+-
+    country_id: '188'
+    country_code: SA
+    country_name: 'SAUDI ARABIA'
+-
+    country_id: '189'
+    country_code: SN
+    country_name: SENEGAL
+-
+    country_id: '190'
+    country_code: CS
+    country_name: 'SERBIA AND MONTENEGRO'
+-
+    country_id: '191'
+    country_code: SC
+    country_name: SEYCHELLES
+-
+    country_id: '192'
+    country_code: SL
+    country_name: 'SIERRA LEONE'
+-
+    country_id: '193'
+    country_code: SG
+    country_name: SINGAPORE
+-
+    country_id: '194'
+    country_code: SK
+    country_name: SLOVAKIA
+-
+    country_id: '195'
+    country_code: SI
+    country_name: SLOVENIA
+-
+    country_id: '196'
+    country_code: SB
+    country_name: 'SOLOMON ISLANDS'
+-
+    country_id: '197'
+    country_code: SO
+    country_name: SOMALIA
+-
+    country_id: '198'
+    country_code: ZA
+    country_name: 'SOUTH AFRICA'
+-
+    country_id: '199'
+    country_code: GS
+    country_name: 'SOUTH GEORGIA AND THE SOUTH SA'
+-
+    country_id: '200'
+    country_code: ES
+    country_name: SPAIN
+-
+    country_id: '201'
+    country_code: LK
+    country_name: 'SRI LANKA'
+-
+    country_id: '202'
+    country_code: SD
+    country_name: SUDAN
+-
+    country_id: '203'
+    country_code: SR
+    country_name: SURINAME
+-
+    country_id: '204'
+    country_code: SJ
+    country_name: 'SVALBARD AND JAN MAYEN'
+-
+    country_id: '205'
+    country_code: SZ
+    country_name: SWAZILAND
+-
+    country_id: '206'
+    country_code: SE
+    country_name: SWEDEN
+-
+    country_id: '207'
+    country_code: CH
+    country_name: SWITZERLAND
+-
+    country_id: '208'
+    country_code: SY
+    country_name: 'SYRIAN ARAB REPUBLIC'
+-
+    country_id: '209'
+    country_code: TW
+    country_name: TAIWAN
+-
+    country_id: '210'
+    country_code: TJ
+    country_name: TAJIKISTAN
+-
+    country_id: '211'
+    country_code: TZ
+    country_name: 'TANZANIA, UNITED REPUBLIC OF'
+-
+    country_id: '212'
+    country_code: TH
+    country_name: THAILAND
+-
+    country_id: '213'
+    country_code: TL
+    country_name: TIMOR-LESTE
+-
+    country_id: '214'
+    country_code: TG
+    country_name: TOGO
+-
+    country_id: '215'
+    country_code: TK
+    country_name: TOKELAU
+-
+    country_id: '216'
+    country_code: TO
+    country_name: TONGA
+-
+    country_id: '217'
+    country_code: TT
+    country_name: 'TRINIDAD AND TOBAGO'
+-
+    country_id: '218'
+    country_code: TN
+    country_name: TUNISIA
+-
+    country_id: '219'
+    country_code: TR
+    country_name: TURKEY
+-
+    country_id: '220'
+    country_code: TM
+    country_name: TURKMENISTAN
+-
+    country_id: '221'
+    country_code: TC
+    country_name: 'TURKS AND CAICOS ISLANDS'
+-
+    country_id: '222'
+    country_code: TV
+    country_name: TUVALU
+-
+    country_id: '223'
+    country_code: UG
+    country_name: UGANDA
+-
+    country_id: '224'
+    country_code: UA
+    country_name: UKRAINE
+-
+    country_id: '225'
+    country_code: AE
+    country_name: 'UNITED ARAB EMIRATES'
+-
+    country_id: '226'
+    country_code: GB
+    country_name: 'UNITED KINGDOM'
+-
+    country_id: '227'
+    country_code: US
+    country_name: 'UNITED STATES'
+-
+    country_id: '228'
+    country_code: UM
+    country_name: 'UNITED STATES MINOR OUTLYING I'
+-
+    country_id: '229'
+    country_code: UY
+    country_name: URUGUAY
+-
+    country_id: '230'
+    country_code: UZ
+    country_name: UZBEKISTAN
+-
+    country_id: '231'
+    country_code: VU
+    country_name: VANUATU
+-
+    country_id: '232'
+    country_code: VE
+    country_name: VENEZUELA
+-
+    country_id: '233'
+    country_code: VN
+    country_name: 'VIET NAM'
+-
+    country_id: '234'
+    country_code: VG
+    country_name: 'VIRGIN ISLANDS, BRITISH'
+-
+    country_id: '235'
+    country_code: VI
+    country_name: 'VIRGIN ISLANDS, U.S.'
+-
+    country_id: '236'
+    country_code: WF
+    country_name: 'WALLIS AND FUTUNA'
+-
+    country_id: '237'
+    country_code: EH
+    country_name: 'WESTERN SAHARA'
+-
+    country_id: '238'
+    country_code: YE
+    country_name: YEMEN
+-
+    country_id: '239'
+    country_code: ZM
+    country_name: ZAMBIA
+-
+    country_id: '240'
+    country_code: ZW
+    country_name: ZIMBABWE

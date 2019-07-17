@@ -43,15 +43,15 @@ if (0 == $option['opt_icon']) {
     $annonce_text = new \XoopsFormDhtmlTextArea(MD_XFGUESTBOOK_YOURMESSAGE, 'message', $message, 10, 50);
 }
 $form_contact->addElement($annonce_text, true);
-$button_tray = new \XoopsFormElementTray('', '');
-$button_tray->addElement(new \XoopsFormCaptcha(), true);
-$button_tray->addElement(new \XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
-$button_tray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
+$buttonTray = new \XoopsFormElementTray('', '');
+$buttonTray->addElement(new \XoopsFormCaptcha(), true);
+$buttonTray->addElement(new \XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
+$buttonTray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
 $button_cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
 $button_cancel->setExtra('\' onclick=\'javascript:window.close();\'');
-$button_tray->addElement($button_cancel);
+$buttonTray->addElement($button_cancel);
 
-$form_contact->addElement($button_tray);
+$form_contact->addElement($buttonTray);
 
 $form_contact->addElement(new \XoopsFormHidden('email_author', $email_author));
 

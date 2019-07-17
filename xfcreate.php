@@ -41,21 +41,21 @@ $msgHandler = $helper->getHandler('Message');
 $confirm_code = \Xmf\Request::getString('confirm_code', '', 'POST');
 $confirm_str  = \Xmf\Request::getString('confirm_str', '', 'POST');
 $user_id      = \Xmf\Request::getInt('user_id', 0, 'POST');
-$title        = (isset($_POST['title']) ? $_POST['title'] : '');
-$message      = (isset($_POST['message']) ? $_POST['message'] : '');
-$gender       = (isset($_POST['gender']) ? $_POST['gender'] : '');
-$preview_name = (isset($_POST['preview_name']) ? $_POST['preview_name'] : '');
-$email        = (isset($_POST['email']) ? $_POST['email'] : '');
-$name         = (isset($_POST['name']) ? $_POST['name'] : '');
-$url          = (isset($_POST['url']) ? $_POST['url'] : '');
-$country      = (isset($_POST['country']) ? $_POST['country'] : '');
+$title        = \Xmf\Request::getString('title', '', 'POST');
+$message      = \Xmf\Request::getString('message', '', 'POST');
+$gender       = \Xmf\Request::getString('gender', '', 'POST');
+$preview_name = \Xmf\Request::getString('preview_name', '', 'POST');
+$email        = \Xmf\Request::getString('email', '', 'POST');
+$name         = \Xmf\Request::getString('name', '', 'POST');
+$url          = \Xmf\Request::getString('url', '', 'POST');
+$country      = \Xmf\Request::getString('country', '', 'POST');
+
+$op = 'form';
 
 if (\Xmf\Request::hasVar('preview', 'POST')) {
     $op = 'preview';
 } elseif (\Xmf\Request::hasVar('post', 'POST')) {
     $op = 'post';
-} else {
-    $op = 'form';
 }
 
 $badip = in_array($_SERVER['REMOTE_ADDR'], Xfguestbook\Utility::get_badips()) ? true : false;
@@ -66,7 +66,6 @@ switch ($op) {
         $nb_removed_tmp = Xfguestbook\Utility::clear_tmp_files($photos_dir);
         redirect_header('index.php', 0);
         break;
-
     case 'preview':
         $ts                                      = \MyTextSanitizer::getInstance();
         $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
@@ -90,8 +89,8 @@ switch ($op) {
         if (!empty($_FILES['photo']['name'])) {
             Xfguestbook\Utility::upload();
         }
-        $title   = $ts->htmlSpecialChars($ts->stripSlashesGPC($title));
-        $message = $ts->htmlSpecialChars($ts->stripSlashesGPC($message));
+//        $title   = $ts->htmlSpecialChars($ts->stripSlashesGPC($title));
+//        $message = $ts->htmlSpecialChars($ts->stripSlashesGPC($message));
         if (!empty($msgstop)) {
             $xoopsTpl->assign('preview', true);
             $xoopsTpl->assign('msgstop', $msgstop);
@@ -131,12 +130,11 @@ switch ($op) {
 
         $xoopsTpl->assign('preview', true);
         $xoopsTpl->assign('msgstop', $msgstop);
-        require_once __DIR__   . '/include/form_sign.inc.php';
+        require_once __DIR__ . '/include/form_sign.inc.php';
         $xoopsTpl->assign('msg', $msgpost);
         $signform->assign($xoopsTpl);
         require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
-
     case 'post':
         $msgstop = '';
         if (1 == $option['opt_code']) {
@@ -154,17 +152,12 @@ switch ($op) {
             $msgstop .= MD_XFGUESTBOOK_URL_DISABLED . '<br><br>';
         }
 
-
-
         if (2 == $option['opt_mail'] && !Xfguestbook\Utility::email_exist($email)) {
             $msgstop .= MD_XFGUESTBOOK_INVALIDMAIL . '<br><br>';
         }
         if (2 == $option['opt_mail'] && '' !== $email && !checkEmail($email)) {
             $msgstop .= MD_XFGUESTBOOK_INVALIDMAIL . '<br><br>';
         }
-
-
-
 
         if (!empty($_FILES['photo']['name'])) {
             Xfguestbook\Utility::upload();
@@ -238,7 +231,6 @@ switch ($op) {
             redirect_header('index.php', 2, $messagesent);
         }
         break;
-
     case 'form':
     default:
         $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
@@ -258,7 +250,7 @@ switch ($op) {
             $xoopsTpl->assign('moderate', MD_XFGUESTBOOK_MODERATED);
         }
 
-        require_once __DIR__   . '/include/form_sign.inc.php';
+        require_once __DIR__ . '/include/form_sign.inc.php';
         $signform->assign($xoopsTpl);
         require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
