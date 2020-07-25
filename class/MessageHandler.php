@@ -14,12 +14,11 @@ namespace XoopsModules\Xfguestbook;
 
 /**
  * @copyright    {@link https://xoops.org/ XOOPS Project}
- * @license      {@link http://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
+ * @license      {@link https://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
  * @package
  * @since
  * @author       XOOPS Development Team
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Class MessageHandler
@@ -79,7 +78,7 @@ class MessageHandler extends \XoopsPersistableObjectHandler
      */
     public function insert(\XoopsObject $msg, $force = true)
     {
-        if (Message::class !== get_class($msg)) {
+        if (Message::class !== \get_class($msg)) {
             return false;
         }
         if (!$msg->cleanVars()) {
@@ -176,12 +175,12 @@ class MessageHandler extends \XoopsPersistableObjectHandler
     public function delete(\XoopsObject $msg, $force = false)
     {
         global $xoopsModule;
-        if (Message::class !== get_class($msg)) {
+        if (Message::class !== \get_class($msg)) {
             return false;
         }
-        $sql = sprintf('DELETE FROM `%s` WHERE msg_id = %u', $this->db->prefix('xfguestbook_msg'), $msg->getVar('msg_id'));
+        $sql = \sprintf('DELETE FROM `%s` WHERE msg_id = %u', $this->db->prefix('xfguestbook_msg'), $msg->getVar('msg_id'));
         if (isset($this->commentstable) && '' !== $this->commentstable) {
-            xoops_comment_delete($xoopsModule->getVar('mid'), $msg_id);
+            \xoops_comment_delete($xoopsModule->getVar('mid'), $msg_id);
         }
 
         if (!$result = $this->db->query($sql)) {
@@ -202,7 +201,7 @@ class MessageHandler extends \XoopsPersistableObjectHandler
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && $criteria instanceof \CriteriaElement) {
             $sql   .= ' ' . $criteria->renderWhere();
             $sort  = ('' !== $criteria->getSort()) ? $criteria->getSort() : 'msg_id';
             $sql   .= ' ORDER BY ' . $sort . ' ' . $criteria->getOrder();
@@ -224,32 +223,32 @@ class MessageHandler extends \XoopsPersistableObjectHandler
     }
 
     /**
-     * @param  null|\CriteriaElement|\CriteriaCompo $criteria
+     * @param null|\CriteriaElement|\CriteriaCompo $criteria
      * @return int
      */
     public function countMsg(\CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
             return 0;
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
 
         return $count;
     }
 
     /**
-     * @param  null|\CriteriaElement|\CriteriaCompo $criteria
+     * @param null|\CriteriaElement|\CriteriaCompo $criteria
      * @return array|bool
      */
     public function countMsgByCountry(\CriteriaElement $criteria = null)
     {
         $arr = [];
         $sql = 'SELECT country, flagdir FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -258,8 +257,8 @@ class MessageHandler extends \XoopsPersistableObjectHandler
         while (list($country, $flagdir) = $this->db->fetchRow($result)) {
             $arr[] = $flagdir . '/' . $country;
         }
-        $ret = array_count_values($arr);
-        arsort($ret);
+        $ret = \array_count_values($arr);
+        \arsort($ret);
 
         return $ret;
     }
@@ -272,7 +271,7 @@ class MessageHandler extends \XoopsPersistableObjectHandler
     {
         $arr = [];
         $sql = 'SELECT gender FROM ' . $this->db->prefix('xfguestbook_msg');
-        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -281,20 +280,20 @@ class MessageHandler extends \XoopsPersistableObjectHandler
         while (list($gender) = $this->db->fetchRow($result)) {
             $arr[] = $gender;
         }
-        $ret = array_count_values($arr);
+        $ret = \array_count_values($arr);
 
         return $ret;
     }
 
     /**
-     * @param  null|\CriteriaElement|\CriteriaCompo $criteria
+     * @param null|\CriteriaElement|\CriteriaCompo $criteria
      * @return array|int
      */
     public function getMsgImg(\CriteriaElement $criteria = null)
     {
         $arr = [];
         $sql = 'SELECT photo FROM ' . $this->db->prefix('xfguestbook_msg') . " WHERE `photo` LIKE 'msg_%'";
-        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {

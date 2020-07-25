@@ -30,8 +30,8 @@ function getOptions()
 {
     global $xoopsDB;
     $arr_conf = [];
-    $sql    = 'SELECT conf_name, conf_value FROM ' . $xoopsDB->prefix('xfguestbook_config');
-    $result = $xoopsDB->query($sql);
+    $sql      = 'SELECT conf_name, conf_value FROM ' . $xoopsDB->prefix('xfguestbook_config');
+    $result   = $xoopsDB->query($sql);
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $arr_conf[$myrow['conf_name']] = $myrow['conf_value'];
     }
@@ -46,9 +46,9 @@ function getOptions4Admin()
 {
     global $xoopsDB;
     $arr_conf = [];
-    $sql    = 'SELECT conf_id, conf_name, conf_value FROM ' . $xoopsDB->prefix('xfguestbook_config');
-    $result = $xoopsDB->query($sql);
-    $i      = 0;
+    $sql      = 'SELECT conf_id, conf_name, conf_value FROM ' . $xoopsDB->prefix('xfguestbook_config');
+    $result   = $xoopsDB->query($sql);
+    $i        = 0;
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $arr_conf[$i]['conf_id']       = $myrow['conf_id'];
         $arr_conf[$i]['conf_name']     = $myrow['conf_name'];

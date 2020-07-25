@@ -23,30 +23,33 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\Module\Admin;
+use Xmf\Request;
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 
 require_once __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/include/cp_functions.php';
 
-/** @var \XoopsModules\Xfguestbook\Helper $helper */
-$helper = \XoopsModules\Xfguestbook\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
 if (null === $helper->getConfig('flagdir')) {
     redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->dirname(), 4, AM_XFGUESTBOOK_MUST_UPDATE);
 }
 
-if (\Xmf\Request::hasVar('op', 'GET')) {
+if (Request::hasVar('op', 'GET')) {
     $op = $_GET['op'];
-} elseif (\Xmf\Request::hasVar('op', 'POST')) {
+} elseif (Request::hasVar('op', 'POST')) {
     $op = $_POST['op'];
 } else {
     $op = 'show';
 }
 
-if (\Xmf\Request::hasVar('msg_id', 'GET')) {
-    $msg_id = \Xmf\Request::getInt('msg_id', 0, 'GET');
+if (Request::hasVar('msg_id', 'GET')) {
+    $msg_id = Request::getInt('msg_id', 0, 'GET');
 } else {
-    $msg_id = \Xmf\Request::getInt('msg_id', 0, 'POST');
+    $msg_id = Request::getInt('msg_id', 0, 'POST');
 }
 
 $msgHandler = $helper->getHandler('Message');
@@ -72,7 +75,7 @@ function delete()
     } else {
         $messagesent = AM_XFGUESTBOOK_NOMSG;
     }
-    redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
+    redirect_header($_SERVER['SCRIPT_NAME'], 2, $messagesent);
 }
 
 function approve()
@@ -91,7 +94,7 @@ function approve()
     } else {
         $messagesent = AM_XFGUESTBOOK_NOMSG;
     }
-    redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
+    redirect_header($_SERVER['SCRIPT_NAME'], 2, $messagesent);
 }
 
 function banish()
@@ -120,16 +123,16 @@ function banish()
         $messagesent = AM_XFGUESTBOOK_NOMSG;
     }
 
-    redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
+    redirect_header($_SERVER['SCRIPT_NAME'], 2, $messagesent);
 }
 
 function show()
 {
     global $msgHandler, $xoopsModule, $pathIcon16;
-    $pick              = \Xmf\Request::getInt('pick', 0, 'GET');
-    $start             = \Xmf\Request::getInt('start', 0, 'GET');
-    $sel_status        = \Xmf\Request::getInt('sel_status', 0, 'GET');
-    $sel_order         = \Xmf\Request::getInt('sel_order', 0, 'GET');
+    $pick              = Request::getInt('pick', 0, 'GET');
+    $start             = Request::getInt('start', 0, 'GET');
+    $sel_status        = Request::getInt('sel_status', 0, 'GET');
+    $sel_order         = Request::getInt('sel_order', 0, 'GET');
     $limit             = 10;
     $status_option0    = '';
     $status_option1    = '';
@@ -178,7 +181,7 @@ function show()
     $badips = Xfguestbook\Utility::get_badips();
 
     /* -- Code to show selected terms -- */
-    echo "<form name='pick' id='pick' action='" . $_SERVER['PHP_SELF'] . '\' method=\'GET\' style=\'margin: 0;\'>';
+    echo "<form name='pick' id='pick' action='" . $_SERVER['SCRIPT_NAME'] . '\' method=\'GET\' style=\'margin: 0;\'>';
 
     echo "
         <table width='100%' cellspacing='1' cellpadding='2' border='0' style='border-left: 1px solid #c0c0c0; border-top: 1px solid #c0c0c0; border-right: 1px solid #c0c0c0;'>
@@ -214,7 +217,7 @@ function show()
     echo '</tr>';
 
     if ('0' != $totalcount) {
-        echo "<form name='msglist' id='list' action='" . $_SERVER['PHP_SELF'] . '\' method=\'POST\' style=\'margin: 0;\'>';
+        echo "<form name='msglist' id='list' action='" . $_SERVER['SCRIPT_NAME'] . '\' method=\'POST\' style=\'margin: 0;\'>';
 
         /** @var \XoopsModules\Xfguestbook\Message $onemsg */
         foreach ($msg as $onemsg) {
@@ -286,7 +289,7 @@ switch ($op) {
         }
         $msgstop = '';
         $msg     = $msgHandler->get($msg_id);
-        $del_img = \Xmf\Request::getInt('del_img', 0, 'POST');
+        $del_img = Request::getInt('del_img', 0, 'POST');
         if ($del_img) {
             $filename = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname') . '/' . $msg->getVar('photo');
             unlink($filename);
@@ -305,16 +308,16 @@ switch ($op) {
         if (!empty($msgstop)) {
             redirect_header('main.php?op=edit&msg_id=' . $msg_id, 2, $msgstop);
         }
-        $uname    = \Xmf\Request::getString('uname', '', 'POST');
-        $email    = \Xmf\Request::getString('email', '', 'POST');
-        $url      = \Xmf\Request::getString('url', '', 'POST');
-        $title    = \Xmf\Request::getString('title', '', 'POST');
-        $message  = \Xmf\Request::getString('message', '', 'POST');
-        $note     = \Xmf\Request::getString('note', '', 'POST');
-        $gender   = \Xmf\Request::getString('gender', '', 'POST');
-        $country  = \Xmf\Request::getString('country', '', 'POST');
-        $other    = \Xmf\Request::getString('other', '', 'POST');
-        $moderate = \Xmf\Request::getInt('moderate', 0, 'POST');
+        $uname    = Request::getString('uname', '', 'POST');
+        $email    = Request::getString('email', '', 'POST');
+        $url      = Request::getString('url', '', 'POST');
+        $title    = Request::getString('title', '', 'POST');
+        $message  = Request::getString('message', '', 'POST');
+        $note     = Request::getString('note', '', 'POST');
+        $gender   = Request::getString('gender', '', 'POST');
+        $country  = Request::getString('country', '', 'POST');
+        $other    = Request::getString('other', '', 'POST');
+        $moderate = Request::getInt('moderate', 0, 'POST');
 
         $msg->setVar('uname', $uname);
         $msg->setVar('email', $email);
@@ -337,7 +340,7 @@ switch ($op) {
         break;
     case 'edit':
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(0);
         $msg = $msgHandler->get($msg_id);
@@ -358,7 +361,7 @@ switch ($op) {
     case 'show':
     default:
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(0);
         show();

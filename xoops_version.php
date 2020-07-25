@@ -25,14 +25,14 @@
 //system menu
 require_once __DIR__ . '/preloads/autoloader.php';
 
-$moduleDirName = basename(__DIR__);
+$moduleDirName      = basename(__DIR__);
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
 // ------------------- Informations ------------------- //
 $modversion = [
     'version'             => '3.21.0',
-    'module_status'       => 'Beta 2',
-    'release_date'        => '2019/07/16',
+    'module_status'       => 'RC 1',
+    'release_date'        => '2020/07/25',
     'name'                => MI_XFGUESTBOOK_NAME,
     'description'         => MI_XFGUESTBOOK_DESC,
     'official'            => 0,
@@ -66,7 +66,7 @@ $modversion = [
     'module_website_url'  => 'www.xoops.org',
     'module_website_name' => 'XOOPS Project',
     // ------------------- Min Requirements -------------------
-    'min_php'             => '5.5',
+    'min_php'             => '7.1',
     'min_xoops'           => '2.5.10',
     'min_admin'           => '1.2',
     'min_db'              => ['mysql' => '5.5'],
@@ -94,7 +94,7 @@ $modversion = [
     //  'onUninstall'         => 'include/onuninstall.php',
     // -------------------  PayPal ---------------------------
     'paypal'              => [
-        'business'      => 'foundation@xoops.org',
+        'business'      => 'xoopsfoundation@gmail.com',
         'item_name'     => 'Donation : ' . MI_XFGUESTBOOK_NAME,
         'amount'        => 25,
         'currency_code' => 'USD',
@@ -313,12 +313,12 @@ $modversion['config'][] = [
  * Show Developer Tools?
  */
 $modversion['config'][] = [
-    'name' => 'displayDeveloperTools',
-    'title' => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_DEV_TOOLS',
+    'name'        => 'displayDeveloperTools',
+    'title'       => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_DEV_TOOLS',
     'description' => 'CO_' . $moduleDirNameUpper . '_' . 'SHOW_DEV_TOOLS_DESC',
-    'formtype' => 'yesno',
-    'valuetype' => 'int',
-    'default' => 0,
+    'formtype'    => 'yesno',
+    'valuetype'   => 'int',
+    'default'     => 0,
 ];
 
 //if (!file_exists(XOOPS_ROOT_PATH . '/uploads/xfguestbook')) {

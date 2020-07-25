@@ -24,11 +24,13 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
+use XoopsModules\Xfguestbook\Form\FormSelectCountry;
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
 //xoopsSecurity don't work with this form ???
 //$signform = new \XoopsThemeForm(MD_XFGUESTBOOK_SIGN, 'signform', 'xfcreate.php','post', true);
@@ -48,9 +50,9 @@ if ($option['opt_gender']) {
     $signform->addElement($gender_text, true);
 }
 
-// affichage pays
+// country display
 if ($option['opt_country']) {
-    $country_text = new \XoopsModules\Xfguestbook\Form\FormSelectCountry($helper->getConfig('country_caption'), 'country', $country, 1, true);
+    $country_text = new FormSelectCountry($helper->getConfig('country_caption'), 'country', $country, 1, true);
     $country_text->setExtra('onchange="test_other(this.value)"');
     $signform->addElement($country_text, true);
     //  $other_text = new \XoopsFormText('other', 'other', 50, 50, $other);
@@ -104,9 +106,9 @@ if (1 == $option['opt_code']) {
 }
 $buttonTray->addElement(new \XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
 $buttonTray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
-$button_cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
-$button_cancel->setExtra("onclick='location=\"index.php?op=cancel\";'");
-$buttonTray->addElement($button_cancel);
+$buttonCancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
+$buttonCancel->setExtra("onclick='location=\"index.php?op=cancel\";'");
+$buttonTray->addElement($buttonCancel);
 $signform->addElement($buttonTray);
 
 $signform->addElement(new \XoopsFormHidden('user_id', $user_id));

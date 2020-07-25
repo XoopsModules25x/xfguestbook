@@ -23,24 +23,28 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\Module\Admin;
+use Xmf\Request;
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
+use XoopsModules\Xfguestbook\Form\FormSelectCountry;
 
 require_once __DIR__ . '/admin_header.php';
 
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
 /**
- * @param  int $cat
+ * @param int $cat
  * @return mixed
  */
 function getOptions4Admin($cat = 2)
 {
     global $xoopsDB;
     $arr_conf = [];
-    $sql    = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ' . $xoopsDB->prefix('xfguestbook_config') . ' WHERE conf_cat=' . $cat . ' ORDER BY conf_order ASC';
-    $result = $xoopsDB->query($sql);
-    $i      = 0;
+    $sql      = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ' . $xoopsDB->prefix('xfguestbook_config') . ' WHERE conf_cat=' . $cat . ' ORDER BY conf_order ASC';
+    $result   = $xoopsDB->query($sql);
+    $i        = 0;
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $arr_conf[$i]['conf_id']       = $myrow['conf_id'];
         $arr_conf[$i]['conf_name']     = $myrow['conf_name'];
@@ -60,7 +64,7 @@ if (isset($_POST)) {
     }
 }
 
-$op = \Xmf\Request::getCmd('op', 'show');
+$op = Request::getCmd('op', 'show');
 
 switch ($op) {
     case 'save':
@@ -76,7 +80,7 @@ switch ($op) {
     case 'show':
     default:
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(1);
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -84,7 +88,7 @@ switch ($op) {
         $option = getOptions4Admin();
         $nb_opt = count($option);
 
-        $sform = new \XoopsThemeForm(AM_XFGUESTBOOK_FORMOPT, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform = new \XoopsThemeForm(AM_XFGUESTBOOK_FORMOPT, 'op', xoops_getenv('SCRIPT_NAME'), 'post', true);
 
         for ($i = 0; $i < $nb_opt; $i++) {
             $title = (!defined($option[$i]['conf_desc'])
@@ -97,7 +101,7 @@ switch ($op) {
                     $ele = new \XoopsFormRadioYN($title, $option[$i]['conf_name'], $option[$i]['conf_value'], _YES, _NO);
                     break;
                 case 'selectcountry':
-                    $ele = new \XoopsModules\Xfguestbook\Form\FormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
+                    $ele = new FormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
                     break;
                 case 'selectmail':
                     $ele     = new \XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);

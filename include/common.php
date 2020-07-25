@@ -11,13 +11,15 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
  */
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
+use XoopsModules\Xfguestbook\Utility;
 
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
@@ -25,11 +27,11 @@ $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 /** @var \XoopsDatabase $db */
-/** @var Xfguestbook\Helper $helper */
-/** @var Xfguestbook\Utility $utility */
+/** @var Helper $helper */
+/** @var Utility $utility */
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = Xfguestbook\Helper::getInstance();
-$utility = new Xfguestbook\Utility();
+$helper  = Helper::getInstance();
+$utility = new Utility();
 //$configurator = new Xfguestbook\Common\Configurator();
 
 $helper->loadLanguage('common');

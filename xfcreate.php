@@ -22,6 +22,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\Request;
 use XoopsModules\Xfguestbook;
 
 require_once __DIR__ . '/header.php';
@@ -32,29 +33,29 @@ if (!is_object($xoopsUser) && 1 != $helper->getConfig('anonsign')) {
 
 require_once __DIR__ . '/include/config.inc.php';
 
-///** @var Xfguestbook\Helper $helper */
-//$helper = Xfguestbook\Helper::getInstance();
+///** @var Helper $helper */
+//$helper = Helper::getInstance();
 
 $option     = getOptions();
 $msgHandler = $helper->getHandler('Message');
 
-$confirm_code = \Xmf\Request::getString('confirm_code', '', 'POST');
-$confirm_str  = \Xmf\Request::getString('confirm_str', '', 'POST');
-$user_id      = \Xmf\Request::getInt('user_id', 0, 'POST');
-$title        = \Xmf\Request::getString('title', '', 'POST');
-$message      = \Xmf\Request::getString('message', '', 'POST');
-$gender       = \Xmf\Request::getString('gender', '', 'POST');
-$preview_name = \Xmf\Request::getString('preview_name', '', 'POST');
-$email        = \Xmf\Request::getString('email', '', 'POST');
-$name         = \Xmf\Request::getString('name', '', 'POST');
-$url          = \Xmf\Request::getString('url', '', 'POST');
-$country      = \Xmf\Request::getString('country', '', 'POST');
+$confirm_code = Request::getString('confirm_code', '', 'POST');
+$confirm_str  = Request::getString('confirm_str', '', 'POST');
+$user_id      = Request::getInt('user_id', 0, 'POST');
+$title        = Request::getString('title', '', 'POST');
+$message      = Request::getString('message', '', 'POST');
+$gender       = Request::getString('gender', '', 'POST');
+$preview_name = Request::getString('preview_name', '', 'POST');
+$email        = Request::getString('email', '', 'POST');
+$name         = Request::getString('name', '', 'POST');
+$url          = Request::getString('url', '', 'POST');
+$country      = Request::getString('country', '', 'POST');
 
 $op = 'form';
 
-if (\Xmf\Request::hasVar('preview', 'POST')) {
+if (Request::hasVar('preview', 'POST')) {
     $op = 'preview';
-} elseif (\Xmf\Request::hasVar('post', 'POST')) {
+} elseif (Request::hasVar('post', 'POST')) {
     $op = 'post';
 }
 
@@ -89,8 +90,8 @@ switch ($op) {
         if (!empty($_FILES['photo']['name'])) {
             Xfguestbook\Utility::upload();
         }
-//        $title   = $ts->htmlSpecialChars($ts->stripSlashesGPC($title));
-//        $message = $ts->htmlSpecialChars($ts->stripSlashesGPC($message));
+        //        $title   = $ts->htmlSpecialChars($ts->stripSlashesGPC($title));
+        //        $message = $ts->htmlSpecialChars($ts->stripSlashesGPC($message));
         if (!empty($msgstop)) {
             $xoopsTpl->assign('preview', true);
             $xoopsTpl->assign('msgstop', $msgstop);

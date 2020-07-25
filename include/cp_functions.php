@@ -29,6 +29,7 @@
  */
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 
 /**
  * @param int    $currentoption
@@ -41,7 +42,7 @@ function xfguestbook_admin_menu($currentoption = 0, $breadcrumb = '')
         <style type='text/css'>
         #buttontop { float:left; width:100%; background: #e7e7e7; font-size:93%; line-height:normal; border-top: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; margin: 0; }
         #buttonbar { float:left; width:100%; background: #e7e7e7 url('" . XOOPS_URL . "/modules/xfguestbook/assets/images/bg.gif') repeat-x left bottom; font-size:93%; line-height:normal; border-left: 1px solid #000000; border-right: 1px solid #000000; margin-bottom: 12px; }
-        #buttonbar ul { margin:0; margin-top: 15px; padding:10px 10px 0; list-style:none; }
+        #buttonbar ul { margin: 15px 0 0;padding:10px 10px 0; list-style:none; }
         #buttonbar li { display:inline; margin:0; padding:0; }
         #buttonbar a { float:left; background:url('" . XOOPS_URL . "/modules/xfguestbook/assets/images/left_both.gif') no-repeat left top; margin:0; padding:0 0 0 9px; border-bottom:1px solid #000; text-decoration:none; }
         #buttonbar a span { float:left; display:block; background:url('" . XOOPS_URL . "/modules/xfguestbook/assets/images/right_both.gif') no-repeat right top; padding:5px 15px 4px 6px; font-weight:bold; color:#765; }
@@ -63,8 +64,8 @@ function xfguestbook_admin_menu($currentoption = 0, $breadcrumb = '')
     $tblColors[0]              = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] = $tblColors[7] = $tblColors[8] = '';
     $tblColors[$currentoption] = 'current';
 
-    /** @var Xfguestbook\Helper $helper */
-    $helper = Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper = Helper::getInstance();
     $helper->loadLanguage('modinfo');
 
     echo "<div id='buttontop'>";
@@ -100,7 +101,7 @@ function executeSQL($sql_file_path)
     $error = false;
     // $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
     //   $sql_file_path = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/sql/".$sqlfile;
-    if (!file_exists($sql_file_path)) {
+    if (!is_file($sql_file_path)) {
         echo "SQL file not found at <b>$sql_file_path</b><br>";
         //     $msg = "SQL file not found at <b>$sql_file_path</b><br>";
         $error = true;

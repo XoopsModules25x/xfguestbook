@@ -47,9 +47,9 @@ $buttonTray = new \XoopsFormElementTray('', '');
 $buttonTray->addElement(new \XoopsFormCaptcha(), true);
 $buttonTray->addElement(new \XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
 $buttonTray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
-$button_cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
-$button_cancel->setExtra('\' onclick=\'javascript:window.close();\'');
-$buttonTray->addElement($button_cancel);
+$buttonCancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
+$buttonCancel->setExtra('\' onclick=\'javascript:window.close();\'');
+$buttonTray->addElement($buttonCancel);
 
 $form_contact->addElement($buttonTray);
 

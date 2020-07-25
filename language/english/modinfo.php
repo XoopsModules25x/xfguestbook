@@ -39,7 +39,7 @@ define('MI_XFGUESTBOOK_IP', 'IP');
 define('MI_XFGUESTBOOK_SHOWEMAIL', 'Show the email button on all messages');
 
 //Help
-define('MI_XFGUESTBOOK_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('MI_XFGUESTBOOK_DIRNAME', basename(dirname(__DIR__, 2)));
 define('MI_XFGUESTBOOK_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('MI_XFGUESTBOOK_BACK_2_ADMIN', 'Back to Administration of ');
 define('MI_XFGUESTBOOK_OVERVIEW', 'Overview');

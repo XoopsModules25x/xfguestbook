@@ -1,4 +1,5 @@
 <?php
+
 // Common
 define('AM_XFGUESTBOOK_ALLMSG', 'All messages');
 define('AM_XFGUESTBOOK_PUBMSG', 'Published messages ');

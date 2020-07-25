@@ -17,7 +17,7 @@ namespace XoopsModules\Xfguestbook\Common;
  * @copyright   XOOPS Project (https://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      XOOPS Development Team
- * @package     Publisher
+ * @package
  * @since       1.05
  */
 
@@ -44,11 +44,7 @@ class Configurator
      */
     public function __construct()
     {
-        $moduleDirName      = basename(dirname(dirname(__DIR__)));
-        $moduleDirNameUpper = mb_strtoupper($moduleDirName);
-
-        require dirname(dirname(__DIR__)) . '/config/config.php';
-        $config = getConfig();
+        $config = require dirname(__DIR__, 2) . '/config/config.php';
 
         $this->name            = $config->name;
         $this->paths           = $config->paths;

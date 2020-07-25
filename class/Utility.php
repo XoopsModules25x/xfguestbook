@@ -3,46 +3,42 @@
 namespace XoopsModules\Xfguestbook;
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Common;
+use XoopsModules\Xfguestbook\Constants;
 
 /**
  * Class Utility
  */
-class Utility
+class Utility extends Common\SysUtility
 {
-    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
-
-    use Common\ServerStats; // getServerStats Trait
-
-    use Common\FilesManagement; // Files Management Trait
-
     //--------------- Custom module methods -----------------------------
 
     public static function upload()
     {
         global $xoopsModule, $preview_name, $msgstop;
-        /** @var Xfguestbook\Helper $helper */
-        $helper = Xfguestbook\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper = Helper::getInstance();
 
-        $created = time();
-        $ext     = preg_replace("/^.+\.([^.]+)$/sU", '\\1', $_FILES['photo']['name']);
+        $created = \time();
+        $ext     = \preg_replace("/^.+\.([^.]+)$/sU", '\\1', $_FILES['photo']['name']);
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         $field = $_POST['xoops_upload_file'][0];
         if (!empty($field) || '' !== $field) {
             // Check if file uploaded
-            if ('' === $_FILES[$field]['tmp_name'] || !is_readable($_FILES[$field]['tmp_name'])) {
-                $msgstop .= sprintf(MD_XFGUESTBOOK_FILEERROR, $helper->getConfig('photo_maxsize'));
+            if ('' === $_FILES[$field]['tmp_name'] || !\is_readable($_FILES[$field]['tmp_name'])) {
+                $msgstop .= \sprintf(MD_XFGUESTBOOK_FILEERROR, $helper->getConfig('photo_maxsize'));
             } else {
                 $photos_dir              = XOOPS_UPLOAD_PATH . '/' . $xoopsModule->getVar('dirname');
                 $array_allowed_mimetypes = ['image/gif', 'image/pjpeg', 'image/jpeg', 'image/x-png'];
                 $uploader                = new \XoopsMediaUploader($photos_dir, $array_allowed_mimetypes, $helper->getConfig('photo_maxsize'), $helper->getConfig('photo_maxwidth'), $helper->getConfig('photo_maxheight'));
                 if ($uploader->fetchMedia($field) && $uploader->upload()) {
                     if (null !== $preview_name) {
-                        @unlink("$photos_dir/" . $preview_name);
+                        @\unlink("$photos_dir/" . $preview_name);
                     }
                     $tmp_name     = $uploader->getSavedFileName();
-                    $ext          = preg_replace("/^.+\.([^.]+)$/sU", '\\1', $tmp_name);
+                    $ext          = \preg_replace("/^.+\.([^.]+)$/sU", '\\1', $tmp_name);
                     $preview_name = 'tmp_' . $created . '.' . $ext;
-                    rename("$photos_dir/$tmp_name", "$photos_dir/$preview_name");
+                    \rename("$photos_dir/$tmp_name", "$photos_dir/$preview_name");
                 } else {
                     $msgstop .= $uploader->getErrors();
                 }
@@ -51,9 +47,9 @@ class Utility
     }
 
     /**
-     * @param  null $criteria
-     * @param  int  $limit
-     * @param  int  $start
+     * @param null $criteria
+     * @param int  $limit
+     * @param int  $start
      * @return array
      */
     public static function getCountry($criteria = null, $limit = 0, $start = 0)
@@ -74,16 +70,16 @@ class Utility
     }
 
     /**
-     * @param  null $criteria
-     * @param  int  $limit
-     * @param  int  $start
+     * @param null $criteria
+     * @param int  $limit
+     * @param int  $start
      * @return array
      */
     public static function getAllCountry($criteria = null, $limit = 0, $start = 0)
     {
         global $xoopsDB, $action;
-        /** @var Xfguestbook\Helper $helper */
-        $helper = Xfguestbook\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper = Helper::getInstance();
 
         $ret = [];
         $sql = 'SELECT country_code, country_name FROM ' . $xoopsDB->prefix('xfguestbook_country');
@@ -107,8 +103,8 @@ class Utility
     public static function get_user_data($user_id)
     {
         global $xoopsUser;
-        /** @var Xfguestbook\Helper $helper */
-        $helper = Xfguestbook\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper = Helper::getInstance();
 
         if (!(int)$user_id) {
             return false;
@@ -138,25 +134,25 @@ class Utility
 
     /**
      * @param         $dir_path
-     * @param  string $prefix
+     * @param string  $prefix
      * @return int
      */
     public static function clear_tmp_files($dir_path, $prefix = 'tmp_')
     {
-        if (!($dir = @opendir($dir_path))) {
+        if (!($dir = @\opendir($dir_path))) {
             return 0;
         }
         $ret        = 0;
         $prefix_len = mb_strlen($prefix);
-        while (false !== ($file = readdir($dir))) {
+        while (false !== ($file = \readdir($dir))) {
             //        if (strncmp($file, $prefix, $prefix_len) === 0) {
             if (0 === mb_strpos($file, $prefix)) {
-                if (@unlink("$dir_path/$file")) {
+                if (@\unlink("$dir_path/$file")) {
                     $ret++;
                 }
             }
         }
-        closedir($dir);
+        \closedir($dir);
 
         return $ret;
     }
@@ -164,7 +160,7 @@ class Utility
     // IP bannies (modérés automatiquement)
 
     /**
-     * @param  null $all
+     * @param null $all
      * @return array
      */
     public static function get_badips($all = null)
@@ -192,9 +188,11 @@ class Utility
      */
     public static function email_exist($email)
     {
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!\filter_var($email, \FILTER_VALIDATE_EMAIL)) {
             return false;
-        } elseif (!checkdnsrr(array_pop(explode('@', $email)), 'MX')) {
+        }
+
+        if (!\checkdnsrr(\array_pop(\explode('@', $email)), 'MX')) {
             return false;
         }
 

@@ -11,13 +11,15 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
  */
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
+use XoopsModules\Xfguestbook\Utility;
 
 /**
  * Prepares system prior to attempting to install module
@@ -27,9 +29,8 @@ use XoopsModules\Xfguestbook;
  */
 function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
 {
-    include __DIR__ . '/common.php';
-    /** @var \XoopsModules\Xfguestbook\Utility $utility */
-    $utility = new \XoopsModules\Xfguestbook\Utility();
+    require __DIR__ . '/common.php';
+    $utility = new Utility();
     //check for minimum XOOPS version
     $xoopsSuccess = $utility::checkVerXoops($module);
 
@@ -57,17 +58,15 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
     require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var \XoopsModules\Xfguestbook\Helper $helper */
-    $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper = Helper::getInstance();
 
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
 
-    /** @var Xfguestbook\Common\Configurator $configurator */
     $configurator = new Xfguestbook\Common\Configurator();
-    /** @var \XoopsModules\Xfguestbook\Utility $utility */
-    $utility = new \XoopsModules\Xfguestbook\Utility();
+    $utility      = new Utility();
 
     // default Permission Settings ----------------------
     global $xoopsModule;

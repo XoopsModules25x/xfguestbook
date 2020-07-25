@@ -25,7 +25,7 @@
 
 //require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 require_once __DIR__ . '/admin_header.php';
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_functions.php';
+require_once dirname(__DIR__, 3) . '/include/cp_functions.php';
 require_once dirname(__DIR__) . '/include/cp_functions.php';
 
 /**
@@ -78,7 +78,7 @@ function CountRows($tablename)
     return $nbr;
 }
 
-$op = (isset($_POST['op']) ? $_POST['op'] : 'check');
+$op = ($_POST['op'] ?? 'check');
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
@@ -331,7 +331,7 @@ switch ($op) {
                 $configHandler = xoops_getHandler('config');
                 $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $xoopsModule->mid()));
                 $criteria->add(new \Criteria('conf_name', 'flagdir'));
-                $config = &$configHandler->getConfigs($criteria);
+                $config = $configHandler->getConfigs($criteria);
                 /** @var \XoopsConfigItem $configItem */
                 $configItem = $config[0];
                 $value      = [$configItem->getConfValueForOutput()];
