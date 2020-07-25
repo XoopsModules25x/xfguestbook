@@ -33,8 +33,8 @@ if (!is_object($xoopsUser) && 1 != $helper->getConfig('anonsign')) {
 
 require_once __DIR__ . '/include/config.inc.php';
 
-///** @var Xfguestbook\Helper $helper */
-//$helper = Xfguestbook\Helper::getInstance();
+///** @var Helper $helper */
+//$helper = Helper::getInstance();
 
 $option     = getOptions();
 $msgHandler = $helper->getHandler('Message');

@@ -33,8 +33,6 @@ function xoops_module_uninstall_xfguestbook(\XoopsModule $module)
 
 //=======================================================
 
-
-
 /**
  * @param \XoopsModule $module
  *

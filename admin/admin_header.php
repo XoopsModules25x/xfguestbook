@@ -27,7 +27,7 @@ require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 require_once dirname(__DIR__) . '/include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-/** @var \XoopsModules\Xfguestbook\Helper $helper */
+/** @var Helper $helper */
 $helper = Helper::getInstance();
 /** @var \Xmf\Module\Admin $adminObject */
 $adminObject = Admin::getInstance();

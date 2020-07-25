@@ -25,15 +25,16 @@
 
 use Xmf\Module\Admin;
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 
-require  dirname(__DIR__) . '/preloads/autoloader.php';
+require dirname(__DIR__) . '/preloads/autoloader.php';
 
 $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
 //require_once  dirname(__DIR__) . '/include/common.php';
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('common');
 $helper->loadLanguage('feedback');

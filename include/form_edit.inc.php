@@ -24,12 +24,13 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 use XoopsModules\Xfguestbook\Form\FormSelectCountry;
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
 $msg_form = new \XoopsThemeForm(AM_XFGUESTBOOK_NAME, 'msg_form', 'main.php', 'post', true);
 $msg_form->setExtra("enctype='multipart/form-data'");

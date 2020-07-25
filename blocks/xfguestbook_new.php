@@ -31,7 +31,7 @@ use XoopsModules\Xfguestbook\Helper;
 function b_xfguestbook_show($options)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
-    /** @var \XoopsModules\Xfguestbook\Helper $helper */
+    /** @var Helper $helper */
     $helper = Helper::getInstance();
     if (empty($xoopsModule) || 'xfguestbook' !== $xoopsModule->getVar('dirname')) {
         /** @var \XoopsModuleHandler $moduleHandler */

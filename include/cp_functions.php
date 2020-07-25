@@ -29,6 +29,7 @@
  */
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 
 /**
  * @param int    $currentoption
@@ -63,8 +64,8 @@ function xfguestbook_admin_menu($currentoption = 0, $breadcrumb = '')
     $tblColors[0]              = $tblColors[1] = $tblColors[2] = $tblColors[3] = $tblColors[4] = $tblColors[5] = $tblColors[6] = $tblColors[7] = $tblColors[8] = '';
     $tblColors[$currentoption] = 'current';
 
-    /** @var Xfguestbook\Helper $helper */
-    $helper = Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper = Helper::getInstance();
     $helper->loadLanguage('modinfo');
 
     echo "<div id='buttontop'>";

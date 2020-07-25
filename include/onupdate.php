@@ -18,6 +18,9 @@
  */
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Common;
+use XoopsModules\Xfguestbook\Helper;
+use XoopsModules\Xfguestbook\Utility;
 
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
     || !$GLOBALS['xoopsUser']->isAdmin()) {
@@ -44,11 +47,11 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_xfguestbook(\XoopsModule $module)
 {
-    /** @var Xfguestbook\Helper $helper */
-    /** @var Xfguestbook\Utility $utility */
+    /** @var Helper $helper */
+    /** @var Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $helper        = Xfguestbook\Helper::getInstance();
-    $utility       = new Xfguestbook\Utility();
+    $helper        = Helper::getInstance();
+    $utility       = new Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
@@ -67,11 +70,12 @@ function xoops_module_update_xfguestbook(\XoopsModule $module, $previousVersion 
     $moduleDirName      = basename(dirname(__DIR__));
     $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-    /** @var Xfguestbook\Helper $helper */ /** @var Xfguestbook\Utility $utility */
-    /** @var Xfguestbook\Common\Configurator $configurator */
-    $helper       = Xfguestbook\Helper::getInstance();
-    $utility      = new Xfguestbook\Utility();
-    $configurator = new Xfguestbook\Common\Configurator();
+    /** @var Helper $helper */
+    /** @var Utility $utility */
+    /** @var Common\Configurator $configurator */
+    $helper       = Helper::getInstance();
+    $utility      = new Utility();
+    $configurator = new Common\Configurator();
 
     if ($previousVersion < 230) {
         //delete old HTML templates

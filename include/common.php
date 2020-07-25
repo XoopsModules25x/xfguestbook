@@ -18,6 +18,8 @@
  */
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
+use XoopsModules\Xfguestbook\Utility;
 
 require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
@@ -25,11 +27,11 @@ $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
 /** @var \XoopsDatabase $db */
-/** @var Xfguestbook\Helper $helper */
-/** @var Xfguestbook\Utility $utility */
+/** @var Helper $helper */
+/** @var Utility $utility */
 $db      = \XoopsDatabaseFactory::getDatabaseConnection();
-$helper  = Xfguestbook\Helper::getInstance();
-$utility = new Xfguestbook\Utility();
+$helper  = Helper::getInstance();
+$utility = new Utility();
 //$configurator = new Xfguestbook\Common\Configurator();
 
 $helper->loadLanguage('common');

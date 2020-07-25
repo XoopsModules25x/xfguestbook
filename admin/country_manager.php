@@ -26,13 +26,14 @@
 use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 
 //require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 //require_once  dirname(__DIR__) . '/include/cp_functions.php';
 require_once __DIR__ . '/admin_header.php';
 
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
 // Flag
 $maxsize   = 2000;
@@ -69,8 +70,8 @@ $country_name = Request::getString('country_name', '', 'POST');
 function flagUpload($country_code)
 {
     global $xoopsModule, $maxsize, $maxwidth, $maxheight, $format;
-    /** @var Xfguestbook\Helper $helper */
-    $helper = Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper = Helper::getInstance();
 
     $array_allowed_mimetypes = ['image/' . $format];
     // photos
@@ -111,8 +112,8 @@ function flagUpload($country_code)
 function flagForm($country_code)
 {
     global $xoopsModule, $maxsize, $maxwidth, $maxheight, $format;
-    /** @var Xfguestbook\Helper $helper */
-    $helper = Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper = Helper::getInstance();
 
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
@@ -147,8 +148,8 @@ function flagForm($country_code)
 function flagDel($country_code)
 {
     global $xoopsModule;
-    /** @var Xfguestbook\Helper $helper */
-    $helper = Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper = Helper::getInstance();
 
     $ok = Request::getInt('ok', 0, 'POST');
     if (1 == $ok) {
@@ -232,8 +233,8 @@ function xfgb_getCountry($criteria = null, $limit = 0, $start = 0)
 function countryDel($country_id)
 {
     global $xoopsDB, $xoopsModule;
-    /** @var Xfguestbook\Helper $helper */
-    $helper = Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper = Helper::getInstance();
 
     $ok = Request::getInt('ok', 0, 'POST');
     if (1 == $ok) {
@@ -291,8 +292,8 @@ function countrySave($country_id, $country_code, $country_name)
 function countryShow()
 {
     global $action, $start, $xoopsModule, $pathIcon16;
-    /** @var Xfguestbook\Helper $helper */
-    $helper = Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper = Helper::getInstance();
 
     $myts        = \MyTextSanitizer::getInstance();
     $limit       = 15;

@@ -25,13 +25,14 @@
 
 use Xmf\Request;
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 
 $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
 
 require_once __DIR__ . '/header.php';
 
-//** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+//** @var Helper $helper */
+$helper = Helper::getInstance();
 
 if (Request::hasVar('msg_id', 'GET')) {
     $msg_id = Request::getInt('msg_id', 0, 'GET');
@@ -101,8 +102,8 @@ function approve($msg_id)
 function xfgb_getmsg($msg)
 {
     global $nbmsg, $xoopsModule, $xoopsUser, $xoopsTpl, $xoopsConfig, $options, $opt, $xoopsDB;
-    /** @var Xfguestbook\Helper $helper */
-    $helper = Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper = Helper::getInstance();
 
     $arr_country = Xfguestbook\Utility::getAllCountry();
     $xoopsTpl->assign('display_msg', true);
@@ -177,8 +178,8 @@ function xfgb_getmsg($msg)
 function xfgb_genderlist()
 {
     global $options, $xoopsTpl, $xoopsModule, $msgHandler;
-    /** @var Xfguestbook\Helper $helper */
-    $helper   = Xfguestbook\Helper::getInstance();
+    /** @var Helper $helper */
+    $helper   = Helper::getInstance();
     $criteria = new \Criteria('moderate', 0);
     $arr_msg  = $msgHandler->countMsgByGender($criteria);
     $i        = 0;

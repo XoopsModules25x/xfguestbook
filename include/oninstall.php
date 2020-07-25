@@ -58,7 +58,7 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
     require_once dirname(__DIR__) . '/preloads/autoloader.php';
 
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var \XoopsModules\Xfguestbook\Helper $helper */
+    /** @var Helper $helper */
     $helper = Helper::getInstance();
 
     // Load language files
@@ -66,7 +66,7 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
     $helper->loadLanguage('modinfo');
 
     $configurator = new Xfguestbook\Common\Configurator();
-    $utility = new Utility();
+    $utility      = new Utility();
 
     // default Permission Settings ----------------------
     global $xoopsModule;

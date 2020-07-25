@@ -25,10 +25,11 @@
 
 use Xmf\Request;
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 
 require_once dirname(__DIR__, 2) . '/mainfile.php';
-//** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+//** @var Helper $helper */
+$helper = Helper::getInstance();
 
 $op = 'form';
 foreach ($_POST as $k => $v) {

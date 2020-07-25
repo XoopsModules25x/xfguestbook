@@ -16,8 +16,8 @@ class Utility extends Common\SysUtility
     public static function upload()
     {
         global $xoopsModule, $preview_name, $msgstop;
-        /** @var Xfguestbook\Helper $helper */
-        $helper = Xfguestbook\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper = Helper::getInstance();
 
         $created = \time();
         $ext     = \preg_replace("/^.+\.([^.]+)$/sU", '\\1', $_FILES['photo']['name']);
@@ -78,8 +78,8 @@ class Utility extends Common\SysUtility
     public static function getAllCountry($criteria = null, $limit = 0, $start = 0)
     {
         global $xoopsDB, $action;
-        /** @var Xfguestbook\Helper $helper */
-        $helper = Xfguestbook\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper = Helper::getInstance();
 
         $ret = [];
         $sql = 'SELECT country_code, country_name FROM ' . $xoopsDB->prefix('xfguestbook_country');
@@ -103,8 +103,8 @@ class Utility extends Common\SysUtility
     public static function get_user_data($user_id)
     {
         global $xoopsUser;
-        /** @var Xfguestbook\Helper $helper */
-        $helper = Xfguestbook\Helper::getInstance();
+        /** @var Helper $helper */
+        $helper = Helper::getInstance();
 
         if (!(int)$user_id) {
             return false;

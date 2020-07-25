@@ -19,6 +19,7 @@ namespace XoopsModules\Xfguestbook;
  * @since
  * @author       XOOPS Development Team
  */
+
 /**
  * Class Helper
  */
@@ -39,7 +40,7 @@ class Helper extends \Xmf\Module\Helper
     /**
      * @param bool $debug
      *
-     * @return \XoopsModules\Xfguestbook\Helper
+     * @return Helper
      */
     public static function getInstance($debug = false)
     {

@@ -19,6 +19,7 @@ namespace XoopsModules\Xfguestbook;
  * @since
  * @author       XOOPS Development Team
  */
+
 /**
  * Class MessageHandler
  */

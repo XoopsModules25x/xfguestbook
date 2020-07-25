@@ -26,12 +26,13 @@
 use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 use XoopsModules\Xfguestbook\Form\FormSelectCountry;
 
 require_once __DIR__ . '/admin_header.php';
 
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
 /**
  * @param int $cat

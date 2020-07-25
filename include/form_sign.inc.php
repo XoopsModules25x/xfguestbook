@@ -24,12 +24,13 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 use XoopsModules\Xfguestbook\Form\FormSelectCountry;
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
 //xoopsSecurity don't work with this form ???
 //$signform = new \XoopsThemeForm(MD_XFGUESTBOOK_SIGN, 'signform', 'xfcreate.php','post', true);

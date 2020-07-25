@@ -26,12 +26,13 @@
 use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
 
 require_once __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/include/cp_functions.php';
 
-/** @var Xfguestbook\Helper $helper */
-$helper = Xfguestbook\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
 if (!isset($_POST['flagdir'])) {
     xoops_cp_header();

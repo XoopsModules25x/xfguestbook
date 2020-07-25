@@ -19,12 +19,12 @@ namespace XoopsModules\Xfguestbook;
  * @since
  * @author       XOOPS Development Team
  */
+
 /**
  * Class Message
  */
 class Message extends \XoopsObject
 {
-    // constructor
 
     /**
      * Message constructor.

@@ -27,7 +27,7 @@ require __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
-/** @var \XoopsModules\Xfguestbook\Helper $helper */
+/** @var Helper $helper */
 $helper = Helper::getInstance();
 
 $modulePath = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName;
