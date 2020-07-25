@@ -78,7 +78,7 @@ function CountRows($tablename)
     return $nbr;
 }
 
-$op = (isset($_POST['op']) ? $_POST['op'] : 'check');
+$op = ($_POST['op'] ?? 'check');
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
