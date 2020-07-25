@@ -37,7 +37,7 @@ if (!isset($_POST['flagdir'])) {
     $adminObject->displayNavigation(basename(__FILE__));
     require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    $form    = new \XoopsThemeForm(AM_XFGUESTBOOK_INSTALL_FLAGS, 'selectflag', $_SERVER['PHP_SELF']);
+    $form    = new \XoopsThemeForm(AM_XFGUESTBOOK_INSTALL_FLAGS, 'selectflag', $_SERVER['SCRIPT_NAME']);
     $sel_box = new \XoopsFormSelect(AM_XFGUESTBOOK_SELECT_PACK, 'flagdir', $helper->getConfig('flagdir'));
     $sel_box->addOption('', _NONE);
     $sel_box->addOptionArray(\XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/'));
@@ -45,9 +45,9 @@ if (!isset($_POST['flagdir'])) {
 
     $buttonTray = new \XoopsFormElementTray('', '');
     $buttonTray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
-    $button_cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
-    $button_cancel->setExtra('\' onclick=\'javascript: history.go(-1)\'');
-    $buttonTray->addElement($button_cancel);
+    $buttonCancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
+    $buttonCancel->setExtra('\' onclick=\'javascript: history.go(-1)\'');
+    $buttonTray->addElement($buttonCancel);
     $form->addElement($buttonTray);
 
     $form->display();

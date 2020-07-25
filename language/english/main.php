@@ -1,4 +1,5 @@
 <?php
+
 //index
 define('MD_XFGUESTBOOK_NAMEMODULE', 'Guestbook');
 define('MD_XFGUESTBOOK_SIGN', '>> Sign guestbook <<');

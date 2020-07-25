@@ -12,7 +12,7 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
@@ -33,7 +33,6 @@ $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('xfguestboo
 list($totalModerateMsgs) = $xoopsDB->fetchRow($result);
 
 $adminObject->addInfoBox(MD_XFGUESTBOOK_MSGCONF);
-
 
 if (0 == $totalWaitingMsgs) {
     //$adminObject->addLineLabel(MD_XFGUESTBOOK_MSGCONF, MD_XFGUESTBOOK_MSGWAITING, $totalNewMsg, 'Green');
@@ -73,7 +72,7 @@ if ($helper->getConfig('displaySampleButton')) {
 
     if (1 == $displaySampleButton) {
         xoops_loadLanguage('admin/modulesadmin', 'system');
-        require __DIR__ . '/../testdata/index.php';
+        require  dirname(__DIR__) . '/testdata/index.php';
 
         $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=load', 'add');
         $adminObject->addItemButton(constant('CO_' . $moduleDirNameUpper . '_' . 'SAVE_SAMPLEDATA'), '__DIR__ . /../../testdata/index.php?op=save', 'add');

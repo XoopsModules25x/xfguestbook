@@ -25,15 +25,17 @@
 
 use XoopsModules\Xfguestbook;
 
-include dirname(__DIR__) . '/preloads/autoloader.php';
+require  dirname(__DIR__) . '/preloads/autoloader.php';
 
-$moduleDirName = basename(dirname(__DIR__));
+$moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
 //require_once  dirname(__DIR__) . '/include/common.php';
 /** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
 $helper->loadLanguage('common');
+$helper->loadLanguage('common');
+$helper->loadLanguage('feedback');
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
@@ -83,12 +85,11 @@ $adminmenu[] = [
     'icon'  => 'assets/images/admin/stop.png',
 ];
 
-
-if ($helper->getConfig('displayDeveloperTools')) {
+if (is_object($helper->getModule()) && $helper->getConfig('displayDeveloperTools')) {
     $adminmenu[] = [
         'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'ADMENU_MIGRATE'),
-        'link' => 'admin/migrate.php',
-        'icon' => $pathIcon32 . '/database_go.png',
+        'link'  => 'admin/migrate.php',
+        'icon'  => $pathIcon32 . '/database_go.png',
     ];
 }
 

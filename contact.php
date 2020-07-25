@@ -38,14 +38,14 @@ foreach ($_GET as $k => $v) {
 }
 
 $email_user = \Xmf\Request::getString('email_user', '');
-$title = \Xmf\Request::getString('title', '');
-$message = \Xmf\Request::getString('message', '');
+$title      = \Xmf\Request::getString('title', '');
+$message    = \Xmf\Request::getString('message', '');
 
 $phone        = \Xmf\Request::getString('phone', '');
 $name_user    = \Xmf\Request::getString('name_user', '');
 $email_author = \Xmf\Request::getString('email_author', '');
-$preview        = \Xmf\Request::getString('preview', '');
-$post        = \Xmf\Request::getString('post', '');
+$preview      = \Xmf\Request::getString('preview', '');
+$post         = \Xmf\Request::getString('post', '');
 
 if (isset($preview)) {
     $op = 'preview';

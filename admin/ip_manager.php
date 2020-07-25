@@ -62,7 +62,7 @@ function badIpDel($ip_id)
     } else {
         $messagesent = AM_XFGUESTBOOK_NOBADIP;
     }
-    redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
+    redirect_header($_SERVER['SCRIPT_NAME'], 2, $messagesent);
 }
 
 /**
@@ -72,11 +72,11 @@ function badIpForm($ip_id = null)
 {
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     if ($ip_id) {
-        $sform    = new \XoopsThemeForm(AM_XFGUESTBOOK_MOD_BADIP, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform    = new \XoopsThemeForm(AM_XFGUESTBOOK_MOD_BADIP, 'op', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $badips   = Xfguestbook\Utility::get_badips(true);
         $ip_value = $badips[$ip_id]['ip_value'];
     } else {
-        $sform    = new \XoopsThemeForm(AM_XFGUESTBOOK_ADD_BADIP, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform    = new \XoopsThemeForm(AM_XFGUESTBOOK_ADD_BADIP, 'op', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $ip_value = '';
     }
 
@@ -147,7 +147,7 @@ function badIpShow()
     echo '</tr>';
 
     if ('0' != count($badips)) {
-        echo "<form name='badiplist' id='list' action='" . $_SERVER['PHP_SELF'] . '\' method=\'POST\' style=\'margin: 0;\'>';
+        echo "<form name='badiplist' id='list' action='" . $_SERVER['SCRIPT_NAME'] . '\' method=\'POST\' style=\'margin: 0;\'>';
 
         for ($i = 0; $i < $nb_badips; $i++) {
             echo '<tr>';

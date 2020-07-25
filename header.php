@@ -12,13 +12,16 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
  */
+
 require dirname(dirname(__DIR__)) . '/mainfile.php';
 require XOOPS_ROOT_PATH . '/header.php';
+
+require __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
@@ -36,11 +39,8 @@ $myts = \MyTextSanitizer::getInstance();
 // Load language files
 $helper->loadLanguage('main');
 
-if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof \XoopsTpl)) {
     require $GLOBALS['xoops']->path('class/template.php');
     $xoopsTpl = new XoopsTpl();
 }
 
-//if ($publisher->getConfig('seo_url_rewrite') != 'none') {
-//    require PUBLISHER_ROOT_PATH . '/include/seo.inc.php';
-//}

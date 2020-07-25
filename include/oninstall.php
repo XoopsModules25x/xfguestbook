@@ -11,7 +11,7 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
@@ -27,7 +27,7 @@ use XoopsModules\Xfguestbook;
  */
 function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
 {
-    include __DIR__ . '/common.php';
+    require __DIR__ . '/common.php';
     /** @var \XoopsModules\Xfguestbook\Utility $utility */
     $utility = new \XoopsModules\Xfguestbook\Utility();
     //check for minimum XOOPS version

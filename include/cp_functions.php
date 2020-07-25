@@ -100,7 +100,7 @@ function executeSQL($sql_file_path)
     $error = false;
     // $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
     //   $sql_file_path = XOOPS_ROOT_PATH."/modules/".$xoopsModule->dirname()."/sql/".$sqlfile;
-    if (!file_exists($sql_file_path)) {
+    if (!is_file($sql_file_path)) {
         echo "SQL file not found at <b>$sql_file_path</b><br>";
         //     $msg = "SQL file not found at <b>$sql_file_path</b><br>";
         $error = true;

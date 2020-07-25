@@ -331,7 +331,7 @@ switch ($op) {
                 $configHandler = xoops_getHandler('config');
                 $criteria      = new \CriteriaCompo(new \Criteria('conf_modid', $xoopsModule->mid()));
                 $criteria->add(new \Criteria('conf_name', 'flagdir'));
-                $config = &$configHandler->getConfigs($criteria);
+                $config = $configHandler->getConfigs($criteria);
                 /** @var \XoopsConfigItem $configItem */
                 $configItem = $config[0];
                 $value      = [$configItem->getConfValueForOutput()];

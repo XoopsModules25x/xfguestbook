@@ -89,8 +89,8 @@ switch ($op) {
         if (!empty($_FILES['photo']['name'])) {
             Xfguestbook\Utility::upload();
         }
-//        $title   = $ts->htmlSpecialChars($ts->stripSlashesGPC($title));
-//        $message = $ts->htmlSpecialChars($ts->stripSlashesGPC($message));
+        //        $title   = $ts->htmlSpecialChars($ts->stripSlashesGPC($title));
+        //        $message = $ts->htmlSpecialChars($ts->stripSlashesGPC($message));
         if (!empty($msgstop)) {
             $xoopsTpl->assign('preview', true);
             $xoopsTpl->assign('msgstop', $msgstop);

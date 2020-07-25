@@ -48,7 +48,7 @@ if ($option['opt_gender']) {
     $signform->addElement($gender_text, true);
 }
 
-// affichage pays
+// country display
 if ($option['opt_country']) {
     $country_text = new \XoopsModules\Xfguestbook\Form\FormSelectCountry($helper->getConfig('country_caption'), 'country', $country, 1, true);
     $country_text->setExtra('onchange="test_other(this.value)"');
@@ -104,9 +104,9 @@ if (1 == $option['opt_code']) {
 }
 $buttonTray->addElement(new \XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
 $buttonTray->addElement(new \XoopsFormButton('', 'post', _SUBMIT, 'submit'));
-$button_cancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
-$button_cancel->setExtra("onclick='location=\"index.php?op=cancel\";'");
-$buttonTray->addElement($button_cancel);
+$buttonCancel = new \XoopsFormButton('', 'cancel', _CANCEL, 'button');
+$buttonCancel->setExtra("onclick='location=\"index.php?op=cancel\";'");
+$buttonTray->addElement($buttonCancel);
 $signform->addElement($buttonTray);
 
 $signform->addElement(new \XoopsFormHidden('user_id', $user_id));

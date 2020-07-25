@@ -31,16 +31,16 @@ require_once __DIR__ . '/admin_header.php';
 $helper = Xfguestbook\Helper::getInstance();
 
 /**
- * @param  int $cat
+ * @param int $cat
  * @return mixed
  */
 function getOptions4Admin($cat = 2)
 {
     global $xoopsDB;
     $arr_conf = [];
-    $sql    = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ' . $xoopsDB->prefix('xfguestbook_config') . ' WHERE conf_cat=' . $cat . ' ORDER BY conf_order ASC';
-    $result = $xoopsDB->query($sql);
-    $i      = 0;
+    $sql      = 'SELECT conf_id, conf_name, conf_value, conf_title, conf_formtype, conf_desc  FROM ' . $xoopsDB->prefix('xfguestbook_config') . ' WHERE conf_cat=' . $cat . ' ORDER BY conf_order ASC';
+    $result   = $xoopsDB->query($sql);
+    $i        = 0;
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $arr_conf[$i]['conf_id']       = $myrow['conf_id'];
         $arr_conf[$i]['conf_name']     = $myrow['conf_name'];
@@ -84,7 +84,7 @@ switch ($op) {
         $option = getOptions4Admin();
         $nb_opt = count($option);
 
-        $sform = new \XoopsThemeForm(AM_XFGUESTBOOK_FORMOPT, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform = new \XoopsThemeForm(AM_XFGUESTBOOK_FORMOPT, 'op', xoops_getenv('SCRIPT_NAME'), 'post', true);
 
         for ($i = 0; $i < $nb_opt; $i++) {
             $title = (!defined($option[$i]['conf_desc'])

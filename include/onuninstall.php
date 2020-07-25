@@ -33,7 +33,7 @@ function xoops_module_uninstall_xfguestbook(\XoopsModule $module)
 
 //=======================================================
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 /**
  * @param \XoopsModule $module
@@ -69,9 +69,9 @@ function xoops_module_uninstall_XXXX(\XoopsModule $module)
 /**
  * Delete a file, or a folder and its contents
  *
- * @author      Aidan Lister <aidan@php.net>
- * @param  string $dirname The directory to delete
+ * @param string $dirname The directory to delete
  * @return bool   Returns true on success, false on failure
+ * @author      Aidan Lister <aidan@php.net>
  */
 function rmdirr($dirname)
 {

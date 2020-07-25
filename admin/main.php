@@ -72,7 +72,7 @@ function delete()
     } else {
         $messagesent = AM_XFGUESTBOOK_NOMSG;
     }
-    redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
+    redirect_header($_SERVER['SCRIPT_NAME'], 2, $messagesent);
 }
 
 function approve()
@@ -91,7 +91,7 @@ function approve()
     } else {
         $messagesent = AM_XFGUESTBOOK_NOMSG;
     }
-    redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
+    redirect_header($_SERVER['SCRIPT_NAME'], 2, $messagesent);
 }
 
 function banish()
@@ -120,7 +120,7 @@ function banish()
         $messagesent = AM_XFGUESTBOOK_NOMSG;
     }
 
-    redirect_header($_SERVER['PHP_SELF'], 2, $messagesent);
+    redirect_header($_SERVER['SCRIPT_NAME'], 2, $messagesent);
 }
 
 function show()
@@ -178,7 +178,7 @@ function show()
     $badips = Xfguestbook\Utility::get_badips();
 
     /* -- Code to show selected terms -- */
-    echo "<form name='pick' id='pick' action='" . $_SERVER['PHP_SELF'] . '\' method=\'GET\' style=\'margin: 0;\'>';
+    echo "<form name='pick' id='pick' action='" . $_SERVER['SCRIPT_NAME'] . '\' method=\'GET\' style=\'margin: 0;\'>';
 
     echo "
         <table width='100%' cellspacing='1' cellpadding='2' border='0' style='border-left: 1px solid #c0c0c0; border-top: 1px solid #c0c0c0; border-right: 1px solid #c0c0c0;'>
@@ -214,7 +214,7 @@ function show()
     echo '</tr>';
 
     if ('0' != $totalcount) {
-        echo "<form name='msglist' id='list' action='" . $_SERVER['PHP_SELF'] . '\' method=\'POST\' style=\'margin: 0;\'>';
+        echo "<form name='msglist' id='list' action='" . $_SERVER['SCRIPT_NAME'] . '\' method=\'POST\' style=\'margin: 0;\'>';
 
         /** @var \XoopsModules\Xfguestbook\Message $onemsg */
         foreach ($msg as $onemsg) {

@@ -24,6 +24,7 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+
 $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
 
 require_once __DIR__ . '/header.php';
@@ -105,7 +106,8 @@ function xfgb_getmsg($msg)
     $arr_country = Xfguestbook\Utility::getAllCountry();
     $xoopsTpl->assign('display_msg', true);
     foreach ($msg as $onemsg) {
-        if ($poster = Xfguestbook\Utility::get_user_data($onemsg->getVar('user_id'))) {
+        $poster = Xfguestbook\Utility::get_user_data($onemsg->getVar('user_id'));
+        if ($poster) {
             $a_msg = &$poster;
         } else {
             $a_msg             = [];
