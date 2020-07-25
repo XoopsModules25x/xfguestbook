@@ -31,8 +31,8 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 // ------------------- Informations ------------------- //
 $modversion = [
     'version'             => '3.21.0',
-    'module_status'       => 'Beta 2',
-    'release_date'        => '2019/07/16',
+    'module_status'       => 'RC 1',
+    'release_date'        => '2020/07/25',
     'name'                => MI_XFGUESTBOOK_NAME,
     'description'         => MI_XFGUESTBOOK_DESC,
     'official'            => 0,
