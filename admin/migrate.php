@@ -54,10 +54,8 @@ EOF;
 
 //XoopsLoad::load('migrate', 'newbb');
 
-/** @var Xfguestbook\Common\Configurator $configurator */
 $configurator = new Xfguestbook\Common\Configurator();
 
-/** @var \XoopsModules\Xfguestbook\Common\Migrate $migrator */
 $migrator = new Migrate($configurator);
 
 $op        = Request::getCmd('op', 'show');

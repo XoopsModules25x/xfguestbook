@@ -30,7 +30,6 @@ use XoopsModules\Xfguestbook\Utility;
 function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
 {
     require __DIR__ . '/common.php';
-    /** @var \XoopsModules\Xfguestbook\Utility $utility */
     $utility = new Utility();
     //check for minimum XOOPS version
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -66,9 +65,7 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
 
-    /** @var Xfguestbook\Common\Configurator $configurator */
     $configurator = new Xfguestbook\Common\Configurator();
-    /** @var \XoopsModules\Xfguestbook\Utility $utility */
     $utility = new Utility();
 
     // default Permission Settings ----------------------
