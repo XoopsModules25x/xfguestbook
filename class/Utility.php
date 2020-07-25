@@ -190,7 +190,9 @@ class Utility extends Common\SysUtility
     {
         if (!\filter_var($email, \FILTER_VALIDATE_EMAIL)) {
             return false;
-        } elseif (!\checkdnsrr(\array_pop(\explode('@', $email)), 'MX')) {
+        }
+
+        if (!\checkdnsrr(\array_pop(\explode('@', $email)), 'MX')) {
             return false;
         }
 
