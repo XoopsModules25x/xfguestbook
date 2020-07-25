@@ -23,7 +23,10 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\Module\Admin;
+use Xmf\Request;
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Form\FormSelectCountry;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -60,7 +63,7 @@ if (isset($_POST)) {
     }
 }
 
-$op = \Xmf\Request::getCmd('op', 'show');
+$op = Request::getCmd('op', 'show');
 
 switch ($op) {
     case 'save':
@@ -76,7 +79,7 @@ switch ($op) {
     case 'show':
     default:
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(1);
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -97,7 +100,7 @@ switch ($op) {
                     $ele = new \XoopsFormRadioYN($title, $option[$i]['conf_name'], $option[$i]['conf_value'], _YES, _NO);
                     break;
                 case 'selectcountry':
-                    $ele = new \XoopsModules\Xfguestbook\Form\FormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
+                    $ele = new FormSelectCountry($title, $option[$i]['conf_name'], $option[$i]['conf_value'], 1, true);
                     break;
                 case 'selectmail':
                     $ele     = new \XoopsFormSelect($title, $option[$i]['conf_name'], $option[$i]['conf_value']);

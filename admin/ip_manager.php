@@ -23,6 +23,8 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\Module\Admin;
+use Xmf\Request;
 use XoopsModules\Xfguestbook;
 
 require_once __DIR__ . '/admin_header.php';
@@ -30,19 +32,19 @@ require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once dirname(__DIR__) . '/include/cp_functions.php';
 
 $op = 'badIpShow';
-if (\Xmf\Request::hasVar('op', 'GET')) {
+if (Request::hasVar('op', 'GET')) {
     $op = $_GET['op'];
-} elseif (\Xmf\Request::hasVar('op', 'POST')) {
+} elseif (Request::hasVar('op', 'POST')) {
     $op = $_POST['op'];
 }
 
-if (\Xmf\Request::hasVar('ip_id', 'GET')) {
-    $ip_id = \Xmf\Request::getInt('ip_id', 0, 'GET');
+if (Request::hasVar('ip_id', 'GET')) {
+    $ip_id = Request::getInt('ip_id', 0, 'GET');
 } else {
-    $ip_id = \Xmf\Request::getInt('ip_id', 0, 'POST');
+    $ip_id = Request::getInt('ip_id', 0, 'POST');
 }
 
-$ip_value = \Xmf\Request::getString('ip_value', '', 'POST');
+$ip_value = Request::getString('ip_value', '', 'POST');
 
 /**
  * @param $ip_id
@@ -109,7 +111,7 @@ function badIpSave($ip_id, $ip_value)
         $messagesent = AM_XFGUESTBOOK_BADIP_UPDATED;
     } else {
         $sql = sprintf("SELECT COUNT(*) FROM  %s WHERE ip_value = '%s'", $xoopsDB->prefix('xfguestbook_badips'), $ip_value);
-        list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql));
+        [$count] = $xoopsDB->fetchRow($xoopsDB->query($sql));
         if ($count > 0) {
             $messagesent = '<span style="color: #FF0000; ">' . AM_XFGUESTBOOK_BADIP_EXIST . '</span>';
         } else {
@@ -173,7 +175,7 @@ function badIpShow()
 switch ($op) {
     case 'badIpForm':
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpForm($ip_id);
@@ -185,7 +187,7 @@ switch ($op) {
         break;
     case 'badIpEdit':
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpForm($ip_id);
@@ -197,7 +199,7 @@ switch ($op) {
         break;
     case 'badIpAdd':
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpForm();
@@ -207,7 +209,7 @@ switch ($op) {
     case 'badIpShow':
     default:
         xoops_cp_header();
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         //xfguestbook_admin_menu(3);
         badIpShow();

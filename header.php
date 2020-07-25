@@ -18,6 +18,8 @@
  * @author       XOOPS Development Team
  */
 
+use XoopsModules\Xfguestbook\Helper;
+
 require dirname(dirname(__DIR__)) . '/mainfile.php';
 require XOOPS_ROOT_PATH . '/header.php';
 
@@ -26,7 +28,7 @@ require __DIR__ . '/preloads/autoloader.php';
 $moduleDirName = basename(__DIR__);
 
 /** @var \XoopsModules\Xfguestbook\Helper $helper */
-$helper = \XoopsModules\Xfguestbook\Helper::getInstance();
+$helper = Helper::getInstance();
 
 $modulePath = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName;
 require __DIR__ . '/config/config.php';

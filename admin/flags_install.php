@@ -23,6 +23,8 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\Module\Admin;
+use Xmf\Request;
 use XoopsModules\Xfguestbook;
 
 require_once __DIR__ . '/admin_header.php';
@@ -33,7 +35,7 @@ $helper = Xfguestbook\Helper::getInstance();
 
 if (!isset($_POST['flagdir'])) {
     xoops_cp_header();
-    $adminObject = \Xmf\Module\Admin::getInstance();
+    $adminObject = Admin::getInstance();
     $adminObject->displayNavigation(basename(__FILE__));
     require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -60,10 +62,10 @@ if (!isset($_POST['flagdir'])) {
     require_once __DIR__ . '/admin_footer.php';
 } else {
     xoops_cp_header();
-    $adminObject = \Xmf\Module\Admin::getInstance();
+    $adminObject = Admin::getInstance();
     $adminObject->displayNavigation(basename(__FILE__));
 
-    $flagdir = \Xmf\Request::getString('flagdir', '', 'POST');
+    $flagdir = Request::getString('flagdir', '', 'POST');
     $msg     = '';
 
     $sql    = 'TRUNCATE TABLE ' . $xoopsDB->prefix('xfguestbook_country');

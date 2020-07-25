@@ -18,6 +18,8 @@
  */
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Helper;
+use XoopsModules\Xfguestbook\Utility;
 
 /**
  * Prepares system prior to attempting to install module
@@ -29,7 +31,7 @@ function xoops_module_pre_install_xfguestbook(\XoopsModule $module)
 {
     require __DIR__ . '/common.php';
     /** @var \XoopsModules\Xfguestbook\Utility $utility */
-    $utility = new \XoopsModules\Xfguestbook\Utility();
+    $utility = new Utility();
     //check for minimum XOOPS version
     $xoopsSuccess = $utility::checkVerXoops($module);
 
@@ -58,7 +60,7 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
 
     $moduleDirName = basename(dirname(__DIR__));
     /** @var \XoopsModules\Xfguestbook\Helper $helper */
-    $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
+    $helper = Helper::getInstance();
 
     // Load language files
     $helper->loadLanguage('admin');
@@ -67,7 +69,7 @@ function xoops_module_install_xfguestbook(\XoopsModule $module)
     /** @var Xfguestbook\Common\Configurator $configurator */
     $configurator = new Xfguestbook\Common\Configurator();
     /** @var \XoopsModules\Xfguestbook\Utility $utility */
-    $utility = new \XoopsModules\Xfguestbook\Utility();
+    $utility = new Utility();
 
     // default Permission Settings ----------------------
     global $xoopsModule;

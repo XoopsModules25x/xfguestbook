@@ -24,6 +24,7 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Form\FormSelectCountry;
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
@@ -54,7 +55,7 @@ $flag         = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->dirname() . '/asse
 if (file_exists($flag)) {
     $country_tray->addElement(new \XoopsFormLabel('', "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/assets/images/flags/' . $msg->getVar('flagdir') . '/' . $msg->getVar('country') . ".gif' name='image' id='image' alt=''><br><br>"));
 }
-$country_tray->addElement(new \XoopsModules\Xfguestbook\Form\FormSelectCountry('', 'country', $msg->getVar('country', 'E'), 1, true));
+$country_tray->addElement(new FormSelectCountry('', 'country', $msg->getVar('country', 'E'), 1, true));
 $country_tray->addElement(new \XoopsFormText(AM_XFGUESTBOOK_IF_OTHER, 'other', 20, 20, $msg->getVar('other', 'E')));
 $msg_form->addElement($country_tray, false);
 //}

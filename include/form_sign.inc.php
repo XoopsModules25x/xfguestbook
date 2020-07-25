@@ -24,6 +24,7 @@
 //  ------------------------------------------------------------------------ //
 
 use XoopsModules\Xfguestbook;
+use XoopsModules\Xfguestbook\Form\FormSelectCountry;
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
@@ -50,7 +51,7 @@ if ($option['opt_gender']) {
 
 // country display
 if ($option['opt_country']) {
-    $country_text = new \XoopsModules\Xfguestbook\Form\FormSelectCountry($helper->getConfig('country_caption'), 'country', $country, 1, true);
+    $country_text = new FormSelectCountry($helper->getConfig('country_caption'), 'country', $country, 1, true);
     $country_text->setExtra('onchange="test_other(this.value)"');
     $signform->addElement($country_text, true);
     //  $other_text = new \XoopsFormText('other', 'other', 50, 50, $other);

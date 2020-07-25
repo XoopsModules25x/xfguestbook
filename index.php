@@ -23,6 +23,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+use Xmf\Request;
 use XoopsModules\Xfguestbook;
 
 $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_index.tpl';
@@ -32,17 +33,17 @@ require_once __DIR__ . '/header.php';
 //** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
 
-if (\Xmf\Request::hasVar('msg_id', 'GET')) {
-    $msg_id = \Xmf\Request::getInt('msg_id', 0, 'GET');
+if (Request::hasVar('msg_id', 'GET')) {
+    $msg_id = Request::getInt('msg_id', 0, 'GET');
 } else {
-    $msg_id = \Xmf\Request::getInt('msg_id', 0, 'POST');
+    $msg_id = Request::getInt('msg_id', 0, 'POST');
 }
 
 $op = 'show_all';
-if (\Xmf\Request::hasVar('op', 'GET')) {
-    $op = \Xmf\Request::getString('op', '', 'GET');
-} elseif (\Xmf\Request::hasVar('op', 'POST')) {
-    $op = \Xmf\Request::getString('op', '', 'POST');
+if (Request::hasVar('op', 'GET')) {
+    $op = Request::getString('op', '', 'GET');
+} elseif (Request::hasVar('op', 'POST')) {
+    $op = Request::getString('op', '', 'POST');
 }
 
 /** @var \XoopsModules\Xfguestbook\MessageHandler $msgHandler */
@@ -57,7 +58,7 @@ $xoopsUser ? $adminview = $xoopsUser->isAdmin() : $adminview = 0;
 function delete($msg_id)
 {
     global $msgHandler, $xoopsModule;
-    $ok = \Xmf\Request::getInt('ok', 0, 'POST');
+    $ok = Request::getInt('ok', 0, 'POST');
     if (1 == $ok) {
         $msg        = $msgHandler->get($msg_id);
         $del_msg_ok = $msgHandler->delete($msg);
@@ -207,8 +208,8 @@ function xfgb_genderlist()
 // if op = show_***, functions needed
 //if (substr($op, 0, 4) == 'show') {
 if (0 === strncmp($op, 'show', 4)) {
-    $debut = \Xmf\Request::getInt('debut', 0, 'GET');
-    $param = \Xmf\Request::getString('param', '', 'GET');
+    $debut = Request::getInt('debut', 0, 'GET');
+    $param = Request::getString('param', '', 'GET');
 
     require_once XOOPS_ROOT_PATH . '/header.php';
     require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
@@ -276,7 +277,7 @@ switch ($op) {
         }
         break;
     case 'show_country':
-        list($flagdir, $country) = explode('/', $param);
+        [$flagdir, $country] = explode('/', $param);
         $criteria = new \CriteriaCompo(new \Criteria('moderate', '0'));
         if ($flagdir == $helper->getConfig('flagdir')) {
             $criteria->add(new \Criteria('flagdir', $flagdir));
@@ -333,7 +334,7 @@ $sql = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_country'
 
 while (false !== ($coun = $xoopsDB->fetchArray($sql))) {
     $sql2 = $xoopsDB->query('SELECT COUNT(country) tot FROM ' . $xoopsDB->prefix('xfguestbook_msg') . " WHERE country='" . $coun['country_code'] . '\'');
-    list($tlocal) = $xoopsDB->fetchRow($sql2);
+    [$tlocal] = $xoopsDB->fetchRow($sql2);
     $tlocal = $tlocal ?: '0';
     if ($tlocal > 0) {
         $opt['<a href="index.php?op=show_country&param=' . $helper->getConfig('flagdir') . '/' . $coun['country_code'] . '">' . $coun['country_name'] . '</a>'] = $tlocal;

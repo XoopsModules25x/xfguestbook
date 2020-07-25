@@ -22,6 +22,7 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+use XoopsModules\Xfguestbook\Helper;
 
 /**
  * @param $options
@@ -31,7 +32,7 @@ function b_xfguestbook_show($options)
 {
     global $xoopsModule, $xoopsModuleConfig, $xoopsDB;
     /** @var \XoopsModules\Xfguestbook\Helper $helper */
-    $helper = \XoopsModules\Xfguestbook\Helper::getInstance();
+    $helper = Helper::getInstance();
     if (empty($xoopsModule) || 'xfguestbook' !== $xoopsModule->getVar('dirname')) {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');

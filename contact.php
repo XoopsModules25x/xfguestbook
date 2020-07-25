@@ -23,6 +23,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //---------------------------------------------------------------------------//
 
+use Xmf\Request;
 use XoopsModules\Xfguestbook;
 
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
@@ -37,15 +38,15 @@ foreach ($_GET as $k => $v) {
     ${$k} = $v;
 }
 
-$email_user = \Xmf\Request::getString('email_user', '');
-$title      = \Xmf\Request::getString('title', '');
-$message    = \Xmf\Request::getString('message', '');
+$email_user = Request::getString('email_user', '');
+$title      = Request::getString('title', '');
+$message    = Request::getString('message', '');
 
-$phone        = \Xmf\Request::getString('phone', '');
-$name_user    = \Xmf\Request::getString('name_user', '');
-$email_author = \Xmf\Request::getString('email_author', '');
-$preview      = \Xmf\Request::getString('preview', '');
-$post         = \Xmf\Request::getString('post', '');
+$phone        = Request::getString('phone', '');
+$name_user    = Request::getString('name_user', '');
+$email_author = Request::getString('email_author', '');
+$preview      = Request::getString('preview', '');
+$post         = Request::getString('post', '');
 
 if (isset($preview)) {
     $op = 'preview';
