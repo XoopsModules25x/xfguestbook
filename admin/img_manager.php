@@ -27,7 +27,7 @@ use Xmf\Module\Admin;
 
 require_once __DIR__ . '/admin_header.php';
 require_once dirname(__DIR__) . '/include/cp_functions.php';
-require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopslists.php';
+require_once dirname(__DIR__, 3) . '/class/xoopslists.php';
 
 $msgHandler = $helper->getHandler('Message');
 require_once __DIR__ . '/admin_header.php';

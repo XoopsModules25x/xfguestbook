@@ -26,7 +26,7 @@
 use Xmf\Request;
 use XoopsModules\Xfguestbook;
 
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(__DIR__, 2) . '/mainfile.php';
 //** @var Xfguestbook\Helper $helper */
 $helper = Xfguestbook\Helper::getInstance();
 

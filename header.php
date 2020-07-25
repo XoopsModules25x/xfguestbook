@@ -20,7 +20,7 @@
 
 use XoopsModules\Xfguestbook\Helper;
 
-require dirname(dirname(__DIR__)) . '/mainfile.php';
+require dirname(__DIR__, 2) . '/mainfile.php';
 require XOOPS_ROOT_PATH . '/header.php';
 
 require __DIR__ . '/preloads/autoloader.php';
