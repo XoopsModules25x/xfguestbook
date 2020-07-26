@@ -25,16 +25,18 @@
 use Xmf\Request;
 use XoopsModules\Xfguestbook;
 
+$GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
+
 require_once __DIR__ . '/header.php';
 
+//** @var Helper $helper */
 if (!is_object($xoopsUser) && 1 != $helper->getConfig('anonsign')) {
     redirect_header(XOOPS_URL . '/user.php', 2, MD_XFGUESTBOOK_MUSTREGFIRST);
 }
 
 require_once __DIR__ . '/include/config.inc.php';
 
-///** @var Helper $helper */
-//$helper = Helper::getInstance();
+
 
 $option     = getOptions();
 $msgHandler = $helper->getHandler('Message');
@@ -69,8 +71,6 @@ switch ($op) {
         break;
     case 'preview':
         $ts                                      = \MyTextSanitizer::getInstance();
-        $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
-        require_once XOOPS_ROOT_PATH . '/header.php';
         $msgstop = '';
 
         /*if ($option['opt_code']==1) {
@@ -144,9 +144,8 @@ switch ($op) {
             if (!$xoopsCaptcha->verify()) {
                 $msgstop .= $xoopsCaptcha->getMessage() . '<br><br>';
             }
-            require_once XOOPS_ROOT_PATH . '/header.php';
         }
-        if ('' !== $_POST['uman']) {
+        if ('' == $_POST['uman']) {
             redirect_header('index.php', 2, '');
         }
         if (2 == $option['opt_url'] && preg_match('/^(http)|(https)|(www)/i', $message)) {
@@ -164,8 +163,6 @@ switch ($op) {
             Xfguestbook\Utility::upload();
         }
         if (!empty($msgstop)) {
-            $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
-            require_once XOOPS_ROOT_PATH . '/header.php';
             $xoopsTpl->assign('preview', true);
             $xoopsTpl->assign('msgstop', $msgstop);
             require_once __DIR__ . '/include/form_sign.inc.php';
@@ -234,9 +231,6 @@ switch ($op) {
         break;
     case 'form':
     default:
-        $GLOBALS['xoopsOption']['template_main'] = 'xfguestbook_signform.tpl';
-
-        require_once XOOPS_ROOT_PATH . '/header.php';
         $user_id = !empty($xoopsUser) ? $xoopsUser->getVar('uid', 'E') : 0;
         $name    = !empty($xoopsUser) ? $xoopsUser->getVar('uname', 'E') : '';
         $email   = !empty($xoopsUser) ? $xoopsUser->getVar('email', 'E') : '';

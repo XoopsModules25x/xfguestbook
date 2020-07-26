@@ -28,7 +28,7 @@ CREATE TABLE `xfguestbook_msg` (
 #
 
 INSERT INTO xfguestbook_msg (msg_id, user_id, uname, title, message, note, post_time, email, url, poster_ip, moderate, gender, country, photo, flagdir)
-VALUES (1, 0, 'Joe Doe PHP team', 'Welcome', ':-) Welcome in your Guestbook', 'You can delete this message', 1073730287, '', '', '127.0.0.1', 0, 'M', 'FR', 'msg_1000000000.jpg', 'world_flags');
+VALUES (1, 0, 'Joe Doe PHP team', 'Welcome', ':-) Welcome in your Guestbook', 'You can delete this message', 1073730287, '', '', '127.0.0.1', 0, 'M', 'FR', 'msg1.jpg', 'world_flags');
 
 #
 # Structure de la table `xfguestbook_config`

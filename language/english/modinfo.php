@@ -34,7 +34,7 @@ define('MI_XFGUESTBOOK_BNAME1_DESC', 'Shows recently added download files');
 define('MI_XFGUESTBOOK_ADMIN_HOME', 'Home');
 define('MI_XFGUESTBOOK_ADMIN_HOME_DESC', 'Back to Home');
 define('MI_XFGUESTBOOK_ADMIN_ABOUT', 'About');
-define('MI_XFGUESTBOOK_IP', 'IP');
+define('MI_XFGUESTBOOK_IP', 'Bad IP');
 
 define('MI_XFGUESTBOOK_SHOWEMAIL', 'Show the email button on all messages');
 

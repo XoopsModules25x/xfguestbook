@@ -31,8 +31,8 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 // ------------------- Informations ------------------- //
 $modversion = [
     'version'             => '3.21.0',
-    'module_status'       => 'RC 1',
-    'release_date'        => '2020/07/25',
+    'module_status'       => 'RC 2',
+    'release_date'        => '2020/07/26',
     'name'                => MI_XFGUESTBOOK_NAME,
     'description'         => MI_XFGUESTBOOK_DESC,
     'official'            => 0,
@@ -44,7 +44,6 @@ $modversion = [
     'author_website_name' => 'XOOPS',
     'license'             => 'GPL 2.0 or later',
     'license_url'         => 'www.gnu.org/licenses/gpl-2.0.html/',
-    'help'                => 'page=help',
     // ------------------- Folders & Files -------------------
     'release_info'        => 'Changelog',
     'release_file'        => XOOPS_URL . "/modules/$moduleDirName/docs/changelog.txt",
@@ -116,32 +115,6 @@ $modversion = [
     //            'update'  => 'picture_comments_update'
     //        ],
     //    ],
-    // ------------------- Notification ----------------------
-    //    'hasNotification'     => 1,
-    //    'notification'        => [
-    //        'lookup_file' => 'include/notification.inc.php',
-    //        'lookup_func' => 'lookup',
-    //        'category'    => [
-    //            'name'           => 'dog',
-    //            'title'          => MI_XFGUESTBOOK_DOG_NOTIFY,
-    //            'description'    => MI_XFGUESTBOOK_DOG_NOTIFY_DSC,
-    //            'subscribe_from' => [
-    //                'dog.php',
-    //                'pedigree.php'
-    //            ],
-    //            'item_name'      => 'id',
-    //            'allow_bookmark' => 1
-    //        ],
-    //        'event'       => [
-    //            'name'          => 'change_data',
-    //            'category'      => 'dog',
-    //            'title'         => MI_XFGUESTBOOK_DATA_NOTIFY,
-    //            'caption'       => MI_XFGUESTBOOK_DATA_NOTIFYCAP,
-    //            'description'   => MI_XFGUESTBOOK_DATA_NOTIFYDSC,
-    //            'mail_template' => 'dog_data_notify',
-    //            'mail_subject'  => MI_XFGUESTBOOK_DATA_NOTIFYSBJ
-    //        ],
-    //    ],
     // ------------------- Mysql -----------------------------
     'sqlfile'             => ['mysql' => 'sql/mysql.sql'],
     // ------------------- Tables ----------------------------
@@ -154,6 +127,7 @@ $modversion = [
 ];
 
 // ------------------- Help files ------------------- //
+$modversion['help']        = 'page=help';
 $modversion['helpsection'] = [
     ['name' => MI_XFGUESTBOOK_OVERVIEW, 'link' => 'page=help'],
     ['name' => MI_XFGUESTBOOK_DISCLAIMER, 'link' => 'page=disclaimer'],

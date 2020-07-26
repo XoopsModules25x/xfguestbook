@@ -148,5 +148,5 @@ define('AM_XFGUESTBOOK_BADIP_VALUE', 'Value');
 define('AM_XFGUESTBOOK_BADIP_EXIST', 'IP address already logged');
 define('AM_XFGUESTBOOK_BADIP_ADDED', 'IP address logged!');
 define('AM_XFGUESTBOOK_BADIP_UPDATED', 'IP address modified !');
-define('AM_XFGUESTBOOK_BADIP_DELETED', 'IP address presuming !');
+define('AM_XFGUESTBOOK_BADIP_DELETED', 'IP address deleted !');
 define('AM_XFGUESTBOOK_NOBADIP', 'Not an IP address !');
