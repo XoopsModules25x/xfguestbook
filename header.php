@@ -29,6 +29,7 @@ $moduleDirName = basename(__DIR__);
 
 /** @var Helper $helper */
 $helper = Helper::getInstance();
+$helper->loadLanguage('modinfo');
 
 $modulePath = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName;
 require __DIR__ . '/config/config.php';

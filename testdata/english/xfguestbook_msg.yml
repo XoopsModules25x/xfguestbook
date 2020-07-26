@@ -8,11 +8,11 @@
     post_time: '1073730287'
     email: ''
     url: ''
-    poster_ip: 127.0.0.1
+    poster_ip: 14.137.191.255
     moderate: '0'
     gender: M
-    country: FR
-    photo: msg_1000000000.jpg
+    country: AU
+    photo: msg1.jpg
     flagdir: world_flags
     other: ''
 -
@@ -25,7 +25,7 @@
     post_time: '1541331345'
     email: name@email.com
     url: ''
-    poster_ip: '::1'
+    poster_ip: 2.155.255.255
     moderate: '0'
     gender: F
     country: ES
@@ -42,7 +42,7 @@
     post_time: '1541332641'
     email: joe@mea.com
     url: ''
-    poster_ip: '::1'
+    poster_ip: 5.249.223.255
     moderate: '0'
     gender: M
     country: RU
@@ -59,7 +59,7 @@
     post_time: '1541365253'
     email: joe@email.com
     url: ''
-    poster_ip: '::1'
+    poster_ip: 5.7.255.255
     moderate: '1'
     gender: M
     country: DE
@@ -76,8 +76,8 @@
     post_time: '1541366026'
     email: bingo@bongo.com
     url: 'https://xoops.org'
-    poster_ip: '::1'
-    moderate: '1'
+    poster_ip: 80.246.111.255
+    moderate: '0'
     gender: F
     country: LU
     photo: ''
@@ -93,7 +93,7 @@
     post_time: '1541365253'
     email: joe@email.com
     url: ''
-    poster_ip: '::1'
+    poster_ip: 5.149.191.255
     moderate: '0'
     gender: M
     country: FR
@@ -110,10 +110,10 @@
     post_time: '1541414016'
     email: ''
     url: ''
-    poster_ip: '::1'
+    poster_ip: 7.255.255.255
     moderate: '1'
     gender: M
-    country: DZ
+    country: US
     photo: ''
     flagdir: world_flags
     other: ''

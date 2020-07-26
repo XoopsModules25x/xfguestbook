@@ -331,11 +331,14 @@ switch ($op) {
         redirect_header('index.php', 0);
         break;
 }
-$sql = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_country') . ' ORDER BY country_name ASC');
 
-while (false !== ($coun = $xoopsDB->fetchArray($sql))) {
-    $sql2 = $xoopsDB->query('SELECT COUNT(country) tot FROM ' . $xoopsDB->prefix('xfguestbook_msg') . " WHERE country='" . $coun['country_code'] . '\'');
-    [$tlocal] = $xoopsDB->fetchRow($sql2);
+$sql = 'SELECT * FROM ' . $xoopsDB->prefix('xfguestbook_country') . ' ORDER BY country_name ASC';
+$result = $xoopsDB->query($sql);
+
+while (false !== ($coun = $xoopsDB->fetchArray($result))) {
+    $sql2 = 'SELECT COUNT(country) tot FROM ' . $xoopsDB->prefix('xfguestbook_msg') . " WHERE country='" . $coun['country_code'] . '\'';
+    $result2 = $xoopsDB->query($sql2);
+    [$tlocal] = $xoopsDB->fetchRow($result2);
     $tlocal = $tlocal ?: '0';
     if ($tlocal > 0) {
         $opt['<a href="index.php?op=show_country&param=' . $helper->getConfig('flagdir') . '/' . $coun['country_code'] . '">' . $coun['country_name'] . '</a>'] = $tlocal;
