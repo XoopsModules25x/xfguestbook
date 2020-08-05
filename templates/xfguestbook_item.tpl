@@ -22,8 +22,11 @@
     </tr>
     <tr align='left'>
         <td width="25%" class='odd'>
-            <div class="comUserRankText"
-            <{$msg.rank}>
+            <div class="comUserRankText">
+                <{$msg.country}>
+                <br>
+                <br>
+                <{$msg.rank}>
             </div>
             <div class="comUserRankImg">
                 <{$msg.rank_img}>
