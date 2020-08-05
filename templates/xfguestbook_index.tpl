@@ -28,12 +28,14 @@
             </td>
         </tr>
     </table>
-    <!-- <ul>
-<{foreach item="local" key="keys" from=$country_l}>
-<li><{$keys}> (<{$local}>)</li>
-<{/foreach}>
-</ul>
-<br>-->
+
+<{*     <ul>*}>
+<{*<{foreach item="local" key="keys" from=$country_l}>*}>
+<{*<li><{$keys}> (<{$local}>)</li>*}>
+<{*<{/foreach}>*}>
+<{*</ul>*}>
+<{*<br>*}>
+
     <!-- start msg item loop -->
     <{section name=i loop=$msg}>
         <{include file="db:xfguestbook_item.tpl" msg=$msg[i]}>
